@@ -712,107 +712,110 @@ footer .update-date {
     background: var(--primary-color);
 }
 
-/* 営業時間ブロック表示 */
-.hours-blocks-chart {
-    margin-top: 15px;
+/* 営業時間ビジュアル表示 */
+.hours-visual {
+    margin-top: 20px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
 }
 
-.hours-blocks-row {
+.hours-visual-header {
     display: flex;
-    align-items: flex-start;
+    gap: 20px;
     margin-bottom: 20px;
-    flex-wrap: wrap;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
 }
 
-.hours-blocks-label {
+.hours-visual-header span {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.header-label {
+    background: white;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+.header-staffed {
+    background: var(--primary-color);
+    color: white;
+}
+
+.header-unmanned {
+    background: white;
+    border: 2px dashed #999;
+    color: var(--text-color);
+}
+
+.hours-visual-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.hours-visual-label {
     width: 50px;
     font-weight: bold;
     color: var(--text-color);
-    padding-top: 5px;
 }
 
-.hours-blocks-container {
+.hours-visual-bar-container {
     flex: 1;
-    min-width: 200px;
+    position: relative;
 }
 
-.hours-blocks {
-    display: flex;
-    gap: 1px;
-}
-
-.hours-blocks .block {
-    flex: 1;
-    height: 24px;
-    border-radius: 2px;
-    min-width: 8px;
-}
-
-.hours-blocks .block.closed {
-    background: #e0e0e0;
-}
-
-.hours-blocks .block.unmanned {
-    background: var(--primary-light);
-    background-image: repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 2px,
-        rgba(255,255,255,0.5) 2px,
-        rgba(255,255,255,0.5) 4px
-    );
-}
-
-.hours-blocks .block.staffed {
-    background: var(--primary-color);
-}
-
-.hours-blocks-scale {
+.hours-visual-numbers {
     position: relative;
     height: 20px;
-    margin-top: 5px;
-    font-size: 0.75rem;
-    color: var(--text-light);
+    margin-bottom: 5px;
 }
 
-.hours-blocks-scale span {
+.hours-visual-numbers .num {
     position: absolute;
+    font-size: 0.8rem;
+    color: var(--text-color);
     transform: translateX(-50%);
 }
 
-.hours-blocks-scale span:last-child {
+.hours-visual-numbers .num:first-child {
+    transform: translateX(0);
+}
+
+.hours-visual-numbers .num.end-mark {
     transform: translateX(-100%);
 }
 
-.hours-blocks-info {
-    width: 100%;
-    font-size: 0.85rem;
-    color: var(--text-light);
-    margin-top: 5px;
-    margin-left: 50px;
+.hours-visual-bar {
+    position: relative;
+    height: 20px;
 }
 
-.hours-blocks-legend {
-    display: flex;
-    gap: 20px;
-    margin-top: 10px;
-    font-size: 0.85rem;
+.bar-unmanned {
+    position: absolute;
+    top: 50%;
+    height: 0;
+    border-top: 2px dashed #999;
+    transform: translateY(-50%);
 }
 
-.legend-unmanned::before {
-    content: '';
-    display: inline-block;
-    width: 16px;
-    height: 12px;
-    margin-right: 5px;
+.bar-staffed {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: var(--primary-color);
     border-radius: 2px;
-    vertical-align: middle;
-    background: var(--primary-light);
-    background-image: repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 2px,
-        rgba(255,255,255,0.5) 2px,
-        rgba(255,255,255,0.5) 4px
-    );
+}
+
+.bar-end-line {
+    position: absolute;
+    top: -5px;
+    width: 2px;
+    height: 30px;
+    background: var(--text-color);
+    transform: translateX(-1px);
 }
