@@ -69,10 +69,10 @@ header .subtitle {
 /* サイドバー */
 #sidebar {
     position: fixed;
-    top: 55px;
+    top: 70px;
     left: 0;
     width: var(--sidebar-width);
-    height: calc(100vh - 55px);
+    height: calc(100vh - 70px);
     background: var(--card-bg);
     border-right: 1px solid var(--border-color);
     overflow-y: auto;
@@ -125,7 +125,7 @@ header .subtitle {
 /* メインコンテンツ */
 main {
     margin-left: var(--sidebar-width);
-    margin-top: 55px;
+    margin-top: 70px;
     padding: 30px 40px;
     max-width: calc(1200px + var(--sidebar-width));
 }
@@ -133,7 +133,7 @@ main {
 /* セクション */
 section {
     margin-bottom: 50px;
-    scroll-margin-top: 70px;
+    scroll-margin-top: 85px;
 }
 
 section h2 {
