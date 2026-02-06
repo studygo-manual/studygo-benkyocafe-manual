@@ -53,19 +53,22 @@ header {
     max-width: 1200px;
     margin: 0 auto;
     padding-left: var(--sidebar-width);
-    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .header-logo {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 32px;
+    height: 40px;
     width: auto;
     background: white;
-    border-radius: 4px;
-    padding: 2px;
+    border-radius: 5px;
+    padding: 3px;
+}
+
+.header-text {
+    display: flex;
+    flex-direction: column;
 }
 
 header h1 {
