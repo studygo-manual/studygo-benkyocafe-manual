@@ -122,6 +122,35 @@ header .subtitle {
     color: white;
 }
 
+/* サブメニュー */
+#sidebar .sub-menu {
+    margin-left: 15px;
+    margin-top: 5px;
+    border-left: 2px solid var(--primary-light);
+    padding-left: 10px;
+}
+
+#sidebar .sub-menu li {
+    margin-bottom: 3px;
+}
+
+#sidebar .sub-menu a {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+#sidebar .sub-menu a:hover {
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+}
+
+#sidebar .sub-menu a.active {
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+    font-weight: bold;
+}
+
 /* メインコンテンツ */
 main {
     margin-left: var(--sidebar-width);
@@ -152,6 +181,7 @@ section h2 {
     margin-bottom: 20px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     border: 1px solid var(--border-color);
+    scroll-margin-top: 85px;
 }
 
 .card h3 {

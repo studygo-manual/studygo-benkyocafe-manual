@@ -21,7 +21,17 @@
                 <li><a href="#overview">スタディGOで出来ること</a></li>
                 <li><a href="#cafe-rules">勉強カフェ手続きについて</a></li>
                 <li><a href="#workflow">対応フロー</a></li>
-                <li><a href="#login">管理画面ログイン</a></li>
+                <li>
+                    <a href="#login">管理画面</a>
+                    <ul class="sub-menu">
+                        <li><a href="#login-url">管理画面URL</a></li>
+                        <li><a href="#login-id">ログインID</a></li>
+                        <li><a href="#dashboard">ダッシュボード</a></li>
+                        <li><a href="#checkin-history">チェックイン実績</a></li>
+                        <li><a href="#member-management">会員管理</a></li>
+                        <li><a href="#notification">通知について</a></li>
+                    </ul>
+                </li>
                 <li><a href="#checkin">チェックイン・チェックアウト</a></li>
                 <li><a href="#dropin">ドロップイン利用</a></li>
                 <li><a href="#reservation">見学予約対応</a></li>
@@ -487,14 +497,14 @@
             </div>
         </section>
 
-        <!-- 管理画面ログイン -->
+        <!-- 管理画面 -->
         <section id="login">
-            <h2>管理画面ログイン</h2>
-            <div class="card">
+            <h2>管理画面</h2>
+            <div class="card" id="login-url">
                 <h3>管理画面URL</h3>
                 <p><a href="https://dashboard.studygo.jp/alliance/login" target="_blank">https://dashboard.studygo.jp/alliance/login</a></p>
             </div>
-            <div class="card">
+            <div class="card" id="login-id">
                 <h3>ログインID</h3>
                 <table class="info-table">
                     <tr>
@@ -516,7 +526,7 @@
                     <p>2段階認証で、メールアドレスに送られてくる6桁の番号を入力して、ログインしてください。</p>
                 </div>
             </div>
-            <div class="card">
+            <div class="card" id="dashboard">
                 <h3>ダッシュボード</h3>
                 <p>以下の内容がわかります：</p>
                 <ul>
@@ -529,11 +539,11 @@
                     <p><strong>※「確認済み」は押さないようにしてください!!</strong></p>
                 </div>
             </div>
-            <div class="card">
+            <div class="card" id="checkin-history">
                 <h3>チェックイン実績</h3>
                 <p>期間を選択することで、チェックインの履歴を調べることができます。</p>
             </div>
-            <div class="card">
+            <div class="card" id="member-management">
                 <h3>会員管理</h3>
                 <p>一番右のテキストマーク📓を押すと会員情報が見れます。</p>
                 <p>以下が記載されています：</p>
@@ -550,7 +560,7 @@
                     <p>チャットワーク【入会情報】新宿S・BPスタジオ で報告する際は、こちらの<strong>ID・氏名</strong>を記載してください。</p>
                 </div>
             </div>
-            <div class="card">
+            <div class="card" id="notification">
                 <h3>通知について</h3>
                 <p>下記内容の通知がスタジオのメールアドレスに届きます：</p>
                 <ol>
