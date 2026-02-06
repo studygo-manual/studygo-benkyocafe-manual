@@ -570,3 +570,89 @@ footer .update-date {
 #sidebar::-webkit-scrollbar-thumb:hover {
     background: var(--primary-color);
 }
+
+/* 営業時間バー表示 */
+.hours-chart {
+    margin-top: 15px;
+}
+
+.hours-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.hours-label {
+    width: 50px;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.hours-bar-container {
+    flex: 1;
+}
+
+.hours-scale {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--text-light);
+    margin-bottom: 3px;
+    padding: 0 2px;
+}
+
+.hours-bar {
+    position: relative;
+    height: 24px;
+    background: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.bar-open {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: var(--primary-light);
+    border-radius: 4px;
+}
+
+.bar-staffed {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+.hours-time {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-top: 3px;
+}
+
+.hours-legend {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+    font-size: 0.85rem;
+}
+
+.legend-open::before,
+.legend-staffed::before {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 12px;
+    margin-right: 5px;
+    border-radius: 2px;
+    vertical-align: middle;
+}
+
+.legend-open::before {
+    background: var(--primary-light);
+}
+
+.legend-staffed::before {
+    background: var(--primary-color);
+}

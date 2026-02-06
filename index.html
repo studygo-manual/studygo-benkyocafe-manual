@@ -40,25 +40,57 @@
         <section id="overview">
             <h2>スタディGOで出来ること</h2>
             <div class="card">
-                <h3>※内容未定</h3>
-                <p>このセクションの内容は後日追加予定です。</p>
+                <h3>ユーザーがアプリで出来ること</h3>
+                <ul>
+                    <li>見学予約</li>
+                    <li>支払い（月額プラン、ドロップイン、オプション）</li>
+                    <li>チェックイン・チェックアウトとAkerunの開錠</li>
+                    <li>メッセージ</li>
+                    <li>支払い情報・会員情報の変更</li>
+                    <li>他施設の利用、勉強場所の探索</li>
+                </ul>
             </div>
             <div class="card">
                 <h3>勉強カフェ 営業時間</h3>
-                <table class="info-table">
-                    <tr>
-                        <th>平日</th>
-                        <td>6:00〜23:00</td>
-                    </tr>
-                    <tr>
-                        <th>土曜</th>
-                        <td>6:00〜22:00</td>
-                    </tr>
-                    <tr>
-                        <th>日祝</th>
-                        <td>6:00〜21:00</td>
-                    </tr>
-                </table>
+                <div class="hours-chart">
+                    <div class="hours-row">
+                        <div class="hours-label">平日</div>
+                        <div class="hours-bar-container">
+                            <div class="hours-scale">
+                                <span>6</span><span>9</span><span>12</span><span>15</span><span>18</span><span>21</span><span>24</span>
+                            </div>
+                            <div class="hours-bar">
+                                <div class="bar-open" style="left: 0%; width: 100%;"></div>
+                                <div class="bar-staffed" style="left: 64.7%; width: 23.5%;"></div>
+                            </div>
+                            <div class="hours-time">6:00〜23:00（有人: 17:00〜21:00）</div>
+                        </div>
+                    </div>
+                    <div class="hours-row">
+                        <div class="hours-label">土曜</div>
+                        <div class="hours-bar-container">
+                            <div class="hours-bar">
+                                <div class="bar-open" style="left: 0%; width: 100%;"></div>
+                                <div class="bar-staffed" style="left: 37.5%; width: 56.25%;"></div>
+                            </div>
+                            <div class="hours-time">6:00〜22:00（有人: 12:00〜21:00）</div>
+                        </div>
+                    </div>
+                    <div class="hours-row">
+                        <div class="hours-label">日祝</div>
+                        <div class="hours-bar-container">
+                            <div class="hours-bar">
+                                <div class="bar-open" style="left: 0%; width: 100%;"></div>
+                                <div class="bar-staffed" style="left: 40%; width: 60%;"></div>
+                            </div>
+                            <div class="hours-time">6:00〜21:00（有人: 12:00〜21:00）</div>
+                        </div>
+                    </div>
+                    <div class="hours-legend">
+                        <span class="legend-open">営業時間</span>
+                        <span class="legend-staffed">スタッフ有人時間帯</span>
+                    </div>
+                </div>
             </div>
         </section>
 
