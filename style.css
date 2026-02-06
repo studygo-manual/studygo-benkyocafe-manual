@@ -593,12 +593,24 @@ footer .update-date {
 }
 
 .hours-scale {
-    display: flex;
-    justify-content: space-between;
+    position: relative;
+    height: 18px;
     font-size: 0.75rem;
     color: var(--text-light);
     margin-bottom: 3px;
-    padding: 0 2px;
+}
+
+.hours-scale span {
+    position: absolute;
+    transform: translateX(-50%);
+}
+
+.hours-scale span:first-child {
+    transform: translateX(0);
+}
+
+.hours-scale span:last-child {
+    transform: translateX(-100%);
 }
 
 .hours-bar {
