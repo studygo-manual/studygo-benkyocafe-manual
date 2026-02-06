@@ -100,6 +100,29 @@ header .subtitle {
     padding: 0 15px;
 }
 
+/* 検索ボックス */
+.search-box {
+    margin-bottom: 15px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.search-box input:focus {
+    border-color: var(--primary-color);
+}
+
+.search-box input::placeholder {
+    color: #999;
+}
+
 .nav-section h3 {
     font-size: 0.9rem;
     color: var(--text-light);
@@ -173,6 +196,15 @@ main {
     margin-top: 70px;
     padding: 30px 40px;
     max-width: calc(1200px + var(--sidebar-width));
+}
+
+/* アコーディオン（折りたたみ）セクション */
+section.collapsed {
+    display: none;
+}
+
+section:not(.collapsed) {
+    animation: fadeIn 0.3s ease;
 }
 
 /* セクション */

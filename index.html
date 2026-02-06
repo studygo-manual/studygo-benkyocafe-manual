@@ -19,13 +19,17 @@
 
     <nav id="sidebar">
         <div class="nav-section">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="検索...">
+            </div>
             <h3>目次</h3>
-            <ul>
-                <li><a href="#overview">サービス概要</a></li>
-                <li><a href="#cafe-rules">勉強カフェ手続きについて</a></li>
-                <li><a href="#workflow">対応フロー</a></li>
+            <ul id="navList">
+                <li><a href="#cafe-info" data-section="cafe-info">勉強カフェ</a></li>
+                <li><a href="#overview" data-section="overview">サービス概要</a></li>
+                <li><a href="#cafe-rules" data-section="cafe-rules">勉強カフェ手続きについて</a></li>
+                <li><a href="#workflow" data-section="workflow">対応フロー</a></li>
                 <li>
-                    <a href="#login">管理画面</a>
+                    <a href="#login" data-section="login">管理画面</a>
                     <ul class="sub-menu">
                         <li><a href="#login-url">管理画面URL</a></li>
                         <li><a href="#login-id">ログインID</a></li>
@@ -35,38 +39,28 @@
                         <li><a href="#notification">通知について</a></li>
                     </ul>
                 </li>
-                <li><a href="#checkin">チェックイン・アウト</a></li>
-                <li><a href="#dropin">ドロップイン利用</a></li>
-                <li><a href="#reservation">見学予約対応</a></li>
-                <li><a href="#contract">契約時の対応</a></li>
-                <li><a href="#cancel">解約時の対応</a></li>
-                <li><a href="#option">オプションについて</a></li>
-                <li><a href="#facility-rules">利用ルール</a></li>
-                <li><a href="#telbooth">テルブース</a></li>
-                <li><a href="#settings">各種設定</a></li>
-                <li><a href="#trouble">トラブル対応</a></li>
-                <li><a href="#rules">注意事項</a></li>
+                <li><a href="#checkin" data-section="checkin">チェックイン・アウト</a></li>
+                <li><a href="#dropin" data-section="dropin">ドロップイン利用</a></li>
+                <li><a href="#reservation" data-section="reservation">見学予約対応</a></li>
+                <li><a href="#contract" data-section="contract">契約時の対応</a></li>
+                <li><a href="#cancel" data-section="cancel">解約時の対応</a></li>
+                <li><a href="#option" data-section="option">オプションについて</a></li>
+                <li><a href="#facility-rules" data-section="facility-rules">利用ルール</a></li>
+                <li><a href="#telbooth" data-section="telbooth">テルブース</a></li>
+                <li><a href="#settings" data-section="settings">各種設定</a></li>
+                <li><a href="#trouble" data-section="trouble">トラブル対応</a></li>
+                <li><a href="#rules" data-section="rules">注意事項</a></li>
             </ul>
         </div>
     </nav>
 
     <main>
-        <!-- サービス概要 -->
-        <section id="overview">
-            <h2>サービス概要</h2>
+        <!-- 勉強カフェ -->
+        <section id="cafe-info" class="accordion-section">
+            <h2 class="section-header">勉強カフェ</h2>
+            <div class="section-content">
             <div class="card">
-                <h3>ユーザーがアプリで出来ること</h3>
-                <ul>
-                    <li>見学予約</li>
-                    <li>支払い（月額プラン、ドロップイン、オプション）</li>
-                    <li>チェックイン・チェックアウトとAkerunの開錠</li>
-                    <li>メッセージ</li>
-                    <li>支払い情報・会員情報の変更</li>
-                    <li>他施設の利用、勉強場所の探索</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>勉強カフェ 営業時間</h3>
+                <h3>営業時間</h3>
                 <div class="hours-visual">
                     <div class="hours-visual-header">
                         <span class="header-label">スタッフ滞在時間</span>
@@ -181,6 +175,25 @@
                 <h3>遺失物・拾得物について</h3>
                 <p>店内保管期間：<strong>2週間</strong></p>
                 <p>期限を過ぎたものは処分いたします。</p>
+            </div>
+            </div>
+        </section>
+
+        <!-- サービス概要 -->
+        <section id="overview" class="accordion-section">
+            <h2 class="section-header">サービス概要</h2>
+            <div class="section-content">
+            <div class="card">
+                <h3>ユーザーがアプリで出来ること</h3>
+                <ul>
+                    <li>見学予約</li>
+                    <li>支払い（月額プラン、ドロップイン、オプション）</li>
+                    <li>チェックイン・チェックアウトとAkerunの開錠</li>
+                    <li>メッセージ</li>
+                    <li>支払い情報・会員情報の変更</li>
+                    <li>他施設の利用、勉強場所の探索</li>
+                </ul>
+            </div>
             </div>
         </section>
 
@@ -1027,43 +1040,114 @@
         // 最終更新日を表示
         document.getElementById('lastUpdate').textContent = new Date().toLocaleDateString('ja-JP');
 
-        // スムーズスクロール
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+        // セクション管理
+        const sections = document.querySelectorAll('main > section');
+        const navLinks = document.querySelectorAll('#sidebar a[data-section]');
+        let activeSection = null;
+
+        // 初期状態：全セクションを非表示
+        sections.forEach(section => {
+            section.classList.add('collapsed');
+        });
+
+        // 目次クリックでセクションを開く
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                const sectionId = this.getAttribute('data-section');
+                const targetSection = document.getElementById(sectionId);
+
+                if (targetSection) {
+                    // 全てのセクションを非表示
+                    sections.forEach(s => s.classList.add('collapsed'));
+
+                    // クリックしたセクションを表示
+                    targetSection.classList.remove('collapsed');
+                    activeSection = sectionId;
+
+                    // アクティブリンクを更新
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // スクロール
+                    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
         });
 
-        // 現在表示中のセクションをハイライト
-        const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('#sidebar a');
+        // サブメニューのリンク（セクション内のカードへジャンプ）
+        document.querySelectorAll('#sidebar .sub-menu a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const target = document.getElementById(targetId);
+                const parentSection = target ? target.closest('section') : null;
 
+                if (parentSection) {
+                    // 親セクションを表示
+                    sections.forEach(s => s.classList.add('collapsed'));
+                    parentSection.classList.remove('collapsed');
+
+                    // ターゲットにスクロール
+                    setTimeout(() => {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 100);
+                }
+            });
+        });
+
+        // 検索機能
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+
+            if (query === '') {
+                // 検索クリア時は全セクションを非表示に戻す
+                sections.forEach(section => {
+                    section.classList.add('collapsed');
+                    section.querySelectorAll('.search-highlight').forEach(el => {
+                        el.classList.remove('search-highlight');
+                    });
+                });
+                return;
+            }
+
+            // 検索実行
+            sections.forEach(section => {
+                const text = section.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    section.classList.remove('collapsed');
+                    // ハイライト用のクラスを追加（シンプルに表示のみ）
+                } else {
+                    section.classList.add('collapsed');
+                }
+            });
+        });
+
+        // スクロール時のアクティブリンク更新
         window.addEventListener('scroll', () => {
             let current = '';
-            const scrollPos = scrollY + 80;
+            const scrollPos = scrollY + 100;
 
             sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionBottom = sectionTop + section.offsetHeight;
+                if (!section.classList.contains('collapsed')) {
+                    const sectionTop = section.offsetTop;
+                    const sectionBottom = sectionTop + section.offsetHeight;
 
-                if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
-                    current = section.getAttribute('id');
+                    if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
+                        current = section.getAttribute('id');
+                    }
                 }
             });
 
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + current) {
-                    link.classList.add('active');
-                }
-            });
+            if (current) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-section') === current) {
+                        link.classList.add('active');
+                    }
+                });
+            }
         });
     </script>
 </body>
