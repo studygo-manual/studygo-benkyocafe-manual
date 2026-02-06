@@ -668,3 +668,108 @@ footer .update-date {
 .legend-staffed::before {
     background: var(--primary-color);
 }
+
+/* 営業時間ブロック表示 */
+.hours-blocks-chart {
+    margin-top: 15px;
+}
+
+.hours-blocks-row {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.hours-blocks-label {
+    width: 50px;
+    font-weight: bold;
+    color: var(--text-color);
+    padding-top: 5px;
+}
+
+.hours-blocks-container {
+    flex: 1;
+    min-width: 200px;
+}
+
+.hours-blocks {
+    display: flex;
+    gap: 1px;
+}
+
+.hours-blocks .block {
+    flex: 1;
+    height: 24px;
+    border-radius: 2px;
+    min-width: 8px;
+}
+
+.hours-blocks .block.closed {
+    background: #e0e0e0;
+}
+
+.hours-blocks .block.unmanned {
+    background: var(--primary-light);
+    background-image: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 2px,
+        rgba(255,255,255,0.5) 2px,
+        rgba(255,255,255,0.5) 4px
+    );
+}
+
+.hours-blocks .block.staffed {
+    background: var(--primary-color);
+}
+
+.hours-blocks-scale {
+    position: relative;
+    height: 20px;
+    margin-top: 5px;
+    font-size: 0.75rem;
+    color: var(--text-light);
+}
+
+.hours-blocks-scale span {
+    position: absolute;
+    transform: translateX(-50%);
+}
+
+.hours-blocks-scale span:last-child {
+    transform: translateX(-100%);
+}
+
+.hours-blocks-info {
+    width: 100%;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-top: 5px;
+    margin-left: 50px;
+}
+
+.hours-blocks-legend {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+    font-size: 0.85rem;
+}
+
+.legend-unmanned::before {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 12px;
+    margin-right: 5px;
+    border-radius: 2px;
+    vertical-align: middle;
+    background: var(--primary-light);
+    background-image: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 2px,
+        rgba(255,255,255,0.5) 2px,
+        rgba(255,255,255,0.5) 4px
+    );
+}

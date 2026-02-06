@@ -54,66 +54,60 @@
             </div>
             <div class="card">
                 <h3>勉強カフェ 営業時間</h3>
-                <div class="hours-chart">
-                    <!-- 平日: 6:00-23:00 (17時間) -->
-                    <div class="hours-row">
-                        <div class="hours-label">平日</div>
-                        <div class="hours-bar-container">
-                            <div class="hours-scale">
-                                <span style="left: 0%;">6</span>
-                                <span style="left: 23.5%;">10</span>
-                                <span style="left: 35.3%;">12</span>
-                                <span style="left: 64.7%;">17</span>
-                                <span style="left: 88.2%;">21</span>
-                                <span style="left: 94.1%;">22</span>
+                <div class="hours-blocks-chart">
+                    <!-- 平日: 23ブロック (1-23時)、営業6-23、有人17-21 -->
+                    <div class="hours-blocks-row">
+                        <div class="hours-blocks-label">平日</div>
+                        <div class="hours-blocks-container">
+                            <div class="hours-blocks" data-total="23">
+                                <div class="block closed"></div><div class="block closed"></div><div class="block closed"></div><div class="block closed"></div><div class="block closed"></div><div class="block unmanned"></div><div class="block unmanned"></div><div class="block unmanned"></div><div class="block unmanned"></div><div class="block unmanned"></div><div class="block unmanned"></div><div class="block unmanned"></div><div class="block unmanned"></div><div class="block unmanned"></div><div class="block unmanned"></div><div class="block unmanned"></div><div class="block staffed"></div><div class="block staffed"></div><div class="block staffed"></div><div class="block staffed"></div><div class="block unmanned"></div><div class="block unmanned"></div><div class="block unmanned"></div>
+                            </div>
+                            <div class="hours-blocks-scale">
+                                <span style="left: calc(6/23 * 100%);">6</span>
+                                <span style="left: calc(12/23 * 100%);">12</span>
+                                <span style="left: calc(17/23 * 100%);">17</span>
+                                <span style="left: calc(21/23 * 100%);">21</span>
+                                <span style="left: calc(22/23 * 100%);">22</span>
                                 <span style="left: 100%;">23</span>
                             </div>
-                            <div class="hours-bar">
-                                <div class="bar-open" style="left: 0%; width: 100%;"></div>
-                                <div class="bar-staffed" style="left: 64.7%; width: 23.5%;"></div>
-                            </div>
-                            <div class="hours-time">6:00〜23:00（有人: 17:00〜21:00）</div>
                         </div>
+                        <div class="hours-blocks-info">6:00〜23:00（有人: 17:00〜21:00）</div>
                     </div>
-                    <!-- 土曜: 6:00-22:00 (16時間) -->
-                    <div class="hours-row">
-                        <div class="hours-label">土曜</div>
-                        <div class="hours-bar-container">
-                            <div class="hours-scale">
-                                <span style="left: 0%;">6</span>
-                                <span style="left: 25%;">10</span>
-                                <span style="left: 37.5%;">12</span>
-                                <span style="left: 68.75%;">17</span>
-                                <span style="left: 93.75%;">21</span>
+                    <!-- 土曜: 22ブロック (1-22時)、営業6-22、有人12-21 -->
+                    <div class="hours-blocks-row">
+                        <div class="hours-blocks-label">土曜</div>
+                        <div class="hours-blocks-container">
+                            <div class="hours-blocks" data-total="22">
+                                <div class="block closed"></div><div class="block closed"></div><div class="block closed"></div><div class="block closed"></div><div class="block closed"></div><div class="block unmanned"></div><div class="block unmanned"></div><div class="block unmanned"></div><div class="block unmanned"></div><div class="block unmanned"></div><div class="block unmanned"></div><div class="block staffed"></div><div class="block staffed"></div><div class="block staffed"></div><div class="block staffed"></div><div class="block staffed"></div><div class="block staffed"></div><div class="block staffed"></div><div class="block staffed"></div><div class="block staffed"></div><div class="block unmanned"></div><div class="block unmanned"></div>
+                            </div>
+                            <div class="hours-blocks-scale">
+                                <span style="left: calc(6/22 * 100%);">6</span>
+                                <span style="left: calc(12/22 * 100%);">12</span>
+                                <span style="left: calc(17/22 * 100%);">17</span>
+                                <span style="left: calc(21/22 * 100%);">21</span>
                                 <span style="left: 100%;">22</span>
                             </div>
-                            <div class="hours-bar">
-                                <div class="bar-open" style="left: 0%; width: 100%;"></div>
-                                <div class="bar-staffed" style="left: 37.5%; width: 56.25%;"></div>
-                            </div>
-                            <div class="hours-time">6:00〜22:00（有人: 12:00〜21:00）</div>
                         </div>
+                        <div class="hours-blocks-info">6:00〜22:00（有人: 12:00〜21:00）</div>
                     </div>
-                    <!-- 日祝: 6:00-21:00 (15時間) -->
-                    <div class="hours-row">
-                        <div class="hours-label">日祝</div>
-                        <div class="hours-bar-container">
-                            <div class="hours-scale">
-                                <span style="left: 0%;">6</span>
-                                <span style="left: 26.7%;">10</span>
-                                <span style="left: 40%;">12</span>
-                                <span style="left: 73.3%;">17</span>
+                    <!-- 日祝: 21ブロック (1-21時)、営業6-21、有人12-21 -->
+                    <div class="hours-blocks-row">
+                        <div class="hours-blocks-label">日祝</div>
+                        <div class="hours-blocks-container">
+                            <div class="hours-blocks" data-total="21">
+                                <div class="block closed"></div><div class="block closed"></div><div class="block closed"></div><div class="block closed"></div><div class="block closed"></div><div class="block unmanned"></div><div class="block unmanned"></div><div class="block unmanned"></div><div class="block unmanned"></div><div class="block unmanned"></div><div class="block unmanned"></div><div class="block staffed"></div><div class="block staffed"></div><div class="block staffed"></div><div class="block staffed"></div><div class="block staffed"></div><div class="block staffed"></div><div class="block staffed"></div><div class="block staffed"></div><div class="block staffed"></div><div class="block staffed"></div>
+                            </div>
+                            <div class="hours-blocks-scale">
+                                <span style="left: calc(6/21 * 100%);">6</span>
+                                <span style="left: calc(12/21 * 100%);">12</span>
+                                <span style="left: calc(17/21 * 100%);">17</span>
                                 <span style="left: 100%;">21</span>
                             </div>
-                            <div class="hours-bar">
-                                <div class="bar-open" style="left: 0%; width: 100%;"></div>
-                                <div class="bar-staffed" style="left: 40%; width: 60%;"></div>
-                            </div>
-                            <div class="hours-time">6:00〜21:00（有人: 12:00〜21:00）</div>
                         </div>
+                        <div class="hours-blocks-info">6:00〜21:00（有人: 12:00〜21:00）</div>
                     </div>
-                    <div class="hours-legend">
-                        <span class="legend-open">営業時間</span>
+                    <div class="hours-blocks-legend">
+                        <span class="legend-unmanned">無人営業時間</span>
                         <span class="legend-staffed">スタッフ有人時間帯</span>
                     </div>
                 </div>
@@ -196,23 +190,24 @@
                 <h3>店頭受付が必要な手続き</h3>
                 <div class="plan-grid">
                     <div class="plan-item">
-                        <h4>休会・退会</h4>
-                        <p>休会・プラン解約</p>
+                        <h4>プラン解約（退会）</h4>
+                        <p>店頭での手続きが必要です</p>
+                        <p class="note">※詳細は「解約時の対応」を参照</p>
                     </div>
                     <div class="plan-item">
-                        <h4>オプション追加・解約</h4>
-                        <p>ロッカー(小)(大)</p>
+                        <h4>オプション契約（新規）</h4>
+                        <p>ロッカー(小)(大)の新規契約</p>
                     </div>
-                </div>
-                <div class="warning" style="margin-top: 15px;">
-                    <p><strong>【注意事項】</strong></p>
-                    <p>プラン・オプションともに、解約完了には<strong>店頭での手続きが必要</strong>となります。確認事項があるため、<strong>必ずご来店</strong>をお願いいたします。</p>
                 </div>
             </div>
 
             <div class="card">
-                <h3>再開・プラン変更</h3>
-                <p>スタディGOアプリ マイページ【プランを解約・変更する】から<strong>会員様ご自身</strong>で手続き可能</p>
+                <h3>アプリで手続き可能（店頭不要）</h3>
+                <ul>
+                    <li><strong>休会</strong> - アプリで申請可能</li>
+                    <li><strong>ロッカー解約</strong> - アプリで解約可能</li>
+                    <li><strong>再開・プラン変更</strong> - マイページ【プランを解約・変更する】から手続き可能</li>
+                </ul>
             </div>
 
             <div class="card">
