@@ -40,7 +40,7 @@ body {
 header {
     background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
     color: white;
-    padding: 30px 20px;
+    padding: 12px 20px;
     position: fixed;
     top: 0;
     left: 0;
@@ -56,23 +56,23 @@ header {
 }
 
 header h1 {
-    font-size: 1.8rem;
+    font-size: 1.2rem;
     font-weight: bold;
 }
 
 header .subtitle {
-    font-size: 1rem;
+    font-size: 0.85rem;
     opacity: 0.9;
-    margin-top: 5px;
+    margin-top: 2px;
 }
 
 /* サイドバー */
 #sidebar {
     position: fixed;
-    top: 100px;
+    top: 55px;
     left: 0;
     width: var(--sidebar-width);
-    height: calc(100vh - 100px);
+    height: calc(100vh - 55px);
     background: var(--card-bg);
     border-right: 1px solid var(--border-color);
     overflow-y: auto;
@@ -125,7 +125,7 @@ header .subtitle {
 /* メインコンテンツ */
 main {
     margin-left: var(--sidebar-width);
-    margin-top: 100px;
+    margin-top: 55px;
     padding: 30px 40px;
     max-width: calc(1200px + var(--sidebar-width));
 }
@@ -133,7 +133,7 @@ main {
 /* セクション */
 section {
     margin-bottom: 50px;
-    scroll-margin-top: 120px;
+    scroll-margin-top: 70px;
 }
 
 section h2 {
