@@ -3021,6 +3021,12 @@
                     link.classList.remove('active');
                     if (link.getAttribute('data-section') === current) {
                         link.classList.add('active');
+                        // スクロール時にサブメニューが閉じていたら自動で開く
+                        const subMenu = link.parentElement.querySelector('.sub-menu');
+                        if (subMenu && !subMenu.classList.contains('open')) {
+                            document.querySelectorAll('#navList .sub-menu').forEach(sm => sm.classList.remove('open'));
+                            subMenu.classList.add('open');
+                        }
                     }
                 });
 
