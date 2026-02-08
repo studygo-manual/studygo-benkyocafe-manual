@@ -105,7 +105,7 @@
                             <span class="quick-link-icon">&#128176;</span>
                             <span>料金</span>
                         </a>
-                        <a href="#" class="quick-link-item" data-quick-section="admin-panel" data-quick-h3="管理画面URL">
+                        <a href="#" class="quick-link-item" data-quick-section="admin-panel" data-quick-h3="ダッシュボード">
                             <span class="quick-link-icon">&#128187;</span>
                             <span>管理画面ログイン</span>
                         </a>
@@ -1426,12 +1426,12 @@
         <!-- スタディGO > 管理画面操作方法 -->
         <section id="admin-panel" data-category="studygo">
             <h2>管理画面操作方法</h2>
-            <div class="card" id="login-url">
-                <h3>管理画面URL</h3>
+
+            <!-- ① ダッシュボード（URL・ID・通知を統合） -->
+            <div class="card" id="dashboard">
+                <h3>ダッシュボード</h3>
+                <h4>管理画面ログイン</h4>
                 <p><a href="https://dashboard.studygo.jp/alliance/login" target="_blank">https://dashboard.studygo.jp/alliance/login</a></p>
-            </div>
-            <div class="card" id="login-id">
-                <h3>ログインID</h3>
                 <table class="info-table">
                     <tr>
                         <th>勉強カフェ新宿スタジオ</th>
@@ -1451,30 +1451,54 @@
                 <div class="tips">
                     <p>2段階認証で、メールアドレスに送られてくる6桁の番号を入力して、ログインしてください。</p>
                 </div>
-            </div>
-            <div class="card" id="dashboard">
-                <h3>ダッシュボード</h3>
-                <p>以下の内容がわかります：</p>
+
+                <h4>ダッシュボード画面の見方</h4>
+                <p>ログイン後のトップ画面（ダッシュボード）で以下の内容が確認できます：</p>
                 <ul>
-                    <li>未返信のメッセージがあるお客様</li>
-                    <li>新規契約したお客様</li>
-                    <li>解約予定のお客様</li>
+                    <li><strong>未返信のメッセージがあるお客様</strong> ー 「メッセージへ」からやり取り可能</li>
+                    <li><strong>新規契約したお客様</strong> ー 店外契約の場合は来店手続きの連絡が必要</li>
+                    <li><strong>解約予定のお客様</strong> ー ロッカー撤去や鍵回収の確認</li>
                 </ul>
-                <p>「メッセージへ」からお客様とやり取りができます。</p>
                 <div class="warning">
                     <p><strong>※「確認済み」は押さないようにしてください!!</strong></p>
                 </div>
+
+                <h4>通知について</h4>
+                <p>下記内容の通知がスタジオのメールアドレスに届きます：</p>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <h4>メッセージ通知</h4>
+                        <p>会員様からのメッセージが届いた際に通知</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>契約通知</h4>
+                        <p>新規契約・プラン変更があった際に通知</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>解約通知</h4>
+                        <p>解約申請があった際に通知</p>
+                    </div>
+                </div>
             </div>
-            <div class="card" id="checkin-history">
-                <h3>チェックイン実績</h3>
-                <p>期間を選択することで、チェックインの履歴を調べることができます。</p>
-            </div>
+
+            <!-- ② 会員管理 -->
             <div class="card" id="member-management">
                 <h3>会員管理</h3>
-                <p>一番右のテキストマーク📓を押すと会員情報が見れます。</p>
-                <p>以下が記載されています：</p>
+                <p>会員一覧から各会員の詳細情報を確認できます。</p>
+                <h4>会員情報の確認方法</h4>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <h4>1. 会員一覧</h4>
+                        <p>「会員管理」メニューを開く</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>2. 詳細表示</h4>
+                        <p>一番右のテキストマーク📓を押す</p>
+                    </div>
+                </div>
+                <h4>確認できる情報</h4>
                 <ul>
-                    <li>ID</li>
+                    <li>ID（会員番号）</li>
                     <li>氏名</li>
                     <li>メールアドレス</li>
                     <li>電話番号</li>
@@ -1485,15 +1509,143 @@
                 <div class="tips">
                     <p>チャットワーク【入会情報】新宿S・BPスタジオ で報告する際は、メモの<strong>会員番号</strong>と<strong>氏名</strong>を記載してください。</p>
                 </div>
+                <h4>会員の検索</h4>
+                <p>氏名・メールアドレス・電話番号等で会員を検索できます。契約中・解約済みなどのステータスで絞り込みも可能です。</p>
             </div>
-            <div class="card" id="notification">
-                <h3>通知について</h3>
-                <p>下記内容の通知がスタジオのメールアドレスに届きます：</p>
-                <ol>
-                    <li>会員様からのメッセージ</li>
-                    <li>契約通知</li>
-                    <li>解約通知</li>
-                </ol>
+
+            <!-- ③ 店舗管理 -->
+            <div class="card" id="store-management">
+                <h3>店舗管理</h3>
+                <p>店舗の基本設定や料金プランの管理を行う画面です。</p>
+                <h4>主な設定項目</h4>
+                <table class="info-table">
+                    <tr>
+                        <th>最短利用開始日</th>
+                        <td>
+                            通常は<strong>1日</strong>に設定。即日入会の場合のみ<strong>0日</strong>に一時変更し、契約完了後に<strong>必ず元に戻す</strong>
+                            <p class="warning-text">※設定の戻し忘れに注意してください</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>店舗コード</th>
+                        <td>QR読取エラー時にユーザーが手入力するコード（非推奨の代替手段）</td>
+                    </tr>
+                    <tr>
+                        <th>プラン設定</th>
+                        <td>月額プラン・ドロップインプランの料金や条件の確認</td>
+                    </tr>
+                    <tr>
+                        <th>鍵（Akerun）設定</th>
+                        <td>Akerunの鍵付与時間帯の管理</td>
+                    </tr>
+                </table>
+                <div class="warning">
+                    <p><strong>注意：</strong>店舗管理の設定変更は影響範囲が大きいため、変更が必要な場合は運営に確認してから行ってください。</p>
+                </div>
+            </div>
+
+            <!-- ④ チェックイン実績 -->
+            <div class="card" id="checkin-history">
+                <h3>チェックイン実績</h3>
+                <p>期間を選択することで、チェックインの履歴を調べることができます。</p>
+                <h4>確認方法</h4>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <h4>1. 画面を開く</h4>
+                        <p>「チェックイン実績」メニューを開く</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>2. 店舗選択</h4>
+                        <p>対象の店舗で絞り込み</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>3. 期間指定</h4>
+                        <p>日付で範囲を指定して検索</p>
+                    </div>
+                </div>
+                <h4>チェックイン実績で確認できること</h4>
+                <ul>
+                    <li>チェックイン・チェックアウト日時</li>
+                    <li>利用時間</li>
+                    <li>精算情報</li>
+                </ul>
+                <p class="note">チェックアウト後は明細確認可能、チェックアウト前は時間編集可能です。</p>
+            </div>
+
+            <!-- ⑤ 来店予約一覧（見学予約） -->
+            <div class="card" id="visit-reservation">
+                <h3>来店予約一覧</h3>
+                <p>見学予約の管理を行う画面です。ユーザーがアプリから見学予約を行うと、この一覧に表示されます。</p>
+                <h4>予約ステータスの管理</h4>
+                <table class="info-table">
+                    <tr>
+                        <th>予約確定</th>
+                        <td>見学対応が可能な場合に設定</td>
+                    </tr>
+                    <tr>
+                        <th>仮予約</th>
+                        <td>対応可否が不明な場合に一時的に設定</td>
+                    </tr>
+                    <tr>
+                        <th>見学実施</th>
+                        <td>予約日時に来店があった場合に設定</td>
+                    </tr>
+                    <tr>
+                        <th>見学キャンセル</th>
+                        <td>予約日時に来店がなかった場合に設定</td>
+                    </tr>
+                </table>
+                <p class="note">ステータス変更後、一覧から非表示になりアーカイブされます。</p>
+            </div>
+
+            <!-- ⑥ 営業日・営業時間管理 -->
+            <div class="card" id="business-hours-management">
+                <h3>営業日・営業時間管理</h3>
+                <p>営業日や営業時間の変更を管理する画面です。</p>
+                <h4>主な操作</h4>
+                <table class="info-table">
+                    <tr>
+                        <th>臨時休業</th>
+                        <td>年末年始やビル点検など、臨時で休業する日を設定</td>
+                    </tr>
+                    <tr>
+                        <th>営業時間変更</th>
+                        <td>特定の日の営業時間を変更する場合に設定</td>
+                    </tr>
+                </table>
+                <div class="tips">
+                    <p>営業時間の変更は店内掲示・Lステップ等にてご案内いたします。管理画面での設定変更が必要な場合は運営に確認してください。</p>
+                </div>
+            </div>
+
+            <!-- メール・メッセージ -->
+            <div class="card" id="email-message">
+                <h3>メール・メッセージ</h3>
+                <p>ユーザーへのメールやメッセージの送受信内容を確認・管理できます。</p>
+                <h4>メッセージ（アプリ内）</h4>
+                <ul>
+                    <li>ダッシュボードの「メッセージへ」またはメニューの「メッセージ」から確認</li>
+                    <li>見学予約時のやり取り、店外契約時の来店案内に利用</li>
+                    <li>ユーザーからのメッセージがあるとメール通知が届く</li>
+                </ul>
+                <h4>メール通知</h4>
+                <ul>
+                    <li>契約・解約・メッセージの通知がスタジオのメールアドレスに届く</li>
+                    <li>新宿スタジオ：benkyocafe.shinjuku@gmail.com</li>
+                    <li>BPスタジオ：benkyo-cafe.sbp@b-pt.jp</li>
+                </ul>
+                <h4>メッセージの利用場面</h4>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <h4>見学予約対応</h4>
+                        <p>見学予約が入った際の確認連絡やリスケ対応</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>店外契約対応</h4>
+                        <p>店外で契約したユーザーへの来店案内・手続き連絡</p>
+                    </div>
+                </div>
+                <p class="note">※Lステップとの併用（スタディGOユーザー用の自動応答を設置）も可能です。</p>
             </div>
         </section>
 
