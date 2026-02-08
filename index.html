@@ -10,7 +10,7 @@
     <header>
         <div class="header-content">
             <button class="menu-toggle" id="menuToggle" aria-label="メニューを開く">&#9776;</button>
-            <img src="logo.png" alt="スタディGO" class="header-logo">
+            <div class="header-logo-placeholder" aria-label="スタディGO">StudyGO</div>
             <h1>スタッフマニュアル<span class="subtitle">～勉強カフェ～</span></h1>
             <div class="header-guide">
                 左の目次から項目を選択、または検索してご覧ください
@@ -41,6 +41,8 @@
             <span id="contextCategory" class="context-category"></span>
             <span class="context-separator">›</span>
             <span id="contextSection" class="context-section"></span>
+            <span id="contextH3Sep" class="context-separator" style="display:none;">›</span>
+            <span id="contextH3" class="context-h3" style="display:none;"></span>
         </div>
         <!-- よく見られている項目 & よく検索されている項目（初期表示・メイン） -->
         <section id="quick-access" class="usage-guide-section quick-access-section">
@@ -600,7 +602,7 @@
             <h2>ホームページ</h2>
             <div class="card">
                 <h3>概要</h3>
-                <p>このセクションの内容は準備中です。勉強カフェのホームページに関する情報が追加される予定です。</p>
+                <p class="preparing-notice">情報が入り次第、更新されます。</p>
             </div>
         </section>
 
@@ -630,7 +632,7 @@
             <div class="card">
                 <h3>BPアプリとは</h3>
                 <p>スタディGO導入以前に勉強カフェで使用していた旧システムです。</p>
-                <p>このセクションの詳細は準備中です。内容が決まり次第追加されます。</p>
+                <p class="preparing-notice">情報が入り次第、更新されます。</p>
             </div>
         </section>
 
@@ -640,7 +642,7 @@
             <h2>予約経路</h2>
             <div class="card">
                 <h3>概要</h3>
-                <p>このセクションの内容は準備中です。勉強カフェへの予約経路に関する情報が追加される予定です。</p>
+                <p class="preparing-notice">情報が入り次第、更新されます。</p>
             </div>
         </section>
 
@@ -678,7 +680,7 @@
 
             <div class="card" id="printer">
                 <h3>印刷機</h3>
-                <p>このセクションの内容は準備中です。内容が決まり次第追加されます。</p>
+                <p class="preparing-notice">情報が入り次第、更新されます。</p>
             </div>
 
             <div class="card">
@@ -696,7 +698,7 @@
             <h2>連絡方法</h2>
             <div class="card">
                 <h3>概要</h3>
-                <p>このセクションの内容は準備中です。内容が決まり次第追加されます。</p>
+                <p class="preparing-notice">情報が入り次第、更新されます。</p>
             </div>
             <div class="card">
                 <h3>緊急連絡先</h3>
@@ -889,11 +891,11 @@
                 <p>下記のQRコードをスマートフォンで読み取ると、各ストアのダウンロードページに移動します。</p>
                 <div class="qr-download-grid">
                     <div class="qr-download-item qr-ios">
-                        <img src="qr-ios.png" alt="App Store QRコード" class="qr-code-img">
+                        <div class="img-placeholder" data-img="qr-ios.png">QRコード（iOS）</div>
                         <p class="qr-label">iOS（iPhone）</p>
                     </div>
                     <div class="qr-download-item qr-android">
-                        <img src="qr-android.png" alt="Google Play QRコード" class="qr-code-img">
+                        <div class="img-placeholder" data-img="qr-android.png">QRコード（Android）</div>
                         <p class="qr-label">Android</p>
                     </div>
                 </div>
@@ -1250,8 +1252,8 @@
                         <div class="step2-screenshots">
                             <p class="screenshot-label">この画面をスタッフに見せてください</p>
                             <div class="screenshot-pair">
-                                <img src="checkin-screen.png" alt="チェックイン完了画面" class="app-screenshot">
-                                <img src="checkin-screen2.png" alt="チェックイン中画面" class="app-screenshot">
+                                <div class="img-placeholder screenshot" data-img="checkin-screen.png">チェックイン完了画面</div>
+                                <div class="img-placeholder screenshot" data-img="checkin-screen2.png">チェックイン中画面</div>
                             </div>
                         </div>
                         <h4>スタッフに提示</h4>
@@ -1679,26 +1681,26 @@
             <div class="card">
                 <h3>概要</h3>
                 <p>会員様がアプリで各手続きを行う際の画面遷移を、操作ごとにわかりやすく解説します。</p>
-                <p>このセクションの内容は準備中です。各操作の画面キャプチャが揃い次第、順次追加されます。</p>
+                <p class="preparing-notice">画面キャプチャが揃い次第、順次追加されます。</p>
             </div>
             <div class="card">
                 <h3>休会の手続き</h3>
-                <p>準備中</p>
+                <p class="preparing-notice">情報が入り次第、更新されます。</p>
                 <div class="tips">
                     <p><strong>休会からの再開には2か月分の決済が必要です。</strong>休会を検討されている会員様にはこの点をお伝えください。</p>
                 </div>
             </div>
             <div class="card">
                 <h3>ロッカー解約</h3>
-                <p>準備中</p>
+                <p class="preparing-notice">情報が入り次第、更新されます。</p>
             </div>
             <div class="card">
                 <h3>再開・プラン変更</h3>
-                <p>準備中</p>
+                <p class="preparing-notice">情報が入り次第、更新されます。</p>
             </div>
             <div class="card">
                 <h3>連絡先・支払い方法の変更</h3>
-                <p>準備中</p>
+                <p class="preparing-notice">情報が入り次第、更新されます。</p>
             </div>
         </section>
 
@@ -2361,7 +2363,10 @@
             <button class="page-nav-btn" id="prevButton" aria-label="戻る">&#8592; 戻る</button>
             <button class="page-nav-btn" id="nextButton" aria-label="次へ">次へ &#8594;</button>
         </div>
-        <button class="page-nav-btn page-nav-section-btn" id="nextSectionButton" aria-label="次のセクションへ">次のセクションへ &#9660;</button>
+        <div class="page-nav-row">
+            <button class="page-nav-btn page-nav-section-btn" id="prevSectionButton" aria-label="前のセクションへ">&#9650; 前のセクションへ</button>
+            <button class="page-nav-btn page-nav-section-btn" id="nextSectionButton" aria-label="次のセクションへ">次のセクションへ &#9660;</button>
+        </div>
     </div>
 
     <footer>
@@ -2407,6 +2412,7 @@
         const pageNav = document.getElementById('pageNav');
         const prevButton = document.getElementById('prevButton');
         const nextButton = document.getElementById('nextButton');
+        const prevSectionButton = document.getElementById('prevSectionButton');
         const nextSectionButton = document.getElementById('nextSectionButton');
 
         // 全セクションのh3を順番にフラットなリストで管理
@@ -2452,6 +2458,7 @@
             pageNav.style.display = 'flex';
             prevButton.disabled = (navHistory.length === 0);
             nextButton.disabled = (navForward.length === 0);
+            prevSectionButton.disabled = (currentNavIndex <= 0);
             nextSectionButton.disabled = (currentNavIndex >= navItems.length - 1);
         }
 
@@ -2546,6 +2553,12 @@
             }
         });
 
+        prevSectionButton.addEventListener('click', function() {
+            if (currentNavIndex > 0) {
+                navigateTo(currentNavIndex - 1);
+            }
+        });
+
         nextSectionButton.addEventListener('click', function() {
             if (currentNavIndex < navItems.length - 1) {
                 navigateTo(currentNavIndex + 1);
@@ -2563,8 +2576,10 @@
         const contextBar = document.getElementById('contextBar');
         const contextCategory = document.getElementById('contextCategory');
         const contextSection = document.getElementById('contextSection');
+        const contextH3 = document.getElementById('contextH3');
+        const contextH3Sep = document.getElementById('contextH3Sep');
 
-        function updateContextBar(sectionId) {
+        function updateContextBar(sectionId, h3Id) {
             if (!sectionId) {
                 contextBar.style.display = 'none';
                 return;
@@ -2582,6 +2597,18 @@
                 contextCategory.style.backgroundColor = cat.color;
                 contextSection.textContent = h2.textContent;
                 contextBar.style.display = 'flex';
+                // h3名の表示
+                if (h3Id) {
+                    const h3El = document.getElementById(h3Id);
+                    if (h3El) {
+                        contextH3.textContent = h3El.textContent;
+                        contextH3.style.display = '';
+                        contextH3Sep.style.display = '';
+                        return;
+                    }
+                }
+                contextH3.style.display = 'none';
+                contextH3Sep.style.display = 'none';
             } else {
                 contextBar.style.display = 'none';
             }
@@ -2877,7 +2904,7 @@
                 const lowerText = text.toLowerCase();
                 const index = lowerText.indexOf(query.toLowerCase());
 
-                if (index !== -1 && node.parentNode.tagName !== 'SCRIPT' && node.parentNode.tagName !== 'STYLE') {
+                if (index !== -1 && node.parentNode.tagName !== 'SCRIPT' && node.parentNode.tagName !== 'STYLE' && !node.parentNode.closest('svg')) {
                     const before = text.substring(0, index);
                     const match = text.substring(index, index + query.length);
                     const after = text.substring(index + query.length);
@@ -3038,6 +3065,9 @@
                     const idx = findNavIndex(current, currentH3);
                     if (idx !== -1) currentNavIndex = idx;
                 }
+
+                // コンテキストバーにh3名も反映
+                updateContextBar(current, currentH3);
             }
         });
     </script>
