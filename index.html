@@ -25,7 +25,10 @@
                 <input type="text" id="searchInput" placeholder="検索...">
                 <button class="search-clear" id="searchClear" aria-label="検索をクリア">&times;</button>
             </div>
-            <h3>目次</h3>
+            <div class="nav-header-row">
+                <h3>目次</h3>
+                <button class="top-btn" id="topButton">TOP画面へ</button>
+            </div>
             <ul id="navList">
                 <!-- JavaScriptで動的に生成 -->
             </ul>
@@ -39,57 +42,9 @@
             <span class="context-separator">›</span>
             <span id="contextSection" class="context-section"></span>
         </div>
-        <!-- 使い方ガイド（初期表示） -->
-        <section id="usage-guide" class="usage-guide-section">
-            <h2>このマニュアルの使い方</h2>
-            <div class="card">
-                <div class="usage-grid">
-                    <div class="usage-item">
-                        <div class="usage-icon">&#128196;</div>
-                        <h4>目次から選択</h4>
-                        <p>左の目次から見たい項目をクリックすると、その項目の内容が表示されます。</p>
-                    </div>
-                    <div class="usage-item">
-                        <div class="usage-icon">&#128269;</div>
-                        <h4>検索で探す</h4>
-                        <p>検索ボックスにキーワードを入力すると、該当する項目が自動的に表示されます。ヒットした箇所は<span style="background-color:#FFCDD2;color:#B71C1C;font-weight:bold;padding:1px 3px;border-radius:3px;border-bottom:2px solid #f44336;">赤色</span>で強調表示されます。</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- よく検索されている項目 & よく見られている項目（初期表示） -->
+        <!-- よく見られている項目 & よく検索されている項目（初期表示・メイン） -->
         <section id="quick-access" class="usage-guide-section quick-access-section">
             <div class="quick-access-grid">
-                <div class="card">
-                    <h3 style="border-left-color: #FF9800; color: #E65100;">よく検索されている項目</h3>
-                    <div class="quick-links" id="popularSearches">
-                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="対応フロー">
-                            <span class="quick-link-icon">&#128203;</span>
-                            <span>対応フロー</span>
-                        </a>
-                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="契約">
-                            <span class="quick-link-icon">&#128221;</span>
-                            <span>契約</span>
-                        </a>
-                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="解約（退会）">
-                            <span class="quick-link-icon">&#128683;</span>
-                            <span>解約（退会）</span>
-                        </a>
-                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="チェックイン・アウト / ドロップイン">
-                            <span class="quick-link-icon">&#128241;</span>
-                            <span>チェックイン・ドロップイン</span>
-                        </a>
-                        <a href="#" class="quick-link-item" data-quick-section="cafe-basic" data-quick-h3="営業時間">
-                            <span class="quick-link-icon">&#128336;</span>
-                            <span>営業時間</span>
-                        </a>
-                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="Akerun（入退室管理）">
-                            <span class="quick-link-icon">&#128274;</span>
-                            <span>Akerun</span>
-                        </a>
-                    </div>
-                </div>
                 <div class="card">
                     <h3 style="border-left-color: #2196F3; color: #0D47A1;">よく見られている項目</h3>
                     <div class="quick-links" id="popularViews">
@@ -119,8 +74,42 @@
                         </a>
                     </div>
                 </div>
+                <div class="card">
+                    <h3 style="border-left-color: #FF9800; color: #E65100;">よく検索されている項目</h3>
+                    <div class="quick-links" id="popularSearches">
+                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="対応フロー">
+                            <span class="quick-link-icon">&#128203;</span>
+                            <span>対応フロー</span>
+                        </a>
+                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="契約">
+                            <span class="quick-link-icon">&#128221;</span>
+                            <span>契約</span>
+                        </a>
+                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="解約">
+                            <span class="quick-link-icon">&#128465;</span>
+                            <span>解約</span>
+                        </a>
+                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="チェックイン・アウト / ドロップイン">
+                            <span class="quick-link-icon">&#9989;</span>
+                            <span>チェックイン</span>
+                        </a>
+                        <a href="#" class="quick-link-item" data-quick-section="cafe-basic" data-quick-h3="営業時間">
+                            <span class="quick-link-icon">&#128336;</span>
+                            <span>営業時間</span>
+                        </a>
+                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="Akerun">
+                            <span class="quick-link-icon">&#128273;</span>
+                            <span>Akerun</span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </section>
+
+        <!-- マニュアルの使い方（シンプル版） -->
+        <div id="usage-guide" class="usage-guide-compact">
+            <p><strong>使い方：</strong>左の目次から項目を選択、または上部の検索バーでキーワード検索できます。</p>
+        </div>
 
         <!-- 勉強カフェ > 基本情報 -->
         <section id="cafe-basic" data-category="cafe">
@@ -2798,6 +2787,26 @@
 
         // h3単位のナビリストを構築
         buildNavItems();
+
+        // TOP画面へボタン
+        document.getElementById('topButton').addEventListener('click', function() {
+            // 全セクションを非表示
+            sections.forEach(s => s.classList.add('collapsed'));
+            activeSection = null;
+            // 使い方ガイドとクイックアクセスを表示
+            if (usageGuide) usageGuide.style.display = '';
+            if (quickAccess) quickAccess.style.display = '';
+            contextBar.style.display = 'none';
+            // サイドバーのアクティブ状態をリセット
+            document.querySelectorAll('.nav-category-list a').forEach(l => l.classList.remove('active'));
+            document.querySelectorAll('#navList .sub-menu a').forEach(l => l.classList.remove('active'));
+            document.querySelectorAll('#navList .sub-menu').forEach(sm => sm.classList.remove('open'));
+            // ページトップにスクロール
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // ページ送りを非表示
+            pageNav.style.display = 'none';
+            closeMobileMenu();
+        });
 
         // クイックアクセスリンク対応
         document.querySelectorAll('.quick-link-item[data-quick-section]').forEach(link => {

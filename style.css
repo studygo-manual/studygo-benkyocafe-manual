@@ -209,6 +209,43 @@ header .subtitle {
     color: #999;
 }
 
+.nav-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.nav-header-row h3 {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.top-btn {
+    background: #7B1FA2;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    white-space: nowrap;
+}
+
+.top-btn:hover {
+    background: #6A1B9A;
+    transform: translateY(-1px);
+}
+
 .nav-section h3 {
     font-size: 0.9rem;
     color: var(--text-light);
@@ -1391,6 +1428,22 @@ footer .update-date {
     .quick-access-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* マニュアルの使い方（コンパクト版） */
+.usage-guide-compact {
+    background: #f8f9fa;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px 20px;
+    margin: 0 20px 20px 20px;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    text-align: center;
+}
+
+.usage-guide-compact p {
+    margin: 0;
 }
 
 /* アニメーション */
