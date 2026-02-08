@@ -245,6 +245,9 @@ header .subtitle {
     background: #f8f9fa;
     transition: all 0.2s;
     user-select: none;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 .nav-category-header:hover {
@@ -292,14 +295,17 @@ header .subtitle {
     transition: all 0.2s ease;
 }
 
+.nav-category-list > li > a.active {
+    position: sticky;
+    top: 40px;
+    z-index: 9;
+    background-color: var(--primary-color);
+    color: white;
+}
+
 .nav-category-list > li > a:hover {
     background-color: var(--primary-light);
     color: var(--primary-dark);
-}
-
-.nav-category-list > li > a.active {
-    background-color: var(--primary-color);
-    color: white;
 }
 
 /* サブメニュー */
@@ -599,21 +605,29 @@ section h2 {
 /* フローステップ */
 .flow-steps {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
     margin-top: 15px;
 }
 
 .flow-step {
     background: #f8f9fa;
-    padding: 15px;
-    border-radius: 8px;
-    border-left: 3px solid var(--primary-color);
+    padding: 14px;
+    border-radius: 10px;
+    border-left: 4px solid var(--primary-color);
+    position: relative;
 }
 
 .flow-step h4 {
     color: var(--primary-dark);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+}
+
+.flow-step p {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--text-light);
 }
 
 /* テーブル */
@@ -1327,6 +1341,56 @@ footer .update-date {
     font-size: 0.9rem;
     color: var(--text-light);
     line-height: 1.6;
+}
+
+/* クイックアクセス（TOP画面） */
+.quick-access-section {
+    margin-top: -10px;
+}
+
+.quick-access-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.quick-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.quick-link-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: #f8f9fa;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.quick-link-item:hover {
+    background: var(--primary-light);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+.quick-link-icon {
+    font-size: 1.2rem;
+}
+
+@media screen and (max-width: 640px) {
+    .quick-access-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* アニメーション */

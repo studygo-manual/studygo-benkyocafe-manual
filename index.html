@@ -58,6 +58,69 @@
             </div>
         </section>
 
+        <!-- よく検索されている項目 & よく見られている項目（初期表示） -->
+        <section id="quick-access" class="usage-guide-section quick-access-section">
+            <div class="quick-access-grid">
+                <div class="card">
+                    <h3 style="border-left-color: #FF9800; color: #E65100;">よく検索されている項目</h3>
+                    <div class="quick-links" id="popularSearches">
+                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="対応フロー">
+                            <span class="quick-link-icon">&#128203;</span>
+                            <span>対応フロー</span>
+                        </a>
+                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="契約">
+                            <span class="quick-link-icon">&#128221;</span>
+                            <span>契約</span>
+                        </a>
+                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="解約（退会）">
+                            <span class="quick-link-icon">&#128683;</span>
+                            <span>解約（退会）</span>
+                        </a>
+                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="チェックイン・アウト / ドロップイン">
+                            <span class="quick-link-icon">&#128241;</span>
+                            <span>チェックイン・ドロップイン</span>
+                        </a>
+                        <a href="#" class="quick-link-item" data-quick-section="cafe-basic" data-quick-h3="営業時間">
+                            <span class="quick-link-icon">&#128336;</span>
+                            <span>営業時間</span>
+                        </a>
+                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="Akerun（入退室管理）">
+                            <span class="quick-link-icon">&#128274;</span>
+                            <span>Akerun</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 style="border-left-color: #2196F3; color: #0D47A1;">よく見られている項目</h3>
+                    <div class="quick-links" id="popularViews">
+                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="見学予約対応">
+                            <span class="quick-link-icon">&#127970;</span>
+                            <span>見学予約対応</span>
+                        </a>
+                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="オプション（ロッカー）">
+                            <span class="quick-link-icon">&#128451;</span>
+                            <span>オプション（ロッカー）</span>
+                        </a>
+                        <a href="#" class="quick-link-item" data-quick-section="cafe-basic" data-quick-h3="料金">
+                            <span class="quick-link-icon">&#128176;</span>
+                            <span>料金</span>
+                        </a>
+                        <a href="#" class="quick-link-item" data-quick-section="admin-panel" data-quick-h3="管理画面URL">
+                            <span class="quick-link-icon">&#128187;</span>
+                            <span>管理画面ログイン</span>
+                        </a>
+                        <a href="#" class="quick-link-item" data-quick-section="cafe-studio-rules" data-quick-h3="スタッフ有人時間帯と無人時間帯の違い">
+                            <span class="quick-link-icon">&#128101;</span>
+                            <span>有人・無人の違い</span>
+                        </a>
+                        <a href="#" class="quick-link-item" data-quick-section="cafe-contact" data-quick-h3="緊急連絡先">
+                            <span class="quick-link-icon">&#128222;</span>
+                            <span>緊急連絡先</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- 勉強カフェ > 基本情報 -->
         <section id="cafe-basic" data-category="cafe">
@@ -931,17 +994,25 @@
             <div class="card">
                 <h3>見学予約対応</h3>
                 <h4>見学予約が入ったら</h4>
-                <ol>
-                    <li>登録の店舗メールアドレスに予約のお知らせが届く</li>
-                    <li>管理画面の「見学予約一覧」で確認</li>
-                    <li>ステータスを変更：
-                        <ul>
-                            <li>◎見学可能の場合 → 即確定</li>
-                            <li>△対応不明の場合 → 仮予約（「予約確定」または「予約キャンセル」に変更）</li>
-                        </ul>
-                    </li>
-                    <li>ユーザーにメッセージを送信（推奨）</li>
-                </ol>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <h4>1. メール通知</h4>
+                        <p>登録の店舗メールアドレスに予約のお知らせが届く</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>2. 管理画面で確認</h4>
+                        <p>管理画面の「見学予約一覧」で確認</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>3. ステータス変更</h4>
+                        <p>◎見学可能 → 即確定<br>△対応不明 → 仮予約</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>4. メッセージ送信</h4>
+                        <p>ユーザーにアプリメッセージを送信（推奨）</p>
+                    </div>
+                </div>
+                <p class="note">※アプリメッセージは見学予約対応や店外契約時のやり取りで利用します。Lステップとの併用も可能です。</p>
                 <h4>見学対応</h4>
                 <ul>
                     <li>通常の見学対応と同じ内容でOK（営業時間や利用ルール等の説明）</li>
@@ -950,11 +1021,16 @@
                 <h4>見学後の契約</h4>
                 <p>気に入っていただけたら「アプリを通じて」契約してもらいます。ユーザーがアプリで完結できるので、店舗側作業はありません。</p>
                 <h4>見学予約日時経過後</h4>
-                <ol>
-                    <li>来店した場合 →「見学実施」</li>
-                    <li>来店しなかった場合 →「見学キャンセル」</li>
-                    <li>ステータス変更後、一覧から非表示になりアーカイブされます</li>
-                </ol>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <h4>1. 来店確認</h4>
+                        <p>来店あり →「見学実施」<br>来店なし →「見学キャンセル」</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>2. ステータス変更</h4>
+                        <p>変更後、一覧から非表示になりアーカイブされます</p>
+                    </div>
+                </div>
             </div>
 
             <div class="card">
@@ -983,12 +1059,24 @@
                 </ul>
                 <h4>店外で契約した場合</h4>
                 <p>その場にいないで契約したユーザー（見学後の後日契約、ドロップインからの転換、アプリからの直接契約）への対応：</p>
-                <ol>
-                    <li>「メール」通知とダッシュボードの「新規契約したお客様」で確認</li>
-                    <li>「メッセージ」またはメールアドレスでユーザーに連絡</li>
-                    <li>初回利用前の所定手続き（ルール説明、利用方法の説明、身分証確認等）が必要な旨を伝える</li>
-                    <li>来店できる日のアポイントメントを取得（利用開始初日以前が推奨）</li>
-                </ol>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <h4>1. 契約確認</h4>
+                        <p>「メール」通知とダッシュボードの「新規契約したお客様」で確認</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>2. ユーザーに連絡</h4>
+                        <p>アプリの「メッセージ」またはメールアドレスで連絡（来店までのやり取りに利用）</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>3. 手続き案内</h4>
+                        <p>初回利用前の所定手続き（ルール説明、利用方法の説明、身分証確認等）が必要な旨を伝える</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>4. アポイント</h4>
+                        <p>来店できる日のアポイントメントを取得（利用開始初日以前が推奨）</p>
+                    </div>
+                </div>
                 <h4>月額プランの仕組み</h4>
                 <table class="info-table">
                     <tr>
@@ -1033,11 +1121,20 @@
                 </div>
                 <p class="note">※休会の手続きはアプリから可能です。詳細は <a href="#app-flow" class="section-link" data-link-section="app-flow">アプリ画面遷移ガイド</a> をご覧ください。</p>
                 <h4>解約時の対応フロー</h4>
-                <ol>
-                    <li>10日までの解約申請で月末での契約終了 → 11日に一覧に解約者が追加</li>
-                    <li>ダッシュボードで解約者を確認</li>
-                    <li>オプション（ロッカー）を契約中の場合、ロッカーの撤去が完了しているか確認。完了済みであればアプリ上でロッカー解約処理を行う</li>
-                </ol>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <h4>1. 解約申請</h4>
+                        <p>10日までの解約申請で月末での契約終了 → 11日に一覧に解約者が追加</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>2. 解約者確認</h4>
+                        <p>ダッシュボードで解約者を確認</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>3. ロッカー確認</h4>
+                        <p>ロッカー契約中の場合、撤去が完了しているか確認。完了済みならアプリ上でロッカー解約処理を行う</p>
+                    </div>
+                </div>
                 <h4>管理画面での操作</h4>
                 <ul>
                     <li>「鍵回収ステータス」で管理（未回収/回収済み）</li>
@@ -1167,17 +1264,32 @@
                 </div>
 
                 <h4>チェックインの流れ</h4>
-                <ol>
-                    <li>ユーザーがアプリでQRコードを読み取る</li>
-                    <li>チェックイン完了画面が表示される（ドロップインの場合はプラン選択後に契約即チェックイン）</li>
-                    <li>必要があれば画面を確認</li>
-                </ol>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <h4>1. QR読取</h4>
+                        <p>ユーザーがアプリでQRコードを読み取る</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>2. チェックイン完了</h4>
+                        <p>チェックイン完了画面が表示（ドロップインはプラン選択後に契約即チェックイン）</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>3. 画面確認</h4>
+                        <p>必要があればスタッフが画面を確認</p>
+                    </div>
+                </div>
                 <p class="note">※QR読取エラー時は店舗コードでもチェックイン可能です（非推奨）</p>
                 <h4>チェックアウトの流れ</h4>
-                <ol>
-                    <li>ユーザーがアプリでQRコードを読み取る</li>
-                    <li>チェックアウト完了・精算画面が表示される</li>
-                </ol>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <h4>1. QR読取</h4>
+                        <p>ユーザーがアプリでQRコードを読み取る</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>2. 精算完了</h4>
+                        <p>チェックアウト完了・精算画面が表示される</p>
+                    </div>
+                </div>
                 <div class="warning">
                     <p><strong>重要：</strong>チェックアウトが行われるまで利用があったものとみなされ、課金対象の場合は課金されます。営業終了時間に強制チェックアウトが行われます。</p>
                 </div>
@@ -1208,10 +1320,16 @@
                 </div>
 
                 <h4>利用履歴の確認方法</h4>
-                <ol>
-                    <li>管理画面の「チェックイン実績」をクリック</li>
-                    <li>店舗で絞り込み → 日付で範囲指定</li>
-                </ol>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <h4>1. チェックイン実績</h4>
+                        <p>管理画面の「チェックイン実績」をクリック</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>2. 絞り込み</h4>
+                        <p>店舗で絞り込み → 日付で範囲指定</p>
+                    </div>
+                </div>
                 <p>チェックアウト後は明細確認可能、チェックアウト前は時間編集可能です。</p>
                 <h4>打刻修正</h4>
                 <p><strong>基本不可</strong>です。お客様から打刻修正の依頼があった場合は、対応できない旨をお伝えください。</p>
@@ -1226,12 +1344,24 @@
                     <li>QRコードは<strong>入口</strong>に設置（既存会員との区別化のため）</li>
                 </ul>
                 <h4>開錠の流れ</h4>
-                <ol>
-                    <li>スタディGOアプリを開く</li>
-                    <li>「チェックイン」からQRコードを読み取る</li>
-                    <li>チェックイン画面を確認</li>
-                    <li>「ドアを開錠しました！」と表示されたら入室可能</li>
-                </ol>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <h4>1. アプリ起動</h4>
+                        <p>スタディGOアプリを開く</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>2. QR読取</h4>
+                        <p>「チェックイン」からQRコードを読み取る</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>3. 画面確認</h4>
+                        <p>チェックイン画面を確認</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>4. 入室</h4>
+                        <p>「ドアを開錠しました！」と表示されたら入室可能</p>
+                    </div>
+                </div>
                 <div class="tips">
                     <p>ご利用時に「チェックイン画面」を確認させていただく場合がございます。ご利用終了後はチェックアウト忘れにご注意ください。</p>
                 </div>
@@ -1240,6 +1370,7 @@
             <div class="card">
                 <h3>オプション（ロッカー）</h3>
                 <p><strong>契約の申請と決済はアプリで出来ます。</strong></p>
+                <p>ロッカーの契約状況は <a href="https://docs.google.com/spreadsheets/d/1PybeQcvBuE0CbBeVCrUNlkIBdC8qjMW-U8NWdnt8PMo/edit?gid=1597720472#gid=1597720472" target="_blank" class="section-link">新宿エリアロッカー契約者管理表</a> で管理しています。どのロッカーを誰が利用しているかを記載してください。</p>
                 <table class="info-table">
                     <tr>
                         <th>契約方法</th>
@@ -1289,14 +1420,6 @@
                 </table>
             </div>
 
-            <div class="card">
-                <h3>アプリメッセージの利用用途</h3>
-                <ul>
-                    <li>店外で契約されたユーザーが店頭来店までのやり取り</li>
-                    <li>見学のやり取り・リスケ</li>
-                </ul>
-                <p class="note">※Lステップとの併用（スタディGOユーザー用の自動応答を設置）</p>
-            </div>
         </section>
 
 
@@ -1360,7 +1483,7 @@
                     <li>勉強内容</li>
                 </ul>
                 <div class="tips">
-                    <p>チャットワーク【入会情報】新宿S・BPスタジオ で報告する際は、こちらの<strong>ID・氏名</strong>を記載してください。</p>
+                    <p>チャットワーク【入会情報】新宿S・BPスタジオ で報告する際は、メモの<strong>会員番号</strong>と<strong>氏名</strong>を記載してください。</p>
                 </div>
             </div>
             <div class="card" id="notification">
@@ -1695,28 +1818,64 @@
             </div>
             <div class="card">
                 <h3>見学対応</h3>
-                <ol>
-                    <li>ご予約の確認（お名前・予約時間）</li>
-                    <li>店内のご案内（各エリアの説明、利用ルール）</li>
-                    <li>プラン・料金の説明</li>
-                    <li>ご質問への対応</li>
-                    <li>入会をご希望の場合はアプリでの契約をご案内</li>
-                </ol>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <h4>1. 予約確認</h4>
+                        <p>お名前・予約時間を確認</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>2. 店内案内</h4>
+                        <p>各エリアの説明、利用ルールをご案内</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>3. プラン説明</h4>
+                        <p>プラン・料金の説明</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>4. 質問対応</h4>
+                        <p>ご質問への対応</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>5. 入会案内</h4>
+                        <p>ご希望の場合はアプリでの契約をご案内</p>
+                    </div>
+                </div>
                 <div class="warning">
                     <p><strong>注意</strong>：スタディGO以外のプランやサービスの紹介・説明はお控えください。</p>
                 </div>
             </div>
             <div class="card">
                 <h3>入会対応</h3>
-                <ol>
-                    <li>アプリのダウンロード・アカウント作成をご案内</li>
-                    <li>アプリでプランを選択・契約</li>
-                    <li>身分証明書の確認（氏名・現住所記載のもの）</li>
-                    <li>施設ルールの読み合わせ</li>
-                    <li>Akerun鍵の付与</li>
-                    <li>緊急連絡先のご案内</li>
-                    <li>チャットワークで入会報告（ID・氏名）</li>
-                </ol>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <h4>1. アプリ案内</h4>
+                        <p>アプリのダウンロード・アカウント作成をご案内</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>2. 契約</h4>
+                        <p>アプリでプランを選択・契約</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>3. 身分証確認</h4>
+                        <p>氏名・現住所記載の身分証明書を確認</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>4. ルール説明</h4>
+                        <p>施設ルールの読み合わせ</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>5. 鍵付与</h4>
+                        <p>Akerun鍵の付与</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>6. 連絡先案内</h4>
+                        <p>緊急連絡先のご案内</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>7. 報告</h4>
+                        <p>チャットワークで入会報告（ID・氏名）</p>
+                    </div>
+                </div>
             </div>
             <div class="card">
                 <h3>よくある質問への回答例</h3>
@@ -1747,41 +1906,98 @@
             <h2>各種手続き対応</h2>
             <div class="card">
                 <h3>入会手続きの流れ</h3>
-                <ol>
-                    <li>見学対応（予約あり/飛び込み）</li>
-                    <li>アプリのダウンロードをご案内</li>
-                    <li>アプリでプラン選択・契約（お客様操作）</li>
-                    <li>即日利用希望の場合は管理画面で最短利用開始日を0日に変更</li>
-                    <li>身分証の確認・コピー</li>
-                    <li>施設ルール説明・同意書</li>
-                    <li>Akerun鍵付与</li>
-                    <li>報告（チャットワーク【入会情報】）</li>
-                </ol>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <h4>1. 見学対応</h4>
+                        <p>予約あり / 飛び込み</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>2. アプリ案内</h4>
+                        <p>ダウンロードをご案内</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>3. 契約</h4>
+                        <p>アプリでプラン選択・契約（お客様操作）</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>4. 即日対応</h4>
+                        <p>即日利用の場合は管理画面で最短利用開始日を0日に変更</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>5. 身分証確認</h4>
+                        <p>身分証の確認・コピー</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>6. ルール説明</h4>
+                        <p>施設ルール説明・同意書</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>7. 鍵付与</h4>
+                        <p>Akerun鍵付与</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>8. 報告</h4>
+                        <p>チャットワーク【入会情報】で報告</p>
+                    </div>
+                </div>
                 <div class="warning">
                     <p>即日入会の場合は、管理画面の最短利用開始日を必ず<strong>元に戻す</strong>こと！</p>
                 </div>
             </div>
             <div class="card">
                 <h3>退会（解約）手続きの流れ</h3>
-                <ol>
-                    <li>退会理由のヒアリング</li>
-                    <li>退会届の記入</li>
-                    <li>ロッカー契約がある場合は荷物撤去・鍵返却の確認</li>
-                    <li>Akerun鍵の削除</li>
-                    <li>物理キーの回収（該当者のみ）</li>
-                    <li>管理画面での処理</li>
-                    <li>報告（チャットワーク）</li>
-                </ol>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <h4>1. ヒアリング</h4>
+                        <p>退会理由のヒアリング</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>2. 退会届</h4>
+                        <p>退会届の記入</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>3. ロッカー確認</h4>
+                        <p>ロッカー契約がある場合は荷物撤去・鍵返却の確認</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>4. 鍵削除</h4>
+                        <p>Akerun鍵の削除</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>5. 物理キー</h4>
+                        <p>物理キーの回収（該当者のみ）</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>6. 管理画面</h4>
+                        <p>管理画面での処理</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>7. 報告</h4>
+                        <p>チャットワークで報告</p>
+                    </div>
+                </div>
                 <p class="note">※締日（10日まで→翌月1日解約、11日以降→翌々月1日解約）にご注意ください。</p>
             </div>
             <div class="card">
                 <h3>ビジター（ドロップイン）対応</h3>
-                <ol>
-                    <li>アプリのダウンロードをご案内</li>
-                    <li>QRコード読み取りでドロップインプラン選択</li>
-                    <li>身分証の確認</li>
-                    <li>施設ルールの簡単な説明</li>
-                </ol>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <h4>1. アプリ案内</h4>
+                        <p>アプリのダウンロードをご案内</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>2. チェックイン</h4>
+                        <p>QRコード読み取りでドロップインプラン選択</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>3. 身分証確認</h4>
+                        <p>身分証の確認</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>4. ルール説明</h4>
+                        <p>施設ルールの簡単な説明</p>
+                    </div>
+                </div>
                 <p class="note">※有人時間帯のみ対応。外国人のお客様は対応に注意。</p>
             </div>
             <div class="card">
@@ -1836,11 +2052,20 @@
             </div>
             <div class="card">
                 <h3>発注の流れ</h3>
-                <ol>
-                    <li>在庫が残り少なくなったら在庫リストを確認</li>
-                    <li>チャットワークで発注依頼を報告</li>
-                    <li>発注品が届いたら検品・所定の場所に収納</li>
-                </ol>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <h4>1. 在庫確認</h4>
+                        <p>在庫が残り少なくなったら在庫リストを確認</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>2. 発注依頼</h4>
+                        <p>チャットワークで発注依頼を報告</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>3. 検品・収納</h4>
+                        <p>発注品が届いたら検品・所定の場所に収納</p>
+                    </div>
+                </div>
             </div>
             <div class="card">
                 <h3>貸出備品の管理</h3>
@@ -1998,6 +2223,7 @@
         // セクション管理（使い方ガイドを除外）
         const sections = document.querySelectorAll('main > section:not(.usage-guide-section)');
         const usageGuide = document.getElementById('usage-guide');
+        const quickAccess = document.getElementById('quick-access');
         const navList = document.getElementById('navList');
         let activeSection = null;
 
@@ -2271,11 +2497,20 @@
 
         // ナビゲーションのイベントリスナー設定
         function setupNavEventListeners() {
-            // メインセクションリンク（カテゴリリスト内）
+            // メインセクションリンク（カテゴリリスト内）- トグル対応
             document.querySelectorAll('#navList .nav-category-list a[data-section]').forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     const sectionId = this.getAttribute('data-section');
+                    const subMenu = this.parentElement.querySelector('.sub-menu');
+
+                    // 既にアクティブなセクションの場合、サブメニューをトグル
+                    if (activeSection === sectionId && subMenu) {
+                        subMenu.classList.toggle('open');
+                        closeMobileMenu();
+                        return;
+                    }
+
                     showSection(sectionId);
                 });
             });
@@ -2315,6 +2550,7 @@
 
             // 使い方ガイドを非表示にする
             if (usageGuide) usageGuide.style.display = 'none';
+            if (quickAccess) quickAccess.style.display = 'none';
 
             // 全てのセクションを非表示
             sections.forEach(s => s.classList.add('collapsed'));
@@ -2375,6 +2611,38 @@
 
         // h3単位のナビリストを構築
         buildNavItems();
+
+        // クイックアクセスリンク対応
+        document.querySelectorAll('.quick-link-item[data-quick-section]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const sectionId = this.getAttribute('data-quick-section');
+                const h3Text = this.getAttribute('data-quick-h3');
+                showSection(sectionId, false);
+
+                // h3テキストに一致する要素を探してスクロール
+                if (h3Text) {
+                    const section = document.getElementById(sectionId);
+                    if (section) {
+                        const h3List = section.querySelectorAll('h3');
+                        for (const h3 of h3List) {
+                            if (h3.textContent.trim() === h3Text) {
+                                const h3Id = h3.getAttribute('id');
+                                if (h3Id) {
+                                    updateSubMenuActive(h3Id);
+                                    currentNavIndex = findNavIndex(sectionId, h3Id);
+                                    updatePageNav();
+                                }
+                                setTimeout(() => {
+                                    h3.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                }, 100);
+                                break;
+                            }
+                        }
+                    }
+                }
+            });
+        });
 
         // 本文中のセクションリンク対応
         document.addEventListener('click', function(e) {
@@ -2465,6 +2733,7 @@
                     section.classList.add('collapsed');
                 });
                 if (usageGuide) usageGuide.style.display = '';
+                if (quickAccess) quickAccess.style.display = '';
                 contextBar.style.display = 'none';
                 // カテゴリ・目次を全て表示、サブメニュー・カテゴリリストは閉じる
                 document.querySelectorAll('.nav-category').forEach(c => c.style.display = '');
@@ -2477,6 +2746,7 @@
 
             // 検索中は使い方ガイドを非表示
             if (usageGuide) usageGuide.style.display = 'none';
+            if (quickAccess) quickAccess.style.display = 'none';
 
             // サブメニューを一旦すべて閉じる
             document.querySelectorAll('#navList .sub-menu').forEach(sm => sm.classList.remove('open'));
