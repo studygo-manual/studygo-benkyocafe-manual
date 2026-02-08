@@ -345,6 +345,44 @@ main {
     max-width: calc(1200px + var(--sidebar-width));
 }
 
+/* コンテキストバー（大項目・中項目の固定表示） */
+.context-bar {
+    position: sticky;
+    top: 50px;
+    z-index: 500;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 10px 20px;
+    margin: -30px -40px 20px -40px;
+    border-bottom: 2px solid var(--primary-color);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.context-category {
+    font-weight: bold;
+    color: white;
+    padding: 3px 12px;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+.context-separator {
+    color: var(--text-light);
+    font-size: 1.2rem;
+}
+
+.context-section {
+    font-weight: bold;
+    color: var(--primary-dark);
+    font-size: 0.95rem;
+}
+
 /* アコーディオン（折りたたみ）セクション */
 section.collapsed {
     display: none;
@@ -357,7 +395,7 @@ section:not(.collapsed) {
 /* セクション */
 section {
     margin-bottom: 50px;
-    scroll-margin-top: 65px;
+    scroll-margin-top: 110px;
 }
 
 section h2 {
@@ -376,7 +414,7 @@ section h2 {
     margin-bottom: 20px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     border: 1px solid var(--border-color);
-    scroll-margin-top: 65px;
+    scroll-margin-top: 110px;
 }
 
 .card h3 {
@@ -385,7 +423,7 @@ section h2 {
     margin-bottom: 15px;
     padding-left: 15px;
     border-left: 4px solid var(--primary-color);
-    scroll-margin-top: 65px;
+    scroll-margin-top: 110px;
 }
 
 .card h4 {
@@ -825,6 +863,12 @@ footer .update-date {
         padding: 15px;
     }
 
+    .context-bar {
+        margin: -15px -15px 15px -15px;
+        padding: 8px 15px;
+        font-size: 0.85rem;
+    }
+
     footer {
         margin-left: 0;
     }
@@ -860,6 +904,10 @@ footer .update-date {
     main {
         margin-left: 0;
         margin-top: 0;
+    }
+
+    .context-bar {
+        display: none !important;
     }
 
     footer {

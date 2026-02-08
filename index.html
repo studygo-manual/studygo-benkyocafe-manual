@@ -33,6 +33,12 @@
     </nav>
 
     <main>
+        <!-- コンテキストバー（大項目・中項目の固定表示） -->
+        <div id="contextBar" class="context-bar" style="display: none;">
+            <span id="contextCategory" class="context-category"></span>
+            <span class="context-separator">›</span>
+            <span id="contextSection" class="context-section"></span>
+        </div>
         <!-- 使い方ガイド（初期表示） -->
         <section id="usage-guide" class="usage-guide-section">
             <h2>このマニュアルの使い方</h2>
@@ -695,79 +701,7 @@
                         </div>
                         <span class="app-feature-label">チェックイン<br>チェックアウト</span>
                     </div>
-                    <!-- Akerun開錠（緑ボタン） -->
-                    <div class="app-feature-item">
-                        <div class="app-feature-icon">
-                            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
-                                <!-- ドア -->
-                                <rect x="20" y="4" width="20" height="36" rx="2" fill="#EFEBE9" stroke="#8D6E63" stroke-width="1.5"/>
-                                <circle cx="35" cy="22" r="2" fill="#8D6E63"/>
-                                <!-- 鍵アイコン（開錠状態） -->
-                                <rect x="4" y="16" width="14" height="16" rx="2" fill="#4CAF50"/>
-                                <path d="M11 12 L11 16" stroke="#4CAF50" stroke-width="3" stroke-linecap="round"/>
-                                <path d="M11 12 Q11 8 15 8" stroke="#4CAF50" stroke-width="3" stroke-linecap="round" fill="none"/>
-                                <circle cx="11" cy="23" r="2.5" fill="white"/>
-                                <rect x="10" y="24" width="2" height="4" rx="1" fill="white"/>
-                                <!-- 開錠エフェクト -->
-                                <path d="M17 18 L20 20" stroke="#4CAF50" stroke-width="1.5"/>
-                                <path d="M17 22 L20 22" stroke="#4CAF50" stroke-width="1.5"/>
-                                <path d="M17 26 L20 24" stroke="#4CAF50" stroke-width="1.5"/>
-                            </svg>
-                        </div>
-                        <span class="app-feature-label">Akerun開錠</span>
-                    </div>
-                    <!-- メッセージ -->
-                    <div class="app-feature-item">
-                        <div class="app-feature-icon">
-                            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="4" y="8" width="36" height="24" rx="4" fill="#42A5F5"/>
-                                <polygon points="12,32 20,32 14,38" fill="#42A5F5"/>
-                                <line x1="12" y1="16" x2="32" y2="16" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                                <line x1="12" y1="22" x2="28" y2="22" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                                <line x1="12" y1="28" x2="22" y2="28" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
-                            </svg>
-                        </div>
-                        <span class="app-feature-label">メッセージ</span>
-                    </div>
-                    <!-- 支払い情報・会員情報の変更 -->
-                    <div class="app-feature-item">
-                        <div class="app-feature-icon">
-                            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M22 6 L24.5 8.2 L28 7.5 L28.8 11 L32 12.5 L31 16 L33.5 18.5 L31.5 21.5 L33 24.5 L30 26 L30 29.5 L27 29.5 L25 32.5 L22 31 L19 32.5 L17 29.5 L14 29.5 L14 26 L11 24.5 L12.5 21.5 L10.5 18.5 L13 16 L12 12.5 L15.2 11 L16 7.5 L19.5 8.2 Z" fill="#757575"/>
-                                <circle cx="22" cy="19" r="7" fill="white"/>
-                                <circle cx="22" cy="19" r="4.5" fill="#757575"/>
-                                <!-- 下部のスライダー -->
-                                <rect x="10" y="34" width="24" height="3" rx="1.5" fill="#BDBDBD"/>
-                                <circle cx="18" cy="35.5" r="3" fill="#757575" stroke="white" stroke-width="1"/>
-                                <rect x="10" y="39" width="24" height="3" rx="1.5" fill="#BDBDBD"/>
-                                <circle cx="28" cy="40.5" r="3" fill="#757575" stroke="white" stroke-width="1"/>
-                            </svg>
-                        </div>
-                        <span class="app-feature-label">支払い情報<br>会員情報の変更</span>
-                    </div>
-                    <!-- 他施設の利用・勉強場所の探索 -->
-                    <div class="app-feature-item">
-                        <div class="app-feature-icon">
-                            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
-                                <!-- ビル -->
-                                <rect x="2" y="10" width="12" height="22" rx="1" fill="#78909C"/>
-                                <rect x="4" y="13" width="3" height="3" rx="0.5" fill="#B0BEC5"/>
-                                <rect x="10" y="13" width="3" height="3" rx="0.5" fill="#B0BEC5"/>
-                                <rect x="4" y="19" width="3" height="3" rx="0.5" fill="#B0BEC5"/>
-                                <rect x="10" y="19" width="3" height="3" rx="0.5" fill="#B0BEC5"/>
-                                <rect x="4" y="25" width="3" height="3" rx="0.5" fill="#B0BEC5"/>
-                                <rect x="10" y="25" width="3" height="3" rx="0.5" fill="#B0BEC5"/>
-                                <!-- 虫眼鏡 -->
-                                <circle cx="30" cy="18" r="9" fill="none" stroke="#555" stroke-width="2.5"/>
-                                <line x1="36" y1="24" x2="42" y2="30" stroke="#555" stroke-width="2.5" stroke-linecap="round"/>
-                                <!-- マップピン -->
-                                <path d="M30 12 Q26 12 26 16 Q26 19 30 22 Q34 19 34 16 Q34 12 30 12Z" fill="#f44336" opacity="0.7"/>
-                                <circle cx="30" cy="16" r="1.8" fill="white"/>
-                            </svg>
-                        </div>
-                        <span class="app-feature-label">他施設の利用<br>勉強場所の探索</span>
-                    </div>
-                    <!-- クレジットカードの登録と決済 -->
+                    <!-- 5. クレジットカードの登録と決済 -->
                     <div class="app-feature-item">
                         <div class="app-feature-icon">
                             <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
@@ -781,7 +715,25 @@
                         </div>
                         <span class="app-feature-label">クレジットカード<br>登録と決済</span>
                     </div>
-                    <!-- 勉強記録・利用明細の確認 -->
+                    <!-- 6. Akerun開錠 -->
+                    <div class="app-feature-item">
+                        <div class="app-feature-icon">
+                            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="20" y="4" width="20" height="36" rx="2" fill="#EFEBE9" stroke="#8D6E63" stroke-width="1.5"/>
+                                <circle cx="35" cy="22" r="2" fill="#8D6E63"/>
+                                <rect x="4" y="16" width="14" height="16" rx="2" fill="#4CAF50"/>
+                                <path d="M11 12 L11 16" stroke="#4CAF50" stroke-width="3" stroke-linecap="round"/>
+                                <path d="M11 12 Q11 8 15 8" stroke="#4CAF50" stroke-width="3" stroke-linecap="round" fill="none"/>
+                                <circle cx="11" cy="23" r="2.5" fill="white"/>
+                                <rect x="10" y="24" width="2" height="4" rx="1" fill="white"/>
+                                <path d="M17 18 L20 20" stroke="#4CAF50" stroke-width="1.5"/>
+                                <path d="M17 22 L20 22" stroke="#4CAF50" stroke-width="1.5"/>
+                                <path d="M17 26 L20 24" stroke="#4CAF50" stroke-width="1.5"/>
+                            </svg>
+                        </div>
+                        <span class="app-feature-label">Akerun開錠</span>
+                    </div>
+                    <!-- 7. 勉強記録・利用明細の確認 -->
                     <div class="app-feature-item">
                         <div class="app-feature-icon">
                             <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
@@ -795,6 +747,53 @@
                             </svg>
                         </div>
                         <span class="app-feature-label">勉強記録<br>利用明細の確認</span>
+                    </div>
+                    <!-- 8. メッセージ -->
+                    <div class="app-feature-item">
+                        <div class="app-feature-icon">
+                            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="4" y="8" width="36" height="24" rx="4" fill="#42A5F5"/>
+                                <polygon points="12,32 20,32 14,38" fill="#42A5F5"/>
+                                <line x1="12" y1="16" x2="32" y2="16" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                <line x1="12" y1="22" x2="28" y2="22" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                <line x1="12" y1="28" x2="22" y2="28" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+                            </svg>
+                        </div>
+                        <span class="app-feature-label">メッセージ</span>
+                    </div>
+                    <!-- 9. 情報変更 -->
+                    <div class="app-feature-item">
+                        <div class="app-feature-icon">
+                            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M22 6 L24.5 8.2 L28 7.5 L28.8 11 L32 12.5 L31 16 L33.5 18.5 L31.5 21.5 L33 24.5 L30 26 L30 29.5 L27 29.5 L25 32.5 L22 31 L19 32.5 L17 29.5 L14 29.5 L14 26 L11 24.5 L12.5 21.5 L10.5 18.5 L13 16 L12 12.5 L15.2 11 L16 7.5 L19.5 8.2 Z" fill="#757575"/>
+                                <circle cx="22" cy="19" r="7" fill="white"/>
+                                <circle cx="22" cy="19" r="4.5" fill="#757575"/>
+                                <rect x="10" y="34" width="24" height="3" rx="1.5" fill="#BDBDBD"/>
+                                <circle cx="18" cy="35.5" r="3" fill="#757575" stroke="white" stroke-width="1"/>
+                                <rect x="10" y="39" width="24" height="3" rx="1.5" fill="#BDBDBD"/>
+                                <circle cx="28" cy="40.5" r="3" fill="#757575" stroke="white" stroke-width="1"/>
+                            </svg>
+                        </div>
+                        <span class="app-feature-label">支払い情報<br>会員情報の変更</span>
+                    </div>
+                    <!-- 10. 検索 -->
+                    <div class="app-feature-item">
+                        <div class="app-feature-icon">
+                            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="2" y="10" width="12" height="22" rx="1" fill="#78909C"/>
+                                <rect x="4" y="13" width="3" height="3" rx="0.5" fill="#B0BEC5"/>
+                                <rect x="10" y="13" width="3" height="3" rx="0.5" fill="#B0BEC5"/>
+                                <rect x="4" y="19" width="3" height="3" rx="0.5" fill="#B0BEC5"/>
+                                <rect x="10" y="19" width="3" height="3" rx="0.5" fill="#B0BEC5"/>
+                                <rect x="4" y="25" width="3" height="3" rx="0.5" fill="#B0BEC5"/>
+                                <rect x="10" y="25" width="3" height="3" rx="0.5" fill="#B0BEC5"/>
+                                <circle cx="30" cy="18" r="9" fill="none" stroke="#555" stroke-width="2.5"/>
+                                <line x1="36" y1="24" x2="42" y2="30" stroke="#555" stroke-width="2.5" stroke-linecap="round"/>
+                                <path d="M30 12 Q26 12 26 16 Q26 19 30 22 Q34 19 34 16 Q34 12 30 12Z" fill="#f44336" opacity="0.7"/>
+                                <circle cx="30" cy="16" r="1.8" fill="white"/>
+                            </svg>
+                        </div>
+                        <span class="app-feature-label">他施設の利用<br>勉強場所の探索</span>
                     </div>
                 </div>
             </div>
@@ -829,8 +828,8 @@
                         <div class="step-content">
                             <h4><a href="#procedures" class="section-link" data-link-section="procedures" style="color: inherit; text-decoration: underline;">見学予約対応</a></h4>
                             <ul>
-                                <li>内見カレンダーを設定</li>
-                                <li>内見予約を管理</li>
+                                <li>見学カレンダーを設定</li>
+                                <li>見学予約を管理</li>
                                 <li>ユーザーと連絡</li>
                             </ul>
                         </div>
@@ -841,7 +840,8 @@
                         <div class="step-content">
                             <h4><a href="#procedures" class="section-link" data-link-section="procedures" style="color: inherit; text-decoration: underline;">契約</a></h4>
                             <ul>
-                                <li>ルール説明・鍵付与</li>
+                                <li>ルール説明</li>
+                                <li>Akerun利用方法確認</li>
                                 <li>身分証明書確認</li>
                             </ul>
                         </div>
@@ -850,7 +850,7 @@
                     <div class="workflow-step">
                         <div class="step-number">3</div>
                         <div class="step-content">
-                            <h4><a href="#procedures" class="section-link" data-link-section="procedures" style="color: inherit; text-decoration: underline;">チェックイン・アウト</a></h4>
+                            <h4><a href="#procedures" class="section-link" data-link-section="procedures" style="color: inherit; text-decoration: underline;">チェックイン・アウト / ドロップイン</a></h4>
                             <ul>
                                 <li>通常の接客対応</li>
                                 <li>トラブル対応</li>
@@ -930,29 +930,29 @@
 
             <div class="card">
                 <h3>見学予約対応</h3>
-                <h4>内見予約が入ったら</h4>
+                <h4>見学予約が入ったら</h4>
                 <ol>
                     <li>登録の店舗メールアドレスに予約のお知らせが届く</li>
-                    <li>管理画面の「内見予約一覧」で確認</li>
+                    <li>管理画面の「見学予約一覧」で確認</li>
                     <li>ステータスを変更：
                         <ul>
-                            <li>◎内見可能の場合 → 即確定</li>
+                            <li>◎見学可能の場合 → 即確定</li>
                             <li>△対応不明の場合 → 仮予約（「予約確定」または「予約キャンセル」に変更）</li>
                         </ul>
                     </li>
                     <li>ユーザーにメッセージを送信（推奨）</li>
                 </ol>
-                <h4>内見対応</h4>
+                <h4>見学対応</h4>
                 <ul>
-                    <li>通常の内見対応と同じ内容でOK（営業時間や利用ルール等の説明）</li>
+                    <li>通常の見学対応と同じ内容でOK（営業時間や利用ルール等の説明）</li>
                     <li class="warning-text">※店舗で提供されているプランの紹介・説明や、他サービスの紹介・説明はお控えください</li>
                 </ul>
-                <h4>内見後の契約</h4>
+                <h4>見学後の契約</h4>
                 <p>気に入っていただけたら「アプリを通じて」契約してもらいます。ユーザーがアプリで完結できるので、店舗側作業はありません。</p>
-                <h4>内見予約日時経過後</h4>
+                <h4>見学予約日時経過後</h4>
                 <ol>
-                    <li>来店した場合 →「内見実施」</li>
-                    <li>来店しなかった場合 →「内見キャンセル」</li>
+                    <li>来店した場合 →「見学実施」</li>
+                    <li>来店しなかった場合 →「見学キャンセル」</li>
                     <li>ステータス変更後、一覧から非表示になりアーカイブされます</li>
                 </ol>
             </div>
@@ -977,34 +977,38 @@
                 <p>契約はユーザーがアプリで行うため、店舗側作業はありません。契約後は以下の業務を行ってください：</p>
                 <ul>
                     <li>施設ルールの読み合せ</li>
-                    <li>無人時間帯の鍵付与（Akerun）</li>
+                    <li>利用方法の確認（Akerun・チェックイン等）</li>
                     <li>身分証明書の確認、コピー等</li>
                     <li>緊急連絡先を伝える</li>
                 </ul>
                 <h4>店外で契約した場合</h4>
-                <p>その場にいないで契約したユーザー（内見後の後日契約、ドロップインからの転換、アプリからの直接契約）への対応：</p>
+                <p>その場にいないで契約したユーザー（見学後の後日契約、ドロップインからの転換、アプリからの直接契約）への対応：</p>
                 <ol>
                     <li>「メール」通知とダッシュボードの「新規契約したお客様」で確認</li>
                     <li>「メッセージ」またはメールアドレスでユーザーに連絡</li>
-                    <li>初回利用前の所定手続き（ルール説明、鍵発行、身分証確認等）が必要な旨を伝える</li>
+                    <li>初回利用前の所定手続き（ルール説明、利用方法の説明、身分証確認等）が必要な旨を伝える</li>
                     <li>来店できる日のアポイントメントを取得（利用開始初日以前が推奨）</li>
                 </ol>
                 <h4>月額プランの仕組み</h4>
                 <table class="info-table">
                     <tr>
                         <th>契約時の請求</th>
-                        <td>入会金5,500円 + 店舗別初期費用 + 利用開始月分（日割り）+ 翌月分月額料金</td>
+                        <td>アプリ入会金 + 店舗別初期費用（店舗入会金11,000円）+ 利用開始月分（日割り）+ 翌月分月額料金</td>
+                    </tr>
+                    <tr>
+                        <th>アプリ入会金について</th>
+                        <td>アプリでの契約時にクーポンコード <strong>cp210n</strong> の入力が必須です。このコードを入力することでアプリ入会金が<strong>免除</strong>されます。<br><span class="warning-text">※クーポンコード未入力の場合、アプリ入会金が別途請求されますのでご注意ください。</span></td>
                     </tr>
                     <tr>
                         <th>最低継続期間</th>
                         <td>利用開始月とその翌月の2ヶ月</td>
                     </tr>
                     <tr>
-                        <th>自動更新</th>
-                        <td>当月10日までに解約申請が無ければ、15日に翌月分請求。1日に1ヶ月単位で自動更新</td>
+                        <th>自動請求</th>
+                        <td>当月10日までに解約申請が無ければ、15日に翌月分請求。1日に1ヶ月単位で自動請求</td>
                     </tr>
                 </table>
-                <p class="note">プラン変更ルール等、詳細はメッセージ機能で「運営に聞いてください」でOKです。</p>
+                <p class="note">プラン変更などの操作は <a href="#app-flow" class="section-link" data-link-section="app-flow">アプリ画面遷移ガイド</a> に記載しています。</p>
             </div>
 
             <div class="card">
@@ -1017,20 +1021,22 @@
                     </tr>
                     <tr>
                         <th>退会手続き</th>
-                        <td><strong>来店必須</strong>（※10日 21時以降の申請は適用されないので注意）</td>
+                        <td><strong>来店必須</strong></td>
                     </tr>
                     <tr>
                         <th>解約申請</th>
                         <td>前月11日〜当月10日までの申請で当月末解約</td>
                     </tr>
                 </table>
+                <div class="warning" style="margin-top: 12px;">
+                    <p><strong>重要：</strong>解約（退会）はアプリ上で申請ができますが、<strong>店頭でスタッフが手続きを完了させる必要があります</strong>。毎月10日の21時（有人時間終了）までにスタッフが対応できないと、プランが自動請求され翌月も継続となります。お客様には有人時間帯内にお早めの来店をお願いしてください。</p>
+                </div>
                 <p class="note">※休会の手続きはアプリから可能です。詳細は <a href="#app-flow" class="section-link" data-link-section="app-flow">アプリ画面遷移ガイド</a> をご覧ください。</p>
                 <h4>解約時の対応フロー</h4>
                 <ol>
                     <li>10日までの解約申請で月末での契約終了 → 11日に一覧に解約者が追加</li>
                     <li>ダッシュボードで解約者を確認</li>
-                    <li>必要があれば連絡（物理キーの回収が必要な場合など）</li>
-                    <li>最終利用日以降に鍵の権限削除など、店舗システム側で退会処理</li>
+                    <li>オプション（ロッカー）を契約中の場合、ロッカーの撤去が完了しているか確認。完了済みであればアプリ上でロッカー解約処理を行う</li>
                 </ol>
                 <h4>管理画面での操作</h4>
                 <ul>
@@ -1040,10 +1046,59 @@
             </div>
 
             <div class="card">
-                <h3>チェックイン・アウト</h3>
+                <h3>チェックイン・アウト / ドロップイン</h3>
                 <div class="important-box">
                     <p>スタッフがいる時間帯は、チェックイン完了画面を見せてもらってください。</p>
                 </div>
+
+                <h4>月額利用とドロップイン利用の違い</h4>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>項目</th>
+                            <th>月額プラン利用</th>
+                            <th>ドロップイン利用</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>対象</strong></td>
+                            <td>月額プラン契約中の会員</td>
+                            <td>誰でも利用可能（要アプリ登録）</td>
+                        </tr>
+                        <tr>
+                            <td><strong>利用可能時間</strong></td>
+                            <td>契約プランの時間帯</td>
+                            <td><strong>有人時間帯のみ</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>料金</strong></td>
+                            <td>月額固定（時間超過時は超過料金）</td>
+                            <td>770円/時間（1日最大料金あり）</td>
+                        </tr>
+                        <tr>
+                            <td><strong>チェックイン方法</strong></td>
+                            <td>QRコード読み取り → チェックイン</td>
+                            <td>QRコード読み取り → ドロップインプラン選択 → 契約即チェックイン</td>
+                        </tr>
+                        <tr>
+                            <td><strong>チェックイン時の決済</strong></td>
+                            <td>なし（月額請求）</td>
+                            <td>1日最大料金を先に請求</td>
+                        </tr>
+                        <tr>
+                            <td><strong>チェックアウト時の精算</strong></td>
+                            <td>時間超過分の算出・請求</td>
+                            <td>最大料金からの精算（返金または追加請求）</td>
+                        </tr>
+                        <tr>
+                            <td><strong>入退室</strong></td>
+                            <td>Akerunアプリで解錠</td>
+                            <td>スタッフが対応</td>
+                        </tr>
+                    </tbody>
+                </table>
+
                 <div class="checkin-steps-guide">
                     <div class="checkin-step-card step-ok">
                         <div class="step-badge">STEP 1</div>
@@ -1110,10 +1165,11 @@
                         <p>無断利用と間違われない<br>ようにご協力を！</p>
                     </div>
                 </div>
+
                 <h4>チェックインの流れ</h4>
                 <ol>
                     <li>ユーザーがアプリでQRコードを読み取る</li>
-                    <li>チェックイン完了画面が表示される</li>
+                    <li>チェックイン完了画面が表示される（ドロップインの場合はプラン選択後に契約即チェックイン）</li>
                     <li>必要があれば画面を確認</li>
                 </ol>
                 <p class="note">※QR読取エラー時は店舗コードでもチェックイン可能です（非推奨）</p>
@@ -1131,6 +1187,26 @@
                     <li>ドロップイン利用時の1日最大請求額からの精算（返金または請求）</li>
                     <li>超過時間は店舗設定の〇〇円/1分で計算（計50円未満は切り捨て）</li>
                 </ul>
+
+                <h4>ドロップイン利用について</h4>
+                <ul>
+                    <li><strong>有人時間帯のみ</strong>対応</li>
+                    <li>スタディGO利用のみ</li>
+                    <li class="warning-text">※外国人のお客様は対応に注意</li>
+                </ul>
+                <p><strong>想定されるシーン：</strong></p>
+                <ul>
+                    <li>月額利用を検討しているが、まずはお試しとして利用</li>
+                    <li>月額会員だが、プラン時間外にチェックインする場合</li>
+                    <li>月額会員だが、〇〇分プランの残時間が無い状態</li>
+                    <li>勉強場所を近辺で探していた人</li>
+                </ul>
+                <h4>月額会員のドロップイン利用</h4>
+                <p>月額会員でもプラン時間前にドロップイン → プラン時間内に突入 → プラン時間外の超過利用が可能です。</p>
+                <div class="tips">
+                    <p>これを容認する場合、鍵付与の際にプラン時間内に限定せず、営業時間全ての鍵付与を行う必要があります。</p>
+                </div>
+
                 <h4>利用履歴の確認方法</h4>
                 <ol>
                     <li>管理画面の「チェックイン実績」をクリック</li>
@@ -1139,42 +1215,6 @@
                 <p>チェックアウト後は明細確認可能、チェックアウト前は時間編集可能です。</p>
                 <h4>打刻修正</h4>
                 <p><strong>基本不可</strong>です。お客様から打刻修正の依頼があった場合は、対応できない旨をお伝えください。</p>
-            </div>
-
-            <div class="card">
-                <h3>ドロップイン利用</h3>
-                <ul>
-                    <li><strong>有人時間帯のみ</strong>対応</li>
-                    <li>スタディGO利用のみ</li>
-                    <li class="warning-text">※外国人のお客様は対応に注意</li>
-                </ul>
-                <h4>想定されるシーン</h4>
-                <ul>
-                    <li>月額利用を検討しているが、まずはお試しとして利用</li>
-                    <li>月額会員だが、プラン時間外にチェックインする場合</li>
-                    <li>月額会員だが、〇〇分プランの残時間が無い状態</li>
-                    <li>勉強場所を近辺で探していた人</li>
-                </ul>
-                <h4>ドロップイン利用の流れ</h4>
-                <div class="flow-steps">
-                    <div class="flow-step">
-                        <h4>1. QR読取</h4>
-                        <p>ユーザーがQRを読み取り、ドロップインプラン選択画面が表示</p>
-                    </div>
-                    <div class="flow-step">
-                        <h4>2. 契約・チェックイン</h4>
-                        <p>チェックイン時にドロップインプランを契約（契約即チェックイン）。この時点で1日最大料金を請求</p>
-                    </div>
-                    <div class="flow-step">
-                        <h4>3. チェックアウト・精算</h4>
-                        <p>QRを読み取り、チェックアウト完了・明細画面が表示</p>
-                    </div>
-                </div>
-                <h4>月額会員のドロップイン利用</h4>
-                <p>月額会員でもプラン時間前にドロップイン → プラン時間内に突入 → プラン時間外の超過利用が可能です。</p>
-                <div class="tips">
-                    <p>これを容認する場合、鍵付与の際にプラン時間内に限定せず、営業時間全ての鍵付与を行う必要があります。</p>
-                </div>
             </div>
 
             <div class="card">
@@ -1195,21 +1235,11 @@
                 <div class="tips">
                     <p>ご利用時に「チェックイン画面」を確認させていただく場合がございます。ご利用終了後はチェックアウト忘れにご注意ください。</p>
                 </div>
-                <h4>鍵の付与・削除</h4>
-                <table class="info-table">
-                    <tr>
-                        <th>鍵の付与</th>
-                        <td>入会手続き完了後、Akerunの鍵（アプリ連携）を付与します</td>
-                    </tr>
-                    <tr>
-                        <th>鍵の削除</th>
-                        <td>退会・解約時にAkerunの鍵権限を削除します</td>
-                    </tr>
-                </table>
             </div>
 
             <div class="card">
                 <h3>オプション（ロッカー）</h3>
+                <p><strong>契約の申請と決済はアプリで出来ます。</strong></p>
                 <table class="info-table">
                     <tr>
                         <th>契約方法</th>
@@ -1377,14 +1407,14 @@
             <h2>注意が必要な各種設定</h2>
 
             <div class="card">
-                <h3>内見予約カレンダーの設定</h3>
+                <h3>見学予約カレンダーの設定</h3>
                 <p>「営業日・営業時間管理」から設定します。</p>
                 <h4>設定項目</h4>
                 <ul>
-                    <li><strong>締め切り設定</strong> - いつまで内見予約を受け付けるか（例：「前日の20:00まで」「当日の内見開始時刻の1時間前」など）</li>
-                    <li><strong>基本内見可能時間</strong> - 「◎内見可能」となる時間帯</li>
+                    <li><strong>締め切り設定</strong> - いつまで見学予約を受け付けるか（例：「前日の20:00まで」「当日の見学開始時刻の1時間前」など）</li>
+                    <li><strong>基本見学可能時間</strong> - 「◎見学可能」となる時間帯</li>
                     <li><strong>対応不明</strong> - チェックを入れると「△対応不明」（仮予約）で表示</li>
-                    <li><strong>対応不可</strong> - チェックを入れるとその曜日の内見予約を停止</li>
+                    <li><strong>対応不可</strong> - チェックを入れるとその曜日の見学予約を停止</li>
                 </ul>
                 <div class="tips">
                     <p>無人店舗の場合は基本は全て「△対応不明」とする運用が想定されます。</p>
@@ -1434,7 +1464,7 @@
                         </td>
                     </tr>
                 </table>
-                <p class="note">※内見対応時にその日から入会させたいときはその時のみ設定変更</p>
+                <p class="note">※見学対応時にその日から入会させたいときはその時のみ設定変更</p>
             </div>
         </section>
 
@@ -1664,7 +1694,7 @@
                 </ul>
             </div>
             <div class="card">
-                <h3>見学（内見）対応</h3>
+                <h3>見学対応</h3>
                 <ol>
                     <li>ご予約の確認（お名前・予約時間）</li>
                     <li>店内のご案内（各エリアの説明、利用ルール）</li>
@@ -2127,6 +2157,34 @@
             { key: 'staff', label: 'スタッフマニュアル', color: '#FF7043' }
         ];
 
+        // コンテキストバー（大項目・中項目の固定表示）
+        const contextBar = document.getElementById('contextBar');
+        const contextCategory = document.getElementById('contextCategory');
+        const contextSection = document.getElementById('contextSection');
+
+        function updateContextBar(sectionId) {
+            if (!sectionId) {
+                contextBar.style.display = 'none';
+                return;
+            }
+            const section = document.getElementById(sectionId);
+            if (!section) {
+                contextBar.style.display = 'none';
+                return;
+            }
+            const catKey = section.getAttribute('data-category');
+            const cat = categories.find(c => c.key === catKey);
+            const h2 = section.querySelector('h2');
+            if (cat && h2) {
+                contextCategory.textContent = cat.label;
+                contextCategory.style.backgroundColor = cat.color;
+                contextSection.textContent = h2.textContent;
+                contextBar.style.display = 'flex';
+            } else {
+                contextBar.style.display = 'none';
+            }
+        }
+
         // 動的に目次を生成（カテゴリ対応）
         function generateNavigation() {
             navList.innerHTML = '';
@@ -2299,6 +2357,9 @@
             // モバイルメニューを閉じる
             closeMobileMenu();
 
+            // コンテキストバーを更新
+            updateContextBar(sectionId);
+
             // ページ送りボタンの表示更新
             currentNavIndex = findNavIndex(sectionId, null);
             updatePageNav();
@@ -2404,6 +2465,7 @@
                     section.classList.add('collapsed');
                 });
                 if (usageGuide) usageGuide.style.display = '';
+                contextBar.style.display = 'none';
                 // カテゴリ・目次を全て表示、サブメニュー・カテゴリリストは閉じる
                 document.querySelectorAll('.nav-category').forEach(c => c.style.display = '');
                 document.querySelectorAll('.nav-category-list > li').forEach(li => li.style.display = '');
@@ -2464,7 +2526,7 @@
         window.addEventListener('scroll', () => {
             let current = '';
             let currentH3 = '';
-            const scrollPos = scrollY + 100;
+            const scrollPos = scrollY + 130;
 
             sections.forEach(section => {
                 if (!section.classList.contains('collapsed')) {
