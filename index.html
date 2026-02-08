@@ -9,54 +9,51 @@
 <body>
     <header>
         <div class="header-content">
+            <button class="menu-toggle" id="menuToggle" aria-label="メニューを開く">&#9776;</button>
             <img src="logo.png" alt="スタディGO" class="header-logo">
-            <div class="header-text">
-                <h1>スタッフマニュアル</h1>
-                <p class="subtitle">勉強カフェ</p>
+            <h1>スタッフマニュアル<span class="subtitle">～勉強カフェ～</span></h1>
+            <div class="header-guide">
+                左の目次から項目を選択、または検索してご覧ください
             </div>
         </div>
     </header>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     <nav id="sidebar">
         <div class="nav-section">
             <div class="search-box">
                 <input type="text" id="searchInput" placeholder="検索...">
+                <button class="search-clear" id="searchClear" aria-label="検索をクリア">&times;</button>
             </div>
             <h3>目次</h3>
             <ul id="navList">
-                <li><a href="#cafe-info" data-section="cafe-info">勉強カフェ</a></li>
-                <li><a href="#overview" data-section="overview">サービス概要</a></li>
-                <li><a href="#cafe-rules" data-section="cafe-rules">勉強カフェ手続きについて</a></li>
-                <li><a href="#workflow" data-section="workflow">対応フロー</a></li>
-                <li>
-                    <a href="#login" data-section="login">管理画面</a>
-                    <ul class="sub-menu">
-                        <li><a href="#login-url">管理画面URL</a></li>
-                        <li><a href="#login-id">ログインID</a></li>
-                        <li><a href="#dashboard">ダッシュボード</a></li>
-                        <li><a href="#checkin-history">チェックイン実績</a></li>
-                        <li><a href="#member-management">会員管理</a></li>
-                        <li><a href="#notification">通知について</a></li>
-                    </ul>
-                </li>
-                <li><a href="#checkin" data-section="checkin">チェックイン・アウト</a></li>
-                <li><a href="#dropin" data-section="dropin">ドロップイン利用</a></li>
-                <li><a href="#reservation" data-section="reservation">見学予約対応</a></li>
-                <li><a href="#contract" data-section="contract">契約時の対応</a></li>
-                <li><a href="#cancel" data-section="cancel">解約時の対応</a></li>
-                <li><a href="#option" data-section="option">オプションについて</a></li>
-                <li><a href="#facility-rules" data-section="facility-rules">利用ルール</a></li>
-                <li><a href="#telbooth" data-section="telbooth">テルブース</a></li>
-                <li><a href="#settings" data-section="settings">各種設定</a></li>
-                <li><a href="#trouble" data-section="trouble">トラブル対応</a></li>
-                <li><a href="#rules" data-section="rules">注意事項</a></li>
+                <!-- JavaScriptで動的に生成 -->
             </ul>
         </div>
     </nav>
 
     <main>
+        <!-- 使い方ガイド（初期表示） -->
+        <section id="usage-guide" class="usage-guide-section">
+            <h2>このマニュアルの使い方</h2>
+            <div class="card">
+                <div class="usage-grid">
+                    <div class="usage-item">
+                        <div class="usage-icon">&#128196;</div>
+                        <h4>目次から選択</h4>
+                        <p>左の目次から見たい項目をクリックすると、その項目の内容が表示されます。</p>
+                    </div>
+                    <div class="usage-item">
+                        <div class="usage-icon">&#128269;</div>
+                        <h4>検索で探す</h4>
+                        <p>検索ボックスにキーワードを入力すると、該当する項目が自動的に表示されます。ヒットした箇所は<span style="background-color:#FFCDD2;color:#B71C1C;font-weight:bold;padding:1px 3px;border-radius:3px;border-bottom:2px solid #f44336;">赤色</span>で強調表示されます。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- 勉強カフェ -->
-        <section id="cafe-info" class="accordion-section">
+        <section id="cafe-info" class="accordion-section" data-category="cafe">
             <h2 class="section-header">勉強カフェ</h2>
             <div class="section-content">
             <div class="card">
@@ -127,7 +124,7 @@
                 <ul>
                     <li><strong>店頭受付が必要な手続き</strong>
                         <ul>
-                            <li>休会・退会</li>
+                            <li>休会・解約（退会）</li>
                             <li>オプション契約・解約</li>
                         </ul>
                         → 有人営業時間にお越しください
@@ -176,12 +173,38 @@
                 <p>店内保管期間：<strong>2週間</strong></p>
                 <p>期限を過ぎたものは処分いたします。</p>
             </div>
+            <div class="card warning">
+                <h3>入退出について</h3>
+                <ul>
+                    <li>入退出を正確に管理するために、<strong>お一人づつのご入室</strong>をお願いいたします。不正利用が発覚した場合、除名処分を行います。</li>
+                    <li>自身のアプリで開錠し他の会員様や非会員様を入店・利用させることは<strong>禁止</strong>です。上記の行為が確認された場合、会員資格停止／除名処分を行う場合がございます。</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>防犯・防災について</h3>
+                <ul>
+                    <li>無人営業時間がございますため、<strong>スタジオ内各所に防犯カメラを設置</strong>しております</li>
+                    <li>避難経路のご案内：災害時に利用する非常口の場所を<strong>事前にご確認</strong>ください</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Akerunご利用方法</h3>
+                <ol>
+                    <li>スタディGOアプリを開く</li>
+                    <li>「チェックイン」からQRコードを読み取る</li>
+                    <li>チェックイン画面を確認</li>
+                    <li>「ドアを開錠しました！」と表示されたら入室可能</li>
+                </ol>
+                <div class="tips">
+                    <p>ご利用時に「チェックイン画面」を確認させていただく場合がございます。ご利用終了後はチェックアウト忘れにご注意ください。</p>
+                </div>
+            </div>
             </div>
         </section>
 
-        <!-- サービス概要 -->
-        <section id="overview" class="accordion-section">
-            <h2 class="section-header">サービス概要</h2>
+        <!-- スタディGOとは？ -->
+        <section id="overview" class="accordion-section" data-category="studygo">
+            <h2 class="section-header">スタディGOとは？</h2>
             <div class="section-content">
             <div class="card">
                 <h3>ユーザーがアプリで出来ること</h3>
@@ -194,11 +217,25 @@
                     <li>他施設の利用、勉強場所の探索</li>
                 </ul>
             </div>
+            <div class="card">
+                <h3>アプリのダウンロード</h3>
+                <p>下記のQRコードをスマートフォンで読み取ると、各ストアのダウンロードページに移動します。</p>
+                <div class="qr-download-grid">
+                    <div class="qr-download-item qr-ios">
+                        <img src="qr-ios.png" alt="App Store QRコード" class="qr-code-img">
+                        <p class="qr-label">iOS（iPhone）</p>
+                    </div>
+                    <div class="qr-download-item qr-android">
+                        <img src="qr-android.png" alt="Google Play QRコード" class="qr-code-img">
+                        <p class="qr-label">Android</p>
+                    </div>
+                </div>
+            </div>
             </div>
         </section>
 
         <!-- 勉強カフェ手続きについて -->
-        <section id="cafe-rules">
+        <section id="cafe-rules" data-category="studygo">
             <h2>勉強カフェ手続きについて</h2>
 
             <div class="card important">
@@ -255,32 +292,40 @@
                 <p class="warning-text">※未成年の方は保護者同意書が必要となります。</p>
             </div>
 
-            <div class="card">
-                <h3>15歳以上の現役高校生の方</h3>
+            <div class="card warning">
+                <h3>年齢制限について</h3>
                 <ul>
-                    <li>プランに関わらずご利用時間は<strong>21:00まで</strong>となります</li>
-                    <li>入会時には<strong>保護者同意書</strong>が必要となります</li>
+                    <li>スタディGO・勉強カフェは<strong>16歳以上</strong>を対象としたサービスです</li>
+                    <li><strong>15歳以下（中学生以下）</strong>の方はご利用いただけません</li>
+                    <li>16歳以上の現役高校生の方は、プランに関わらずご利用時間は原則<strong>21:00まで</strong>となります</li>
+                    <li>未成年の方の入会時には<strong>保護者同意書</strong>が必要となります</li>
+                    <li><strong>保護者同意書</strong>に保護者の方が「21時以降の利用を認める」旨を記載した場合は、<strong>21:00以降もご利用可能</strong>となります</li>
                 </ul>
             </div>
 
             <div class="card">
                 <h3>毎日！習慣化プランについて</h3>
+                <p>毎日少しずつ勉強する習慣をつけるためのプランです。1日あたりの利用時間に上限があり、その分お得な月額料金で利用できます。</p>
                 <table class="info-table">
                     <tr>
-                        <th>利用時間</th>
-                        <td>1日合計（60/120）分まで（営業時間内ならいつでも利用可）</td>
+                        <th>1日の利用上限</th>
+                        <td>「60分プラン」または「120分プラン」の2種類があり、<strong>1日あたりの合計利用時間</strong>がそれぞれ60分・120分までとなります</td>
+                    </tr>
+                    <tr>
+                        <th>利用可能な時間帯</th>
+                        <td>営業時間内であれば<strong>いつでも</strong>チェックイン可能です</td>
                     </tr>
                     <tr>
                         <th>分割利用</th>
-                        <td>OK：「朝30分＋夜30分」など、小分けにしてのご利用も可能です</td>
+                        <td>1日の中で何度でも出入りできます<br>例：「朝30分＋夜30分」のように分けて利用OK</td>
                     </tr>
                     <tr>
-                        <th>超過料金</th>
-                        <td>（60/120）を超えた分については、<strong>1分単位</strong>で追加料金が発生します</td>
+                        <th>上限を超えた場合</th>
+                        <td>上限時間を超えた分は<strong>1分単位で追加料金</strong>が発生します</td>
                     </tr>
                     <tr>
-                        <th>上限終了後</th>
-                        <td>1日の上限を使い切った後は、本プランでのチェックインはできません。引き続き利用される場合は、別途「時間利用パック」をご購入ください</td>
+                        <th>上限を使い切った後</th>
+                        <td>その日はこのプランでの追加チェックインはできません。引き続き利用する場合は、別途<span class="app-badge">時間利用（ドロップイン）</span>パックをご購入ください</td>
                     </tr>
                 </table>
             </div>
@@ -297,12 +342,13 @@
                         <td><strong>2,200円(税込)</strong>/月</td>
                     </tr>
                 </table>
+                <p style="margin-top:10px;">詳しくは <a href="#option" class="section-link" data-link-section="option">オプションについて</a> をご覧ください。</p>
             </div>
 
             <div class="card">
                 <h3>プラン時間外料金</h3>
                 <ul>
-                    <li>契約プラン外の時間帯の利用は「<strong>時間利用（ドロップイン）</strong>」パックの購入が必要です</li>
+                    <li>契約プラン外の時間帯の利用は<span class="app-badge">時間利用（ドロップイン）</span>パックの購入が必要です</li>
                     <li>利用を延長される場合は、<strong>1分につき13円（税込）</strong>の追加料金が発生します</li>
                     <li>料金はチェックアウト時に、登録済みのクレジットカードで<strong>自動精算</strong>されます</li>
                 </ul>
@@ -310,32 +356,32 @@
 
             <div class="card">
                 <h3>入退室管理（Akerun）</h3>
-                <ul>
-                    <li>入退室はアプリで管理</li>
-                    <li>Akerunオートロック常時ON（WSは除く）</li>
-                    <li>QRコードは<strong>入口</strong>に設置（既存会員との区別化のため）</li>
-                </ul>
+                <p>入退室はスタディGOアプリとAkerunで管理しています。</p>
+                <p>詳しくは <a href="#akerun" class="section-link" data-link-section="akerun">Akerun</a> をご覧ください。</p>
             </div>
 
             <div class="card">
                 <h3>月額プラン契約</h3>
                 <table class="info-table">
                     <tr>
-                        <th>利用開始日</th>
+                        <th>利用開始日（通常）</th>
                         <td>
-                            <strong>1日（月初）</strong>から<br>
-                            ※即日利用の場合はスタッフが設定を0日に変更してから契約
+                            会員様がアプリ上で<strong>翌日以降の希望日</strong>を利用開始日として設定し、契約できます。<br>
+                            <span class="note">※アプリの設定により「最短利用開始日」が決まっています（例：翌日から、2日後からなど）</span>
                         </td>
                     </tr>
                     <tr>
-                        <th>即日入会の場合</th>
+                        <th>本日から利用したい場合<br>（即日入会）</th>
                         <td>
+                            店頭での手続き時に「今日から使いたい」というお客様への対応です。<br>
+                            アプリの初期設定では当日開始ができないため、以下の手順で対応します：
                             <ol>
-                                <li>スタッフが管理画面で利用開始日を0日に変更</li>
-                                <li>ユーザーに契約してもらう</li>
-                                <li>契約完了後、設定を元に戻す</li>
+                                <li>スタッフが管理画面の「店舗管理」で最短利用開始日を<strong>0日</strong>に変更</li>
+                                <li>お客様にアプリで契約してもらう（当日が選択可能になります）</li>
+                                <li>契約完了後、設定を<strong>元に戻す</strong></li>
                                 <li>報告フローに従って報告</li>
                             </ol>
+                            <p class="warning-text">※設定の戻し忘れに注意してください</p>
                         </td>
                     </tr>
                     <tr>
@@ -350,6 +396,104 @@
                 <div class="important-box">
                     <p>スタッフがいる時間帯は、チェックイン完了画面を見せてもらってください。</p>
                 </div>
+                <div class="checkin-steps-guide">
+                    <div class="checkin-step-card step-ok">
+                        <div class="step-badge">STEP 1</div>
+                        <div class="step-illustration">
+                            <svg viewBox="0 0 160 140" xmlns="http://www.w3.org/2000/svg">
+                                <!-- 人物（会員様） -->
+                                <circle cx="45" cy="28" r="14" fill="#FFE0B2" stroke="#5D4037" stroke-width="1"/>
+                                <!-- 髪 -->
+                                <ellipse cx="45" cy="20" rx="14" ry="8" fill="#5D4037"/>
+                                <!-- 顔 -->
+                                <circle cx="40" cy="28" r="1.5" fill="#333"/>
+                                <circle cx="50" cy="28" r="1.5" fill="#333"/>
+                                <path d="M42 33 Q45 36 48 33" stroke="#333" stroke-width="1" fill="none"/>
+                                <!-- 体 -->
+                                <rect x="30" y="42" width="30" height="35" rx="5" fill="#42A5F5"/>
+                                <!-- 腕（スマホを持つ） -->
+                                <rect x="60" y="48" width="25" height="8" rx="4" fill="#FFE0B2"/>
+                                <!-- スマホ -->
+                                <rect x="80" y="38" width="22" height="38" rx="3" fill="#333"/>
+                                <rect x="82" y="42" width="18" height="28" rx="2" fill="#E8F5E9"/>
+                                <text x="91" y="58" text-anchor="middle" font-size="8" fill="#4CAF50" font-weight="bold">&#10003;</text>
+                                <!-- 脚 -->
+                                <rect x="35" y="77" width="10" height="25" rx="3" fill="#37474F"/>
+                                <rect x="47" y="77" width="10" height="25" rx="3" fill="#37474F"/>
+                                <!-- 靴 -->
+                                <rect x="33" y="99" width="14" height="5" rx="2" fill="#5D4037"/>
+                                <rect x="45" y="99" width="14" height="5" rx="2" fill="#5D4037"/>
+                                <!-- ドア -->
+                                <rect x="115" y="10" width="35" height="95" rx="3" fill="#8D6E63"/>
+                                <rect x="118" y="13" width="29" height="40" rx="2" fill="#A1887F"/>
+                                <rect x="118" y="57" width="29" height="40" rx="2" fill="#A1887F"/>
+                                <circle cx="125" cy="58" r="3" fill="#FFD54F"/>
+                                <!-- 解錠エフェクト -->
+                                <path d="M108 55 L113 58 L108 61" stroke="#4CAF50" stroke-width="2" fill="none"/>
+                                <path d="M104 52 L111 56 L104 60" stroke="#4CAF50" stroke-width="1.5" fill="none" opacity="0.5"/>
+                            </svg>
+                        </div>
+                        <h4>アプリで入店</h4>
+                        <p>チェックインして<br>ドアを解錠</p>
+                    </div>
+                    <div class="checkin-step-arrow">&#10132;</div>
+                    <div class="checkin-step-card step-ok">
+                        <div class="step-badge">STEP 2</div>
+                        <div class="step2-screenshots">
+                            <p class="screenshot-label">この画面をスタッフに見せてください</p>
+                            <div class="screenshot-pair">
+                                <img src="checkin-screen.png" alt="チェックイン完了画面" class="app-screenshot">
+                                <img src="checkin-screen2.png" alt="チェックイン中画面" class="app-screenshot">
+                            </div>
+                        </div>
+                        <h4>スタッフに提示</h4>
+                        <p>席に着く前に、必ずこの画面を見せてください</p>
+                    </div>
+                    <div class="checkin-step-arrow">&#10132;</div>
+                    <div class="checkin-step-card step-ng">
+                        <div class="step-badge badge-ng">NG例</div>
+                        <div class="step-illustration">
+                            <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+                                <!-- 素通りする人 -->
+                                <circle cx="40" cy="28" r="14" fill="#FFE0B2" stroke="#5D4037" stroke-width="1"/>
+                                <ellipse cx="40" cy="20" rx="14" ry="8" fill="#5D4037"/>
+                                <circle cx="35" cy="28" r="1.5" fill="#333"/>
+                                <circle cx="45" cy="28" r="1.5" fill="#333"/>
+                                <path d="M38 34 L42 34" stroke="#333" stroke-width="1"/>
+                                <rect x="25" y="42" width="30" height="35" rx="5" fill="#9E9E9E"/>
+                                <!-- 歩く脚 -->
+                                <rect x="28" y="77" width="10" height="25" rx="3" fill="#616161" transform="rotate(-10 33 77)"/>
+                                <rect x="44" y="77" width="10" height="25" rx="3" fill="#616161" transform="rotate(10 49 77)"/>
+                                <rect x="24" y="99" width="14" height="5" rx="2" fill="#5D4037" transform="rotate(-10 31 101)"/>
+                                <rect x="44" y="99" width="14" height="5" rx="2" fill="#5D4037" transform="rotate(10 51 101)"/>
+                                <!-- 矢印（素通り） -->
+                                <path d="M60 55 L85 55" stroke="#9E9E9E" stroke-width="2" stroke-dasharray="4,3" fill="none" marker-end="url(#arr_ng)"/>
+                                <defs><marker id="arr_ng" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#9E9E9E"/></marker></defs>
+                                <!-- 椅子・机 -->
+                                <rect x="90" y="50" width="35" height="3" rx="1" fill="#8D6E63"/>
+                                <rect x="92" y="53" width="4" height="18" fill="#6D4C41"/>
+                                <rect x="119" y="53" width="4" height="18" fill="#6D4C41"/>
+                                <rect x="95" y="60" width="20" height="18" rx="3" fill="#A1887F"/>
+                                <rect x="97" y="78" width="5" height="10" fill="#8D6E63"/>
+                                <rect x="112" y="78" width="5" height="10" fill="#8D6E63"/>
+                                <!-- 大きな✕ -->
+                                <circle cx="70" cy="100" r="18" fill="none" stroke="#f44336" stroke-width="3.5"/>
+                                <line x1="60" y1="90" x2="80" y2="110" stroke="#f44336" stroke-width="3.5"/>
+                                <line x1="80" y1="90" x2="60" y2="110" stroke="#f44336" stroke-width="3.5"/>
+                            </svg>
+                        </div>
+                        <h4>素通りはNG</h4>
+                        <p>無断利用と間違われない<br>ようにご協力を！</p>
+                    </div>
+                </div>
+                <div class="tips">
+                    <h4>なぜチェックイン画面の確認が必要？</h4>
+                    <ul>
+                        <li><strong>不正利用の防止</strong>：他人のアカウントでの入室や、チェックインせずに利用することを防ぎます</li>
+                        <li><strong>セキュリティの確保</strong>：無人営業時間帯もあるため、正規の会員様のみが利用していることを確認します</li>
+                        <li><strong>正確な利用記録</strong>：料金計算やトラブル対応のため、チェックイン状況を把握しておく必要があります</li>
+                    </ul>
+                </div>
             </div>
 
             <div class="card warning">
@@ -359,11 +503,14 @@
             </div>
 
             <div class="card">
-                <h3>休会・退会</h3>
+                <h3>休会・解約（退会）</h3>
                 <table class="info-table">
                     <tr>
                         <th>受付時間</th>
-                        <td><strong>有人時間帯のみ</strong></td>
+                        <td>
+                            <strong>有人時間帯のみ</strong><br>
+                            平日 17:00〜21:00 ／ 土曜 12:00〜21:00 ／ 日祝 12:00〜21:00
+                        </td>
                     </tr>
                     <tr>
                         <th>退会手続き</th>
@@ -449,7 +596,7 @@
         </section>
 
         <!-- 対応フロー -->
-        <section id="workflow">
+        <section id="workflow" data-category="studygo">
             <h2>対応フロー</h2>
             <div class="card">
                 <h3>掲載店舗の対応フロー</h3>
@@ -517,7 +664,7 @@
         </section>
 
         <!-- 管理画面 -->
-        <section id="login">
+        <section id="login" data-category="studygo">
             <h2>管理画面</h2>
             <div class="card" id="login-url">
                 <h3>管理画面URL</h3>
@@ -591,7 +738,7 @@
         </section>
 
         <!-- チェックイン・アウト -->
-        <section id="checkin">
+        <section id="checkin" data-category="studygo">
             <h2>チェックイン・アウト</h2>
             <div class="card">
                 <h3>事前準備</h3>
@@ -643,7 +790,7 @@
         </section>
 
         <!-- ドロップイン利用 -->
-        <section id="dropin">
+        <section id="dropin" data-category="studygo">
             <h2>ドロップイン利用</h2>
             <div class="card">
                 <h3>ドロップイン利用が想定されるシーン</h3>
@@ -682,7 +829,7 @@
         </section>
 
         <!-- 見学予約対応 -->
-        <section id="reservation">
+        <section id="reservation" data-category="studygo">
             <h2>見学予約対応</h2>
             <div class="card">
                 <h3>内見予約が入ったら</h3>
@@ -726,7 +873,7 @@
         </section>
 
         <!-- 契約時の対応 -->
-        <section id="contract">
+        <section id="contract" data-category="studygo">
             <h2>契約時の対応</h2>
 
             <div class="card">
@@ -790,7 +937,7 @@
         </section>
 
         <!-- 解約時の対応 -->
-        <section id="cancel">
+        <section id="cancel" data-category="studygo">
             <h2>解約時の対応</h2>
             <div class="card">
                 <h3>解約の流れ</h3>
@@ -810,8 +957,46 @@
             </div>
         </section>
 
+        <!-- Akerun -->
+        <section id="akerun" data-category="studygo">
+            <h2>Akerun</h2>
+            <div class="card">
+                <h3>Akerunとは</h3>
+                <p>スマートロックシステム「Akerun」を導入しており、スタディGOアプリと連携して入退室を管理しています。</p>
+            </div>
+            <div class="card">
+                <h3>基本設定</h3>
+                <ul>
+                    <li>Akerunオートロック<strong>常時ON</strong>（WSは除く）</li>
+                    <li>QRコードは<strong>入口</strong>に設置（既存会員との区別化のため）</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>開錠の流れ</h3>
+                <ol>
+                    <li>スタディGOアプリを開く</li>
+                    <li>「チェックイン」からQRコードを読み取る</li>
+                    <li>チェックイン画面を確認</li>
+                    <li>「ドアを開錠しました！」と表示されたら入室可能</li>
+                </ol>
+            </div>
+            <div class="card">
+                <h3>鍵の付与・削除</h3>
+                <table class="info-table">
+                    <tr>
+                        <th>鍵の付与</th>
+                        <td>入会手続き完了後、Akerunの鍵（アプリ連携）を付与します</td>
+                    </tr>
+                    <tr>
+                        <th>鍵の削除</th>
+                        <td>退会・解約時にAkerunの鍵権限を削除します</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
         <!-- オプションについて -->
-        <section id="option">
+        <section id="option" data-category="studygo">
             <h2>オプションについて</h2>
             <div class="card">
                 <h3>※内容未定</h3>
@@ -819,72 +1004,46 @@
             </div>
         </section>
 
-        <!-- 利用ルール -->
-        <section id="facility-rules">
-            <h2>利用ルール</h2>
 
-            <div class="card warning">
-                <h3>入退出について</h3>
-                <ul>
-                    <li>入退出を正確に管理するために、<strong>お一人づつのご入室</strong>をお願いいたします。不正利用が発覚した場合、除名処分を行います。</li>
-                    <li>自身のアプリで開錠し他の会員様や非会員様を入店・利用させることは<strong>禁止</strong>です。上記の行為が確認された場合、会員資格停止／除名処分を行う場合がございます。</li>
-                </ul>
-            </div>
+        <!-- 設備備品 -->
+        <section id="equipment" data-category="cafe">
+            <h2>設備備品</h2>
 
-            <div class="card">
-                <h3>防犯・防災について</h3>
-                <ul>
-                    <li>無人営業時間がございますため、<strong>スタジオ内各所に防犯カメラを設置</strong>しております</li>
-                    <li>避難経路のご案内：災害時に利用する非常口の場所を<strong>事前にご確認</strong>ください</li>
-                </ul>
-            </div>
-
-            <div class="card">
-                <h3>Akerunご利用方法</h3>
-                <ol>
-                    <li>スタディGOアプリを開く</li>
-                    <li>「チェックイン」からQRコードを読み取る</li>
-                    <li>チェックイン画面を確認</li>
-                    <li>「ドアを開錠しました！」と表示されたら入室可能</li>
-                </ol>
-                <div class="tips">
-                    <p>ご利用時に「チェックイン画面」を確認させていただく場合がございます。ご利用終了後はチェックアウト忘れにご注意ください。</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- テルブース -->
-        <section id="telbooth">
-            <h2>テルブース ご利用ルール</h2>
-
-            <div class="card">
-                <h3>ご利用例</h3>
+            <div class="card" id="telbooth">
+                <h3>テルブース（BPスタジオ）</h3>
+                <h4>ご利用例</h4>
                 <ul>
                     <li>リモート会議</li>
                     <li>お電話</li>
                     <li>音の出る勉強利用（発音練習など）</li>
                 </ul>
                 <p class="warning-text">※上記以外の個室利用はお断りしております</p>
-            </div>
 
-            <div class="card">
-                <h3>ご利用時の注意</h3>
+                <h4>ご利用時の注意</h4>
                 <ul>
                     <li>完全防音ではありませんので、<strong>個人情報の取り扱い</strong>にはご注意ください</li>
                     <li><strong>扉を閉めて</strong>ご利用ください</li>
                     <li>荷物を置いたままの外出（お席の確保）は<strong>お控えください</strong></li>
                     <li>お食事は<strong>ラウンジ</strong>をご利用ください</li>
                 </ul>
+
+                <h4>貸出備品</h4>
+                <p>受付にて<strong>イヤホン等</strong>貸し出ししております。ぜひご活用ください。</p>
             </div>
 
-            <div class="card">
-                <h3>貸出備品</h3>
-                <p>受付にて<strong>イヤホン等</strong>貸し出ししております。ぜひご活用ください。</p>
+            <div class="card" id="meeting-room">
+                <h3>会議室（新宿スタジオ）</h3>
+                <p>このセクションの内容は準備中です。内容が決まり次第追加されます。</p>
+            </div>
+
+            <div class="card" id="printer">
+                <h3>印刷機</h3>
+                <p>このセクションの内容は準備中です。内容が決まり次第追加されます。</p>
             </div>
         </section>
 
         <!-- 各種設定 -->
-        <section id="settings">
+        <section id="settings" data-category="studygo">
             <h2>各種設定</h2>
 
             <div class="card">
@@ -950,7 +1109,7 @@
         </section>
 
         <!-- トラブル対応 -->
-        <section id="trouble">
+        <section id="trouble" data-category="studygo">
             <h2>トラブル対応</h2>
 
             <div class="card">
@@ -1012,24 +1171,32 @@
             </div>
         </section>
 
-        <!-- 注意事項 -->
-        <section id="rules">
-            <h2>注意事項（禁止事項）</h2>
-            <div class="card warning">
-                <h3>スタディGOサービス特有の留意事項</h3>
-                <ul>
-                    <li>
-                        <strong>スタディGOユーザーを直接契約に誘因すること</strong><br>
-                        ※契約前のユーザー・契約済のユーザーかは問いません
-                    </li>
-                    <li>
-                        <strong>同一内容のプランを異なる料金で設定すること</strong><br>
-                        ※利用時間帯や曜日を変えてオリジナル化することで回避できます
-                    </li>
-                </ul>
+        <!-- 公式LINE（Lステップ） -->
+        <section id="line" data-category="cafe">
+            <h2>公式LINE（Lステップ）</h2>
+            <div class="card">
+                <h3>概要</h3>
+                <p>このセクションの内容は準備中です。内容が決まり次第追加されます。</p>
             </div>
         </section>
+
+        <!-- BPアプリについて -->
+        <section id="bpapp" data-category="bpapp">
+            <h2>BPアプリについて</h2>
+            <div class="card">
+                <h3>BPアプリとは</h3>
+                <p>スタディGO導入以前に勉強カフェで使用していた旧システムです。</p>
+                <p>このセクションの詳細は準備中です。内容が決まり次第追加されます。</p>
+            </div>
+        </section>
+
     </main>
+
+    <!-- ページ送りボタン -->
+    <div class="page-nav" id="pageNav" style="display:none;">
+        <button class="page-nav-btn" id="prevButton" aria-label="前のページ">&#8592; 戻る</button>
+        <button class="page-nav-btn" id="nextButton" aria-label="次のページ">次へ &#8594;</button>
+    </div>
 
     <footer>
         <p>勉強カフェ スタディGO スタッフマニュアル</p>
@@ -1040,93 +1207,468 @@
         // 最終更新日を表示
         document.getElementById('lastUpdate').textContent = new Date().toLocaleDateString('ja-JP');
 
-        // セクション管理
-        const sections = document.querySelectorAll('main > section');
-        const navLinks = document.querySelectorAll('#sidebar a[data-section]');
+        // ハンバーガーメニュー
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        menuToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('open');
+            sidebarOverlay.classList.toggle('active');
+        });
+
+        sidebarOverlay.addEventListener('click', function() {
+            sidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('active');
+        });
+
+        // サイドバー内のリンクをクリックしたらメニューを閉じる（モバイル時）
+        function closeMobileMenu() {
+            if (window.innerWidth <= 640) {
+                sidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('active');
+            }
+        }
+
+        // セクション管理（使い方ガイドを除外）
+        const sections = document.querySelectorAll('main > section:not(.usage-guide-section)');
+        const usageGuide = document.getElementById('usage-guide');
+        const navList = document.getElementById('navList');
         let activeSection = null;
+
+        // ページ送りボタン
+        const pageNav = document.getElementById('pageNav');
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+
+        // 全セクションのh3を順番にフラットなリストで管理
+        // 各要素: { h3Id, sectionId }
+        let navItems = [];
+        let currentNavIndex = -1;
+
+        function buildNavItems() {
+            navItems = [];
+            sections.forEach(section => {
+                const sectionId = section.getAttribute('id');
+                const h3List = section.querySelectorAll('h3');
+                if (h3List.length === 0) {
+                    // h3がないセクションはセクション自体を1項目とする
+                    navItems.push({ h3Id: null, sectionId: sectionId });
+                } else {
+                    h3List.forEach(h3 => {
+                        const h3Id = h3.getAttribute('id');
+                        navItems.push({ h3Id: h3Id, sectionId: sectionId });
+                    });
+                }
+            });
+        }
+
+        function findNavIndex(sectionId, h3Id) {
+            if (h3Id) {
+                const idx = navItems.findIndex(item => item.h3Id === h3Id);
+                if (idx !== -1) return idx;
+            }
+            // セクションの最初の項目を返す
+            return navItems.findIndex(item => item.sectionId === sectionId);
+        }
+
+        function updatePageNav() {
+            if (!activeSection) {
+                pageNav.style.display = 'none';
+                return;
+            }
+            pageNav.style.display = 'flex';
+            prevButton.disabled = (currentNavIndex <= 0);
+            nextButton.disabled = (currentNavIndex >= navItems.length - 1);
+        }
+
+        function navigateTo(index) {
+            if (index < 0 || index >= navItems.length) return;
+            const item = navItems[index];
+            currentNavIndex = index;
+
+            // 別セクションなら切り替え
+            if (activeSection !== item.sectionId) {
+                showSection(item.sectionId, false);
+            }
+
+            // サブメニューのアクティブ状態を更新
+            updateSubMenuActive(item.h3Id);
+
+            // h3にスクロール
+            if (item.h3Id) {
+                setTimeout(() => {
+                    const target = document.getElementById(item.h3Id);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 50);
+            } else {
+                const sec = document.getElementById(item.sectionId);
+                if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            updatePageNav();
+        }
+
+        // サブメニューのアクティブ状態を更新する関数
+        function updateSubMenuActive(h3Id) {
+            document.querySelectorAll('#navList .sub-menu a').forEach(l => l.classList.remove('active'));
+            if (h3Id) {
+                const subLink = document.querySelector('#navList .sub-menu a[data-target="' + h3Id + '"]');
+                if (subLink) subLink.classList.add('active');
+            }
+        }
+
+        prevButton.addEventListener('click', function() {
+            if (currentNavIndex > 0) {
+                navigateTo(currentNavIndex - 1);
+            }
+        });
+
+        nextButton.addEventListener('click', function() {
+            if (currentNavIndex < navItems.length - 1) {
+                navigateTo(currentNavIndex + 1);
+            }
+        });
+
+        // カテゴリ定義
+        const categories = [
+            { key: 'cafe', label: '勉強カフェについて', color: '#8D6E63' },
+            { key: 'studygo', label: 'スタディGOについて', color: '#4CAF50' },
+            { key: 'bpapp', label: 'BPアプリについて', color: '#1976D2' }
+        ];
+
+        // 動的に目次を生成（カテゴリ対応）
+        function generateNavigation() {
+            navList.innerHTML = '';
+
+            categories.forEach(cat => {
+                // カテゴリヘッダー
+                const catLi = document.createElement('li');
+                catLi.className = 'nav-category';
+                const catHeader = document.createElement('div');
+                catHeader.className = 'nav-category-header';
+                catHeader.setAttribute('data-cat', cat.key);
+                catHeader.style.borderLeftColor = cat.color;
+                catHeader.innerHTML = '<span class="cat-toggle">&#9654;</span> ' + cat.label;
+                catLi.appendChild(catHeader);
+
+                const catList = document.createElement('ul');
+                catList.className = 'nav-category-list';
+                catList.setAttribute('data-cat-list', cat.key);
+
+                // このカテゴリに属するセクションを追加
+                sections.forEach(section => {
+                    if (section.getAttribute('data-category') !== cat.key) return;
+                    const sectionId = section.getAttribute('id');
+                    const h2 = section.querySelector('h2');
+                    if (!h2) return;
+
+                    const sectionTitle = h2.textContent;
+                    const li = document.createElement('li');
+                    const mainLink = document.createElement('a');
+                    mainLink.href = '#' + sectionId;
+                    mainLink.setAttribute('data-section', sectionId);
+                    mainLink.textContent = sectionTitle;
+                    li.appendChild(mainLink);
+
+                    // h3サブメニュー
+                    const h3List = section.querySelectorAll('h3');
+                    if (h3List.length > 0) {
+                        const subMenu = document.createElement('ul');
+                        subMenu.className = 'sub-menu';
+
+                        h3List.forEach((h3, index) => {
+                            let h3Id = h3.getAttribute('id');
+                            if (!h3Id) {
+                                h3Id = sectionId + '-item-' + index;
+                                h3.setAttribute('id', h3Id);
+                            }
+
+                            const subLi = document.createElement('li');
+                            const subLink = document.createElement('a');
+                            subLink.href = '#' + h3Id;
+                            subLink.setAttribute('data-target', h3Id);
+                            subLink.setAttribute('data-parent-section', sectionId);
+                            subLink.textContent = h3.textContent;
+                            subLi.appendChild(subLink);
+                            subMenu.appendChild(subLi);
+                        });
+
+                        li.appendChild(subMenu);
+                    }
+
+                    catList.appendChild(li);
+                });
+
+                catLi.appendChild(catList);
+                navList.appendChild(catLi);
+
+                // カテゴリヘッダーのクリックで開閉
+                catHeader.addEventListener('click', function() {
+                    const isOpen = catList.classList.contains('open');
+                    // 全カテゴリを閉じる
+                    document.querySelectorAll('.nav-category-list').forEach(cl => cl.classList.remove('open'));
+                    document.querySelectorAll('.nav-category-header').forEach(ch => ch.classList.remove('active'));
+                    // クリックしたカテゴリだけ開く
+                    if (!isOpen) {
+                        catList.classList.add('open');
+                        catHeader.classList.add('active');
+                    }
+                });
+            });
+
+            // イベントリスナーを設定
+            setupNavEventListeners();
+        }
+
+        // ナビゲーションのイベントリスナー設定
+        function setupNavEventListeners() {
+            // メインセクションリンク（カテゴリリスト内）
+            document.querySelectorAll('#navList .nav-category-list a[data-section]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const sectionId = this.getAttribute('data-section');
+                    showSection(sectionId);
+                });
+            });
+
+            // サブメニューリンク（h3への直接ジャンプ）
+            document.querySelectorAll('#navList .sub-menu a[data-target]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('data-target');
+                    const parentSectionId = this.getAttribute('data-parent-section');
+
+                    // まず親セクションを表示
+                    showSection(parentSectionId, false);
+
+                    // サブメニューのアクティブ状態を更新
+                    updateSubMenuActive(targetId);
+
+                    // ナビインデックスを更新
+                    currentNavIndex = findNavIndex(parentSectionId, targetId);
+                    updatePageNav();
+
+                    // ターゲットにスクロール
+                    setTimeout(() => {
+                        const target = document.getElementById(targetId);
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }, 100);
+                });
+            });
+        }
+
+        // セクションを表示する関数
+        function showSection(sectionId, scroll = true) {
+            const targetSection = document.getElementById(sectionId);
+            if (!targetSection) return;
+
+            // 使い方ガイドを非表示にする
+            if (usageGuide) usageGuide.style.display = 'none';
+
+            // 全てのセクションを非表示
+            sections.forEach(s => s.classList.add('collapsed'));
+
+            // クリックしたセクションを表示
+            targetSection.classList.remove('collapsed');
+            activeSection = sectionId;
+
+            // アクティブリンクを更新（大項目・小項目ともにリセット）
+            document.querySelectorAll('.nav-category-list a').forEach(l => l.classList.remove('active'));
+            document.querySelectorAll('#navList .sub-menu a').forEach(l => l.classList.remove('active'));
+            const activeLink = document.querySelector('#navList a[data-section="' + sectionId + '"]');
+            if (activeLink) activeLink.classList.add('active');
+
+            // 該当するカテゴリを自動展開
+            const category = targetSection.getAttribute('data-category');
+            if (category) {
+                document.querySelectorAll('.nav-category-list').forEach(cl => cl.classList.remove('open'));
+                document.querySelectorAll('.nav-category-header').forEach(ch => ch.classList.remove('active'));
+                const catList = document.querySelector('.nav-category-list[data-cat-list="' + category + '"]');
+                const catHeader = document.querySelector('.nav-category-header[data-cat="' + category + '"]');
+                if (catList) catList.classList.add('open');
+                if (catHeader) catHeader.classList.add('active');
+            }
+
+            // サブメニューの表示切替：選択された大項目のサブメニューのみ表示
+            document.querySelectorAll('#navList .sub-menu').forEach(sm => sm.classList.remove('open'));
+            if (activeLink) {
+                const subMenu = activeLink.parentElement.querySelector('.sub-menu');
+                if (subMenu) subMenu.classList.add('open');
+            }
+
+            // スクロール
+            if (scroll) {
+                targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            // モバイルメニューを閉じる
+            closeMobileMenu();
+
+            // ページ送りボタンの表示更新
+            currentNavIndex = findNavIndex(sectionId, null);
+            updatePageNav();
+        }
 
         // 初期状態：全セクションを非表示
         sections.forEach(section => {
             section.classList.add('collapsed');
         });
 
-        // 目次クリックでセクションを開く
-        navLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
+        // 目次を生成
+        generateNavigation();
+
+        // h3単位のナビリストを構築
+        buildNavItems();
+
+        // 本文中のセクションリンク対応
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('.section-link[data-link-section]');
+            if (link) {
                 e.preventDefault();
-                const sectionId = this.getAttribute('data-section');
-                const targetSection = document.getElementById(sectionId);
-
-                if (targetSection) {
-                    // 全てのセクションを非表示
-                    sections.forEach(s => s.classList.add('collapsed'));
-
-                    // クリックしたセクションを表示
-                    targetSection.classList.remove('collapsed');
-                    activeSection = sectionId;
-
-                    // アクティブリンクを更新
-                    navLinks.forEach(l => l.classList.remove('active'));
-                    this.classList.add('active');
-
-                    // スクロール
-                    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
+                const targetSection = link.getAttribute('data-link-section');
+                showSection(targetSection);
+            }
         });
 
-        // サブメニューのリンク（セクション内のカードへジャンプ）
-        document.querySelectorAll('#sidebar .sub-menu a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href').substring(1);
-                const target = document.getElementById(targetId);
-                const parentSection = target ? target.closest('section') : null;
+        // ハイライトを削除する関数
+        function removeHighlights() {
+            document.querySelectorAll('.search-highlight').forEach(el => {
+                const parent = el.parentNode;
+                parent.replaceChild(document.createTextNode(el.textContent), el);
+                parent.normalize();
+            });
+        }
 
-                if (parentSection) {
-                    // 親セクションを表示
-                    sections.forEach(s => s.classList.add('collapsed'));
-                    parentSection.classList.remove('collapsed');
+        // テキストをハイライトする関数
+        function highlightText(element, query) {
+            const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null, false);
+            const textNodes = [];
+            while (walker.nextNode()) {
+                textNodes.push(walker.currentNode);
+            }
 
-                    // ターゲットにスクロール
-                    setTimeout(() => {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 100);
+            textNodes.forEach(node => {
+                const text = node.textContent;
+                const lowerText = text.toLowerCase();
+                const index = lowerText.indexOf(query.toLowerCase());
+
+                if (index !== -1 && node.parentNode.tagName !== 'SCRIPT' && node.parentNode.tagName !== 'STYLE') {
+                    const before = text.substring(0, index);
+                    const match = text.substring(index, index + query.length);
+                    const after = text.substring(index + query.length);
+
+                    const fragment = document.createDocumentFragment();
+                    if (before) fragment.appendChild(document.createTextNode(before));
+
+                    const highlight = document.createElement('span');
+                    highlight.className = 'search-highlight';
+                    highlight.textContent = match;
+                    fragment.appendChild(highlight);
+
+                    if (after) fragment.appendChild(document.createTextNode(after));
+
+                    node.parentNode.replaceChild(fragment, node);
                 }
             });
+        }
+
+        // 検索クリアボタン
+        const searchInput = document.getElementById('searchInput');
+        const searchClear = document.getElementById('searchClear');
+
+        function updateClearButton() {
+            if (searchInput.value.trim() !== '') {
+                searchClear.classList.add('visible');
+            } else {
+                searchClear.classList.remove('visible');
+            }
+        }
+
+        searchClear.addEventListener('click', function() {
+            searchInput.value = '';
+            searchInput.dispatchEvent(new Event('input'));
+            searchInput.focus();
         });
 
         // 検索機能
-        const searchInput = document.getElementById('searchInput');
         searchInput.addEventListener('input', function() {
-            const query = this.value.toLowerCase().trim();
+            updateClearButton();
+            const query = this.value.trim();
+
+            // 既存のハイライトを削除
+            removeHighlights();
 
             if (query === '') {
-                // 検索クリア時は全セクションを非表示に戻す
+                // 検索クリア時は全セクションを非表示に戻し、使い方ガイドを再表示
                 sections.forEach(section => {
                     section.classList.add('collapsed');
-                    section.querySelectorAll('.search-highlight').forEach(el => {
-                        el.classList.remove('search-highlight');
-                    });
                 });
+                if (usageGuide) usageGuide.style.display = '';
+                // カテゴリ・目次を全て表示、サブメニュー・カテゴリリストは閉じる
+                document.querySelectorAll('.nav-category').forEach(c => c.style.display = '');
+                document.querySelectorAll('.nav-category-list > li').forEach(li => li.style.display = '');
+                document.querySelectorAll('.nav-category-list').forEach(cl => cl.classList.remove('open'));
+                document.querySelectorAll('.nav-category-header').forEach(ch => ch.classList.remove('active'));
+                document.querySelectorAll('#navList .sub-menu').forEach(sm => sm.classList.remove('open'));
                 return;
             }
 
-            // 検索実行
+            // 検索中は使い方ガイドを非表示
+            if (usageGuide) usageGuide.style.display = 'none';
+
+            // サブメニューを一旦すべて閉じる
+            document.querySelectorAll('#navList .sub-menu').forEach(sm => sm.classList.remove('open'));
+
+            // ヒットしたカテゴリを追跡
+            const hitCategories = new Set();
+
+            // 検索実行：セクションとナビゲーション両方をフィルタリング
             sections.forEach(section => {
                 const text = section.textContent.toLowerCase();
-                if (text.includes(query)) {
+                const sectionId = section.getAttribute('id');
+                const category = section.getAttribute('data-category');
+                const navItem = document.querySelector('#navList a[data-section="' + sectionId + '"]');
+                const parentLi = navItem ? navItem.closest('.nav-category-list > li') : null;
+
+                if (text.includes(query.toLowerCase())) {
                     section.classList.remove('collapsed');
-                    // ハイライト用のクラスを追加（シンプルに表示のみ）
+                    if (category) hitCategories.add(category);
+                    if (parentLi) {
+                        parentLi.style.display = '';
+                        const subMenu = parentLi.querySelector('.sub-menu');
+                        if (subMenu) subMenu.classList.add('open');
+                    }
+                    highlightText(section, query);
                 } else {
                     section.classList.add('collapsed');
+                    if (parentLi) parentLi.style.display = 'none';
+                }
+            });
+
+            // ヒットしたカテゴリのみ展開表示
+            document.querySelectorAll('.nav-category').forEach(cat => {
+                const catList = cat.querySelector('.nav-category-list');
+                const catHeader = cat.querySelector('.nav-category-header');
+                const catKey = catHeader ? catHeader.getAttribute('data-cat') : '';
+                if (hitCategories.has(catKey)) {
+                    cat.style.display = '';
+                    if (catList) catList.classList.add('open');
+                    if (catHeader) catHeader.classList.add('active');
+                } else {
+                    cat.style.display = 'none';
                 }
             });
         });
 
-        // スクロール時のアクティブリンク更新
+        // スクロール時のアクティブリンク更新（大項目＋小項目）
         window.addEventListener('scroll', () => {
             let current = '';
+            let currentH3 = '';
             const scrollPos = scrollY + 100;
 
             sections.forEach(section => {
@@ -1136,17 +1678,37 @@
 
                     if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
                         current = section.getAttribute('id');
+
+                        // このセクション内のh3を逆順にチェックして、現在位置のh3を特定
+                        const h3List = section.querySelectorAll('h3[id]');
+                        for (let i = h3List.length - 1; i >= 0; i--) {
+                            const h3 = h3List[i];
+                            const h3Top = h3.getBoundingClientRect().top + window.scrollY;
+                            if (scrollPos >= h3Top) {
+                                currentH3 = h3.getAttribute('id');
+                                break;
+                            }
+                        }
                     }
                 }
             });
 
             if (current) {
-                navLinks.forEach(link => {
+                document.querySelectorAll('.nav-category-list a[data-section]').forEach(link => {
                     link.classList.remove('active');
                     if (link.getAttribute('data-section') === current) {
                         link.classList.add('active');
                     }
                 });
+
+                // 小項目のアクティブ状態を更新
+                updateSubMenuActive(currentH3);
+
+                // ナビインデックスも更新
+                if (currentH3) {
+                    const idx = findNavIndex(current, currentH3);
+                    if (idx !== -1) currentNavIndex = idx;
+                }
             }
         });
     </script>
