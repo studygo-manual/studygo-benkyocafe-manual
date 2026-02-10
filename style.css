@@ -2919,13 +2919,14 @@ footer .update-date {
 }
 
 .plan-unified-name {
-    width: 110px;
-    min-width: 110px;
-    font-size: 0.78rem;
+    width: 170px;
+    min-width: 170px;
+    font-size: 0.72rem;
     font-weight: bold;
     color: var(--text-color);
     padding-right: 4px;
     flex-shrink: 0;
+    white-space: nowrap;
 }
 
 .plan-unified-chart {
@@ -3026,9 +3027,9 @@ footer .update-date {
 
 @media screen and (max-width: 640px) {
     .plan-unified-name {
-        width: 95px;
-        min-width: 95px;
-        font-size: 0.65rem;
+        width: 135px;
+        min-width: 135px;
+        font-size: 0.6rem;
     }
     .plan-unified-chart {
         min-width: 120px;
