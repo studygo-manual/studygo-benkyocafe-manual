@@ -147,11 +147,11 @@
                 <div class="card">
                     <h3 style="border-left-color: #2196F3; color: #0D47A1;">よく見られている項目</h3>
                     <div class="quick-links" id="popularViews">
-                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="見学予約対応">
+                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="ドロップイン利用・見学予約">
                             <span class="quick-link-icon">&#127970;</span>
                             <span>見学予約対応</span>
                         </a>
-                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="オプション（ロッカー）">
+                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="オプション">
                             <span class="quick-link-icon">&#128451;</span>
                             <span>オプション（ロッカー）</span>
                         </a>
@@ -176,11 +176,11 @@
                 <div class="card">
                     <h3 style="border-left-color: #FF9800; color: #E65100;">よく検索されている項目</h3>
                     <div class="quick-links" id="popularSearches">
-                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="対応フロー">
+                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="月額契約">
                             <span class="quick-link-icon">&#128203;</span>
-                            <span>対応フロー</span>
+                            <span>月額契約</span>
                         </a>
-                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="契約">
+                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="月額契約">
                             <span class="quick-link-icon">&#128221;</span>
                             <span>契約</span>
                         </a>
@@ -188,7 +188,7 @@
                             <span class="quick-link-icon">&#128465;</span>
                             <span>解約</span>
                         </a>
-                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="チェックイン・アウト / ドロップイン">
+                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="ドロップイン利用・見学予約">
                             <span class="quick-link-icon">&#9989;</span>
                             <span>チェックイン</span>
                         </a>
@@ -196,7 +196,7 @@
                             <span class="quick-link-icon">&#128336;</span>
                             <span>営業時間</span>
                         </a>
-                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="Akerun">
+                        <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="月額契約">
                             <span class="quick-link-icon">&#128273;</span>
                             <span>Akerun</span>
                         </a>
@@ -1367,261 +1367,48 @@
         </section>
 
 
-        <!-- スタディGO > 各種手続き -->
+        <!-- スタディGO > 対応フロー -->
         <section id="procedures" data-category="studygo">
-            <h2>各種手続き</h2>
+            <h2>対応フロー</h2>
 
-            <!-- 対応フロー（カテゴリ別） -->
+            <!-- カード1: 月額契約 -->
             <div class="card">
-                <h3>対応フロー</h3>
-                <p style="margin-bottom: 15px;">手続きの種類ごとに、お客様・スタッフ・事務手続きの流れを確認できます。</p>
+                <h3>月額契約</h3>
+                <p>見学予約またはアプリからの新規月額契約の流れです。契約はすべてアプリで完結しますが、初回来店時にスタッフの対応が必要です。</p>
 
-                <!-- タブ切り替え -->
-                <div class="flow-category-tabs">
-                    <button class="flow-category-tab active" data-flow-target="flow-monthly">月額契約</button>
-                    <button class="flow-category-tab" data-flow-target="flow-monthly-option">月額契約＋オプション</button>
-                    <button class="flow-category-tab" data-flow-target="flow-option">オプション</button>
-                    <button class="flow-category-tab" data-flow-target="flow-dropin">ドロップイン利用</button>
-                </div>
-
-                <!-- ① 月額契約 -->
-                <div id="flow-monthly" class="flow-category-content active">
-                    <div class="flow-role-section">
-                        <div class="flow-role-header role-customer">
-                            <span class="role-icon">&#128100;</span>
-                            <span>お客様がやること</span>
-                        </div>
-                        <div class="flow-role-body">
-                            <p class="preparing-notice">内容準備中</p>
-                            <a href="#app-flow" class="app-link-btn section-link" data-link-section="app-flow">&#128241; アプリ画面遷移ガイドを見る</a>
-                        </div>
-                    </div>
-                    <div class="flow-role-section">
-                        <div class="flow-role-header role-staff">
-                            <span class="role-icon">&#128119;</span>
-                            <span>スタッフがやること</span>
-                        </div>
-                        <div class="flow-role-body">
-                            <p class="preparing-notice">内容準備中</p>
-                        </div>
-                    </div>
-                    <div class="flow-role-section">
-                        <div class="flow-role-header role-admin">
-                            <span class="role-icon">&#128203;</span>
-                            <span>事務手続き</span>
-                        </div>
-                        <div class="flow-role-body">
-                            <p class="preparing-notice">内容準備中</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ② 月額契約＋オプション -->
-                <div id="flow-monthly-option" class="flow-category-content">
-                    <div class="flow-role-section">
-                        <div class="flow-role-header role-customer">
-                            <span class="role-icon">&#128100;</span>
-                            <span>お客様がやること</span>
-                        </div>
-                        <div class="flow-role-body">
-                            <p class="preparing-notice">内容準備中</p>
-                            <a href="#app-flow" class="app-link-btn section-link" data-link-section="app-flow">&#128241; アプリ画面遷移ガイドを見る</a>
-                        </div>
-                    </div>
-                    <div class="flow-role-section">
-                        <div class="flow-role-header role-staff">
-                            <span class="role-icon">&#128119;</span>
-                            <span>スタッフがやること</span>
-                        </div>
-                        <div class="flow-role-body">
-                            <p class="preparing-notice">内容準備中</p>
-                        </div>
-                    </div>
-                    <div class="flow-role-section">
-                        <div class="flow-role-header role-admin">
-                            <span class="role-icon">&#128203;</span>
-                            <span>事務手続き</span>
-                        </div>
-                        <div class="flow-role-body">
-                            <p class="preparing-notice">内容準備中</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ③ オプション -->
-                <div id="flow-option" class="flow-category-content">
-                    <div class="flow-role-section">
-                        <div class="flow-role-header role-customer">
-                            <span class="role-icon">&#128100;</span>
-                            <span>お客様がやること</span>
-                        </div>
-                        <div class="flow-role-body">
-                            <p class="preparing-notice">内容準備中</p>
-                            <a href="#app-flow" class="app-link-btn section-link" data-link-section="app-flow">&#128241; アプリ画面遷移ガイドを見る</a>
-                        </div>
-                    </div>
-                    <div class="flow-role-section">
-                        <div class="flow-role-header role-staff">
-                            <span class="role-icon">&#128119;</span>
-                            <span>スタッフがやること</span>
-                        </div>
-                        <div class="flow-role-body">
-                            <p class="preparing-notice">内容準備中</p>
-                        </div>
-                    </div>
-                    <div class="flow-role-section">
-                        <div class="flow-role-header role-admin">
-                            <span class="role-icon">&#128203;</span>
-                            <span>事務手続き</span>
-                        </div>
-                        <div class="flow-role-body">
-                            <p class="preparing-notice">内容準備中</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ④ ドロップイン利用 -->
-                <div id="flow-dropin" class="flow-category-content">
-                    <div class="flow-role-section">
-                        <div class="flow-role-header role-customer">
-                            <span class="role-icon">&#128100;</span>
-                            <span>お客様がやること</span>
-                        </div>
-                        <div class="flow-role-body">
-                            <p class="preparing-notice">内容準備中</p>
-                            <a href="#app-flow" class="app-link-btn section-link" data-link-section="app-flow">&#128241; アプリ画面遷移ガイドを見る</a>
-                        </div>
-                    </div>
-                    <div class="flow-role-section">
-                        <div class="flow-role-header role-staff">
-                            <span class="role-icon">&#128119;</span>
-                            <span>スタッフがやること</span>
-                        </div>
-                        <div class="flow-role-body">
-                            <p class="preparing-notice">内容準備中</p>
-                        </div>
-                    </div>
-                    <div class="flow-role-section">
-                        <div class="flow-role-header role-admin">
-                            <span class="role-icon">&#128203;</span>
-                            <span>事務手続き</span>
-                        </div>
-                        <div class="flow-role-body">
-                            <p class="preparing-notice">内容準備中</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card deadline-card">
-                <h3>締日（〆日）</h3>
-                <table class="info-table">
-                    <tr>
-                        <th>毎月10日まで</th>
-                        <td>→ <strong>翌月1日</strong>から適用</td>
-                    </tr>
-                    <tr>
-                        <th>11日以降</th>
-                        <td>→ <strong>翌々月1日</strong>から適用</td>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="card">
-                <h3>手続きの種類</h3>
-                <h4>店頭受付が必要な手続き</h4>
-                <div class="plan-grid">
-                    <div class="plan-item">
-                        <h4>プラン解約（退会）</h4>
-                        <p>アプリおよび管理画面で操作が必要</p>
-                    </div>
-                    <div class="plan-item">
-                        <h4>オプション契約（新規）</h4>
-                        <p>ロッカー(小)(大)の新規契約</p>
-                    </div>
-                </div>
-                <h4>アプリで手続き可能（店頭不要）</h4>
-                <div class="app-action-grid">
-                    <a href="#app-flow" class="app-action-btn section-link" data-link-section="app-flow">休会</a>
-                    <a href="#app-flow" class="app-action-btn section-link" data-link-section="app-flow">ロッカー解約</a>
-                    <a href="#app-flow" class="app-action-btn section-link" data-link-section="app-flow">再開・プラン変更</a>
-                    <a href="#app-flow" class="app-action-btn section-link" data-link-section="app-flow">連絡先・支払い方法の変更</a>
-                </div>
-            </div>
-
-            <div class="card">
-                <h3>入会について</h3>
-                <h4>入会時に必要なもの</h4>
-                <ul>
-                    <li>入会金 <strong>11,000円(税込)</strong> + 当月日割り分月会費 + 翌月分月会費</li>
-                    <li>クレジットカード</li>
-                    <li>スマートフォン</li>
-                    <li>身分証（<strong>氏名、現住所</strong>が記載されているもの）</li>
-                </ul>
-                <p class="warning-text">※未成年の方は保護者同意書が必要となります。</p>
-                <h4>年齢制限</h4>
-                <ul>
-                    <li>スタディGO・勉強カフェは<strong>16歳以上</strong>を対象としたサービスです</li>
-                    <li><strong>15歳以下（中学生以下）</strong>の方はご利用いただけません</li>
-                    <li>16歳以上の現役高校生の方は、プランに関わらずご利用時間は原則<strong>21:00まで</strong>となります</li>
-                    <li>未成年の方の入会時には<strong>保護者同意書</strong>が必要となります</li>
-                    <li><strong>保護者同意書</strong>に保護者の方が「21時以降の利用を認める」旨を記載した場合は、<strong>21:00以降もご利用可能</strong>となります</li>
-                </ul>
-            </div>
-
-            <div class="card">
-                <h3>見学予約対応</h3>
-                <h4>見学予約が入ったら</h4>
-                <div class="flow-steps">
+                <div class="flow-steps flow-steps-vertical">
                     <div class="flow-step">
-                        <h4>1. メール通知</h4>
-                        <p>登録の店舗メールアドレスに予約のお知らせが届く</p>
+                        <h4>STEP 1: 契約希望</h4>
+                        <p><strong>【お客様】</strong> 見学予約またはアプリから契約を希望する</p>
                     </div>
                     <div class="flow-step">
-                        <h4>2. 管理画面で確認</h4>
-                        <p>管理画面の「見学予約一覧」で確認</p>
+                        <h4>STEP 2: アプリで会員登録</h4>
+                        <p><strong>【お客様】</strong> アプリで会員登録・クレジットカード登録・クーポンコード入力（<strong style="font-size: 1.1em; color: #B71C1C; background: #FFF9C4; padding: 1px 6px; border-radius: 4px;">cp210n</strong> 必須）</p>
                     </div>
                     <div class="flow-step">
-                        <h4>3. ステータス変更</h4>
-                        <p>◎見学可能 → 即確定<br>△対応不明 → 仮予約</p>
+                        <h4>STEP 3: プラン選択・契約完了</h4>
+                        <p><strong>【お客様】</strong> プラン選択・利用開始日設定・契約完了</p>
                     </div>
                     <div class="flow-step">
-                        <h4>4. メッセージ送信</h4>
-                        <p>ユーザーにアプリメッセージを送信（推奨）</p>
+                        <h4>STEP 4: 新規契約の確認</h4>
+                        <p><strong>【スタッフ】</strong> ダッシュボードの「新規契約したお客様」で確認</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>STEP 5: 来店手続きの案内</h4>
+                        <p><strong>【スタッフ】</strong> 店外契約 → メッセージで来店手続きの案内・アポイント取得 ／ 店内契約 → そのまま手続き</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>STEP 6: 初回来店対応</h4>
+                        <p><strong>【スタッフ】</strong> 施設ルール読み合せ、利用方法確認（Akerun・チェックイン）、身分証確認、緊急連絡先伝達</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>STEP 7: 入会報告</h4>
+                        <p><strong>【スタッフ】</strong> チャットワーク【入会情報】に会員番号・氏名を報告</p>
                     </div>
                 </div>
-                <p class="note">※アプリメッセージは見学予約対応や店外契約時のやり取りで利用します。Lステップとの併用も可能です。</p>
-                <h4>見学対応</h4>
-                <ul>
-                    <li>通常の見学対応と同じ内容でOK（営業時間や利用ルール等の説明）</li>
-                    <li class="warning-text">※店舗で提供されているプランの紹介・説明や、他サービスの紹介・説明はお控えください</li>
-                </ul>
-                <h4>見学後の契約</h4>
-                <p>気に入っていただけたら「アプリを通じて」契約してもらいます。ユーザーがアプリで完結できるので、店舗側作業はありません。</p>
-                <h4>見学予約日時経過後</h4>
-                <div class="flow-steps">
-                    <div class="flow-step">
-                        <h4>1. 来店確認</h4>
-                        <p>来店あり →「見学実施」<br>来店なし →「見学キャンセル」</p>
-                    </div>
-                    <div class="flow-step">
-                        <h4>2. ステータス変更</h4>
-                        <p>変更後、一覧から非表示になりアーカイブされます</p>
-                    </div>
-                </div>
-            </div>
 
-            <div class="card">
-                <h3>契約</h3>
-                <h4>利用開始日</h4>
-                <table class="info-table">
-                    <tr>
-                        <th>通常</th>
-                        <td>会員様がアプリ上で<strong>翌日以降の希望日</strong>を利用開始日として設定し、契約できます。</td>
-                    </tr>
-                </table>
-
-                <div class="card critical" style="margin-top: 15px; box-shadow: none;">
+                <!-- 即日入会 -->
+                <div class="card critical" style="margin-top: 20px; box-shadow: none;">
                     <h3 style="border-left: none; padding-left: 0;">即日入会の手順</h3>
                     <p>見学当日にそのまま入会する場合の手順です。<strong>設定の戻し忘れ</strong>は他のお客様に影響するため、特に注意してください。</p>
                     <div class="staff-action" style="background: #FFF3E0; border-left-color: #f44336;">
@@ -1634,34 +1421,26 @@
                         </ol>
                     </div>
                 </div>
-                <h4>店内で契約した場合</h4>
-                <p>契約はユーザーがアプリで行うため、店舗側作業はありません。契約後は以下の業務を行ってください：</p>
+
+                <!-- 補足情報 -->
+                <h4>入会時に必要なもの</h4>
                 <ul>
-                    <li>施設ルールの読み合せ</li>
-                    <li>利用方法の確認（Akerun・チェックイン等）</li>
-                    <li>身分証明書の確認、コピー等</li>
-                    <li>緊急連絡先を伝える</li>
+                    <li>入会金 <strong>11,000円(税込)</strong> + 当月日割り分月会費 + 翌月分月会費</li>
+                    <li>クレジットカード</li>
+                    <li>スマートフォン</li>
+                    <li>身分証（<strong>氏名、現住所</strong>が記載されているもの）</li>
                 </ul>
-                <h4>店外で契約した場合</h4>
-                <p>その場にいないで契約したユーザー（見学後の後日契約、ドロップインからの転換、アプリからの直接契約）への対応：</p>
-                <div class="flow-steps">
-                    <div class="flow-step">
-                        <h4>1. 契約確認</h4>
-                        <p>「メール」通知とダッシュボードの「新規契約したお客様」で確認</p>
-                    </div>
-                    <div class="flow-step">
-                        <h4>2. ユーザーに連絡</h4>
-                        <p>アプリの「メッセージ」またはメールアドレスで連絡（来店までのやり取りに利用）</p>
-                    </div>
-                    <div class="flow-step">
-                        <h4>3. 手続き案内</h4>
-                        <p>初回利用前の所定手続き（ルール説明、利用方法の説明、身分証確認等）が必要な旨を伝える</p>
-                    </div>
-                    <div class="flow-step">
-                        <h4>4. アポイント</h4>
-                        <p>来店できる日のアポイントメントを取得（利用開始初日以前が推奨）</p>
-                    </div>
-                </div>
+                <p class="warning-text">※未成年の方は保護者同意書が必要となります。</p>
+
+                <h4>年齢制限</h4>
+                <ul>
+                    <li>スタディGO・勉強カフェは<strong>16歳以上</strong>を対象としたサービスです</li>
+                    <li><strong>15歳以下（中学生以下）</strong>の方はご利用いただけません</li>
+                    <li>16歳以上の現役高校生の方は、プランに関わらずご利用時間は原則<strong>21:00まで</strong>となります</li>
+                    <li>未成年の方の入会時には<strong>保護者同意書</strong>が必要となります</li>
+                    <li><strong>保護者同意書</strong>に保護者の方が「21時以降の利用を認める」旨を記載した場合は、<strong>21:00以降もご利用可能</strong>となります</li>
+                </ul>
+
                 <h4>月額プランの仕組み</h4>
                 <table class="info-table">
                     <tr>
@@ -1681,58 +1460,189 @@
                         <td>当月10日までに解約申請が無ければ、15日に翌月分請求。1日に1ヶ月単位で自動請求</td>
                     </tr>
                 </table>
+
+                <h4>締日ルール</h4>
+                <table class="info-table">
+                    <tr>
+                        <th>毎月10日まで</th>
+                        <td>→ <strong>翌月1日</strong>から適用（プラン変更・解約等）</td>
+                    </tr>
+                    <tr>
+                        <th>11日以降</th>
+                        <td>→ <strong>翌々月1日</strong>から適用</td>
+                    </tr>
+                </table>
+
+                <h4>Akerun（入退室管理）</h4>
+                <p>スマートロックシステム「Akerun」を導入しており、スタディGOアプリと連携して入退室を管理しています。</p>
+                <ul>
+                    <li>Akerunオートロック<strong>常時ON</strong>（WSは除く）</li>
+                    <li>QRコードは<strong>入口</strong>に設置（既存会員との区別化のため）</li>
+                </ul>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <h4>1. アプリ起動</h4>
+                        <p>スタディGOアプリを開く</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>2. QR読取</h4>
+                        <p>「チェックイン」からQRコードを読み取る</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>3. 画面確認</h4>
+                        <p>チェックイン画面を確認</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>4. 入室</h4>
+                        <p>「ドアを開錠しました！」と表示されたら入室可能</p>
+                    </div>
+                </div>
+
                 <p class="note">プラン変更などの操作は <a href="#app-flow" class="section-link" data-link-section="app-flow">アプリ画面遷移ガイド</a> に記載しています。</p>
             </div>
 
+            <!-- カード2: 月額契約＋オプション -->
             <div class="card">
-                <h3>解約（退会）</h3>
-                <h4>解約の基本情報</h4>
-                <table class="info-table">
-                    <tr>
-                        <th>受付時間</th>
-                        <td><strong>有人時間帯のみ</strong>（平日 17:00〜21:00 ／ 土曜 12:00〜21:00 ／ 日祝 12:00〜21:00）</td>
-                    </tr>
-                    <tr>
-                        <th>退会手続き</th>
-                        <td><strong>来店必須</strong></td>
-                    </tr>
-                    <tr>
-                        <th>解約申請</th>
-                        <td>前月11日〜当月10日までの申請で当月末解約</td>
-                    </tr>
-                </table>
-                <div class="warning" style="margin-top: 12px;">
-                    <p><strong>重要：</strong>解約（退会）はアプリ上で申請ができますが、<strong>店頭でスタッフが手続きを完了させる必要があります</strong>。毎月10日の21時（有人時間終了）までにスタッフが対応できないと、プランが自動請求され翌月も継続となります。お客様には有人時間帯内にお早めの来店をお願いしてください。</p>
-                </div>
-                <p class="note">※休会の手続きはアプリから可能です。詳細は <a href="#app-flow" class="section-link" data-link-section="app-flow">アプリ画面遷移ガイド</a> をご覧ください。</p>
-                <h4>解約時の対応フロー</h4>
-                <div class="flow-steps">
+                <h3>月額契約＋オプション</h3>
+                <p>月額契約と同時にロッカーオプションも契約する場合の流れです。月額契約の手続き完了後に、ロッカーの手続きを行います。</p>
+
+                <div class="flow-steps flow-steps-vertical">
                     <div class="flow-step">
-                        <h4>1. 解約申請</h4>
-                        <p>10日までの解約申請で月末での契約終了 → 11日に一覧に解約者が追加</p>
+                        <h4>STEP 1: 月額契約完了</h4>
+                        <p><strong>【お客様】</strong> 月額契約の手続きを完了する（上記「月額契約」の流れと同じ）</p>
                     </div>
                     <div class="flow-step">
-                        <h4>2. 解約者確認</h4>
-                        <p>ダッシュボードで解約者を確認</p>
+                        <h4>STEP 2: 有人時間帯に来店</h4>
+                        <p><strong>【お客様】</strong> 有人時間帯に来店する</p>
                     </div>
                     <div class="flow-step">
-                        <h4>3. ロッカー確認</h4>
-                        <p>ロッカー契約中の場合、撤去が完了しているか確認。完了済みならアプリ上でロッカー解約処理を行う</p>
+                        <h4>STEP 3: ロッカー確認</h4>
+                        <p><strong>【スタッフ】</strong> 空きロッカーの確認・ロッカー番号と暗証番号を決定</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>STEP 4: オプション契約</h4>
+                        <p><strong>【お客様】</strong> アプリでオプション（ロッカー）を契約（日割り・即時決済）</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>STEP 5: 管理表記入</h4>
+                        <p><strong>【スタッフ】</strong> <a href="https://docs.google.com/spreadsheets/d/1PybeQcvBuE0CbBeVCrUNlkIBdC8qjMW-U8NWdnt8PMo/edit?gid=1597720472#gid=1597720472" target="_blank" class="section-link">ロッカー管理表</a>に記入</p>
                     </div>
                 </div>
-                <h4>管理画面での操作</h4>
-                <ul>
-                    <li>「鍵回収ステータス」で管理（未回収/回収済み）</li>
-                    <li>対応完了後は「確認済み」で一覧から非表示に</li>
-                </ul>
+
+                <div class="warning">
+                    <h4>ロッカー契約注意事項</h4>
+                    <p><strong>1. 利用に関して</strong>：ロッカーは店頭での手続きが必要です。スタッフ有人時間帯にご来店ください。</p>
+                    <p><strong>2. 鍵の管理</strong>：鍵の紛失・破損時には、再発行手数料(3,300円)が発生いたします。</p>
+                </div>
             </div>
 
+            <!-- カード3: オプション -->
             <div class="card">
-                <h3>チェックイン・アウト / ドロップイン</h3>
-                <div class="important-box">
-                    <p>スタッフがいる時間帯は、チェックイン完了画面を見せてもらってください。</p>
+                <h3>オプション</h3>
+                <p>既に月額契約中のお客様がロッカーオプションを追加契約する場合の流れです。契約の申請と決済はアプリで行います。</p>
+
+                <div class="flow-steps flow-steps-vertical">
+                    <div class="flow-step">
+                        <h4>STEP 1: オプション契約希望</h4>
+                        <p><strong>【お客様】</strong> 有人時間帯に来店してオプション契約を申し出る</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>STEP 2: ロッカー確認</h4>
+                        <p><strong>【スタッフ】</strong> 空きロッカーの確認・ロッカー番号と暗証番号を決定</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>STEP 3: アプリで契約</h4>
+                        <p><strong>【お客様】</strong> アプリでオプション（ロッカー）を契約（日割り・即時決済）</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>STEP 4: 管理表記入</h4>
+                        <p><strong>【スタッフ】</strong> <a href="https://docs.google.com/spreadsheets/d/1PybeQcvBuE0CbBeVCrUNlkIBdC8qjMW-U8NWdnt8PMo/edit?gid=1597720472#gid=1597720472" target="_blank" class="section-link">ロッカー管理表</a>に記入</p>
+                    </div>
                 </div>
 
+                <table class="info-table">
+                    <tr>
+                        <th>契約方法</th>
+                        <td>アプリで契約（日割り）、即時決済</td>
+                    </tr>
+                    <tr>
+                        <th>契約タイミング</th>
+                        <td><strong>有人時間帯のみ</strong>（ロッカーの場所・暗証番号が決まったとき）</td>
+                    </tr>
+                    <tr>
+                        <th>解約方法</th>
+                        <td>アプリで解約可能（店頭不要）</td>
+                    </tr>
+                </table>
+                <div class="warning">
+                    <h4>ロッカー契約注意事項</h4>
+                    <p><strong>1. 利用に関して</strong>：ロッカーは店頭での手続きが必要です。スタッフ有人時間帯にご来店ください。</p>
+                    <p><strong>2. 鍵の管理</strong>：鍵の紛失・破損時には、再発行手数料(3,300円)が発生いたします。</p>
+                </div>
+                <div class="warning">
+                    <h4>ロッカー解約注意事項</h4>
+                    <p><strong>1. 荷物の撤去</strong>：解約日までにロッカー内の荷物をすべてお持ち帰りください。残置物がある場合は翌月分の料金を請求する場合があります。</p>
+                    <p><strong>2. 鍵の返却</strong>：解約日当日または指定日までに受付まで鍵をご返却ください。紛失の場合は再発行手数料(3,300円)が発生します。</p>
+                </div>
+            </div>
+
+            <!-- カード4: ドロップイン利用・見学予約 -->
+            <div class="card">
+                <h3>ドロップイン利用・見学予約</h3>
+                <p>ドロップイン（時間制）利用と見学予約の対応フローです。</p>
+
+                <h4>ドロップイン利用のフロー</h4>
+                <div class="flow-steps flow-steps-vertical">
+                    <div class="flow-step">
+                        <h4>STEP 1: 来店</h4>
+                        <p><strong>【お客様】</strong> 有人時間帯に来店する</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>STEP 2: チェックイン</h4>
+                        <p><strong>【お客様】</strong> アプリでQRコード読み取り → ドロップインプラン選択 → 契約即チェックイン（1日最大料金を先に請求）</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>STEP 3: 画面確認</h4>
+                        <p><strong>【スタッフ】</strong> チェックイン完了画面を確認する</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>STEP 4: チェックアウト・精算</h4>
+                        <p><strong>【お客様】</strong> 利用終了時にQRコード読み取りでチェックアウト → 精算</p>
+                    </div>
+                </div>
+
+                <h4>見学予約のフロー</h4>
+                <div class="flow-steps flow-steps-vertical">
+                    <div class="flow-step">
+                        <h4>STEP 1: 見学予約</h4>
+                        <p><strong>【お客様】</strong> アプリから見学予約を行う</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>STEP 2: 予約確認・ステータス変更</h4>
+                        <p><strong>【スタッフ】</strong> メール通知を確認 → 管理画面「見学予約一覧」でステータス変更（予約確定／仮予約）</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>STEP 3: お客様に連絡</h4>
+                        <p><strong>【スタッフ】</strong> メッセージでお客様に確認連絡</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>STEP 4: 見学当日</h4>
+                        <p><strong>【スタッフ】</strong> 通常の見学対応（営業時間や利用ルール等の説明）</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>STEP 5: 契約</h4>
+                        <p><strong>【お客様】</strong> 気に入ったらアプリで契約</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>STEP 6: 不来店の場合</h4>
+                        <p><strong>【スタッフ】</strong> 予約時間から30分経過後「見学キャンセル」に変更</p>
+                    </div>
+                </div>
+                <div class="tips">
+                    <p><strong>見学対応の注意：</strong>店舗で提供されているプランの紹介・説明や、他サービスの紹介・説明はお控えください。</p>
+                </div>
+
+                <!-- 比較表 -->
                 <h4>月額利用とドロップイン利用の違い</h4>
                 <table class="comparison-table">
                     <thead>
@@ -1781,6 +1691,10 @@
                     </tbody>
                 </table>
 
+                <!-- チェックイン提示ガイド（SVGイラスト） -->
+                <div class="important-box" style="margin-top: 20px;">
+                    <p>スタッフがいる時間帯は、チェックイン完了画面を見せてもらってください。</p>
+                </div>
                 <div class="checkin-steps-guide">
                     <div class="checkin-step-card step-ok">
                         <div class="step-badge">STEP 1</div>
@@ -1848,6 +1762,7 @@
                     </div>
                 </div>
 
+                <!-- チェックイン・チェックアウトの流れ -->
                 <h4>チェックインの流れ</h4>
                 <div class="flow-steps">
                     <div class="flow-step">
@@ -1864,6 +1779,7 @@
                     </div>
                 </div>
                 <p class="note">※QR読取エラー時は店舗コードでもチェックイン可能です（非推奨）</p>
+
                 <h4>チェックアウトの流れ</h4>
                 <div class="flow-steps">
                     <div class="flow-step">
@@ -1878,110 +1794,67 @@
                 <div class="warning">
                     <p><strong>重要：</strong>チェックアウトが行われるまで利用があったものとみなされ、課金対象の場合は課金されます。営業終了時間に強制チェックアウトが行われます。</p>
                 </div>
-                <h4>チェックアウト時の精算</h4>
-                <ul>
-                    <li>月額プラン時間超過分の算出・請求</li>
-                    <li>ドロップイン利用時の1日最大請求額からの精算（返金または請求）</li>
-                    <li>超過時間は店舗設定の〇〇円/1分で計算（計50円未満は切り捨て）</li>
-                </ul>
 
-                <h4>ドロップイン利用について</h4>
-                <ul>
-                    <li><strong>有人時間帯のみ</strong>対応</li>
-                    <li>スタディGO利用のみ</li>
-                    <li class="warning-text">※外国人のお客様は対応に注意</li>
-                </ul>
-                <p><strong>想定されるシーン：</strong></p>
+                <h4>ドロップイン利用の想定シーン</h4>
                 <ul>
                     <li>月額利用を検討しているが、まずはお試しとして利用</li>
                     <li>月額会員だが、プラン時間外にチェックインする場合</li>
                     <li>月額会員だが、〇〇分プランの残時間が無い状態</li>
                     <li>勉強場所を近辺で探していた人</li>
                 </ul>
-                <h4>月額会員のドロップイン利用</h4>
-                <p>月額会員でもプラン時間前にドロップイン → プラン時間内に突入 → プラン時間外の超過利用が可能です。</p>
                 <div class="tips">
-                    <p>これを容認する場合、鍵付与の際にプラン時間内に限定せず、営業時間全ての鍵付与を行う必要があります。</p>
-                </div>
-
-                <h4>利用履歴の確認方法</h4>
-                <div class="flow-steps">
-                    <div class="flow-step">
-                        <h4>1. チェックイン実績</h4>
-                        <p>管理画面の「チェックイン実績」をクリック</p>
-                    </div>
-                    <div class="flow-step">
-                        <h4>2. 絞り込み</h4>
-                        <p>店舗で絞り込み → 日付で範囲指定</p>
-                    </div>
-                </div>
-                <p>チェックアウト後は明細確認可能、チェックアウト前は時間編集可能です。</p>
-                <h4>打刻修正</h4>
-                <p><strong>基本不可</strong>です。お客様から打刻修正の依頼があった場合は、対応できない旨をお伝えください。</p>
-            </div>
-
-            <div class="card">
-                <h3>Akerun（入退室管理）</h3>
-                <p>スマートロックシステム「Akerun」を導入しており、スタディGOアプリと連携して入退室を管理しています。</p>
-                <h4>基本設定</h4>
-                <ul>
-                    <li>Akerunオートロック<strong>常時ON</strong>（WSは除く）</li>
-                    <li>QRコードは<strong>入口</strong>に設置（既存会員との区別化のため）</li>
-                </ul>
-                <h4>開錠の流れ</h4>
-                <div class="flow-steps">
-                    <div class="flow-step">
-                        <h4>1. アプリ起動</h4>
-                        <p>スタディGOアプリを開く</p>
-                    </div>
-                    <div class="flow-step">
-                        <h4>2. QR読取</h4>
-                        <p>「チェックイン」からQRコードを読み取る</p>
-                    </div>
-                    <div class="flow-step">
-                        <h4>3. 画面確認</h4>
-                        <p>チェックイン画面を確認</p>
-                    </div>
-                    <div class="flow-step">
-                        <h4>4. 入室</h4>
-                        <p>「ドアを開錠しました！」と表示されたら入室可能</p>
-                    </div>
-                </div>
-                <div class="tips">
-                    <p>ご利用時に「チェックイン画面」を確認させていただく場合がございます。ご利用終了後はチェックアウト忘れにご注意ください。</p>
+                    <p>月額会員でもプラン時間前にドロップイン → プラン時間内に突入 → プラン時間外の超過利用が可能です。これを容認する場合、鍵付与の際にプラン時間内に限定せず、営業時間全ての鍵付与を行う必要があります。</p>
                 </div>
             </div>
 
+            <!-- カード5: 解約 -->
             <div class="card">
-                <h3>オプション（ロッカー）</h3>
-                <p><strong>契約の申請と決済はアプリで出来ます。</strong></p>
-                <p>ロッカーの契約状況は <a href="https://docs.google.com/spreadsheets/d/1PybeQcvBuE0CbBeVCrUNlkIBdC8qjMW-U8NWdnt8PMo/edit?gid=1597720472#gid=1597720472" target="_blank" class="section-link">新宿エリアロッカー契約者管理表</a> で管理しています。どのロッカーを誰が利用しているかを記載してください。</p>
+                <h3>解約</h3>
+                <p>月額プランの解約（退会）手続きの流れです。アプリで申請後、店頭での対応が必要です。</p>
+
+                <div class="flow-steps flow-steps-vertical">
+                    <div class="flow-step">
+                        <h4>STEP 1: 解約申請</h4>
+                        <p><strong>【お客様】</strong> アプリで解約申請（毎月10日まで → 当月末解約 ／ 11日以降 → 翌月末解約）</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>STEP 2: 来店</h4>
+                        <p><strong>【お客様】</strong> 有人時間帯に来店する</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>STEP 3: 解約者確認</h4>
+                        <p><strong>【スタッフ】</strong> ダッシュボードで解約者を確認</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>STEP 4: ロッカー対応</h4>
+                        <p><strong>【スタッフ】</strong> ロッカー契約がある場合 → 荷物撤去・鍵返却を確認 → アプリでロッカー解約処理</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>STEP 5: ステータス更新</h4>
+                        <p><strong>【スタッフ】</strong> 「鍵回収ステータス」を更新（未回収／回収済み）</p>
+                    </div>
+                </div>
+
+                <h4>解約の基本情報</h4>
                 <table class="info-table">
                     <tr>
-                        <th>契約方法</th>
-                        <td>アプリで契約（日割り）、即時決済</td>
+                        <th>受付時間</th>
+                        <td><strong>有人時間帯のみ</strong>（平日 17:00〜21:00 ／ 土曜 12:00〜21:00 ／ 日祝 12:00〜21:00）</td>
                     </tr>
                     <tr>
-                        <th>契約タイミング</th>
-                        <td><strong>有人時間帯のみ</strong>（ロッカーの場所・暗証番号が決まったとき）</td>
+                        <th>退会手続き</th>
+                        <td><strong>来店必須</strong></td>
                     </tr>
                     <tr>
-                        <th>解約方法</th>
-                        <td>アプリで解約可能（店頭不要）</td>
+                        <th>解約申請締日</th>
+                        <td>前月11日〜当月10日までの申請で当月末解約</td>
                     </tr>
                 </table>
-                <div class="warning">
-                    <h4>ロッカー契約注意事項</h4>
-                    <p><strong>1. 利用に関して</strong>：ロッカーは店頭での手続きが必要です。スタッフ有人時間帯にご来店ください。</p>
-                    <p><strong>2. 鍵の管理</strong>：鍵の紛失・破損時には、再発行手数料(3,300円)が発生いたします。</p>
+                <div class="warning" style="margin-top: 12px;">
+                    <p><strong>重要：</strong>解約（退会）はアプリ上で申請ができますが、<strong>店頭でスタッフが手続きを完了させる必要があります</strong>。毎月10日の21時（有人時間終了）までにスタッフが対応できないと、プランが自動請求され翌月も継続となります。お客様には有人時間帯内にお早めの来店をお願いしてください。</p>
                 </div>
-                <div class="warning">
-                    <h4>ロッカー解約注意事項</h4>
-                    <p><strong>1. 荷物の撤去</strong>：解約日までにロッカー内の荷物をすべてお持ち帰りください。残置物がある場合は翌月分の料金を請求する場合があります。</p>
-                    <p><strong>2. 鍵の返却</strong>：解約日当日または指定日までに受付まで鍵をご返却ください。紛失の場合は再発行手数料(3,300円)が発生します。</p>
-                </div>
+                <p class="note">※休会の手続きはアプリから可能です。詳細は <a href="#app-flow" class="section-link" data-link-section="app-flow">アプリ画面遷移ガイド</a> をご覧ください。</p>
             </div>
-
 
         </section>
 
@@ -4209,7 +4082,7 @@
                 ]
             },
             'procedures': {
-                title: '各種手続き',
+                title: '対応フロー',
                 questions: [
                     {
                         q: 'スタディGOでの支払い方法は？',
@@ -4594,21 +4467,6 @@
         addQuizButtons();
         updateTrainingDashboard();
 
-        // ===================================
-        // 対応フロー タブ切り替え
-        // ===================================
-        document.querySelectorAll('.flow-category-tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                const targetId = this.dataset.flowTarget;
-                // タブの切り替え
-                this.closest('.flow-category-tabs').querySelectorAll('.flow-category-tab').forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-                // コンテンツの切り替え
-                this.closest('.card').querySelectorAll('.flow-category-content').forEach(c => c.classList.remove('active'));
-                const target = document.getElementById(targetId);
-                if (target) target.classList.add('active');
-            });
-        });
     </script>
 </body>
 </html>
