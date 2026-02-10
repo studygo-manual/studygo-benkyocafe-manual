@@ -103,7 +103,7 @@
         <!-- マネージャーからのお知らせ（TOP：最新1件のみ表示） -->
         <div id="manager-notice" class="manager-notice">
             <div class="card" style="border-left: 5px solid #FF7043;">
-                <h3 style="border-left-color: #FF7043; color: #E64A19;">マネージャーからのお知らせ</h3>
+                <h3 style="border-left-color: #FF7043; color: #E64A19;">最新のお知らせ</h3>
                 <div id="noticeList">
                     <!-- お知らせデータ（JSで表示制御） -->
                     <div class="notice-card" data-notice-idx="0">
@@ -128,7 +128,7 @@
                     </div>
                 </div>
                 <div class="notice-footer">
-                    <a href="#" id="showAllNoticesLink" class="notice-all-link">他のお知らせを確認する</a>
+                    <a href="#" id="showAllNoticesLink" class="notice-all-link">お知らせ一覧を確認する</a>
                 </div>
             </div>
         </div>
@@ -136,15 +136,6 @@
         <!-- マニュアルの使い方（シンプル版） -->
         <div id="usage-guide" class="usage-guide-compact">
             <p><strong>使い方：</strong>左の目次から項目を選択、または上部の検索バーでキーワード検索できます。</p>
-        </div>
-
-        <!-- 研修進捗（下部に配置） -->
-        <div id="training-dashboard" class="card" style="margin-bottom: 20px;">
-            <h3 id="trainingDashboardTitle" style="border-left-color: #9C27B0; color: #7B1FA2;">研修進捗</h3>
-            <p style="font-size: 0.85rem; color: #666;">各セクションのクイズに合格するとバッジが獲得できます。</p>
-            <div class="training-progress-grid" id="trainingProgressGrid">
-                <!-- JSで動的に生成 -->
-            </div>
         </div>
 
         <!-- よく見られている項目 & よく検索されている項目（下部中央配置） -->
@@ -210,6 +201,15 @@
                 </div>
             </div>
         </section>
+
+        <!-- 研修進捗（一番下に配置） -->
+        <div id="training-dashboard" class="card" style="margin-bottom: 20px;">
+            <h3 id="trainingDashboardTitle" style="border-left-color: #9C27B0; color: #7B1FA2;">研修進捗</h3>
+            <p style="font-size: 0.85rem; color: #666;">各セクションのクイズに合格するとバッジが獲得できます。</p>
+            <div class="training-progress-grid" id="trainingProgressGrid">
+                <!-- JSで動的に生成 -->
+            </div>
+        </div>
 
         <!-- お知らせ一覧（専用表示エリア） -->
         <div id="notice-list-page" style="display: none;">
@@ -307,59 +307,109 @@
                 <h3>料金</h3>
 
                 <h4 class="pricing-label pricing-monthly">月額プラン</h4>
-                <div class="plan-side-by-side">
-                    <div class="plan-table-compact">
-                        <table class="info-table plan-table-sm">
-                            <tr><th>レギュラー</th><td>平17-23 / 土9-22 / 日祝9-21</td><td><strong>14,080円</strong></td></tr>
-                            <tr><th>レギュラー+</th><td>平17-23 / 土日祝 全時間</td><td><strong>19,580円</strong></td></tr>
-                            <tr><th>レギュラーM+</th><td>平11-23 / 土6-22 / 日祝6-21</td><td><strong>17,490円</strong></td></tr>
-                            <tr><th>レギュラーMorning</th><td>平6-10・17-23 / 土6-22 / 日祝6-21</td><td><strong>7,150円</strong></td></tr>
-                            <tr><th>ウィークデイ</th><td>平6-23</td><td><strong>14,080円</strong></td></tr>
-                            <tr><th>WDモーニング</th><td>平6-10</td><td><strong>5,500円</strong></td></tr>
-                            <tr><th>WDライト</th><td>平9-19</td><td><strong>12,870円</strong></td></tr>
-                            <tr><th>ホリデイ</th><td>土6-22 / 日祝6-21</td><td><strong>12,870円</strong></td></tr>
-                            <tr><th>ホリデイMorning</th><td>土日祝6-10</td><td><strong>4,400円</strong></td></tr>
-                            <tr><th>プレミアム</th><td>全営業時間</td><td><strong>23,980円</strong></td></tr>
-                        </table>
+                <!-- プラン一体型テーブル（名称 + 利用可能時間帯 + 料金） -->
+                <div class="plan-unified" style="overflow-x:auto;">
+                    <!-- 時間スケールヘッダー -->
+                    <div class="plan-unified-row plan-unified-header-row">
+                        <div class="plan-unified-name"></div>
+                        <div class="plan-unified-chart"><div class="plan-time-scale"><span style="left:0%">6</span><span style="left:23.5%">10</span><span style="left:47.1%">14</span><span style="left:70.6%">18</span><span style="left:94.1%">22</span></div></div>
+                        <div class="plan-unified-price" style="font-size:0.7rem; color:#999;">月額（税込）</div>
                     </div>
-                    <div class="plan-chart-compact">
-                        <div class="plan-time-chart mini">
-                            <h4 style="font-size:0.8rem; margin-bottom:4px;">利用可能時間帯</h4>
-                            <div class="plan-time-header"><div class="plan-time-name-col"></div><div class="plan-time-bar-col"><div class="plan-time-scale"><span style="left:0%">6</span><span style="left:23.5%">10</span><span style="left:47.1%">14</span><span style="left:70.6%">18</span><span style="left:94.1%">22</span></div></div></div>
-                            <div class="plan-time-row"><div class="plan-time-name"><span class="plan-color-dot" style="background:#4CAF50;"></span>レギュラー</div><div class="plan-time-bars"><div class="plan-bar"><span class="plan-bar-label">平</span><div class="plan-bar-fill" style="left:64.7%;width:35.3%;background:#4CAF50;"></div></div><div class="plan-bar"><span class="plan-bar-label">土</span><div class="plan-bar-fill" style="left:17.6%;width:76.5%;background:#4CAF50;"></div></div><div class="plan-bar"><span class="plan-bar-label">日</span><div class="plan-bar-fill" style="left:17.6%;width:70.6%;background:#4CAF50;"></div></div></div></div>
-                            <div class="plan-time-row"><div class="plan-time-name"><span class="plan-color-dot" style="background:#2E7D32;"></span>レギュラー+</div><div class="plan-time-bars"><div class="plan-bar"><span class="plan-bar-label">平</span><div class="plan-bar-fill" style="left:64.7%;width:35.3%;background:#2E7D32;"></div></div><div class="plan-bar"><span class="plan-bar-label">土</span><div class="plan-bar-fill" style="left:0%;width:94.1%;background:#2E7D32;"></div></div><div class="plan-bar"><span class="plan-bar-label">日</span><div class="plan-bar-fill" style="left:0%;width:88.2%;background:#2E7D32;"></div></div></div></div>
-                            <div class="plan-time-row"><div class="plan-time-name"><span class="plan-color-dot" style="background:#8BC34A;"></span>レギュラーM+</div><div class="plan-time-bars"><div class="plan-bar"><span class="plan-bar-label">平</span><div class="plan-bar-fill" style="left:29.4%;width:70.6%;background:#8BC34A;"></div></div><div class="plan-bar"><span class="plan-bar-label">土</span><div class="plan-bar-fill" style="left:0%;width:94.1%;background:#8BC34A;"></div></div><div class="plan-bar"><span class="plan-bar-label">日</span><div class="plan-bar-fill" style="left:0%;width:88.2%;background:#8BC34A;"></div></div></div></div>
-                            <div class="plan-time-row"><div class="plan-time-name"><span class="plan-color-dot" style="background:#A5D6A7;"></span>レギュラーMor</div><div class="plan-time-bars"><div class="plan-bar"><span class="plan-bar-label">平</span><div class="plan-bar-fill" style="left:0%;width:23.5%;background:#A5D6A7;"></div><div class="plan-bar-fill" style="left:64.7%;width:35.3%;background:#A5D6A7;"></div></div><div class="plan-bar"><span class="plan-bar-label">土</span><div class="plan-bar-fill" style="left:0%;width:94.1%;background:#A5D6A7;"></div></div><div class="plan-bar"><span class="plan-bar-label">日</span><div class="plan-bar-fill" style="left:0%;width:88.2%;background:#A5D6A7;"></div></div></div></div>
-                            <div class="plan-time-row"><div class="plan-time-name"><span class="plan-color-dot" style="background:#2196F3;"></span>ウィークデイ</div><div class="plan-time-bars"><div class="plan-bar"><span class="plan-bar-label">平</span><div class="plan-bar-fill" style="left:0%;width:100%;background:#2196F3;"></div></div><div class="plan-bar"><span class="plan-bar-label">土</span></div><div class="plan-bar"><span class="plan-bar-label">日</span></div></div></div>
-                            <div class="plan-time-row"><div class="plan-time-name"><span class="plan-color-dot" style="background:#90CAF9;"></span>WDモーニング</div><div class="plan-time-bars"><div class="plan-bar"><span class="plan-bar-label">平</span><div class="plan-bar-fill" style="left:0%;width:23.5%;background:#90CAF9;"></div></div><div class="plan-bar"><span class="plan-bar-label">土</span></div><div class="plan-bar"><span class="plan-bar-label">日</span></div></div></div>
-                            <div class="plan-time-row"><div class="plan-time-name"><span class="plan-color-dot" style="background:#00ACC1;"></span>WDライト</div><div class="plan-time-bars"><div class="plan-bar"><span class="plan-bar-label">平</span><div class="plan-bar-fill" style="left:17.6%;width:58.8%;background:#00ACC1;"></div></div><div class="plan-bar"><span class="plan-bar-label">土</span></div><div class="plan-bar"><span class="plan-bar-label">日</span></div></div></div>
-                            <div class="plan-time-row"><div class="plan-time-name"><span class="plan-color-dot" style="background:#E91E63;"></span>ホリデイ</div><div class="plan-time-bars"><div class="plan-bar"><span class="plan-bar-label">平</span></div><div class="plan-bar"><span class="plan-bar-label">土</span><div class="plan-bar-fill" style="left:0%;width:94.1%;background:#E91E63;"></div></div><div class="plan-bar"><span class="plan-bar-label">日</span><div class="plan-bar-fill" style="left:0%;width:88.2%;background:#E91E63;"></div></div></div></div>
-                            <div class="plan-time-row"><div class="plan-time-name"><span class="plan-color-dot" style="background:#F48FB1;"></span>ホリデイMor</div><div class="plan-time-bars"><div class="plan-bar"><span class="plan-bar-label">平</span></div><div class="plan-bar"><span class="plan-bar-label">土</span><div class="plan-bar-fill" style="left:0%;width:23.5%;background:#F48FB1;"></div></div><div class="plan-bar"><span class="plan-bar-label">日</span><div class="plan-bar-fill" style="left:0%;width:23.5%;background:#F48FB1;"></div></div></div></div>
-                            <div class="plan-time-row"><div class="plan-time-name"><span class="plan-color-dot" style="background:#9C27B0;"></span>プレミアム</div><div class="plan-time-bars"><div class="plan-bar"><span class="plan-bar-label">平</span><div class="plan-bar-fill" style="left:0%;width:100%;background:#9C27B0;"></div></div><div class="plan-bar"><span class="plan-bar-label">土</span><div class="plan-bar-fill" style="left:0%;width:94.1%;background:#9C27B0;"></div></div><div class="plan-bar"><span class="plan-bar-label">日</span><div class="plan-bar-fill" style="left:0%;width:88.2%;background:#9C27B0;"></div></div></div></div>
-                            <div class="plan-time-row"><div class="plan-time-name"><span class="plan-color-dot" style="background:#8D6E63;"></span>習慣化60分</div><div class="plan-time-bars"><div class="plan-bar"><span class="plan-bar-label">平</span><div class="plan-bar-fill" style="left:0%;width:100%;background:#8D6E63;"></div></div><div class="plan-bar"><span class="plan-bar-label">土</span><div class="plan-bar-fill" style="left:0%;width:94.1%;background:#8D6E63;"></div></div><div class="plan-bar"><span class="plan-bar-label">日</span><div class="plan-bar-fill" style="left:0%;width:88.2%;background:#8D6E63;"></div></div></div></div>
-                            <div class="plan-time-row"><div class="plan-time-name"><span class="plan-color-dot" style="background:#5D4037;"></span>習慣化120分</div><div class="plan-time-bars"><div class="plan-bar"><span class="plan-bar-label">平</span><div class="plan-bar-fill" style="left:0%;width:100%;background:#5D4037;"></div></div><div class="plan-bar"><span class="plan-bar-label">土</span><div class="plan-bar-fill" style="left:0%;width:94.1%;background:#5D4037;"></div></div><div class="plan-bar"><span class="plan-bar-label">日</span><div class="plan-bar-fill" style="left:0%;width:88.2%;background:#5D4037;"></div></div></div></div>
-                            <div class="plan-time-legend"><span>平＝平日 土＝土曜 日＝日祝</span><span>色付き＝利用可</span></div>
-                        </div>
+                    <!-- レギュラープラン -->
+                    <div class="plan-unified-row">
+                        <div class="plan-unified-name">レギュラープラン</div>
+                        <div class="plan-unified-chart"><div class="plan-bar"><span class="plan-bar-label">平</span><div class="plan-bar-fill" style="left:64.7%;width:35.3%;background:#4CAF50;"></div></div><div class="plan-bar"><span class="plan-bar-label">土</span><div class="plan-bar-fill" style="left:17.6%;width:76.5%;background:#4CAF50;"></div></div><div class="plan-bar"><span class="plan-bar-label">日</span><div class="plan-bar-fill" style="left:17.6%;width:70.6%;background:#4CAF50;"></div></div></div>
+                        <div class="plan-unified-price"><strong>14,080円</strong></div>
                     </div>
+                    <!-- レギュラー+プラン -->
+                    <div class="plan-unified-row">
+                        <div class="plan-unified-name">レギュラー+プラン</div>
+                        <div class="plan-unified-chart"><div class="plan-bar"><span class="plan-bar-label">平</span><div class="plan-bar-fill" style="left:64.7%;width:35.3%;background:#2E7D32;"></div></div><div class="plan-bar"><span class="plan-bar-label">土</span><div class="plan-bar-fill" style="left:0%;width:94.1%;background:#2E7D32;"></div></div><div class="plan-bar"><span class="plan-bar-label">日</span><div class="plan-bar-fill" style="left:0%;width:88.2%;background:#2E7D32;"></div></div></div>
+                        <div class="plan-unified-price"><strong>19,580円</strong></div>
+                    </div>
+                    <!-- レギュラーM+プラン -->
+                    <div class="plan-unified-row">
+                        <div class="plan-unified-name">レギュラーM+プラン</div>
+                        <div class="plan-unified-chart"><div class="plan-bar"><span class="plan-bar-label">平</span><div class="plan-bar-fill" style="left:29.4%;width:70.6%;background:#8BC34A;"></div></div><div class="plan-bar"><span class="plan-bar-label">土</span><div class="plan-bar-fill" style="left:0%;width:94.1%;background:#8BC34A;"></div></div><div class="plan-bar"><span class="plan-bar-label">日</span><div class="plan-bar-fill" style="left:0%;width:88.2%;background:#8BC34A;"></div></div></div>
+                        <div class="plan-unified-price"><strong>17,490円</strong></div>
+                    </div>
+                    <!-- レギュラーMorningプラン -->
+                    <div class="plan-unified-row">
+                        <div class="plan-unified-name">レギュラーMorningプラン</div>
+                        <div class="plan-unified-chart"><div class="plan-bar"><span class="plan-bar-label">平</span><div class="plan-bar-fill" style="left:0%;width:23.5%;background:#A5D6A7;"></div><div class="plan-bar-fill" style="left:64.7%;width:35.3%;background:#A5D6A7;"></div></div><div class="plan-bar"><span class="plan-bar-label">土</span><div class="plan-bar-fill" style="left:0%;width:94.1%;background:#A5D6A7;"></div></div><div class="plan-bar"><span class="plan-bar-label">日</span><div class="plan-bar-fill" style="left:0%;width:88.2%;background:#A5D6A7;"></div></div></div>
+                        <div class="plan-unified-price"><strong>7,150円</strong></div>
+                    </div>
+                    <!-- ウィークデイプラン -->
+                    <div class="plan-unified-row">
+                        <div class="plan-unified-name">ウィークデイプラン</div>
+                        <div class="plan-unified-chart"><div class="plan-bar"><span class="plan-bar-label">平</span><div class="plan-bar-fill" style="left:0%;width:100%;background:#2196F3;"></div></div><div class="plan-bar"><span class="plan-bar-label">土</span></div><div class="plan-bar"><span class="plan-bar-label">日</span></div></div>
+                        <div class="plan-unified-price"><strong>14,080円</strong></div>
+                    </div>
+                    <!-- ウィークデイモーニングプラン -->
+                    <div class="plan-unified-row">
+                        <div class="plan-unified-name">ウィークデイモーニングプラン</div>
+                        <div class="plan-unified-chart"><div class="plan-bar"><span class="plan-bar-label">平</span><div class="plan-bar-fill" style="left:0%;width:23.5%;background:#90CAF9;"></div></div><div class="plan-bar"><span class="plan-bar-label">土</span></div><div class="plan-bar"><span class="plan-bar-label">日</span></div></div>
+                        <div class="plan-unified-price"><strong>5,500円</strong></div>
+                    </div>
+                    <!-- ウィークデイライトプラン -->
+                    <div class="plan-unified-row">
+                        <div class="plan-unified-name">ウィークデイライトプラン</div>
+                        <div class="plan-unified-chart"><div class="plan-bar"><span class="plan-bar-label">平</span><div class="plan-bar-fill" style="left:17.6%;width:58.8%;background:#00ACC1;"></div></div><div class="plan-bar"><span class="plan-bar-label">土</span></div><div class="plan-bar"><span class="plan-bar-label">日</span></div></div>
+                        <div class="plan-unified-price"><strong>12,870円</strong></div>
+                    </div>
+                    <!-- ホリデイプラン -->
+                    <div class="plan-unified-row">
+                        <div class="plan-unified-name">ホリデイプラン</div>
+                        <div class="plan-unified-chart"><div class="plan-bar"><span class="plan-bar-label">平</span></div><div class="plan-bar"><span class="plan-bar-label">土</span><div class="plan-bar-fill" style="left:0%;width:94.1%;background:#E91E63;"></div></div><div class="plan-bar"><span class="plan-bar-label">日</span><div class="plan-bar-fill" style="left:0%;width:88.2%;background:#E91E63;"></div></div></div>
+                        <div class="plan-unified-price"><strong>12,870円</strong></div>
+                    </div>
+                    <!-- ホリデイMorningプラン -->
+                    <div class="plan-unified-row">
+                        <div class="plan-unified-name">ホリデイMorningプラン</div>
+                        <div class="plan-unified-chart"><div class="plan-bar"><span class="plan-bar-label">平</span></div><div class="plan-bar"><span class="plan-bar-label">土</span><div class="plan-bar-fill" style="left:0%;width:23.5%;background:#F48FB1;"></div></div><div class="plan-bar"><span class="plan-bar-label">日</span><div class="plan-bar-fill" style="left:0%;width:23.5%;background:#F48FB1;"></div></div></div>
+                        <div class="plan-unified-price"><strong>4,400円</strong></div>
+                    </div>
+                    <!-- プレミアムプラン -->
+                    <div class="plan-unified-row">
+                        <div class="plan-unified-name">プレミアムプラン</div>
+                        <div class="plan-unified-chart"><div class="plan-bar"><span class="plan-bar-label">平</span><div class="plan-bar-fill" style="left:0%;width:100%;background:#9C27B0;"></div></div><div class="plan-bar"><span class="plan-bar-label">土</span><div class="plan-bar-fill" style="left:0%;width:94.1%;background:#9C27B0;"></div></div><div class="plan-bar"><span class="plan-bar-label">日</span><div class="plan-bar-fill" style="left:0%;width:88.2%;background:#9C27B0;"></div></div></div>
+                        <div class="plan-unified-price"><strong>23,980円</strong></div>
+                    </div>
+                    <!-- 【60分】毎日！習慣化プラン -->
+                    <div class="plan-unified-row plan-unified-habit">
+                        <div class="plan-unified-name">【60分】毎日！習慣化プラン</div>
+                        <div class="plan-unified-chart"><div class="plan-bar"><span class="plan-bar-label">平</span><div class="plan-bar-fill" style="left:0%;width:100%;background:#8D6E63;"></div></div><div class="plan-bar"><span class="plan-bar-label">土</span><div class="plan-bar-fill" style="left:0%;width:94.1%;background:#8D6E63;"></div></div><div class="plan-bar"><span class="plan-bar-label">日</span><div class="plan-bar-fill" style="left:0%;width:88.2%;background:#8D6E63;"></div></div></div>
+                        <div class="plan-unified-price"><strong>6,600円</strong></div>
+                    </div>
+                    <!-- 【120分】毎日！習慣化プラン -->
+                    <div class="plan-unified-row plan-unified-habit">
+                        <div class="plan-unified-name">【120分】毎日！習慣化プラン</div>
+                        <div class="plan-unified-chart"><div class="plan-bar"><span class="plan-bar-label">平</span><div class="plan-bar-fill" style="left:0%;width:100%;background:#5D4037;"></div></div><div class="plan-bar"><span class="plan-bar-label">土</span><div class="plan-bar-fill" style="left:0%;width:94.1%;background:#5D4037;"></div></div><div class="plan-bar"><span class="plan-bar-label">日</span><div class="plan-bar-fill" style="left:0%;width:88.2%;background:#5D4037;"></div></div></div>
+                        <div class="plan-unified-price"><strong>11,000円</strong></div>
+                    </div>
+                    <div class="plan-time-legend" style="margin-top:8px;"><span>平＝平日 土＝土曜 日＝日祝</span><span>色付き＝利用可能時間帯</span></div>
                 </div>
 
-                <h4 class="pricing-label pricing-habit">毎日！習慣化プラン</h4>
+                <h4 class="pricing-label pricing-habit">毎日！習慣化プランについて</h4>
                 <p style="font-size:0.85rem; color:#666; margin-bottom:10px;">毎日少しずつ勉強する習慣をつけるためのプランです。1日あたりの利用時間に上限があり、その分お得な月額料金で利用できます。</p>
                 <table class="info-table">
                     <tr>
-                        <th>【60分】毎日！習慣化プラン</th>
-                        <td>1日合計60分まで利用可（営業時間内いつでも）<br>分割利用OK（例：朝30分＋夜30分）</td>
-                        <td><strong>6,000円</strong>（税込6,600円）</td>
+                        <th>利用時間</th>
+                        <td>1日合計（60／120）分まで（営業時間内ならいつでも利用可）</td>
                     </tr>
                     <tr>
-                        <th>【120分】毎日！習慣化プラン</th>
-                        <td>1日合計120分まで利用可（営業時間内いつでも）<br>分割利用OK</td>
-                        <td><strong>10,000円</strong>（税込11,000円）</td>
+                        <th>分割利用OK</th>
+                        <td>「朝30分 ＋ 夜30分」など、1日の利用時間を分割することも可能です。</td>
+                    </tr>
+                    <tr>
+                        <th>超過料金</th>
+                        <td>1日の利用時間が（60／120）分を超えた場合は、<strong>1分単位で追加料金</strong>が発生します。</td>
+                    </tr>
+                    <tr>
+                        <th>上限終了後</th>
+                        <td>1日の上限を使い切った後は、本プランでのチェックインはできません。引き続き利用する場合は、別途<span class="app-badge">時間利用パック</span>をご購入ください。</td>
                     </tr>
                 </table>
-                <div class="tips" style="margin-top:10px;">
-                    <p><strong>上限超過時：</strong>（60/120分）を超えた分については、1分単位で追加料金が発生します。上限到達後は、本プランでのチェックインはできません。引き続き利用される場合は、別途<span class="app-badge">時間利用（ドロップイン）</span>パックをご購入ください。</p>
-                </div>
 
                 <h4 class="pricing-label pricing-extra">プラン時間外料金</h4>
                 <ul>
@@ -3272,6 +3322,11 @@
         function generateNavigation() {
             navList.innerHTML = '';
 
+            // 中項目用アルファベット配列
+            const alphaLabels = 'abcdefghijklmnopqrstuvwxyz';
+            // 小項目用丸数字配列
+            const circleNums = ['①','②','③','④','⑤','⑥','⑦','⑧','⑨','⑩','⑪','⑫','⑬','⑭','⑮','⑯','⑰','⑱','⑲','⑳'];
+
             categories.forEach((cat, catIdx) => {
                 const catNum = catIdx + 1; // 1, 2, 3
                 // カテゴリヘッダー
@@ -3292,16 +3347,16 @@
                 let sectionIdx = 0;
                 sections.forEach(section => {
                     if (section.getAttribute('data-category') !== cat.key) return;
+                    const sectionLetter = alphaLabels[sectionIdx] || String(sectionIdx + 1);
                     sectionIdx++;
-                    const sectionNum = catNum + '-' + sectionIdx; // "1-1", "1-2"...
                     const sectionId = section.getAttribute('id');
                     const h2 = section.querySelector('h2');
                     if (!h2) return;
 
-                    // h2に番号を挿入
+                    // h2に番号を挿入（例: "a. "）
                     const h2NumSpan = document.createElement('span');
                     h2NumSpan.className = 'section-num';
-                    h2NumSpan.textContent = sectionNum + ' ';
+                    h2NumSpan.textContent = sectionLetter + '. ';
                     h2.insertBefore(h2NumSpan, h2.firstChild);
 
                     const sectionTitle = h2.textContent;
@@ -3319,7 +3374,7 @@
                         subMenu.className = 'sub-menu';
 
                         h3List.forEach((h3, index) => {
-                            const h3Num = sectionNum + '-' + (index + 1); // "1-1-1"...
+                            const h3Num = circleNums[index] || ('(' + (index + 1) + ')'); // ①②③...
                             let h3Id = h3.getAttribute('id');
                             if (!h3Id) {
                                 h3Id = sectionId + '-item-' + index;
@@ -3792,40 +3847,12 @@
         // ===================================
         const noticeListPage = document.getElementById('notice-list-page');
         const noticeListAll = document.getElementById('noticeListAll');
-        const NOTICE_TEXT_MAX = 40; // 省略する文字数
-
-        // TOP画面のお知らせ：最新1件のみ表示 & テキスト省略
+        // TOP画面のお知らせ：最新1件のみ表示（テキスト省略はCSSで処理）
         function initTopNotices() {
             const cards = document.querySelectorAll('#noticeList .notice-card');
             cards.forEach((card, idx) => {
                 if (idx > 0) {
                     card.style.display = 'none'; // 2件目以降を非表示
-                }
-                // テキスト省略処理
-                const textEl = card.querySelector('.notice-text');
-                if (textEl) {
-                    const fullText = textEl.getAttribute('data-full-text') || textEl.textContent;
-                    if (fullText.length > NOTICE_TEXT_MAX) {
-                        textEl.textContent = fullText.substring(0, NOTICE_TEXT_MAX) + '...';
-                        // 「内容を確認」ボタンを追加
-                        if (!card.querySelector('.notice-detail-btn')) {
-                            const detailBtn = document.createElement('button');
-                            detailBtn.className = 'notice-detail-btn';
-                            detailBtn.textContent = '内容を確認';
-                            detailBtn.addEventListener('click', function() {
-                                if (textEl.classList.contains('expanded')) {
-                                    textEl.textContent = fullText.substring(0, NOTICE_TEXT_MAX) + '...';
-                                    textEl.classList.remove('expanded');
-                                    detailBtn.textContent = '内容を確認';
-                                } else {
-                                    textEl.textContent = fullText;
-                                    textEl.classList.add('expanded');
-                                    detailBtn.textContent = '閉じる';
-                                }
-                            });
-                            textEl.after(detailBtn);
-                        }
-                    }
                 }
             });
         }
@@ -3838,16 +3865,11 @@
             cards.forEach(card => {
                 const clone = card.cloneNode(true);
                 clone.style.display = ''; // 全件表示
-                // テキストを全文表示
+                // 一覧ではテキスト省略を解除
                 const textEl = clone.querySelector('.notice-text');
                 if (textEl) {
-                    const fullText = textEl.getAttribute('data-full-text') || textEl.textContent;
-                    textEl.textContent = fullText;
-                    textEl.classList.add('expanded');
+                    textEl.classList.add('notice-text-full');
                 }
-                // 省略ボタンを削除
-                const detailBtn = clone.querySelector('.notice-detail-btn');
-                if (detailBtn) detailBtn.remove();
                 // 確認ボタンの状態を反映
                 const actionsEl = clone.querySelector('.notice-actions');
                 if (actionsEl) {

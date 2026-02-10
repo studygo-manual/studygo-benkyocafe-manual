@@ -2292,6 +2292,15 @@ footer .update-date {
     color: var(--text-light);
     line-height: 1.6;
     margin-bottom: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.notice-text-full {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
 }
 
 .notice-date {
@@ -2344,26 +2353,6 @@ footer .update-date {
     color: #999;
     font-weight: normal;
     margin-left: 8px;
-}
-
-/* 「内容を確認」ボタン */
-.notice-detail-btn {
-    display: inline-block;
-    padding: 4px 14px;
-    background: #E3F2FD;
-    color: #1565C0;
-    border: 1px solid #90CAF9;
-    border-radius: 15px;
-    font-size: 0.75rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.2s;
-    margin-top: 4px;
-}
-
-.notice-detail-btn:hover {
-    background: #BBDEFB;
-    border-color: #1976D2;
 }
 
 /* お知らせフッター（一覧リンク） */
@@ -2900,7 +2889,126 @@ footer .update-date {
 }
 
 /* ===================================
-   プラン表 横並びレイアウト
+   プラン一体型テーブル（名称 + 時間帯バー + 料金）
+   =================================== */
+.plan-unified {
+    margin-top: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px;
+    background: #f8f9fa;
+}
+
+.plan-unified-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 38px;
+    border-bottom: 1px solid #eee;
+    padding: 4px 0;
+}
+
+.plan-unified-row:last-of-type {
+    border-bottom: none;
+}
+
+.plan-unified-header-row {
+    min-height: 28px;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 2px;
+}
+
+.plan-unified-name {
+    width: 200px;
+    min-width: 200px;
+    font-size: 0.78rem;
+    font-weight: bold;
+    color: var(--text-color);
+    padding-right: 8px;
+    flex-shrink: 0;
+}
+
+.plan-unified-chart {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    position: relative;
+}
+
+.plan-unified-chart .plan-time-scale {
+    position: relative;
+    height: 18px;
+    border-bottom: 1px solid #ccc;
+}
+
+.plan-unified-chart .plan-time-scale span {
+    position: absolute;
+    font-size: 0.65rem;
+    color: var(--text-light);
+    transform: translateX(-50%);
+}
+
+.plan-unified-chart .plan-bar {
+    position: relative;
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 2px;
+}
+
+.plan-unified-chart .plan-bar-label {
+    position: absolute;
+    left: -14px;
+    font-size: 0.5rem;
+    color: var(--text-light);
+    font-weight: bold;
+    width: 12px;
+    text-align: right;
+    top: -1px;
+}
+
+.plan-unified-chart .plan-bar-fill {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    border-radius: 2px;
+    opacity: 0.85;
+}
+
+.plan-unified-price {
+    width: 80px;
+    min-width: 80px;
+    text-align: right;
+    font-size: 0.78rem;
+    flex-shrink: 0;
+}
+
+.plan-unified-habit {
+    background: #EFEBE9;
+    border-radius: 4px;
+    padding: 4px 4px;
+    margin: 2px 0;
+}
+
+@media screen and (max-width: 640px) {
+    .plan-unified-name {
+        width: 130px;
+        min-width: 130px;
+        font-size: 0.68rem;
+    }
+    .plan-unified-chart {
+        min-width: 140px;
+    }
+    .plan-unified-price {
+        width: 65px;
+        min-width: 65px;
+        font-size: 0.7rem;
+    }
+}
+
+/* ===================================
+   プラン表 横並びレイアウト（旧・互換）
    =================================== */
 .plan-side-by-side {
     display: grid;
