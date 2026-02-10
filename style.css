@@ -2471,7 +2471,7 @@ footer .update-date {
 }
 
 .pricing-option {
-    background: linear-gradient(135deg, #8D6E63, #6D4C41);
+    background: linear-gradient(135deg, #7B1FA2, #6A1B9A);
 }
 
 .pricing-extra {
@@ -2929,7 +2929,7 @@ footer .update-date {
 }
 
 .plan-unified-chart {
-    flex: 0 0 40%;
+    flex: 0 1 40%;
     min-width: 180px;
     display: flex;
     flex-direction: column;
@@ -3009,10 +3009,12 @@ footer .update-date {
 }
 
 .plan-unified-price {
-    flex: 1;
+    width: 80px;
     min-width: 80px;
     text-align: right;
     font-size: 0.78rem;
+    flex-shrink: 0;
+    margin-left: 8px;
 }
 
 .plan-unified-habit {
