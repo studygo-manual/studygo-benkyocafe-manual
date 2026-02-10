@@ -2919,8 +2919,8 @@ footer .update-date {
 }
 
 .plan-unified-name {
-    width: 200px;
-    min-width: 200px;
+    width: 160px;
+    min-width: 160px;
     font-size: 0.78rem;
     font-weight: bold;
     color: var(--text-color);
@@ -2929,8 +2929,8 @@ footer .update-date {
 }
 
 .plan-unified-chart {
-    flex: 1;
-    min-width: 200px;
+    flex: 0 0 40%;
+    min-width: 180px;
     display: flex;
     flex-direction: column;
     gap: 1px;
@@ -2955,6 +2955,16 @@ footer .update-date {
     height: 8px;
     background: #e0e0e0;
     border-radius: 2px;
+}
+
+/* 土曜：22時（94.1%）以降の背景を非表示 */
+.plan-unified-chart .plan-bar:nth-child(2) {
+    background: linear-gradient(to right, #e0e0e0 94.1%, transparent 94.1%);
+}
+
+/* 日祝：21時（88.2%）以降の背景を非表示 */
+.plan-unified-chart .plan-bar:nth-child(3) {
+    background: linear-gradient(to right, #e0e0e0 88.2%, transparent 88.2%);
 }
 
 .plan-unified-chart .plan-bar-label {
@@ -2999,11 +3009,10 @@ footer .update-date {
 }
 
 .plan-unified-price {
-    width: 80px;
+    flex: 1;
     min-width: 80px;
     text-align: right;
     font-size: 0.78rem;
-    flex-shrink: 0;
 }
 
 .plan-unified-habit {
