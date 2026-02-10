@@ -1855,6 +1855,13 @@ footer .update-date {
     padding-top: 8px;
 }
 
+/* セクション番号 */
+.section-num {
+    color: #757575;
+    font-weight: 600;
+    margin-right: 4px;
+}
+
 /* ブロックラベル（A, B, C...） */
 .block-label {
     display: inline-flex;
@@ -2328,6 +2335,91 @@ footer .update-date {
     }
     .notice-actions {
         align-self: flex-end;
+    }
+}
+
+/* お知らせ日付（タイトル横） */
+.notice-date-inline {
+    font-size: 0.75rem;
+    color: #999;
+    font-weight: normal;
+    margin-left: 8px;
+}
+
+/* 「内容を確認」ボタン */
+.notice-detail-btn {
+    display: inline-block;
+    padding: 4px 14px;
+    background: #E3F2FD;
+    color: #1565C0;
+    border: 1px solid #90CAF9;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 4px;
+}
+
+.notice-detail-btn:hover {
+    background: #BBDEFB;
+    border-color: #1976D2;
+}
+
+/* お知らせフッター（一覧リンク） */
+.notice-footer {
+    text-align: center;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+}
+
+.notice-all-link {
+    color: #1565C0;
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 6px 20px;
+    border: 1px solid #90CAF9;
+    border-radius: 20px;
+    transition: all 0.2s;
+    display: inline-block;
+}
+
+.notice-all-link:hover {
+    background: #E3F2FD;
+    border-color: #1976D2;
+}
+
+/* お知らせ一覧ページ */
+#notice-list-page {
+    margin-bottom: 30px;
+}
+
+#notice-list-page .notice-card {
+    display: flex;
+}
+
+/* クイックアクセス下部中央配置 */
+.quick-access-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.quick-access-card {
+    width: 100%;
+    max-width: 700px;
+}
+
+.quick-links-center {
+    justify-content: center;
+}
+
+@media screen and (max-width: 640px) {
+    .quick-access-card {
+        max-width: 100%;
     }
 }
 
