@@ -401,7 +401,8 @@
 
                 <h4 class="pricing-label pricing-habit">毎日！習慣化プランについて</h4>
                 <p style="font-size:0.85rem; color:#666; margin-bottom:10px;">毎日少しずつ勉強する習慣をつけるためのプランです。1日あたりの利用時間に上限があります。</p>
-                <table class="info-table">
+                <table class="info-table" style="table-layout: fixed;">
+                    <colgroup><col style="width: 18%;"><col style="width: 82%;"></colgroup>
                     <tr>
                         <th>利用時間</th>
                         <td>1日合計（60／120）分まで（営業時間内ならいつでも利用可）</td>
@@ -556,53 +557,69 @@
                 <div style="grid-column: 1 / -1; border-top: 2px dashed #9C27B0; margin: 8px 0 4px; padding-top: 6px;">
                     <p style="margin: 0; font-size: 0.75rem; color: #7B1FA2; font-weight: bold; text-align: center;">▼ スタジオ別ルール ▼</p>
                 </div>
-                <div class="rule-card" style="border-color: #9C27B0;">
-                    <div class="rule-card-title" style="background: #9C27B0;">&#9453; テルブースについて</div>
-                    <div class="rule-card-body">
-                        <p><strong>【BPスタジオ】</strong>テルブースのご利用は1回<strong>30分以内</strong>を目安にお願いします。仮眠はお断りいたします。次の方がお待ちの場合は譲り合ってご利用ください。</p>
+            </div>
+            <!-- スタジオ別ルール（2列レイアウト） -->
+            <div style="display: flex; gap: 0; margin-top: 10px;">
+                <!-- BPスタジオ（左） -->
+                <div style="flex: 1; padding-right: 10px; border-right: 3px solid #9C27B0;">
+                    <h4 style="text-align: center; color: #E65100; margin: 0 0 8px; font-size: 0.95rem;">&#x1F7E0; BPスタジオ</h4>
+                    <div class="rule-card" style="border-color: #E65100;">
+                        <div class="rule-card-title" style="background: #E65100;">&#9453; テルブースについて</div>
+                        <div class="rule-card-body">
+                            <p>テルブースのご利用は1回<strong>30分以内</strong>を目安にお願いします。仮眠はお断りいたします。次の方がお待ちの場合は譲り合ってご利用ください。</p>
+                        </div>
+                    </div>
+                    <div class="rule-card" style="border-color: #E65100; margin-top: 8px;">
+                        <div class="rule-card-title" style="background: #E65100;">&#9454; 自動ドアについて</div>
+                        <div class="rule-card-body">
+                            <p>自動ドアは施錠の関係上、出入りの際は<strong>すみやかに通過</strong>してください。ドア付近に長時間立ち止まらないようお願いします。</p>
+                        </div>
                     </div>
                 </div>
-                <div class="rule-card" style="border-color: #AB47BC;">
-                    <div class="rule-card-title" style="background: #AB47BC;">&#9454; 会議室について</div>
-                    <div class="rule-card-body">
-                        <p><strong>【新宿スタジオ】</strong>会議室は1時間<strong>1,100円</strong>の予約制です。1人用時間帯もございます。ご予約はスタッフまたはアプリからお申し込みください。</p>
+                <!-- 新宿スタジオ（右） -->
+                <div style="flex: 1; padding-left: 10px;">
+                    <h4 style="text-align: center; color: #1565C0; margin: 0 0 8px; font-size: 0.95rem;">&#x1F535; 新宿スタジオ</h4>
+                    <div class="rule-card" style="border-color: #1565C0;">
+                        <div class="rule-card-title" style="background: #1565C0;">&#9453; 会議室について</div>
+                        <div class="rule-card-body">
+                            <p>会議室は1時間<strong>1,100円</strong>の予約制です。1人用時間帯もございます。ご予約はスタッフまたはアプリからお申し込みください。</p>
+                        </div>
                     </div>
-                </div>
-                <div class="rule-card" style="border-color: #009688;">
-                    <div class="rule-card-title" style="background: #009688;">&#9455; 自動ドアについて</div>
-                    <div class="rule-card-body">
-                        <p><strong>【BPスタジオ】</strong>自動ドアは施錠の関係上、出入りの際は<strong>すみやかに通過</strong>してください。ドア付近に長時間立ち止まらないようお願いします。</p>
-                    </div>
-                </div>
-                <div class="rule-card" style="border-color: #00897B;">
-                    <div class="rule-card-title" style="background: #00897B;">&#9456; 混雑時について</div>
-                    <div class="rule-card-body">
-                        <p><strong>【新宿スタジオ】</strong>混雑時は<strong>BPスタジオへの移動</strong>をお願いする場合がございます。両スタジオをご活用いただき、快適にお過ごしください。</p>
+                    <div class="rule-card" style="border-color: #1565C0; margin-top: 8px;">
+                        <div class="rule-card-title" style="background: #1565C0;">&#9454; 混雑時について</div>
+                        <div class="rule-card-body">
+                            <p>混雑時は<strong>BPスタジオへの移動</strong>をお願いする場合がございます。両スタジオをご活用いただき、快適にお過ごしください。</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="card important" style="margin-top: 20px;">
+            <div class="card" style="margin-top: 20px; background: #fff; border-left: 5px solid var(--primary-color);">
                 <h3>有人・無人時間帯の違い</h3>
 
                 <table class="info-table" style="margin-bottom: 15px;">
                     <thead>
                         <tr>
-                            <th style="width: 25%;"></th>
-                            <th style="width: 37.5%; background: #E8F5E9;">有人時間帯</th>
-                            <th style="width: 37.5%; background: #FFF3E0;">無人時間帯</th>
+                            <th style="width: 20%; background: #fff;"></th>
+                            <th style="width: 40%; background: #E8F5E9; color: #2E7D32;">有人時間帯</th>
+                            <th style="width: 40%; background: #FFEBEE; color: #C62828;">無人時間帯</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <th>平日</th>
-                            <td style="text-align: center; font-weight: bold; color: #2E7D32;">17:00〜21:00</td>
-                            <td style="text-align: center; font-weight: bold; color: #E65100;">6:00〜17:00 / 21:00〜23:00</td>
+                            <td style="text-align: center; font-weight: bold; color: #2E7D32; background: #F1F8E9;">17:00〜21:00</td>
+                            <td style="text-align: center; font-weight: bold; color: #C62828; background: #FFF8F8;">6:00〜17:00 / 21:00〜23:00</td>
                         </tr>
                         <tr>
-                            <th>土日祝</th>
-                            <td style="text-align: center; font-weight: bold; color: #2E7D32;">12:00〜21:00</td>
-                            <td style="text-align: center; font-weight: bold; color: #E65100;">6:00〜12:00</td>
+                            <th>土曜</th>
+                            <td style="text-align: center; font-weight: bold; color: #2E7D32; background: #F1F8E9;">12:00〜21:00</td>
+                            <td style="text-align: center; font-weight: bold; color: #C62828; background: #FFF8F8;">6:00〜12:00 / <strong>21:00〜22:00</strong></td>
+                        </tr>
+                        <tr>
+                            <th>日祝</th>
+                            <td style="text-align: center; font-weight: bold; color: #2E7D32; background: #F1F8E9;">12:00〜21:00</td>
+                            <td style="text-align: center; font-weight: bold; color: #C62828; background: #FFF8F8;">6:00〜12:00</td>
                         </tr>
                     </tbody>
                 </table>
@@ -610,46 +627,44 @@
                 <table class="info-table">
                     <thead>
                         <tr>
-                            <th style="width: 25%;">項目</th>
-                            <th style="width: 37.5%; background: #E8F5E9;">有人時間帯</th>
-                            <th style="width: 37.5%; background: #FFF3E0;">無人時間帯</th>
+                            <th style="width: 20%; background: #fff;">項目</th>
+                            <th style="width: 40%; background: #E8F5E9; color: #2E7D32;">有人時間帯</th>
+                            <th style="width: 40%; background: #FFEBEE; color: #C62828;">無人時間帯</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <th>スタッフ</th>
-                            <td style="text-align: center;"><strong style="color: #2E7D32; font-size: 1.1em;">いる</strong></td>
-                            <td style="text-align: center;"><strong style="color: #C62828; font-size: 1.1em;">いない</strong></td>
+                            <td style="text-align: center; background: #F1F8E9;"><strong style="color: #2E7D32; font-size: 1.1em;">いる</strong></td>
+                            <td style="text-align: center; background: #FFF8F8;"><strong style="color: #C62828; font-size: 1.1em;">いない</strong></td>
                         </tr>
                         <tr>
                             <th>入館方法</th>
-                            <td>入口ドアは施錠<br><strong>スタディGOアプリで解錠</strong>が必要</td>
-                            <td>入口ドアは施錠<br><strong>スタディGOアプリで解錠</strong>が必要</td>
+                            <td colspan="2" style="text-align: center;">入口ドアは施錠 ― <strong>スタディGOアプリで解錠</strong>が必要</td>
                         </tr>
                         <tr>
                             <th>備品の貸出</th>
-                            <td>受付にて充電器等の貸出あり</td>
-                            <td>充電器等の一部備品は<strong>利用不可</strong><br>（セルフ備品は利用可）</td>
+                            <td style="background: #F1F8E9;">受付にて充電器等の貸出あり</td>
+                            <td style="background: #FFF8F8;">充電器等の一部備品は<strong>利用不可</strong><br>（セルフ備品は利用可）</td>
                         </tr>
                         <tr>
                             <th>各種手続き</th>
-                            <td>すべて対応可能<br>（休会・プラン解約・オプション契約等）</td>
-                            <td>プラン解約・オプション契約/解約手続きは<strong>不可</strong><br>→ 有人時間帯にお越しください</td>
+                            <td style="background: #F1F8E9;">すべて対応可能<br>（休会・プラン解約・オプション契約等）</td>
+                            <td style="background: #FFF8F8;">プラン解約・オプション契約/解約手続きは<strong>不可</strong><br>→ 有人時間帯にお越しください</td>
                         </tr>
                         <tr>
                             <th>空調・照明</th>
-                            <td>スタッフが変更可能<br><span class="note">※会員様は操作できません</span></td>
-                            <td>自動で稼働<br><span class="note">※会員様は操作できません</span></td>
+                            <td style="background: #F1F8E9;">スタッフが変更可能<br><span class="note">※会員様は操作できません</span></td>
+                            <td style="background: #FFF8F8;">自動で稼働<br><span class="note">※会員様は操作できません</span></td>
                         </tr>
                         <tr>
                             <th>困ったとき</th>
-                            <td>スタッフに直接お声がけください</td>
-                            <td>緊急連絡先：<strong>050-3199-1446</strong><br><span class="note">※メール・Lステップでも可能</span></td>
+                            <td style="background: #F1F8E9;">スタッフに直接お声がけください</td>
+                            <td style="background: #FFF8F8;">緊急連絡先：<strong>050-3199-1446</strong><br><span class="note">※メール・Lステップでも可能</span></td>
                         </tr>
                         <tr>
                             <th>退席時</th>
-                            <td>机を綺麗にしてお帰りください</td>
-                            <td>机を綺麗にしてお帰りください</td>
+                            <td colspan="2" style="text-align: center;">机を綺麗にしてお帰りください</td>
                         </tr>
                     </tbody>
                 </table>
