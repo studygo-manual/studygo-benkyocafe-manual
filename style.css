@@ -2976,6 +2976,28 @@ footer .update-date {
     opacity: 0.85;
 }
 
+.plan-unified-chart .plan-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    background-image:
+        repeating-linear-gradient(to bottom, rgba(0,0,0,0.3) 0, rgba(0,0,0,0.3) 2px, transparent 2px, transparent 4px),
+        repeating-linear-gradient(to bottom, rgba(0,0,0,0.3) 0, rgba(0,0,0,0.3) 2px, transparent 2px, transparent 4px),
+        repeating-linear-gradient(to bottom, rgba(0,0,0,0.3) 0, rgba(0,0,0,0.3) 2px, transparent 2px, transparent 4px),
+        repeating-linear-gradient(to bottom, rgba(0,0,0,0.3) 0, rgba(0,0,0,0.3) 2px, transparent 2px, transparent 4px),
+        repeating-linear-gradient(to bottom, rgba(0,0,0,0.3) 0, rgba(0,0,0,0.3) 2px, transparent 2px, transparent 4px),
+        repeating-linear-gradient(to bottom, rgba(0,0,0,0.3) 0, rgba(0,0,0,0.3) 2px, transparent 2px, transparent 4px);
+    background-position: 17.6% 0, 23.5% 0, 64.7% 0, 76.5% 0, 88.2% 0, 94.1% 0;
+    background-size: 1px 100%, 1px 100%, 1px 100%, 1px 100%, 1px 100%, 1px 100%;
+    background-repeat: no-repeat;
+    z-index: 2;
+    pointer-events: none;
+}
+
 .plan-unified-price {
     width: 80px;
     min-width: 80px;
