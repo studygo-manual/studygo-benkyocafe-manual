@@ -3495,3 +3495,128 @@ footer .update-date {
         gap: 15px;
     }
 }
+
+/* ===================================
+   樹形図（ツリービュー）
+   =================================== */
+.tree-view {
+    padding: 0 0 0 8px;
+}
+.tree-view ul {
+    list-style: none;
+    padding-left: 24px;
+    margin: 0;
+    position: relative;
+}
+.tree-view > ul {
+    padding-left: 0;
+}
+.tree-view li {
+    position: relative;
+    padding: 4px 0 4px 20px;
+    line-height: 1.6;
+    font-size: 0.9rem;
+}
+/* 縦線 */
+.tree-view ul > li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: #bbb;
+}
+/* 横線 */
+.tree-view ul > li::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 16px;
+    width: 16px;
+    height: 1px;
+    background: #bbb;
+}
+/* 最後の子は縦線を途中で切る */
+.tree-view ul > li:last-child::before {
+    bottom: calc(100% - 16px);
+}
+
+/* 大項目（見学・月額契約 等） */
+.tree-branch-label {
+    font-weight: bold;
+    font-size: 0.95rem;
+    color: #333;
+    padding: 3px 10px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-bottom: 2px;
+}
+/* 担当ラベル */
+.tree-role-staff {
+    font-weight: bold;
+    color: #1565C0;
+    background: #E3F2FD;
+    padding: 2px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    font-size: 0.85rem;
+}
+.tree-role-customer {
+    font-weight: bold;
+    color: #E65100;
+    background: #FFF3E0;
+    padding: 2px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    font-size: 0.85rem;
+}
+/* 葉ノード */
+.tree-view li > span.tree-leaf {
+    color: #444;
+    font-size: 0.85rem;
+}
+.tree-leaf-num {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+    border-radius: 50%;
+    background: #607D8B;
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: bold;
+    margin-right: 4px;
+    vertical-align: middle;
+}
+.tree-leaf-num.staff-num { background: #1565C0; }
+.tree-leaf-num.customer-num { background: #E65100; }
+.tree-leaf-num.shared-num { background: #7B1FA2; }
+
+/* 樹形図カードタイトル */
+.tree-card-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+.tree-card-title h4 {
+    margin: 0;
+    font-size: 1rem;
+    color: #333;
+    border: none;
+    padding: 0;
+}
+.tree-legend {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+    font-size: 0.8rem;
+}
+.tree-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}

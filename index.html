@@ -1408,6 +1408,122 @@
         <section id="procedures" data-category="studygo">
             <h2>★対応フロー</h2>
 
+            <!-- 対応フロー 樹形図（全体像） -->
+            <div class="card" style="border-left: 5px solid #607D8B;">
+                <div class="tree-card-title">
+                    <h4 style="border-left: none; padding-left: 0; color: #37474F;">対応フロー 全体像（スタッフ／お客様の役割一覧）</h4>
+                </div>
+                <div class="tree-legend">
+                    <div class="tree-legend-item"><span class="tree-leaf-num staff-num" style="font-size: 0.6rem;">S</span> スタッフが行うこと</div>
+                    <div class="tree-legend-item"><span class="tree-leaf-num customer-num" style="font-size: 0.6rem;">C</span> お客様にお願いすること</div>
+                    <div class="tree-legend-item"><span class="tree-leaf-num shared-num" style="font-size: 0.6rem;">=</span> 両者で行うこと</div>
+                </div>
+                <div class="tree-view">
+                    <ul>
+                        <!-- 見学・お客様対応 -->
+                        <li>
+                            <span class="tree-branch-label" style="background: #E0F2F1; color: #00695C;">見学・お客様対応</span>
+                            <ul>
+                                <li>
+                                    <span class="tree-role-staff">スタッフが行うこと</span>
+                                    <ul>
+                                        <li><span class="tree-leaf">予約確認（メール・管理画面）</span></li>
+                                        <li><span class="tree-leaf">お客様情報の確認</span></li>
+                                        <li><span class="tree-leaf">お客様への確認連絡（メッセージ）</span></li>
+                                        <li><span class="tree-leaf">来店受付（名前確認 → 席へご案内）</span></li>
+                                        <li><span class="tree-leaf">アイスブレイク・ヒアリング</span></li>
+                                        <li><span class="tree-leaf">サービス説明・スタジオ案内・プラン説明</span></li>
+                                        <li><span class="tree-leaf">来店報告シートの記入</span></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <span class="tree-role-customer">お客様にお願いすること</span>
+                                    <ul>
+                                        <li><span class="tree-leaf">見学予約（アプリ / HP / 電話 / LINE）</span></li>
+                                        <li><span class="tree-leaf">来店</span></li>
+                                        <li><span class="tree-leaf">体験利用（希望時）</span></li>
+                                        <li><span class="tree-leaf">アンケート記入（入会しない場合）</span></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- 月額契約 -->
+                        <li>
+                            <span class="tree-branch-label" style="background: #FFF9C4; color: #F57F17;">月額契約</span>
+                            <ul>
+                                <li>
+                                    <span class="tree-role-staff">スタッフが行うこと</span>
+                                    <ul>
+                                        <li><span class="tree-leaf"><span class="tree-leaf-num staff-num">4</span>新規契約の確認（会員番号確認）</span></li>
+                                        <li><span class="tree-leaf"><span class="tree-leaf-num staff-num">5</span>来店手続きの案内</span></li>
+                                        <li><span class="tree-leaf"><span class="tree-leaf-num staff-num">7</span>利用説明（スタジオ案内・プラン・解約説明等）</span></li>
+                                        <li><span class="tree-leaf"><span class="tree-leaf-num shared-num">8</span>初回来店手続き（Lステップ・身分証等）</span></li>
+                                        <li><span class="tree-leaf"><span class="tree-leaf-num staff-num">9</span>ご案内資料のお渡し</span></li>
+                                        <li><span class="tree-leaf"><span class="tree-leaf-num staff-num">10</span>入会報告（チャットワーク）</span></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <span class="tree-role-customer">お客様にお願いすること</span>
+                                    <ul>
+                                        <li><span class="tree-leaf"><span class="tree-leaf-num customer-num">1</span>アプリDL・会員登録</span></li>
+                                        <li><span class="tree-leaf"><span class="tree-leaf-num customer-num">2</span>クレジットカード登録</span></li>
+                                        <li><span class="tree-leaf"><span class="tree-leaf-num customer-num">3</span>月額プラン契約</span></li>
+                                        <li><span class="tree-leaf"><span class="tree-leaf-num customer-num">6</span>来店（有人時間帯）</span></li>
+                                        <li><span class="tree-leaf"><span class="tree-leaf-num shared-num">8</span>初回来店手続き（Lステップ・アンケート・身分証等）</span></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- チェックイン・チェックアウト -->
+                        <li>
+                            <span class="tree-branch-label" style="background: #E3F2FD; color: #0D47A1;">チェックイン・チェックアウト</span>
+                            <ul>
+                                <li>
+                                    <span class="tree-role-staff">スタッフが行うこと</span>
+                                    <ul>
+                                        <li><span class="tree-leaf">チェックイン画面の確認</span></li>
+                                        <li><span class="tree-leaf">チェックイン忘れ → その場で案内 → 管理画面で時刻修正</span></li>
+                                        <li><span class="tree-leaf">チェックアウト忘れ → 店舗コード入力を案内</span></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <span class="tree-role-customer">お客様にお願いすること</span>
+                                    <ul>
+                                        <li><span class="tree-leaf">QRコード読み取り（チェックイン）</span></li>
+                                        <li><span class="tree-leaf">チェックイン画面をスタッフに提示</span></li>
+                                        <li><span class="tree-leaf">QRコード読み取り（チェックアウト）</span></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- プラン解約（退会）・休会 -->
+                        <li>
+                            <span class="tree-branch-label" style="background: #FFF9C4; color: #F57F17;">プラン解約（退会）・休会</span>
+                            <ul>
+                                <li>
+                                    <span class="tree-role-staff">スタッフが行うこと</span>
+                                    <ul>
+                                        <li><span class="tree-leaf"><span class="tree-leaf-num staff-num">3</span>ダッシュボードで解約者確認</span></li>
+                                        <li><span class="tree-leaf"><span class="tree-leaf-num staff-num">4</span>ロッカー対応（荷物撤去・鍵返却・解約処理）</span></li>
+                                        <li><span class="tree-leaf"><span class="tree-leaf-num staff-num">5</span>鍵回収ステータス更新</span></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <span class="tree-role-customer">お客様にお願いすること</span>
+                                    <ul>
+                                        <li><span class="tree-leaf"><span class="tree-leaf-num customer-num">1</span>アプリで解約申請（毎月10日締め）</span></li>
+                                        <li><span class="tree-leaf"><span class="tree-leaf-num customer-num">2</span>有人時間帯に来店</span></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
             <!-- 見学・お客様対応 -->
             <div class="card" style="border-left: 5px solid #26A69A; background: #E0F2F1;">
                 <h3>見学・お客様対応</h3>
@@ -1487,11 +1603,18 @@
                                 <div class="dual-flow-step-num">1</div>
                                 <div class="dual-flow-step-body">
                                     <h4>スタディGOアプリDL・会員登録</h4>
-                                    <p>アプリのダウンロード → 会員登録 → クレジットカード登録</p>
+                                    <p>アプリのダウンロード → 会員登録</p>
                                 </div>
                             </div>
                             <div class="dual-flow-step">
                                 <div class="dual-flow-step-num">2</div>
+                                <div class="dual-flow-step-body">
+                                    <h4>クレジットカード登録</h4>
+                                    <p>クレジットカード情報を登録</p>
+                                </div>
+                            </div>
+                            <div class="dual-flow-step">
+                                <div class="dual-flow-step-num">3</div>
                                 <div class="dual-flow-step-body">
                                     <h4>月額プラン契約</h4>
                                     <p>アプリ内でプラン・<strong>利用開始日</strong>を選択し、注意事項を読んでいただいた上で契約</p>
@@ -1502,7 +1625,14 @@
                                 <p style="margin: 0; font-size: 0.7rem; color: #C62828; font-weight: bold; text-align: center;">&#9650; ここまでオンラインで完結可能 &#9650;<br><span style="font-weight: normal;">来店前にオンラインで契約される方もいます</span></p>
                             </div>
                             <div class="dual-flow-step">
-                                <div class="dual-flow-step-num">3</div>
+                                <div class="dual-flow-step-num">6</div>
+                                <div class="dual-flow-step-body">
+                                    <h4>来店</h4>
+                                    <p>有人時間帯に来店する</p>
+                                </div>
+                            </div>
+                            <div class="dual-flow-step">
+                                <div class="dual-flow-step-num">8</div>
                                 <div class="dual-flow-step-body">
                                     <h4>初回来店時の手続き</h4>
                                     <ul style="margin: 5px 0 0 15px; font-size: 0.85rem; line-height: 1.6;">
@@ -1523,7 +1653,7 @@
                                 <div class="dual-flow-step-num">4</div>
                                 <div class="dual-flow-step-body">
                                     <h4>新規契約の確認</h4>
-                                    <p>メールもしくは管理画面で確認。メールで<strong>会員番号</strong>を確認</p>
+                                    <p>契約状態を確認。別メールで<strong>会員番号</strong>を確認。</p>
                                 </div>
                             </div>
                             <div class="dual-flow-step">
@@ -1534,21 +1664,21 @@
                                 </div>
                             </div>
                             <div class="dual-flow-step">
-                                <div class="dual-flow-step-num">6</div>
+                                <div class="dual-flow-step-num">7</div>
                                 <div class="dual-flow-step-body">
                                     <h4>利用説明</h4>
                                     <ol style="margin: 5px 0 0 15px; font-size: 0.85rem; line-height: 1.6;">
-                                        <li><strong>館内のルール説明</strong>をする</li>
-                                        <li><strong>プラン＆営業時間（無人・有人）</strong>の確認</li>
-                                        <li>入会時に必要なもの・オプション・時間外利用の説明</li>
+                                        <li><strong>スタジオ案内</strong></li>
+                                        <li><strong>プラン・営業時間（無人・有人）</strong>の確認</li>
                                         <li><strong>休会・プラン解約（退会）</strong>の説明（締め日の案内）</li>
                                         <li><strong>緊急連絡先</strong>の伝達</li>
                                         <li>利用方法の確認（スマートロック・チェックイン方法）<br><span class="note">※ご案内資料を渡し、ドア付近でスタッフ機器を使って操作を実演しながら説明</span></li>
                                     </ol>
+                                    <p class="note" style="margin-top: 4px;">※入会時に必要なもの・オプション・時間外利用についても適宜ご案内ください（オンライン契約済みの場合は省略可）</p>
                                 </div>
                             </div>
                             <div class="dual-flow-step">
-                                <div class="dual-flow-step-num">7</div>
+                                <div class="dual-flow-step-num">8</div>
                                 <div class="dual-flow-step-body">
                                     <h4>初回来店時の手続き</h4>
                                     <ul style="margin: 5px 0 0 15px; font-size: 0.85rem; line-height: 1.6;">
@@ -1561,14 +1691,14 @@
                                 </div>
                             </div>
                             <div class="dual-flow-step">
-                                <div class="dual-flow-step-num">8</div>
+                                <div class="dual-flow-step-num">9</div>
                                 <div class="dual-flow-step-body">
                                     <h4>ご案内資料のお渡し</h4>
                                     <p>ご案内資料をお渡しする</p>
                                 </div>
                             </div>
                             <div class="dual-flow-step admin">
-                                <div class="dual-flow-step-num">9</div>
+                                <div class="dual-flow-step-num">10</div>
                                 <div class="dual-flow-step-body">
                                     <h4>入会報告 <span class="admin-label">事務手続き</span></h4>
                                     <p>チャットワーク【入会情報】に会員番号・氏名を報告</p>
@@ -2268,20 +2398,32 @@
 
         <section id="app-flow" data-category="studygo">
             <h2>アプリ画面遷移ガイド</h2>
+            <p style="margin-bottom: 20px;">会員様がアプリで各手続きを行う際の画面遷移を、操作ごとにわかりやすく解説します。</p>
             <div class="card">
-                <h3>概要</h3>
-                <p>会員様がアプリで各手続きを行う際の画面遷移を、操作ごとにわかりやすく解説します。</p>
-                <p class="preparing-notice">画面キャプチャが揃い次第、順次追加されます。</p>
+                <h3>時間利用（ドロップイン）</h3>
+                <p class="preparing-notice">情報が入り次第、更新されます。</p>
             </div>
             <div class="card">
-                <h3>休会の手続き</h3>
+                <h3>チェックイン～チェックアウト</h3>
+                <p class="preparing-notice">情報が入り次第、更新されます。</p>
+            </div>
+            <div class="card">
+                <h3>月額プラン契約</h3>
+                <p class="preparing-notice">情報が入り次第、更新されます。</p>
+            </div>
+            <div class="card">
+                <h3>オプション（ロッカー契約）契約・解約</h3>
+                <p class="preparing-notice">情報が入り次第、更新されます。</p>
+            </div>
+            <div class="card">
+                <h3>休会</h3>
                 <p class="preparing-notice">情報が入り次第、更新されます。</p>
                 <div class="tips">
                     <p><strong>休会からの再開には2か月分の決済が必要です。</strong>休会を検討されている会員様にはこの点をお伝えください。</p>
                 </div>
             </div>
             <div class="card">
-                <h3>ロッカー解約</h3>
+                <h3>プラン解約（退会）</h3>
                 <p class="preparing-notice">情報が入り次第、更新されます。</p>
             </div>
             <div class="card">
