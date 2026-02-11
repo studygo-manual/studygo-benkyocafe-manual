@@ -3497,6 +3497,134 @@ footer .update-date {
 }
 
 /* ===================================
+   2パターン横並びフロー
+   =================================== */
+.pattern-flow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 15px;
+}
+.pattern-col {
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.pattern-header {
+    text-align: center;
+    padding: 10px 12px;
+    font-weight: bold;
+    font-size: 0.95rem;
+}
+.pattern-header-store {
+    background: #FFF3E0;
+    color: #E65100;
+    border-bottom: 2px solid #FFB74D;
+}
+.pattern-header-online {
+    background: #E8EAF6;
+    color: #283593;
+    border-bottom: 2px solid #7986CB;
+}
+.pattern-steps {
+    padding: 12px 14px;
+}
+.pattern-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 7px 0;
+    position: relative;
+}
+.pattern-step + .pattern-step {
+    border-top: 1px solid #f0f0f0;
+}
+.pattern-step-num {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: #fff;
+}
+.pattern-step-num.customer { background: #1565C0; }
+.pattern-step-num.staff { background: #7B1FA2; }
+.pattern-step-num.both { background: linear-gradient(135deg, #1565C0 50%, #7B1FA2 50%); }
+.pattern-step-body {
+    flex: 1;
+    min-width: 0;
+}
+.pattern-step-body h5 {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: bold;
+    line-height: 1.4;
+}
+.pattern-step-body h5.customer-label { color: #1565C0; }
+.pattern-step-body h5.staff-label { color: #7B1FA2; }
+.pattern-step-body h5.both-label { color: #4A148C; }
+.pattern-step-body p,
+.pattern-step-body ul {
+    margin: 3px 0 0;
+    font-size: 0.8rem;
+    color: #555;
+    line-height: 1.5;
+}
+.pattern-step-body ul {
+    padding-left: 16px;
+}
+.pattern-step-body ul li {
+    margin-bottom: 1px;
+}
+.pattern-divider {
+    text-align: center;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 6px 0;
+    margin: 4px 0;
+    border-top: 2px dashed #bbb;
+    border-bottom: 2px dashed #bbb;
+    color: #888;
+    background: #fafafa;
+}
+.pattern-step.step-warning {
+    background: #FFF8E1;
+    border-radius: 6px;
+    padding: 7px 8px;
+    border: 1px solid #FFE082;
+}
+.pattern-legend {
+    display: flex;
+    gap: 16px;
+    margin-top: 8px;
+    margin-bottom: 4px;
+    font-size: 0.8rem;
+    flex-wrap: wrap;
+}
+.pattern-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.pattern-legend-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.pattern-legend-dot.customer { background: #1565C0; }
+.pattern-legend-dot.staff { background: #7B1FA2; }
+
+@media screen and (max-width: 640px) {
+    .pattern-flow {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===================================
    樹形図（ツリービュー）
    =================================== */
 .tree-view {
