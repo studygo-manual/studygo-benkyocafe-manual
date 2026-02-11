@@ -1598,6 +1598,8 @@
                 <div class="pattern-legend">
                     <div class="pattern-legend-item"><span class="pattern-legend-dot customer"></span> お客様フロー</div>
                     <div class="pattern-legend-item"><span class="pattern-legend-dot staff"></span> スタッフフロー</div>
+                    <div class="pattern-legend-item"><span style="display:inline-block;width:14px;height:3px;background:#4CAF50;vertical-align:middle;border-radius:2px;"></span> 共通</div>
+                    <div class="pattern-legend-item"><span style="display:inline-block;width:14px;height:3px;background:#FF9800;vertical-align:middle;border-radius:2px;"></span> このパターンのみ</div>
                 </div>
 
                 <div class="pattern-flow">
@@ -1605,66 +1607,66 @@
                     <div class="pattern-col">
                         <div class="pattern-header pattern-header-store">来店契約パターン<br><span style="font-size: 0.75rem; font-weight: normal;">見学 → そのまま入会</span></div>
                         <div class="pattern-steps">
-                            <div class="pattern-step">
+                            <div class="pattern-step step-unique">
                                 <div class="pattern-step-num customer">1</div>
                                 <div class="pattern-step-body">
-                                    <h5 class="customer-label">来店・見学</h5>
+                                    <h5 class="customer-label">来店・見学 <span class="pattern-step-badge badge-unique">来店のみ</span></h5>
                                     <p>有人時間帯に来店</p>
                                 </div>
                             </div>
-                            <div class="pattern-step">
+                            <div class="pattern-step step-unique">
                                 <div class="pattern-step-num staff">2</div>
                                 <div class="pattern-step-body">
-                                    <h5 class="staff-label">見学対応・プラン説明</h5>
+                                    <h5 class="staff-label">見学対応・プラン説明 <span class="pattern-step-badge badge-unique">来店のみ</span></h5>
                                     <p>スタジオ案内、プラン・営業時間の説明</p>
                                 </div>
                             </div>
-                            <div class="pattern-step">
+                            <div class="pattern-step step-common">
                                 <div class="pattern-step-num customer">3</div>
                                 <div class="pattern-step-body">
-                                    <h5 class="customer-label">アプリDL・会員登録</h5>
+                                    <h5 class="customer-label">アプリDL・会員登録 <span class="pattern-step-badge badge-common">共通</span></h5>
                                     <p>アプリのダウンロード → 会員登録</p>
                                 </div>
                             </div>
-                            <div class="pattern-step">
+                            <div class="pattern-step step-common">
                                 <div class="pattern-step-num customer">4</div>
                                 <div class="pattern-step-body">
-                                    <h5 class="customer-label">クレジットカード登録</h5>
+                                    <h5 class="customer-label">クレジットカード登録 <span class="pattern-step-badge badge-common">共通</span></h5>
                                     <p>クレジットカード情報を登録</p>
                                 </div>
                             </div>
-                            <div class="pattern-step step-warning">
+                            <div class="pattern-step step-unique step-warning">
                                 <div class="pattern-step-num staff">5</div>
                                 <div class="pattern-step-body">
-                                    <h5 class="staff-label">即日入会設定</h5>
+                                    <h5 class="staff-label">即日入会設定 <span class="pattern-step-badge badge-unique">来店のみ</span></h5>
                                     <p>管理画面「店舗管理」→「最短利用開始日」を <strong>0日</strong> に変更</p>
                                 </div>
                             </div>
-                            <div class="pattern-step">
+                            <div class="pattern-step step-common">
                                 <div class="pattern-step-num customer">6</div>
                                 <div class="pattern-step-body">
-                                    <h5 class="customer-label">月額プラン契約</h5>
+                                    <h5 class="customer-label">月額プラン契約 <span class="pattern-step-badge badge-common">共通</span></h5>
                                     <p>アプリ内でプラン・利用開始日を選択し契約</p>
                                 </div>
                             </div>
-                            <div class="pattern-step step-warning">
+                            <div class="pattern-step step-unique step-warning">
                                 <div class="pattern-step-num staff">7</div>
                                 <div class="pattern-step-body">
-                                    <h5 class="staff-label" style="color: #C62828;">設定を戻す</h5>
+                                    <h5 class="staff-label" style="color: #C62828;">設定を戻す <span class="pattern-step-badge badge-unique">来店のみ</span></h5>
                                     <p style="color: #C62828; font-weight: bold;">「最短利用開始日」を <strong>1日</strong> に必ず戻す</p>
                                 </div>
                             </div>
-                            <div class="pattern-step">
+                            <div class="pattern-step step-common">
                                 <div class="pattern-step-num staff">8</div>
                                 <div class="pattern-step-body">
-                                    <h5 class="staff-label">利用説明</h5>
+                                    <h5 class="staff-label">利用説明 <span class="pattern-step-badge badge-common">共通</span></h5>
                                     <p>休会・解約の説明、緊急連絡先、スマートロック操作の実演</p>
                                 </div>
                             </div>
-                            <div class="pattern-step">
+                            <div class="pattern-step step-common">
                                 <div class="pattern-step-num both">9</div>
                                 <div class="pattern-step-body">
-                                    <h5 class="both-label">初回来店手続き</h5>
+                                    <h5 class="both-label">初回来店手続き <span class="pattern-step-badge badge-common">共通</span></h5>
                                     <ul>
                                         <li>Lステップ（LINE）の登録</li>
                                         <li>入会アンケートの回答</li>
@@ -1674,16 +1676,16 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="pattern-step">
+                            <div class="pattern-step step-common">
                                 <div class="pattern-step-num staff">10</div>
                                 <div class="pattern-step-body">
-                                    <h5 class="staff-label">ご案内資料のお渡し</h5>
+                                    <h5 class="staff-label">ご案内資料のお渡し <span class="pattern-step-badge badge-common">共通</span></h5>
                                 </div>
                             </div>
-                            <div class="pattern-step">
+                            <div class="pattern-step step-common">
                                 <div class="pattern-step-num staff">11</div>
                                 <div class="pattern-step-body">
-                                    <h5 class="staff-label">入会報告</h5>
+                                    <h5 class="staff-label">入会報告 <span class="pattern-step-badge badge-common">共通</span></h5>
                                     <p>チャットワーク【入会情報】に会員番号・氏名を報告</p>
                                 </div>
                             </div>
@@ -1694,53 +1696,53 @@
                     <div class="pattern-col">
                         <div class="pattern-header pattern-header-online">オンライン契約パターン<br><span style="font-size: 0.75rem; font-weight: normal;">Web契約 → 後日来店</span></div>
                         <div class="pattern-steps">
-                            <div class="pattern-step">
+                            <div class="pattern-step step-common">
                                 <div class="pattern-step-num customer">1</div>
                                 <div class="pattern-step-body">
-                                    <h5 class="customer-label">アプリDL・会員登録</h5>
+                                    <h5 class="customer-label">アプリDL・会員登録 <span class="pattern-step-badge badge-common">共通</span></h5>
                                     <p>アプリのダウンロード → 会員登録</p>
                                 </div>
                             </div>
-                            <div class="pattern-step">
+                            <div class="pattern-step step-common">
                                 <div class="pattern-step-num customer">2</div>
                                 <div class="pattern-step-body">
-                                    <h5 class="customer-label">クレジットカード登録</h5>
+                                    <h5 class="customer-label">クレジットカード登録 <span class="pattern-step-badge badge-common">共通</span></h5>
                                     <p>クレジットカード情報を登録</p>
                                 </div>
                             </div>
-                            <div class="pattern-step">
+                            <div class="pattern-step step-common">
                                 <div class="pattern-step-num customer">3</div>
                                 <div class="pattern-step-body">
-                                    <h5 class="customer-label">月額プラン契約</h5>
+                                    <h5 class="customer-label">月額プラン契約 <span class="pattern-step-badge badge-common">共通</span></h5>
                                     <p>アプリ内でプラン・<strong>利用開始日</strong>を選択し契約</p>
                                 </div>
                             </div>
                             <div class="pattern-divider">&#9660; オンライン完結 ／ 以降スタッフ対応 &#9660;</div>
-                            <div class="pattern-step">
+                            <div class="pattern-step step-unique">
                                 <div class="pattern-step-num staff">4</div>
                                 <div class="pattern-step-body">
-                                    <h5 class="staff-label">新規契約の確認</h5>
+                                    <h5 class="staff-label">新規契約の確認 <span class="pattern-step-badge badge-unique">オンラインのみ</span></h5>
                                     <p>契約状態を確認。別メールで<strong>会員番号</strong>を確認</p>
                                 </div>
                             </div>
-                            <div class="pattern-step">
+                            <div class="pattern-step step-unique">
                                 <div class="pattern-step-num staff">5</div>
                                 <div class="pattern-step-body">
-                                    <h5 class="staff-label">来店手続きの案内</h5>
+                                    <h5 class="staff-label">来店手続きの案内 <span class="pattern-step-badge badge-unique">オンラインのみ</span></h5>
                                     <p>メッセージで来店案内・アポイント取得</p>
                                 </div>
                             </div>
-                            <div class="pattern-step">
+                            <div class="pattern-step step-unique">
                                 <div class="pattern-step-num customer">6</div>
                                 <div class="pattern-step-body">
-                                    <h5 class="customer-label">来店</h5>
+                                    <h5 class="customer-label">来店 <span class="pattern-step-badge badge-unique">オンラインのみ</span></h5>
                                     <p>有人時間帯に来店する</p>
                                 </div>
                             </div>
-                            <div class="pattern-step">
+                            <div class="pattern-step step-common">
                                 <div class="pattern-step-num staff">7</div>
                                 <div class="pattern-step-body">
-                                    <h5 class="staff-label">利用説明</h5>
+                                    <h5 class="staff-label">利用説明 <span class="pattern-step-badge badge-common">共通</span></h5>
                                     <ul>
                                         <li>スタジオ案内</li>
                                         <li>プラン・営業時間（無人・有人）の確認</li>
@@ -1750,10 +1752,10 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="pattern-step">
+                            <div class="pattern-step step-common">
                                 <div class="pattern-step-num both">8</div>
                                 <div class="pattern-step-body">
-                                    <h5 class="both-label">初回来店手続き</h5>
+                                    <h5 class="both-label">初回来店手続き <span class="pattern-step-badge badge-common">共通</span></h5>
                                     <ul>
                                         <li>Lステップ（LINE）の登録</li>
                                         <li>入会アンケートの回答</li>
@@ -1763,16 +1765,16 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="pattern-step">
+                            <div class="pattern-step step-common">
                                 <div class="pattern-step-num staff">9</div>
                                 <div class="pattern-step-body">
-                                    <h5 class="staff-label">ご案内資料のお渡し</h5>
+                                    <h5 class="staff-label">ご案内資料のお渡し <span class="pattern-step-badge badge-common">共通</span></h5>
                                 </div>
                             </div>
-                            <div class="pattern-step">
+                            <div class="pattern-step step-common">
                                 <div class="pattern-step-num staff">10</div>
                                 <div class="pattern-step-body">
-                                    <h5 class="staff-label">入会報告</h5>
+                                    <h5 class="staff-label">入会報告 <span class="pattern-step-badge badge-common">共通</span></h5>
                                     <p>チャットワーク【入会情報】に会員番号・氏名を報告</p>
                                 </div>
                             </div>
@@ -1794,25 +1796,6 @@
                         </ol>
                     </div>
                 </div>
-
-                <!-- 補足情報 -->
-                <h4>入会時に必要なもの</h4>
-                <ul>
-                    <li>入会金 <strong>11,000円(税込)</strong> + 当月日割り分月会費 + 翌月分月会費</li>
-                    <li>クレジットカード</li>
-                    <li>スマートフォン</li>
-                    <li>身分証（<strong>氏名、現住所</strong>が記載されているもの）</li>
-                </ul>
-                <p class="warning-text">※未成年の方は保護者同意書が必要となります。</p>
-
-                <h4>年齢制限</h4>
-                <ul>
-                    <li>スタディGO・勉強カフェは<strong>16歳以上</strong>を対象としたサービスです</li>
-                    <li><strong>15歳以下（中学生以下）</strong>の方はご利用いただけません</li>
-                    <li>16歳以上の現役高校生の方は、プランに関わらずご利用時間は原則<strong>21:00まで</strong>となります</li>
-                    <li>未成年の方の入会時には<strong>保護者同意書</strong>が必要となります</li>
-                    <li><strong>保護者同意書</strong>に保護者の方が「21時以降の利用を認める」旨を記載した場合は、<strong>21:00以降もご利用可能</strong>となります</li>
-                </ul>
 
                 <h4>月額プランの仕組み</h4>
                 <table class="info-table">
@@ -1875,40 +1858,83 @@
                 <p>月額会員・時間利用（ドロップイン）共通のチェックイン・チェックアウトの流れ、およびエラー時の対応です。</p>
 
                 <h4>時間利用（ドロップイン）のフロー</h4>
-                <div class="dual-flow">
-                    <div class="dual-flow-col dual-flow-staff">
-                        <div class="dual-flow-header"><span class="dual-flow-icon">&#128119;</span> スタッフフロー</div>
-                        <div class="dual-flow-steps">
-                            <div class="dual-flow-step">
-                                <div class="dual-flow-step-num">3</div>
-                                <div class="dual-flow-step-body">
-                                    <h4>画面確認</h4>
+                <div class="pattern-legend" style="margin-bottom: 8px;">
+                    <div class="pattern-legend-item"><span class="pattern-legend-dot customer"></span> お客様</div>
+                    <div class="pattern-legend-item"><span class="pattern-legend-dot staff"></span> スタッフ</div>
+                </div>
+
+                <!-- 初めて / 2回目以降 の2パターン -->
+                <div class="pattern-flow">
+                    <div class="pattern-col">
+                        <div class="pattern-header" style="background: #FFF3E0; color: #E65100; border-bottom: 2px solid #FFB74D;">初めてのお客様</div>
+                        <div class="pattern-steps">
+                            <div class="pattern-step step-unique">
+                                <div class="pattern-step-num customer">-</div>
+                                <div class="pattern-step-body">
+                                    <h5 class="customer-label">アプリDL・会員登録 <span class="pattern-step-badge badge-unique">初回のみ</span></h5>
+                                    <p>スタディGOアプリのダウンロード → 会員登録 → クレカ登録</p>
+                                </div>
+                            </div>
+                            <div class="pattern-step step-common">
+                                <div class="pattern-step-num customer">1</div>
+                                <div class="pattern-step-body">
+                                    <h5 class="customer-label">来店</h5>
+                                    <p>有人時間帯に来店する</p>
+                                </div>
+                            </div>
+                            <div class="pattern-step step-common">
+                                <div class="pattern-step-num customer">2</div>
+                                <div class="pattern-step-body">
+                                    <h5 class="customer-label">チェックイン</h5>
+                                    <p>アプリでQRコード読み取り → 時間利用プラン選択 → 契約（チェックイン）</p>
+                                    <p style="font-size: 0.75rem; color: #888;">※1日最大料金を先に請求</p>
+                                </div>
+                            </div>
+                            <div class="pattern-step step-common">
+                                <div class="pattern-step-num staff">3</div>
+                                <div class="pattern-step-body">
+                                    <h5 class="staff-label">画面確認</h5>
                                     <p>チェックイン完了画面を確認する</p>
+                                </div>
+                            </div>
+                            <div class="pattern-step step-common">
+                                <div class="pattern-step-num customer">4</div>
+                                <div class="pattern-step-body">
+                                    <h5 class="customer-label">チェックアウト・精算</h5>
+                                    <p>利用終了時にQRコード読み取りでチェックアウト → 精算</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="dual-flow-col dual-flow-customer">
-                        <div class="dual-flow-header"><span class="dual-flow-icon">&#128100;</span> お客様フロー</div>
-                        <div class="dual-flow-steps">
-                            <div class="dual-flow-step">
-                                <div class="dual-flow-step-num">1</div>
-                                <div class="dual-flow-step-body">
-                                    <h4>来店</h4>
+                    <div class="pattern-col">
+                        <div class="pattern-header" style="background: #E8EAF6; color: #283593; border-bottom: 2px solid #7986CB;">2回目以降のお客様</div>
+                        <div class="pattern-steps">
+                            <div class="pattern-step step-common">
+                                <div class="pattern-step-num customer">1</div>
+                                <div class="pattern-step-body">
+                                    <h5 class="customer-label">来店</h5>
                                     <p>有人時間帯に来店する</p>
                                 </div>
                             </div>
-                            <div class="dual-flow-step">
-                                <div class="dual-flow-step-num">2</div>
-                                <div class="dual-flow-step-body">
-                                    <h4>チェックイン</h4>
-                                    <p>アプリでQRコード読み取り → 時間利用プラン選択 → 契約即チェックイン（1日最大料金を先に請求）</p>
+                            <div class="pattern-step step-common">
+                                <div class="pattern-step-num customer">2</div>
+                                <div class="pattern-step-body">
+                                    <h5 class="customer-label">チェックイン</h5>
+                                    <p>アプリでQRコード読み取り → 時間利用プラン選択 → 契約（チェックイン）</p>
+                                    <p style="font-size: 0.75rem; color: #888;">※1日最大料金を先に請求</p>
                                 </div>
                             </div>
-                            <div class="dual-flow-step">
-                                <div class="dual-flow-step-num">4</div>
-                                <div class="dual-flow-step-body">
-                                    <h4>チェックアウト・精算</h4>
+                            <div class="pattern-step step-common">
+                                <div class="pattern-step-num staff">3</div>
+                                <div class="pattern-step-body">
+                                    <h5 class="staff-label">画面確認</h5>
+                                    <p>チェックイン完了画面を確認する</p>
+                                </div>
+                            </div>
+                            <div class="pattern-step step-common">
+                                <div class="pattern-step-num customer">4</div>
+                                <div class="pattern-step-body">
+                                    <h5 class="customer-label">チェックアウト・精算</h5>
                                     <p>利用終了時にQRコード読み取りでチェックアウト → 精算</p>
                                 </div>
                             </div>
@@ -1918,7 +1944,12 @@
 
                 <!-- 比較表 -->
                 <h4>月額利用と時間利用（ドロップイン）の違い</h4>
-                <table class="comparison-table">
+                <table class="comparison-table" style="table-layout: fixed; width: 100%;">
+                    <colgroup>
+                        <col style="width: 20%;">
+                        <col style="width: 40%;">
+                        <col style="width: 40%;">
+                    </colgroup>
                     <thead>
                         <tr>
                             <th>項目</th>
@@ -1945,7 +1976,7 @@
                         <tr>
                             <td><strong>チェックイン方法</strong></td>
                             <td>QRコード読み取り → チェックイン</td>
-                            <td>QRコード読み取り → 時間利用プラン選択 → 契約即チェックイン</td>
+                            <td>QRコード読み取り → 時間利用プラン選択 → 契約（チェックイン）</td>
                         </tr>
                         <tr>
                             <td><strong>チェックイン時の決済</strong></td>
@@ -2045,7 +2076,7 @@
                     </div>
                     <div class="flow-step">
                         <h4>2. チェックイン完了</h4>
-                        <p>チェックイン完了画面が表示（時間利用はプラン選択後に契約即チェックイン）</p>
+                        <p>チェックイン完了画面が表示（時間利用はプラン選択後に契約（チェックイン））</p>
                     </div>
                     <div class="flow-step">
                         <h4>3. 画面確認</h4>
