@@ -88,6 +88,10 @@
             <ul id="navList">
                 <!-- JavaScriptで動的に生成 -->
             </ul>
+            <div style="margin-top: 20px; padding: 10px 15px;">
+                <div style="color: #bbb; font-size: 0.85rem; padding: 6px 0; border-left: 3px solid #ddd; padding-left: 10px;">3. 勉強カフェ（今後実施予定）</div>
+                <div style="color: #bbb; font-size: 0.85rem; padding: 6px 0; border-left: 3px solid #ddd; padding-left: 10px; margin-top: 4px;">4. スタッフマニュアル（今後実施予定）</div>
+            </div>
         </div>
     </nav>
 
@@ -221,7 +225,7 @@
         </div>
 
         <!-- 勉強カフェ > 基本情報 -->
-        <section id="cafe-basic" data-category="cafe" data-modified>
+        <section id="cafe-basic" data-category="cafe" data-modified hidden>
             <h2>基本情報</h2>
             <div class="card">
                 <h3>営業時間</h3>
@@ -674,7 +678,7 @@
 
 
         <!-- 勉強カフェ > スタジオ紹介 -->
-        <section id="cafe-studio-compare" data-category="cafe">
+        <section id="cafe-studio-compare" data-category="cafe" hidden>
             <h2>スタジオ比較表</h2>
 
             <div class="card" style="border-left: 5px solid var(--primary-color);">
@@ -1111,7 +1115,7 @@
 
 
         <!-- 勉強カフェ > 導入システムの違い -->
-        <section id="cafe-systems" data-category="cafe">
+        <section id="cafe-systems" data-category="cafe" hidden>
             <h2>導入システムの違い</h2>
             <div class="card">
                 <h3>各サービスの違い</h3>
@@ -3862,7 +3866,7 @@
         const categories = [
             { key: 'change', label: '2/16～変更点まとめ', color: '#1976D2' },
             { key: 'studygo', label: 'スタディGO', color: '#4CAF50' },
-            { key: 'cafe', label: '勉強カフェ', color: '#8D6E63' },
+            // { key: 'cafe', label: '勉強カフェ', color: '#8D6E63' },  // 今後実施予定
             // { key: 'staff', label: 'スタッフマニュアル', color: '#FF7043' }  // 一旦非表示
         ];
 
