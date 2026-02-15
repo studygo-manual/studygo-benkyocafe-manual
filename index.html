@@ -211,6 +211,18 @@
             </div>
         </div>
 
+        <!-- 管理者用：誤答分析ダッシュボード -->
+        <div id="admin-quiz-dashboard" class="card" style="margin-bottom: 20px; display: none;">
+            <h3 style="border-left-color: #E65100; color: #E65100;">誤答分析ダッシュボード</h3>
+            <p style="font-size: 0.85rem; color: #666;">スタッフがどの問題を間違えたかを確認できます。（このPC上のデータ）</p>
+            <div id="adminQuizStats"></div>
+            <div style="margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap;">
+                <button id="adminExportBtn" style="padding: 8px 16px; background: #1976D2; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">全履歴をコピー</button>
+                <button id="adminClearBtn" style="padding: 8px 16px; background: #757575; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">履歴をクリア</button>
+                <span id="adminCopyMsg" style="line-height: 36px; color: #2E7D32; font-size: 0.85rem; display: none;">コピーしました</span>
+            </div>
+        </div>
+
         <!-- お知らせ一覧（専用表示エリア） -->
         <div id="notice-list-page" style="display: none;">
             <div class="card" style="border-left: 5px solid #FF7043;">
@@ -1241,12 +1253,12 @@
                         <li><b>超過料金</b> ─ 後日請求 → 即日自動決済（1分13円）</li>
                         <li><b>時間外利用</b> ─ 有人時間帯のみ利用可（770円/h・即日決済）</li>
                         <li><b>ドロップイン</b> ─ アプリで受付・決済（未登録者は受付不可）</li>
-                        <li><b>プラン変更</b> ─ 10日ルール厳守（毎月10日までに申請）</li>
+                        <li><b>プラン変更・休会</b> ─ 月1回・10日ルール厳守・申請取り消し不可</li>
                         <li><b>支払い方法</b> ─ クレカのみ（口座振替は廃止）</li>
                         <li><b>会員情報・支払い情報変更</b> ─ アプリで直接変更可能に</li>
                         <li><b>休会</b> ─ オンラインで手続き可能に</li>
                         <li><b>連絡方法</b> ─ Lステップ継続（見学予約・店外契約時はアプリメッセージも使用）</li>
-                        <li><b>廃止</b> ─ 時間制プラン / 新宿エリアパス / 即日アップグレード</li>
+                        <li><b>廃止</b> ─ 時間制プラン / 新宿エリアパス / 即日アップグレード / 会員様の時間外利用割引（550円）</li>
                     </ul>
                 </div>
 
@@ -1343,7 +1355,7 @@
                         <tr>
                             <td><strong>プラン変更</strong></td>
                             <td>アプリで申請<br><span style="font-size: 0.8rem; color: #888;">※取り消し不可</span></td>
-                            <td style="color: #C62828; font-weight: bold;">アプリで申請（10日ルール厳守）<br><span style="font-size: 0.8rem;">※毎月10日までに申請が必要</span></td>
+                            <td style="color: #C62828; font-weight: bold;">アプリで申請（10日ルール厳守）<br><span style="font-size: 0.8rem;">※毎月10日までに申請・月1回・取り消し不可</span></td>
                         </tr>
                         <tr>
                             <td><strong>プラン解約（退会）</strong></td>
@@ -1356,11 +1368,6 @@
                         </tr>
                         <!-- ▼ オプション -->
                         <tr><td colspan="3" style="background: #ECEFF1; font-weight: bold; color: #37474F; padding: 6px 12px; font-size: 0.85rem; border-bottom: 2px solid #B0BEC5;">オプション</td></tr>
-                        <tr>
-                            <td><strong>オプション契約</strong></td>
-                            <td>店頭でのみ可能</td>
-                            <td style="background: #E1F5FE;">アプリで購入可能<br><span style="font-size: 0.8rem; color: #888;">※ロッカーは店頭手続きも必要</span></td>
-                        </tr>
                         <tr>
                             <td><strong>ロッカー契約</strong></td>
                             <td>Googleフォーム＋会費PAY事後決済</td>
@@ -1397,6 +1404,11 @@
                             <td><strong>即日アップグレード</strong></td>
                             <td>あり</td>
                             <td style="color: #C62828; font-weight: bold;">廃止</td>
+                        </tr>
+                        <tr>
+                            <td><strong>時間外利用割引<br><span style="font-size: 0.8rem; font-weight: normal;">（会員様550円/h）</span></strong></td>
+                            <td>あり</td>
+                            <td style="color: #C62828; font-weight: bold;">廃止（770円/h統一）</td>
                         </tr>
                         <tr>
                             <td><strong>習慣化プラン</strong></td>
@@ -1458,8 +1470,8 @@
                         <td>チェックイン時刻の修正は<strong>チェックアウト前</strong>のみ可能（管理画面「チェックイン実績」→「編集」）。チェックアウト忘れは<strong>店舗コード入力</strong>で対応。打刻関連は重点的に説明が必要。</td>
                     </tr>
                     <tr>
-                        <th style="background: #FFEBEE; color: #C62828;">プラン変更の申請取り消し不可</th>
-                        <td>10日ルール自体はBPアプリと同じ。ただし、スタディGOでは<strong>申請後の取り消しができない</strong>ため、申請前にお客様へ十分に確認すること。</td>
+                        <th style="background: #FFEBEE; color: #C62828;">プラン変更・休会は月1回・取り消し不可</th>
+                        <td>10日ルール自体はBPアプリと同じ。ただし、スタディGOでは<strong>申請後の取り消しができない</strong>。さらに<strong>プラン変更・休会は月に1度しかできない</strong>ため、申請前にお客様へ十分に確認すること。入会時のプラン選択時にも必ず説明する。</td>
                     </tr>
                     <tr>
                         <th style="background: #FFEBEE; color: #C62828;">Akerun対応不要</th>
@@ -1504,6 +1516,7 @@
                 </table>
                 <div class="warning" style="margin-top: 10px;">
                     <p>月額プラン会員でも、契約時間外に利用する場合はドロップイン（時間利用）として<strong>別途チェックインが必要</strong>です。プラン時間外は自動的に入室できません。</p>
+                    <p style="color: #C62828; font-weight: bold; margin-top: 5px;">プラン時間終了後 ＋ 有人時間も終了している場合は、ドロップインの購入ができないため利用不可です。</p>
                 </div>
             </div>
 
@@ -1543,7 +1556,7 @@
 
             <div class="card" style="border-left: 5px solid #1565C0;">
                 <h3>即日入会時のフロー</h3>
-                <p>見学当日にそのまま入会する場合、スタッフ側で設定変更が必要です。</p>
+                <p><strong>よくあるケースです。</strong>見学当日にそのまま入会する場合、スタッフ側で設定変更が必要です。</p>
                 <div style="background: #FFF3E0; padding: 12px 15px; border-radius: 8px; border-left: 4px solid #f44336; margin-top: 10px;">
                     <ol style="margin: 0; padding-left: 20px; font-size: 0.9rem;">
                         <li>管理画面 →「店舗管理」→ 編集</li>
@@ -1552,6 +1565,16 @@
                         <li style="color: #C62828; font-weight: bold;">契約完了後、すぐに「最短利用開始日」を 1日 に戻す</li>
                         <li>チャットワークに報告 ＋ 設定を戻した旨を報告</li>
                     </ol>
+                </div>
+                <div class="warning" style="margin-top: 12px;">
+                    <p><strong>入会時のプラン選択で必ず説明すること：</strong></p>
+                    <ul style="margin: 5px 0 0 15px; font-size: 0.9rem;">
+                        <li>プラン時間帯の<strong>前</strong>の無人営業時間は利用できない（延長は可能だが、時間前の利用は不可）</li>
+                        <li>プラン時間外に利用したい場合は、<strong>有人時間帯にドロップインプランを購入</strong>すれば利用可能（入会資料にも組み込む）</li>
+                        <li style="color: #C62828; font-weight: bold;">プラン時間終了後 ＋ 有人時間も終了 → 利用不可（ドロップインは有人時間帯のみ）</li>
+                        <li style="color: #C62828; font-weight: bold;">プラン変更・休会は月に1度しかできない（毎月10日まで、取り消し不可）</li>
+                        <li>入会後のプラン選びなおしは翌月扱いになるため、最初のプラン選択が重要</li>
+                    </ul>
                 </div>
             </div>
         </section>
@@ -3707,6 +3730,8 @@
             loginOverlay.classList.add('active');
             loginNameSelect.value = '';
             loginError.textContent = '';
+            const adminDash = document.getElementById('admin-quiz-dashboard');
+            if (adminDash) adminDash.style.display = 'none';
         });
 
         // ヘッダーのユーザー情報表示
@@ -3771,6 +3796,7 @@
             if (typeof loadNoticeStatus === 'function') loadNoticeStatus();
             if (typeof updateTrainingDashboard === 'function') updateTrainingDashboard();
             if (typeof updateQuizButtons === 'function') updateQuizButtons();
+            if (typeof updateAdminDashboard === 'function') updateAdminDashboard();
         }
 
         // ページ読み込み時のチェック
@@ -4515,6 +4541,7 @@
         // ===================================
         const managerNotice = document.getElementById('manager-notice');
         const trainingDashboard = document.getElementById('training-dashboard');
+        const adminQuizDash = document.getElementById('admin-quiz-dashboard');
 
         function confirmNotice(btn, noticeId) {
             const user = getCurrentUser();
@@ -4604,6 +4631,7 @@
             // TOP要素をすべて非表示
             if (managerNotice) managerNotice.style.display = 'none';
             if (trainingDashboard) trainingDashboard.style.display = 'none';
+            if (adminQuizDash) adminQuizDash.style.display = 'none';
             if (quickAccess) quickAccess.style.display = 'none';
             if (usageGuide) usageGuide.style.display = 'none';
             sections.forEach(s => s.classList.add('collapsed'));
@@ -4619,6 +4647,7 @@
             noticeListPage.style.display = 'none';
             if (managerNotice) managerNotice.style.display = '';
             if (trainingDashboard) trainingDashboard.style.display = '';
+            if (adminQuizDash) updateAdminDashboard();
             if (quickAccess) quickAccess.style.display = '';
             if (usageGuide) usageGuide.style.display = '';
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -4629,6 +4658,7 @@
         showSection = function(sectionId, scroll) {
             if (managerNotice) managerNotice.style.display = 'none';
             if (trainingDashboard) trainingDashboard.style.display = 'none';
+            if (adminQuizDash) adminQuizDash.style.display = 'none';
             if (noticeListPage) noticeListPage.style.display = 'none';
             originalShowSection(sectionId, scroll);
         };
@@ -4639,6 +4669,7 @@
         topButtonEl.addEventListener('click', function() {
             if (managerNotice) managerNotice.style.display = '';
             if (trainingDashboard) trainingDashboard.style.display = '';
+            if (adminQuizDash) updateAdminDashboard();
             if (noticeListPage) noticeListPage.style.display = 'none';
         });
 
@@ -4649,10 +4680,12 @@
             if (q !== '') {
                 if (managerNotice) managerNotice.style.display = 'none';
                 if (trainingDashboard) trainingDashboard.style.display = 'none';
+                if (adminQuizDash) adminQuizDash.style.display = 'none';
                 if (noticeListPage) noticeListPage.style.display = 'none';
             } else {
                 if (managerNotice) managerNotice.style.display = '';
                 if (trainingDashboard) trainingDashboard.style.display = '';
+                if (adminQuizDash) updateAdminDashboard();
             }
         });
 
@@ -4660,177 +4693,133 @@
         // クイズ検定システム
         // ===================================
         const quizData = {
-            'cafe-basic': {
-                title: '基本情報',
+            'bp-to-studygo': {
+                title: 'スタディGO変更内容',
                 questions: [
                     {
-                        q: '勉強カフェの平日の営業時間は？',
-                        options: ['7:00〜22:00', '6:00〜23:00', '8:00〜22:00', '6:00〜22:00'],
+                        q: 'スタディGOでの支払い方法は？',
+                        options: ['口座振替またはクレカ', 'クレジットカードのみ', '現金またはクレカ', '口座振替のみ'],
                         correct: 1,
-                        explanation: '平日の営業時間は6:00〜23:00です。土曜は〜22:00、日祝は〜21:00となります。'
+                        explanation: 'スタディGOではクレジットカードのみです。口座振替は廃止されました。'
                     },
                     {
-                        q: '日曜・祝日の営業終了時間は？',
-                        options: ['21:00', '22:00', '23:00', '20:00'],
-                        correct: 0,
-                        explanation: '日曜・祝日は6:00〜21:00の営業です。'
-                    },
-                    {
-                        q: 'スタディGOサポートの電話対応時間は？',
-                        options: ['24時間対応', '平日9:00〜17:00', '平日10:00〜18:00', '平日8:00〜20:00'],
+                        q: 'スタディGOでの入退室（開錠）方法は？',
+                        options: ['Akerunアプリで開錠', 'ICカードをかざす', 'スタディGOアプリで開錠', 'スタッフに声をかける'],
                         correct: 2,
-                        explanation: 'スタディGOサポートは平日10:00〜18:00で電話対応しています。'
+                        explanation: '入退室はスタディGOアプリで開錠します。Akerunは不要になりました。'
                     },
                     {
-                        q: '無人時間帯と有人時間帯で大きく異なる点は？',
-                        options: ['料金が変わる', 'スタッフ不在のため時間利用（ドロップイン）不可', 'Wi-Fiが使えない', '空調が止まる'],
+                        q: '超過料金の請求方法はどう変わった？',
+                        options: ['翌月末に請求（変更なし）', '即日自動決済（1分13円）', '翌日に請求', 'スタッフが手動で請求'],
                         correct: 1,
-                        explanation: '無人時間帯はスタッフが不在のため、時間利用（ドロップイン）はできません。月額会員のみ利用可能です。'
+                        explanation: 'BPアプリは翌月末請求でしたが、スタディGOは即日自動決済（1分あたり13円）です。'
                     },
                     {
-                        q: '館内での通話について正しいものは？',
-                        options: ['どこでも通話可能', '通話は全面禁止', '指定場所（テルブース等）のみ可', '小声なら座席で可'],
+                        q: '時間外利用について正しいものは？',
+                        options: ['営業時間内すべて利用可能', '有人時間帯のみ利用可能（770円/h・即日決済）', '時間外利用は廃止された', '無人時間帯も追加料金なしで利用可能'],
+                        correct: 1,
+                        explanation: 'スタディGOでは有人時間帯のみ時間外利用が可能で、料金は770円/hの即日決済です。'
+                    },
+                    {
+                        q: 'ドロップイン（時間利用）について正しいものは？',
+                        options: ['スタディGO未登録者でも現地で受付可能', '未登録者は受付不可、スタディGO登録が必要', 'ドロップイン自体が廃止された', '電話予約が必要になった'],
+                        correct: 1,
+                        explanation: 'スタディGO未登録者のドロップインは受付不可です。まずスタディGOへの登録が必要です。'
+                    },
+                    {
+                        q: 'プラン変更の申請について、BPアプリから変わった点は？',
+                        options: ['10日ルールが新設された', '申請後の取り消しができなくなった', 'スタッフ経由でしか申請できなくなった', '変更は一切できなくなった'],
+                        correct: 1,
+                        explanation: '10日ルール自体はBPアプリと同じですが、スタディGOでは申請後の取り消しができなくなりました。'
+                    },
+                    {
+                        q: 'チェックインの方法はどう変わった？',
+                        options: ['受付の専用機器にQRをかざす（変更なし）', 'スタッフがチェックインを代行する', 'アプリでQRコードを読み取る方式に変更', 'ICカードで打刻する方式に変更'],
                         correct: 2,
-                        explanation: '通話はテルブースなど指定場所でのみ可能です。座席での通話はお控えください。'
+                        explanation: 'BPアプリは受付の専用機器にQRをかざす方式でしたが、スタディGOではアプリでQRコードを読み取る方式に変わりました。'
                     },
                     {
-                        q: '持ち込み飲食について正しいものは？',
-                        options: ['飲食ともに持ち込み自由', '飲み物のみ持ち込み可（蓋付き）', '飲食ともに持ち込み禁止', '食べ物のみ持ち込み可'],
+                        q: '打刻修正について正しいものは？',
+                        options: ['スタッフが管理画面からいつでも修正可能', 'チェックイン時刻はチェックアウト前まで修正可、チェックアウト忘れは店舗コード入力', 'お客様自身では一切修正できない', '打刻修正は廃止された'],
                         correct: 1,
-                        explanation: '蓋付きの飲み物は持ち込み可能です。食べ物の持ち込みはお控えください。'
+                        explanation: 'チェックイン時刻の修正はチェックアウト前のみ可能です。チェックアウト忘れはアプリで店舗コードを入力して対応します。'
+                    },
+                    {
+                        q: 'スタディGOで廃止されたサービスはどれ？',
+                        options: ['ドロップイン、ロッカー、休会', '時間制プラン、新宿エリアパス、即日アップグレード、時間外利用割引', '月額プラン、見学予約、Lステップ', 'オプション契約、プラン変更、入会手続き'],
+                        correct: 1,
+                        explanation: '時間制プラン・新宿エリアパス・即日アップグレード・会員様の時間外利用割引（550円）が廃止されました。時間外利用は770円/h統一です。'
+                    },
+                    {
+                        q: '超過料金・時間外料金の返金対応について正しいものは？',
+                        options: ['お客様の申し出があれば返金する', 'アプリの不具合でない限り返金は行わない', 'マネージャー判断で返金可能', '全額返金が原則'],
+                        correct: 1,
+                        explanation: 'チェックイン・チェックアウトはお客様の責任です。アプリの不具合でない限り返金は行いません。'
                     }
                 ]
             },
             'procedures': {
-                title: '対応フロー',
+                title: 'スタディGO対応フロー',
                 questions: [
                     {
-                        q: 'スタディGOでの支払い方法は？',
-                        options: ['口座振替のみ', '現金のみ', 'クレジットカードのみ', '口座振替またはクレカ'],
-                        correct: 2,
-                        explanation: 'スタディGO会員の支払い方法はクレジットカードのみです。'
-                    },
-                    {
-                        q: '時間利用（ドロップイン）ができる時間帯は？',
-                        options: ['営業時間内いつでも', '有人時間帯のみ', '無人時間帯のみ', '予約した時間のみ'],
+                        q: 'お客様がチェックアウトを忘れて退店した場合、どう案内する？',
+                        options: ['スタッフが管理画面からチェックアウトする', 'アプリ →「QR読取」→「QRが読み取れない場合」→ 店舗コード入力', '翌日来店時にチェックアウトしてもらう', '運営本部に連絡して対応を依頼する'],
                         correct: 1,
-                        explanation: '時間利用（ドロップイン）は有人時間帯のみ対応しています。'
+                        explanation: '店外からでもアプリで対応可能です。「QR読取」→「QRが読み取れない場合」→ 店舗コードを入力してチェックアウトします。チェックアウトするまで課金が継続します。'
                     },
                     {
-                        q: '解約手続きで注意すべきことは？',
-                        options: ['いつでも即日解約可能', '締日に注意が必要', '店頭でしか手続きできない', '電話連絡が必要'],
+                        q: 'チェックイン忘れのお客様への対応は？',
+                        options: ['管理画面から代理チェックインする', 'その場でチェックインしてもらい、管理画面「チェックイン実績」→「編集」で時刻修正', 'チェックインなしで利用を許可する', '一度退店してもらい再入店してもらう'],
                         correct: 1,
-                        explanation: 'スタディGOの解約はアプリ上で手続き可能ですが、締日に注意が必要です。'
+                        explanation: 'まずその場でチェックインしてもらい、管理画面「チェックイン実績」→「編集」でチェックイン時刻を修正します。'
                     },
                     {
-                        q: 'チェックインの方法は？',
-                        options: ['受付でスタッフに声をかける', 'ICカードをかざす', 'QRコードをアプリで読み取る', '指紋認証'],
-                        correct: 2,
-                        explanation: 'スタディGOアプリでQRコードを読み取ってチェックインします。'
-                    },
-                    {
-                        q: 'チェックイン忘れで同日の場合の対応は？',
-                        options: ['翌日に修正する', 'その場でチェックインしてもらい、管理画面で修正', '運営に連絡する', '対応不可'],
+                        q: '間違ってチェックアウトしてしまったお客様への対応は？',
+                        options: ['スタッフがチェックアウトを取り消す', 'もう一度QRコードを読み取って再チェックインしてもらう', '管理画面からチェックアウトを削除する', 'そのまま利用を続けてもらう'],
                         correct: 1,
-                        explanation: 'まずその場でチェックインしてもらい、管理画面「チェックイン実績」で現在のチェックインを修正します。'
+                        explanation: '再度QRコードを読み取ってチェックインし直してもらいます。'
                     },
                     {
-                        q: '間違ってチェックアウトしてしまった場合の対応は？',
-                        options: ['スタッフが取り消しできる', '再度チェックインが必要', '管理画面から削除', '自動的に復帰する'],
+                        q: '見学当日にそのまま入会（即日入会）する場合のスタッフ操作は？',
+                        options: ['特に操作不要、お客様にアプリで登録してもらうだけ', '管理画面「店舗管理」→「最短利用開始日」を0日に変更 → 契約後に1日に戻す', '管理画面から会員を手動登録する', '運営本部に電話して即日入会の許可を得る'],
                         correct: 1,
-                        explanation: '間違ってチェックアウトした場合は、再度QRコードを読み取ってチェックインし直す必要があります。なお、チェックインの間違いはQR読取＋確認操作が必要なため、基本的にありえません。'
-                    }
-                ]
-            },
-            'admin-panel': {
-                title: '管理画面操作',
-                questions: [
+                        explanation: '管理画面「店舗管理」→ 編集で「最短利用開始日」を0日に変更し、契約完了後に必ず1日に戻します。チャットワークへの報告も必要です。'
+                    },
                     {
-                        q: '管理画面ダッシュボードの「確認済み」ボタンについて正しいものは？',
+                        q: 'スタディGO未登録の方がドロップイン希望で来店した場合は？',
+                        options: ['現金で受け付ける', 'スタディGO登録をご案内する', '入店をお断りする', 'BPアプリで対応する'],
+                        correct: 1,
+                        explanation: 'スタディGO未登録者のドロップインは受付不可です。まずスタディGOでの登録をご案内します。'
+                    },
+                    {
+                        q: '月額プラン会員が契約時間外に利用したい場合の対応は？',
+                        options: ['追加料金なしでそのまま利用可能', 'ドロップイン（時間利用）として別途チェックインが必要', '時間外利用は一切不可', 'スタッフがプランを一時変更する'],
+                        correct: 1,
+                        explanation: '契約時間外はドロップイン（時間利用）として別途チェックインが必要です。770円/時間で即日決済されます。'
+                    },
+                    {
+                        q: 'ロッカー契約のお客様への案内で正しいものは？',
+                        options: ['すべてアプリで完結する', 'アプリで契約後、ロッカー番号の決定は店頭で行う', '店頭でGoogleフォームに記入してもらう', '運営本部に申請が必要'],
+                        correct: 1,
+                        explanation: 'ロッカーはアプリで契約（日割・即時決済）しますが、ロッカー番号の決定は店頭で行います。'
+                    },
+                    {
+                        q: 'お客様から「超過料金がかかった」と問い合わせがあった場合は？',
+                        options: ['すぐに返金対応する', 'チェックアウトはお客様の責任であること、アプリ不具合でない限り返金は行わないことを説明', 'マネージャーに判断を仰ぐ', '料金を半額にする'],
+                        correct: 1,
+                        explanation: 'チェックイン・チェックアウトはお客様の責任です。アプリの不具合でない限り返金は行わない旨を丁寧に説明します。'
+                    },
+                    {
+                        q: 'お客様がプラン変更を希望された場合、必ず伝えるべきことは？',
+                        options: ['変更は翌月からしかできない', '毎月10日までに申請が必要・月1回のみ・取り消し不可', 'スタッフが代わりに申請する', '変更手数料がかかる'],
+                        correct: 1,
+                        explanation: '毎月10日までに申請が必要（10日ルール）、プラン変更・休会は月に1度しかできず、申請後の取り消しもできません。申請前にお客様へ十分に確認することが重要です。'
+                    },
+                    {
+                        q: '管理画面ダッシュボードの「確認済み」ボタンについて正しい対応は？',
                         options: ['確認したら必ず押す', '押さないようにする', '1日1回押す', 'マネージャーだけが押す'],
                         correct: 1,
                         explanation: '「確認済み」ボタンは押さないでください。押すと通知が消えてしまいます。'
-                    },
-                    {
-                        q: '会員情報を確認するときの操作は？',
-                        options: ['会員名をダブルクリック', '会員一覧で右端のテキストマークを押す', 'IDを検索バーに入力', '会員にメールで確認'],
-                        correct: 1,
-                        explanation: '「会員管理」→ 一覧の右端テキストマーク📓を押すと詳細情報が表示されます。'
-                    },
-                    {
-                        q: '即日入会の場合、最短利用開始日の設定は？',
-                        options: ['変更不要', '0日に変更し、契約後に必ず元に戻す', '当日の日付に変更', '1に変更'],
-                        correct: 1,
-                        explanation: '即日入会時は最短利用開始日を0日に一時変更し、契約完了後に必ず1日に戻してください。'
-                    }
-                ]
-            },
-            'staff-op': {
-                title: 'OP作業',
-                questions: [
-                    {
-                        q: '出勤時に最初に行うことは？',
-                        options: ['エアコンを点ける', 'Akerunで解錠して入店', 'パソコンを起動', '清掃を開始'],
-                        correct: 1,
-                        explanation: 'まずAkerunで入口ドアを解錠・入店します。'
-                    },
-                    {
-                        q: 'オープン作業で確認すべき設備は？',
-                        options: ['パソコンのみ', '照明・空調・給茶機・コーヒーサーバー', 'エアコンのみ', 'Wi-Fiのみ'],
-                        correct: 1,
-                        explanation: '照明、空調、給茶機、コーヒーサーバーなど各設備の動作確認が必要です。'
-                    },
-                    {
-                        q: 'オープン時のチェックリストの目的は？',
-                        options: ['マネージャーへの報告用', '快適な環境をお客様に提供するため', '売上管理のため', '防犯のため'],
-                        correct: 1,
-                        explanation: 'チェックリストはお客様に快適な環境を提供するためのオープン準備です。'
-                    }
-                ]
-            },
-            'staff-cl': {
-                title: 'CL作業',
-                questions: [
-                    {
-                        q: 'クローズ作業で最後に行うことは？',
-                        options: ['ゴミを捨てる', '退勤報告をチャットワークで行い施錠', 'パソコンをシャットダウン', 'エアコンを消す'],
-                        correct: 1,
-                        explanation: '退勤報告をチャットワークで行い、Akerunで施錠して退店します。'
-                    },
-                    {
-                        q: '忘れ物を発見した場合の対応は？',
-                        options: ['ゴミ箱に捨てる', '受付に保管し、チャットワークで報告', '翌日まで放置', '警察に届ける'],
-                        correct: 1,
-                        explanation: '忘れ物は受付に保管し、チャットワークで報告してください。'
-                    },
-                    {
-                        q: '営業終了時間を過ぎてもお客様がいる場合は？',
-                        options: ['そのまま帰宅する', '退店を促し、自動チェックアウトの旨を説明', '翌朝のスタッフに引き継ぐ', '何もしない'],
-                        correct: 1,
-                        explanation: 'お客様に退店を促し、営業時間終了で自動チェックアウトとなることを説明します。'
-                    }
-                ]
-            },
-            'staff-customer': {
-                title: '接客・受付対応',
-                questions: [
-                    {
-                        q: '初来店のお客様への最初の対応は？',
-                        options: ['すぐにプランを説明する', '挨拶し、見学か時間利用か確認する', 'アプリのダウンロードを案内する', '席に案内する'],
-                        correct: 1,
-                        explanation: 'まずは挨拶し、見学希望か時間利用（ドロップイン）かを確認します。'
-                    },
-                    {
-                        q: 'お客様から「うるさい」というクレームがあった場合は？',
-                        options: ['無視する', 'まず謝罪し、原因を確認して対処する', '注意が必要な人に直接注意', 'マネージャーに電話'],
-                        correct: 1,
-                        explanation: 'まずお客様に謝罪し、原因を確認。必要があれば該当者にお声がけします。'
-                    },
-                    {
-                        q: '外国人のお客様が来店された場合の注意点は？',
-                        options: ['対応を断る', '時間利用（ドロップイン）時の対応に特に注意が必要', '日本語のマニュアルを渡す', '電話通訳を呼ぶ'],
-                        correct: 1,
-                        explanation: '外国人のお客様の時間利用（ドロップイン）時は、対応に注意が必要です。'
                     }
                 ]
             }
@@ -4860,6 +4849,7 @@
         let currentQuestionIndex = 0;
         let quizScore = 0;
         let quizAnswered = false;
+        let quizWrongAnswers = []; // 誤答記録用
 
         quizClose.addEventListener('click', () => {
             quizOverlay.classList.remove('active');
@@ -4874,12 +4864,28 @@
             return JSON.parse(localStorage.getItem('studygo_quiz_' + user) || '{}');
         }
 
-        function saveQuizProgress(sectionId, passed) {
+        function saveQuizProgress(sectionId, passed, wrongAnswers) {
             const user = getCurrentUser();
             if (!user) return;
             const progress = getQuizProgress();
             progress[sectionId] = { passed: passed, date: new Date().toISOString() };
             localStorage.setItem('studygo_quiz_' + user, JSON.stringify(progress));
+            // 誤答履歴を保存（全ユーザー分を蓄積）
+            if (wrongAnswers && wrongAnswers.length > 0) {
+                const historyKey = 'studygo_quiz_history';
+                const history = JSON.parse(localStorage.getItem(historyKey) || '[]');
+                history.push({
+                    user: user,
+                    section: quizData[sectionId].title,
+                    sectionId: sectionId,
+                    date: new Date().toISOString(),
+                    score: quizScore + '/' + quizData[sectionId].questions.length,
+                    wrongAnswers: wrongAnswers
+                });
+                // 直近100件まで保持
+                if (history.length > 100) history.splice(0, history.length - 100);
+                localStorage.setItem(historyKey, JSON.stringify(history));
+            }
             updateTrainingDashboard();
             updateQuizButtons();
         }
@@ -4894,6 +4900,7 @@
             currentQuiz.sectionId = sectionId;
             currentQuestionIndex = 0;
             quizScore = 0;
+            quizWrongAnswers = [];
             quizTitle.textContent = currentQuiz.title + ' - 理解度チェック';
             renderQuestion();
             quizOverlay.classList.add('active');
@@ -4948,7 +4955,17 @@
 
             const q = currentQuiz.questions[currentQuestionIndex];
             const isCorrect = selectedIdx === q.correct;
-            if (isCorrect) quizScore++;
+            if (isCorrect) {
+                quizScore++;
+            } else {
+                quizWrongAnswers.push({
+                    questionNum: currentQuestionIndex + 1,
+                    question: q.q,
+                    selected: q.options[selectedIdx],
+                    correct: q.options[q.correct],
+                    explanation: q.explanation
+                });
+            }
 
             // オプションの色を更新
             quizBody.querySelectorAll('.quiz-option').forEach((btn, idx) => {
@@ -4981,7 +4998,7 @@
         function renderResult() {
             const total = currentQuiz.questions.length;
             const passed = quizScore === total;
-            saveQuizProgress(currentQuiz.sectionId, passed);
+            saveQuizProgress(currentQuiz.sectionId, passed, quizWrongAnswers);
 
             let icon, title, message;
             if (passed) {
@@ -4994,14 +5011,60 @@
                 message = '全問正解で合格です。もう一度チャレンジしてみましょう！';
             }
 
+            // 誤答レポート
+            let wrongHTML = '';
+            if (quizWrongAnswers.length > 0) {
+                wrongHTML = '<div style="text-align:left; margin-top:15px; padding:12px; background:#FFF3E0; border-radius:8px; font-size:0.85rem;">' +
+                    '<div style="font-weight:bold; margin-bottom:8px; color:#E65100;">間違えた問題：</div>';
+                quizWrongAnswers.forEach(w => {
+                    wrongHTML += '<div style="margin-bottom:10px; padding-bottom:8px; border-bottom:1px solid #FFE0B2;">' +
+                        '<div style="font-weight:bold;">Q' + w.questionNum + '. ' + w.question + '</div>' +
+                        '<div style="color:#C62828;">あなたの回答: ' + w.selected + '</div>' +
+                        '<div style="color:#2E7D32;">正解: ' + w.correct + '</div>' +
+                        '</div>';
+                });
+                wrongHTML += '</div>';
+            }
+
+            // コピー用テキスト生成
+            const user = getCurrentUser();
+            const now = new Date();
+            const dateStr = now.getFullYear() + '/' + (now.getMonth()+1) + '/' + now.getDate() + ' ' + now.getHours() + ':' + String(now.getMinutes()).padStart(2,'0');
+            let copyText = '【研修クイズ結果】\n';
+            copyText += '名前: ' + user + '\n';
+            copyText += '日時: ' + dateStr + '\n';
+            copyText += 'カテゴリ: ' + currentQuiz.title + '\n';
+            copyText += '結果: ' + quizScore + '/' + total + '問正解' + (passed ? '（合格）' : '') + '\n';
+            if (quizWrongAnswers.length > 0) {
+                copyText += '\n--- 間違えた問題 ---\n';
+                quizWrongAnswers.forEach(w => {
+                    copyText += '\nQ' + w.questionNum + '. ' + w.question + '\n';
+                    copyText += '  回答: ' + w.selected + '\n';
+                    copyText += '  正解: ' + w.correct + '\n';
+                });
+            }
+
+            let copyBtnHTML = '<button id="quizCopyBtn" style="margin-top:10px; padding:8px 20px; background:#1976D2; color:#fff; border:none; border-radius:6px; cursor:pointer; font-size:0.9rem;">結果をコピー</button>' +
+                '<span id="quizCopyMsg" style="margin-left:8px; color:#2E7D32; font-size:0.85rem; display:none;">コピーしました</span>';
+
             quizBody.innerHTML =
                 '<div class="quiz-result">' +
                     '<div class="quiz-result-icon">' + icon + '</div>' +
                     '<div class="quiz-result-title">' + title + '</div>' +
                     '<div class="quiz-result-score">' + quizScore + ' / ' + total + ' 問正解</div>' +
                     '<div class="quiz-result-message">' + message + '</div>' +
-                    '<button class="quiz-retry-btn" id="quizRetryBtn">' + (passed ? '閉じる' : 'もう一度チャレンジ') + '</button>' +
+                    wrongHTML +
+                    '<div style="margin-top:12px;">' + copyBtnHTML + '</div>' +
+                    '<button class="quiz-retry-btn" id="quizRetryBtn" style="margin-top:10px;">' + (passed ? '閉じる' : 'もう一度チャレンジ') + '</button>' +
                 '</div>';
+
+            document.getElementById('quizCopyBtn').addEventListener('click', () => {
+                navigator.clipboard.writeText(copyText).then(() => {
+                    const msg = document.getElementById('quizCopyMsg');
+                    msg.style.display = 'inline';
+                    setTimeout(() => { msg.style.display = 'none'; }, 2000);
+                });
+            });
 
             document.getElementById('quizRetryBtn').addEventListener('click', () => {
                 if (passed) {
@@ -5009,6 +5072,7 @@
                 } else {
                     currentQuestionIndex = 0;
                     quizScore = 0;
+                    quizWrongAnswers = [];
                     renderQuestion();
                 }
             });
@@ -5073,8 +5137,101 @@
             grid.innerHTML = html;
         }
 
+        // 管理者用：誤答分析ダッシュボード
+        const ADMIN_USERS = ['國松', '近藤'];
+        function updateAdminDashboard() {
+            const dashboard = document.getElementById('admin-quiz-dashboard');
+            if (!dashboard) return;
+            const user = getCurrentUser();
+            if (!user || !ADMIN_USERS.includes(user)) {
+                dashboard.style.display = 'none';
+                return;
+            }
+            dashboard.style.display = '';
+            const statsEl = document.getElementById('adminQuizStats');
+            const history = JSON.parse(localStorage.getItem('studygo_quiz_history') || '[]');
+            if (history.length === 0) {
+                statsEl.innerHTML = '<p style="color:#999; font-size:0.85rem;">まだ誤答データがありません。</p>';
+                return;
+            }
+            // 問題ごとの間違い回数を集計
+            const questionStats = {};
+            const userStats = {};
+            history.forEach(entry => {
+                if (!userStats[entry.user]) userStats[entry.user] = { total: 0, wrong: 0, sections: {} };
+                userStats[entry.user].total++;
+                entry.wrongAnswers.forEach(w => {
+                    const key = entry.sectionId + '_Q' + w.questionNum;
+                    if (!questionStats[key]) questionStats[key] = { question: w.question, section: entry.section, count: 0, users: [] };
+                    questionStats[key].count++;
+                    if (!questionStats[key].users.includes(entry.user)) questionStats[key].users.push(entry.user);
+                    userStats[entry.user].wrong++;
+                    if (!userStats[entry.user].sections[entry.section]) userStats[entry.user].sections[entry.section] = 0;
+                    userStats[entry.user].sections[entry.section]++;
+                });
+            });
+            // 間違いが多い順にソート
+            const sorted = Object.entries(questionStats).sort((a, b) => b[1].count - a[1].count);
+            let html = '<div style="margin-bottom:15px;">';
+            html += '<div style="font-weight:bold; font-size:0.9rem; margin-bottom:8px;">間違いが多い問題 TOP5</div>';
+            html += '<table style="width:100%; border-collapse:collapse; font-size:0.82rem;">';
+            html += '<tr style="background:#ECEFF1;"><th style="padding:6px; text-align:left;">問題</th><th style="padding:6px; width:60px; text-align:center;">回数</th><th style="padding:6px; width:100px; text-align:left;">間違えた人</th></tr>';
+            sorted.slice(0, 5).forEach(([key, data]) => {
+                html += '<tr style="border-bottom:1px solid #E0E0E0;">';
+                html += '<td style="padding:6px;"><span style="color:#888; font-size:0.75rem;">[' + data.section + ']</span> ' + data.question.substring(0, 40) + (data.question.length > 40 ? '...' : '') + '</td>';
+                html += '<td style="padding:6px; text-align:center; color:#C62828; font-weight:bold;">' + data.count + '回</td>';
+                html += '<td style="padding:6px; font-size:0.8rem;">' + data.users.join(', ') + '</td>';
+                html += '</tr>';
+            });
+            html += '</table></div>';
+            // スタッフ別の誤答数
+            html += '<div style="font-weight:bold; font-size:0.9rem; margin-bottom:8px;">スタッフ別 誤答数</div>';
+            html += '<div style="display:flex; gap:8px; flex-wrap:wrap;">';
+            Object.entries(userStats).forEach(([name, data]) => {
+                const color = data.wrong === 0 ? '#2E7D32' : '#C62828';
+                html += '<div style="background:#F5F5F5; border-radius:6px; padding:8px 12px; font-size:0.82rem;">';
+                html += '<strong>' + name + '</strong> ';
+                html += '<span style="color:' + color + ';">' + data.wrong + '問ミス</span>';
+                html += ' / 受験' + data.total + '回';
+                html += '</div>';
+            });
+            html += '</div>';
+            statsEl.innerHTML = html;
+        }
+
+        // エクスポート・クリアボタン
+        document.getElementById('adminExportBtn').addEventListener('click', () => {
+            const history = JSON.parse(localStorage.getItem('studygo_quiz_history') || '[]');
+            if (history.length === 0) { alert('履歴がありません'); return; }
+            let text = '【研修クイズ 誤答履歴レポート】\n';
+            text += '出力日時: ' + new Date().toLocaleString('ja-JP') + '\n';
+            text += '================================\n\n';
+            history.forEach(entry => {
+                const d = new Date(entry.date);
+                text += '■ ' + entry.user + ' / ' + entry.section + ' / ' + d.toLocaleString('ja-JP') + ' / ' + entry.score + '\n';
+                entry.wrongAnswers.forEach(w => {
+                    text += '  Q' + w.questionNum + '. ' + w.question + '\n';
+                    text += '    回答: ' + w.selected + '\n';
+                    text += '    正解: ' + w.correct + '\n';
+                });
+                text += '\n';
+            });
+            navigator.clipboard.writeText(text).then(() => {
+                const msg = document.getElementById('adminCopyMsg');
+                msg.style.display = 'inline';
+                setTimeout(() => { msg.style.display = 'none'; }, 2000);
+            });
+        });
+        document.getElementById('adminClearBtn').addEventListener('click', () => {
+            if (confirm('誤答履歴をすべて削除しますか？')) {
+                localStorage.removeItem('studygo_quiz_history');
+                updateAdminDashboard();
+            }
+        });
+
         addQuizButtons();
         updateTrainingDashboard();
+        updateAdminDashboard();
 
     </script>
 </body>
