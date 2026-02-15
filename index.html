@@ -1256,7 +1256,7 @@
                         <li><b>プラン変更・休会</b> ─ 月1回・10日ルール厳守・申請取り消し不可</li>
                         <li><b>支払い方法</b> ─ クレカのみ（口座振替は廃止）</li>
                         <li><b>会員情報・支払い情報変更</b> ─ アプリで直接変更可能に</li>
-                        <li><b>休会</b> ─ アプリで申請するだけ（店頭不要・スタッフ処理不要）</li>
+                        <li><b>休会</b> ─ アプリで申請するだけ（店頭来店不要・スタッフ手続きなし）</li>
                         <li><b>連絡方法</b> ─ Lステップ継続（見学予約・店外契約時はアプリメッセージも使用）</li>
                         <li><b>廃止</b> ─ 時間制プラン / 新宿エリアパス / 即日アップグレード / 会員様の時間外利用割引（550円）</li>
                     </ul>
@@ -1296,7 +1296,7 @@
                         </tr>
                         <tr>
                             <td><strong>決済システム</strong></td>
-                            <td>会費ペイなど別システム</td>
+                            <td>別サービス：会費PAY</td>
                             <td style="background: #E1F5FE;">アプリ内で一元管理</td>
                         </tr>
                         <!-- ▼ 打刻・入退室 -->
@@ -1309,12 +1309,12 @@
                         <tr>
                             <td><strong>QRコード設置場所</strong></td>
                             <td>受付</td>
-                            <td>入口の扉 ＋ 受付</td>
+                            <td>入口の扉 ＋ 受付（初回ドロップイン用）</td>
                         </tr>
                         <tr>
                             <td><strong>打刻修正</strong></td>
                             <td>スタッフが管理画面から修正可能</td>
-                            <td style="color: #C62828;">チェックイン時刻：チェックアウト前まで修正可<br>チェックアウト忘れ：アプリで店舗コード入力</td>
+                            <td style="color: #C62828;">チェックイン時刻：チェックアウト前まで修正可<br>チェックアウト忘れ：アプリで店舗コード入力<br><a href="#" class="section-link" data-link-section="bp-to-studygo" data-link-h3="チェックイン・アウトのトラブル対応" style="font-size: 0.8rem; color: #1565C0;">→ トラブル対応の詳細はこちら</a></td>
                         </tr>
                         <tr>
                             <td><strong>入退室（開錠）</strong></td>
@@ -1366,19 +1366,23 @@
                         <tr>
                             <td><strong>休会</strong></td>
                             <td>店頭でGoogleフォーム</td>
-                            <td style="background: #E1F5FE;">アプリで10日までに申請<br><span style="font-size: 0.8rem; color: #888;">店頭不要・スタッフ処理不要</span></td>
+                            <td style="background: #E1F5FE;">アプリで10日までに申請<br><span style="font-size: 0.8rem; color: #888;">店頭来店不要・スタッフ手続きなし</span></td>
                         </tr>
                         <!-- ▼ オプション -->
                         <tr><td colspan="3" style="background: #ECEFF1; font-weight: bold; color: #37474F; padding: 6px 12px; font-size: 0.85rem; border-bottom: 2px solid #B0BEC5;">オプション</td></tr>
                         <tr>
                             <td><strong>ロッカー契約</strong></td>
                             <td>Googleフォーム＋会費PAY事後決済</td>
-                            <td>アプリで契約（日割）・即時決済<br><span style="font-size: 0.8rem; color: #888;">ロッカー番号決めは店頭で</span></td>
+                            <td>アプリで契約（日割）・即時決済<br><span style="font-size: 0.8rem; color: #C62828;">※契約・解約はアプリで可能だが、契約時はロッカーの場所決めのため店頭来店が必要</span></td>
                         </tr>
                         <tr>
                             <td><strong>ロッカー解約</strong></td>
                             <td>店頭でGoogleフォーム</td>
                             <td style="background: #E1F5FE;">アプリで解約</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ロッカー管理</strong></td>
+                            <td colspan="2" style="text-align: center;">スプレッドシートで管理</td>
                         </tr>
                         <!-- ▼ 連絡・管理 -->
                         <tr><td colspan="3" style="background: #ECEFF1; font-weight: bold; color: #37474F; padding: 6px 12px; font-size: 0.85rem; border-bottom: 2px solid #B0BEC5;">連絡・管理</td></tr>
@@ -1388,7 +1392,7 @@
                         </tr>
                         <tr>
                             <td><strong>チェックイン中の<br>会員確認</strong></td>
-                            <td colspan="2" style="text-align: center;">管理画面から確認（メアド2段階認証）</td>
+                            <td colspan="2" style="text-align: center;">管理画面から確認</td>
                         </tr>
                         <!-- ▼ 廃止・新設 -->
                         <tr><td colspan="3" style="background: #ECEFF1; font-weight: bold; color: #37474F; padding: 6px 12px; font-size: 0.85rem; border-bottom: 2px solid #B0BEC5;">廃止・新設</td></tr>
@@ -4208,8 +4212,13 @@
                     // サブメニューのアクティブ状態を更新
                     updateSubMenuActive(targetId);
 
-                    // ナビインデックスを更新
-                    currentNavIndex = findNavIndex(parentSectionId, targetId);
+                    // ナビインデックスを更新（履歴も記録）
+                    const newIdx = findNavIndex(parentSectionId, targetId);
+                    if (currentNavIndex >= 0 && currentNavIndex !== newIdx) {
+                        navHistory.push({ navIndex: currentNavIndex, scrollY: window.scrollY });
+                        navForward = [];
+                    }
+                    currentNavIndex = newIdx;
                     updatePageNav();
 
                     // ターゲットにスクロール
@@ -4276,8 +4285,13 @@
             // コンテキストバーを更新
             updateContextBar(sectionId);
 
-            // ページ送りボタンの表示更新
-            currentNavIndex = findNavIndex(sectionId, null);
+            // ページ送りボタンの表示更新（履歴も記録）
+            const newIndex = findNavIndex(sectionId, null);
+            if (currentNavIndex >= 0 && currentNavIndex !== newIndex) {
+                navHistory.push({ navIndex: currentNavIndex, scrollY: 0 });
+                navForward = [];
+            }
+            currentNavIndex = newIndex;
             updatePageNav();
         }
 
@@ -4349,13 +4363,24 @@
             const link = e.target.closest('.section-link[data-link-section]');
             if (link) {
                 e.preventDefault();
-                // 現在位置を履歴に記録し、進む履歴をクリア
-                if (currentNavIndex >= 0) {
-                    navHistory.push({ navIndex: currentNavIndex, scrollY: window.scrollY });
-                    navForward = [];
-                }
                 const targetSection = link.getAttribute('data-link-section');
-                showSection(targetSection);
+                const targetH3Text = link.getAttribute('data-link-h3');
+                showSection(targetSection, !targetH3Text);
+                // h3指定がある場合はそのh3にスクロール
+                if (targetH3Text) {
+                    const section = document.getElementById(targetSection);
+                    if (section) {
+                        const h3List = section.querySelectorAll('h3');
+                        for (const h3 of h3List) {
+                            if (h3.textContent.trim() === targetH3Text) {
+                                setTimeout(() => {
+                                    h3.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                }, 100);
+                                break;
+                            }
+                        }
+                    }
+                }
             }
         });
 
