@@ -4865,6 +4865,71 @@
                         explanation: '「確認済み」ボタンは押さないでください。押すと通知が消えてしまいます。'
                     }
                 ]
+            },
+            'bp-to-studygo-scenario': {
+                title: '実践シナリオ',
+                questions: [
+                    {
+                        q: '【例題】会員のAさんが「今日チェックアウトするの忘れてもう家に着いちゃったんですけど…」と電話してきました。どう案内しますか？',
+                        options: ['「明日来店時にチェックアウトしてください」', '「アプリの"QR読取"→"QRが読み取れない場合"→店舗コードを入力してチェックアウトできます」', '「こちらで管理画面からチェックアウトしておきます」', '「営業終了時に自動チェックアウトされるので大丈夫です」'],
+                        correct: 1,
+                        explanation: '店外からでもアプリで対応可能です。店舗コード入力でチェックアウトできることを案内します。チェックアウトまで課金が継続するため、早めの対応を促してください。'
+                    },
+                    {
+                        q: '【例題】初めて来店されたBさんが「1時間だけ使いたいんですけど」と言いました。スタディGOアプリは入れていないそうです。どう対応しますか？',
+                        options: ['現金で受け付けて利用してもらう', 'スタディGO未登録者は受付不可のため、まずアプリ登録をご案内する', '入店をお断りして帰ってもらう', 'BPアプリで対応する'],
+                        correct: 1,
+                        explanation: 'スタディGO未登録者のドロップインは受付不可です。まずスタディGOアプリの登録をご案内し、登録後にドロップインとして利用いただけます。'
+                    },
+                    {
+                        q: '【例題】平日プランのCさんが土曜17時に来店し「今日も使いたいんだけど」と言いました。どのパターンですか？',
+                        options: ['プラン時間内なので通常利用', 'プラン時間外なので、ドロップイン（時間利用）として別途チェックインが必要', 'プラン外の利用は一切不可', 'スタッフがプランを一時的に変更する'],
+                        correct: 1,
+                        explanation: '平日プランの方が土曜に利用する場合はプラン時間外です。ドロップインとして別途チェックインし、770円/時間で即日決済されます。'
+                    },
+                    {
+                        q: '【例題】Dさんが「来月からプランを変えたいんですけど」と12日に相談してきました。どう案内しますか？',
+                        options: ['「今すぐアプリで申請してください、来月から変わります」', '「申請は毎月10日までなので、今月はもう間に合いません。来月10日までに申請すれば再来月から変更になります」', '「スタッフが代わりに申請します」', '「プラン変更はできません」'],
+                        correct: 1,
+                        explanation: 'プラン変更は毎月10日までに申請が必要です。12日では当月の締めに間に合わないため、来月10日までの申請で再来月からの変更になります。月1回・取り消し不可もお伝えしましょう。'
+                    },
+                    {
+                        q: '【例題】見学に来たEさんが「気に入ったので今日から使いたい！」と言いました。スタッフは何をしますか？',
+                        options: ['お客様にアプリで登録してもらうだけ', '管理画面「店舗管理」→「最短利用開始日」を0日に変更 → 契約後に1日に戻す → チャットワーク報告', '本部に電話して許可をもらう', '翌日からの利用を案内する'],
+                        correct: 1,
+                        explanation: '即日入会の場合、管理画面で「最短利用開始日」を0日に一時変更し、契約完了後に必ず1日に戻します。チャットワークへの報告も忘れずに。'
+                    },
+                    {
+                        q: '【例題】Fさんから電話で「超過料金が引かれてるんですけど、間違いじゃないですか？返金してください」と言われました。どう対応しますか？',
+                        options: ['確認せずにすぐ返金する', 'チェックイン・チェックアウトはお客様の責任であり、アプリの不具合でない限り返金は行わないことを丁寧に説明する', 'マネージャーに電話を回す', '半額だけ返金する'],
+                        correct: 1,
+                        explanation: 'スタディGOでは超過料金は即日自動決済です。チェックイン・チェックアウトはお客様の責任であり、アプリの不具合でない限り返金は行いません。丁寧に説明してください。'
+                    },
+                    {
+                        q: '【例題】Gさんが「退会したいです」と20時に来店しました。今日は9日です。どう対応しますか？',
+                        options: ['「アプリで申請できますのでご自分でお願いします」', '店頭でGoogleフォームに回答してもらい、スタッフが管理画面で退会処理を行う', '「明日また来てください」', '電話で本部に連絡する'],
+                        correct: 1,
+                        explanation: '退会は店頭でGoogleフォームに回答してもらい、スタッフが管理画面で処理を完了させます。10日21時までに処理しないと自動請求で翌月継続になるため、今日中に処理を完了させます。'
+                    },
+                    {
+                        q: '【例題】Hさんが「今月は休会したい」と8日に連絡してきました。どう案内しますか？',
+                        options: ['「店頭に来てGoogleフォームに回答してください」', '「アプリから休会申請してください。10日までなので間に合います。店頭来店は不要です」', '「休会は受け付けていません」', '「スタッフが代わりに処理します」'],
+                        correct: 1,
+                        explanation: '休会はアプリで10日までに申請するだけで完了します。店頭来店不要・スタッフ手続きなしです。ただし再開時には2か月分の決済が必要であることもお伝えしましょう。'
+                    },
+                    {
+                        q: '【例題】ナイトプランのIさんが20時50分に「もう少しだけ勉強したい」と言っています。有人時間は21時までです。どうなりますか？',
+                        options: ['プラン時間内なら延長可能。ただし超過すると1分13円が即日自動決済される', 'スタッフが許可すれば無料で延長できる', '21時で強制チェックアウトされる', '延長は一切できない'],
+                        correct: 0,
+                        explanation: 'プラン時間内であれば延長は可能ですが、プラン時間を超過すると1分あたり13円が即日自動決済されます。新規会員には特にこの点を説明しておくことが重要です。'
+                    },
+                    {
+                        q: '【例題】Jさんが「領収書がほしいのですが」と言いました。どう案内しますか？',
+                        options: ['手書きで領収書を発行する', '「決済ごとに電子領収書がメールで届きます。月の利用金額は翌月1日にまとめて発行も可能です」', '「領収書は発行できません」', '本部に依頼する'],
+                        correct: 1,
+                        explanation: 'スタディGOでは決済ごとに電子領収書がメールで自動送付されます。月の利用金額は翌月1日にまとめて発行することも可能です。スタッフの手書き対応は不要になりました。'
+                    }
+                ]
             }
         };
 
@@ -5121,25 +5186,33 @@
             });
         }
 
+        // クイズIDとセクションIDのマッピング（同一セクションに複数クイズを配置可能）
+        const quizSectionMap = {
+            'bp-to-studygo': 'bp-to-studygo',
+            'procedures': 'procedures',
+            'bp-to-studygo-scenario': 'bp-to-studygo'  // 実践シナリオはbp-to-studygoセクションに配置
+        };
+
         // 各セクションにクイズボタンを追加
         function addQuizButtons() {
             const progress = getQuizProgress();
-            Object.keys(quizData).forEach(sectionId => {
-                const section = document.getElementById(sectionId);
+            Object.keys(quizData).forEach(quizId => {
+                const targetSectionId = quizSectionMap[quizId] || quizId;
+                const section = document.getElementById(targetSectionId);
                 if (!section) return;
-                // 既にボタンがあればスキップ
-                if (section.querySelector('.quiz-trigger')) return;
+                // 既に同じクイズのボタンがあればスキップ
+                if (section.querySelector('.quiz-trigger[data-quiz-section="' + quizId + '"]')) return;
 
-                const isPassed = progress[sectionId] && progress[sectionId].passed;
+                const isPassed = progress[quizId] && progress[quizId].passed;
                 const btn = document.createElement('button');
                 btn.className = 'quiz-trigger' + (isPassed ? ' completed' : '');
-                btn.setAttribute('data-quiz-section', sectionId);
+                btn.setAttribute('data-quiz-section', quizId);
                 if (isPassed) {
-                    btn.innerHTML = '&#127942; 合格済み - もう一度チャレンジ';
+                    btn.innerHTML = '&#127942; ' + quizData[quizId].title + ' 合格済み - もう一度チャレンジ';
                 } else {
-                    btn.innerHTML = '&#128221; 理解度チェック - クイズに挑戦!';
+                    btn.innerHTML = '&#128221; ' + quizData[quizId].title + ' - クイズに挑戦!';
                 }
-                btn.addEventListener('click', () => startQuiz(sectionId));
+                btn.addEventListener('click', () => startQuiz(quizId));
                 section.appendChild(btn);
             });
         }
@@ -5147,13 +5220,14 @@
         function updateQuizButtons() {
             const progress = getQuizProgress();
             document.querySelectorAll('.quiz-trigger').forEach(btn => {
-                const sectionId = btn.getAttribute('data-quiz-section');
-                const isPassed = progress[sectionId] && progress[sectionId].passed;
+                const quizId = btn.getAttribute('data-quiz-section');
+                const isPassed = progress[quizId] && progress[quizId].passed;
+                const title = quizData[quizId] ? quizData[quizId].title : '';
                 btn.className = 'quiz-trigger' + (isPassed ? ' completed' : '');
                 if (isPassed) {
-                    btn.innerHTML = '&#127942; 合格済み - もう一度チャレンジ';
+                    btn.innerHTML = '&#127942; ' + title + ' 合格済み - もう一度チャレンジ';
                 } else {
-                    btn.innerHTML = '&#128221; 理解度チェック - クイズに挑戦!';
+                    btn.innerHTML = '&#128221; ' + title + ' - クイズに挑戦!';
                 }
             });
         }
