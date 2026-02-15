@@ -1256,7 +1256,7 @@
                         <li><b>プラン変更・休会</b> ─ 月1回・10日ルール厳守・申請取り消し不可</li>
                         <li><b>支払い方法</b> ─ クレカのみ（口座振替は廃止）</li>
                         <li><b>会員情報・支払い情報変更</b> ─ アプリで直接変更可能に</li>
-                        <li><b>休会</b> ─ オンラインで手続き可能に</li>
+                        <li><b>休会</b> ─ アプリで申請するだけ（店頭不要・スタッフ処理不要）</li>
                         <li><b>連絡方法</b> ─ Lステップ継続（見学予約・店外契約時はアプリメッセージも使用）</li>
                         <li><b>廃止</b> ─ 時間制プラン / 新宿エリアパス / 即日アップグレード / 会員様の時間外利用割引（550円）</li>
                     </ul>
@@ -1359,12 +1359,13 @@
                         </tr>
                         <tr>
                             <td><strong>プラン解約（退会）</strong></td>
-                            <td rowspan="2">店頭でGoogleフォーム</td>
-                            <td>店頭で手続き</td>
+                            <td>店頭でGoogleフォーム</td>
+                            <td style="color: #C62828;">店頭でGoogleフォーム回答<br><span style="font-size: 0.8rem;">※10日21時までにスタッフが管理画面で処理しないと自動請求で翌月継続</span></td>
                         </tr>
                         <tr>
                             <td><strong>休会</strong></td>
-                            <td style="background: #E1F5FE;">オンラインで手続き可能</td>
+                            <td>店頭でGoogleフォーム</td>
+                            <td style="background: #E1F5FE;">アプリで10日までに申請<br><span style="font-size: 0.8rem; color: #888;">店頭不要・スタッフ処理不要</span></td>
                         </tr>
                         <!-- ▼ オプション -->
                         <tr><td colspan="3" style="background: #ECEFF1; font-weight: bold; color: #37474F; padding: 6px 12px; font-size: 0.85rem; border-bottom: 2px solid #B0BEC5;">オプション</td></tr>
@@ -2551,75 +2552,85 @@
             <!-- カードG: 解約（退会）・休会 -->
             <div class="card" style="background: #FFF9C4;">
                 <h3>プラン解約（退会）・休会</h3>
-                <p>月額プランのプラン解約（退会）・休会手続きの流れです。アプリで申請後、店頭での対応が必要です。</p>
+                <p>退会と休会では手続き方法が異なります。以下を確認してください。</p>
+
+                <h4 style="color: #C62828; margin-top: 15px; border-bottom: 2px solid #C62828; padding-bottom: 4px;">プラン解約（退会）── 店頭手続き必須</h4>
 
                 <div class="dual-flow">
-                    <div class="dual-flow-col dual-flow-staff">
-                        <div class="dual-flow-header"><span class="dual-flow-icon">&#128119;</span> スタッフフロー</div>
+                    <div class="dual-flow-col dual-flow-customer">
+                        <div class="dual-flow-header"><span class="dual-flow-icon">&#128100;</span> お客様</div>
                         <div class="dual-flow-steps">
                             <div class="dual-flow-step">
-                                <div class="dual-flow-step-num">3</div>
+                                <div class="dual-flow-step-num">1</div>
                                 <div class="dual-flow-step-body">
-                                    <h4>プラン解約者確認</h4>
-                                    <p>ダッシュボードでプラン解約者を確認</p>
+                                    <h4>来店（有人時間帯）</h4>
+                                    <p>10日の21時までに来店</p>
                                 </div>
                             </div>
                             <div class="dual-flow-step">
-                                <div class="dual-flow-step-num">4</div>
+                                <div class="dual-flow-step-num">2</div>
+                                <div class="dual-flow-step-body">
+                                    <h4>Googleフォーム回答</h4>
+                                    <p>店頭で退会用Googleフォームに回答</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dual-flow-col dual-flow-staff">
+                        <div class="dual-flow-header"><span class="dual-flow-icon">&#128119;</span> スタッフ</div>
+                        <div class="dual-flow-steps">
+                            <div class="dual-flow-step">
+                                <div class="dual-flow-step-num">3</div>
                                 <div class="dual-flow-step-body">
                                     <h4>ロッカー対応</h4>
                                     <p>ロッカー契約がある場合 → 荷物撤去・鍵返却を確認 → アプリでロッカー解約処理</p>
                                 </div>
                             </div>
                             <div class="dual-flow-step admin">
-                                <div class="dual-flow-step-num">5</div>
+                                <div class="dual-flow-step-num">4</div>
                                 <div class="dual-flow-step-body">
-                                    <h4>ステータス更新 <span class="admin-label">事務手続き</span></h4>
-                                    <p>「鍵回収ステータス」を更新（未回収／回収済み）</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="dual-flow-col dual-flow-customer">
-                        <div class="dual-flow-header"><span class="dual-flow-icon">&#128100;</span> お客様フロー</div>
-                        <div class="dual-flow-steps">
-                            <div class="dual-flow-step">
-                                <div class="dual-flow-step-num">1</div>
-                                <div class="dual-flow-step-body">
-                                    <h4>プラン解約申請</h4>
-                                    <p>アプリでプラン解約申請（毎月10日まで → 当月末解約 ／ 11日以降 → 翌月末解約）</p>
-                                </div>
-                            </div>
-                            <div class="dual-flow-step">
-                                <div class="dual-flow-step-num">2</div>
-                                <div class="dual-flow-step-body">
-                                    <h4>来店</h4>
-                                    <p>有人時間帯に来店する</p>
+                                    <h4 style="color: #C62828;">管理画面で退会処理 <span class="admin-label">必須</span></h4>
+                                    <p style="color: #C62828; font-weight: bold;">10日の21時（有人時間終了）までに管理画面で処理を完了させる</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <h4>プラン解約（退会）の基本情報</h4>
-                <table class="info-table">
+                <div class="warning" style="margin-top: 12px;">
+                    <p><strong>重要：</strong>Googleフォームの回答だけでは退会になりません。<strong>スタッフが管理画面で処理を完了</strong>して初めて退会が成立します。<br>10日21時までに処理が間に合わないと、15日にプランが自動請求され翌月も継続となります。<br>お客様には<strong>10日より前の有人時間帯に来店</strong>するよう案内してください。</p>
+                </div>
+
+                <table class="info-table" style="margin-top: 12px;">
+                    <tr>
+                        <th>手続き方法</th>
+                        <td><strong>店頭でGoogleフォーム回答</strong> ＋ スタッフが管理画面で処理</td>
+                    </tr>
+                    <tr>
+                        <th>締日</th>
+                        <td>前月11日〜当月<strong>10日21時まで</strong> → 当月末退会</td>
+                    </tr>
                     <tr>
                         <th>受付時間</th>
-                        <td><strong>有人時間帯のみ</strong>（平日 17:00〜21:00 ／ 土曜 12:00〜21:00 ／ 日祝 12:00〜21:00）</td>
-                    </tr>
-                    <tr>
-                        <th>プラン解約（退会）手続き</th>
-                        <td><strong>来店必須</strong></td>
-                    </tr>
-                    <tr>
-                        <th>プラン解約申請締日</th>
-                        <td>前月11日〜当月10日までの申請で当月末プラン解約</td>
+                        <td><strong>有人時間帯のみ</strong>（平日 17:00〜21:00 ／ 土 12:00〜21:00 ／ 日祝 12:00〜21:00）</td>
                     </tr>
                 </table>
-                <div class="warning" style="margin-top: 12px;">
-                    <p><strong>重要：</strong>プラン解約（退会）はアプリ上で申請ができますが、<strong>店頭でスタッフが手続きを完了させる必要があります</strong>。毎月10日の21時（有人時間終了）までにスタッフが対応できないと、プランが自動請求され翌月も継続となります。お客様には有人時間帯内にお早めの来店をお願いしてください。</p>
-                </div>
-                <p class="note">※休会の手続きはアプリから可能です。詳細は <a href="#app-flow" class="section-link" data-link-section="app-flow">アプリ画面遷移ガイド</a> をご覧ください。</p>
+
+                <h4 style="color: #1565C0; margin-top: 20px; border-bottom: 2px solid #1565C0; padding-bottom: 4px;">休会 ── アプリで申請（店頭不要）</h4>
+                <table class="info-table" style="margin-top: 10px;">
+                    <tr>
+                        <th>手続き方法</th>
+                        <td><strong>アプリで申請するだけ</strong>（店頭来店不要・スタッフ処理不要）</td>
+                    </tr>
+                    <tr>
+                        <th>締日</th>
+                        <td>毎月<strong>10日まで</strong>に申請 → 当月末から休会</td>
+                    </tr>
+                    <tr>
+                        <th>注意</th>
+                        <td style="color: #C62828; font-weight: bold;">休会からの再開には2か月分の決済が必要。休会も月に1度しかできない（取り消し不可）</td>
+                    </tr>
+                </table>
             </div>
 
         </section>
