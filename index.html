@@ -1312,7 +1312,7 @@
                         <tr>
                             <td><strong>打刻修正</strong></td>
                             <td>スタッフが管理画面から修正可能</td>
-                            <td style="color: #C62828;">チェックイン時刻：チェックアウト前まで修正可<br>チェックアウト忘れ：アプリで店舗コード入力<br><a href="#" class="section-link" data-link-section="bp-to-studygo" data-link-h3="チェックイン・アウトのトラブル対応" style="font-size: 0.8rem; color: #1565C0;">→ ⑤ チェックイン・アウトのトラブル対応を参照</a></td>
+                            <td style="color: #C62828;">チェックイン時刻：チェックアウト前まで修正可<br>チェックアウト忘れ：アプリで店舗コード入力<br><a href="#trouble-checkin" class="section-link" data-link-section="bp-to-studygo" data-link-h3="チェックイン・アウトのトラブル対応" style="font-size: 0.85rem; color: #1565C0; text-decoration: underline; cursor: pointer; display: inline-block; margin-top: 4px;">→ ⑤ チェックイン・アウトのトラブル対応を参照</a></td>
                         </tr>
                         <tr>
                             <td><strong>入退室（開錠）</strong></td>
@@ -1473,6 +1473,13 @@
 
             <div class="card" style="border-left: 5px solid #FF6F00;">
                 <h3>スタッフが特に注意すべきポイント</h3>
+                <div style="background: #FFF8E1; border: 1px solid #FFD54F; border-radius: 8px; padding: 10px 15px; margin-bottom: 15px; font-size: 0.9rem;">
+                    <p style="margin: 0 0 6px; font-weight: bold; color: #E65100;">注意レベルについて</p>
+                    <p style="margin: 0; line-height: 1.7;">各項目の重要度を★の数で表しています。★が多いほど注意が必要です。<br>
+                    <span style="color: #B71C1C; font-weight: bold;">★★★★★</span> 最重要（必ず説明・対応が必要）
+                    <span style="color: #D84315; font-weight: bold;">★★★★☆</span> 重要
+                    <span style="color: #E65100; font-weight: bold;">★★☆☆☆</span> 確認事項</p>
+                </div>
                 <table class="info-table">
                     <tr>
                         <th style="background: #B71C1C; width: 25%; color: #FFFFFF;">
@@ -1493,7 +1500,7 @@
                             <span style="display: block; font-size: 1.1rem; letter-spacing: 2px; margin-bottom: 4px;">★★★★☆</span>
                             チェックアウト忘れに注意
                         </th>
-                        <td>チェックインはQRコード読み取り時に施設の扉が開く仕組みのため、<strong>忘れることはほぼありません</strong>（チェックインしないと入室できない）。<br><br>
+                        <td>QRコードを読み込んでチェックインした後に、アプリ上で施設の扉を開錠できる仕組みです。つまり<strong>チェックインしないと入室できない</strong>ため、チェックイン忘れはほぼ発生しません。<br><br>
                             <strong style="color: #C62828;">最も注意が必要なのはチェックアウト忘れです。</strong>チェックアウトしないまま退店すると、★★★★★の「時間外料金は即日決済」に該当し、<strong>営業終了時間まで課金が継続</strong>してしまいます。お客様に余計な料金が発生するため、<strong>退店時のチェックアウトは必ず行うよう案内</strong>してください。<br>
                             <span style="font-size: 0.85rem; color: #666;">チェックアウト忘れ時の対応：アプリ →「QR読取」→「QRが読み取れない場合」→ 店舗コード入力</span></td>
                     </tr>
@@ -1547,7 +1554,7 @@
             </div>
 
             <div class="card" style="border-left: 5px solid #E65100;">
-                <h3>チェックイン・アウトのトラブル対応</h3>
+                <h3 id="trouble-checkin">チェックイン・アウトのトラブル対応</h3>
                 <table class="info-table">
                     <tr>
                         <th style="background: #FFEBEE;">間違ってチェックアウト</th>
