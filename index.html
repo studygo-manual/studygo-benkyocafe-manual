@@ -88,10 +88,6 @@
             <ul id="navList">
                 <!-- JavaScriptで動的に生成 -->
             </ul>
-            <div style="margin-top: 20px; padding: 10px 15px;">
-                <div style="color: #bbb; font-size: 0.85rem; padding: 6px 0; border-left: 3px solid #ddd; padding-left: 10px;">3. 勉強カフェ（今後実施予定）</div>
-                <div style="color: #bbb; font-size: 0.85rem; padding: 6px 0; border-left: 3px solid #ddd; padding-left: 10px; margin-top: 4px;">4. スタッフマニュアル（今後実施予定）</div>
-            </div>
         </div>
     </nav>
 
@@ -237,7 +233,7 @@
         </div>
 
         <!-- 勉強カフェ > 基本情報 -->
-        <section id="cafe-basic" data-category="cafe" data-modified hidden>
+        <section id="cafe-basic" data-category="cafe" data-modified>
             <h2>基本情報</h2>
             <div class="card">
                 <h3>営業時間</h3>
@@ -690,7 +686,7 @@
 
 
         <!-- 勉強カフェ > スタジオ紹介 -->
-        <section id="cafe-studio-compare" data-category="cafe" hidden>
+        <section id="cafe-studio-compare" data-category="cafe">
             <h2>スタジオ比較表</h2>
 
             <div class="card" style="border-left: 5px solid var(--primary-color);">
@@ -1127,7 +1123,7 @@
 
 
         <!-- 勉強カフェ > 導入システムの違い -->
-        <section id="cafe-systems" data-category="cafe" hidden>
+        <section id="cafe-systems" data-category="cafe">
             <h2>導入システムの違い</h2>
             <div class="card">
                 <h3>各サービスの違い</h3>
@@ -3050,7 +3046,7 @@
 
 
         <!-- スタッフマニュアル > OP作業 -->
-        <section id="staff-op" data-category="staff" hidden>
+        <section id="staff-op" data-category="staff">
             <h2>OP作業（オープン作業）</h2>
             <div class="card">
                 <h3>出勤時チェックリスト</h3>
@@ -3121,7 +3117,7 @@
 
 
         <!-- スタッフマニュアル > CL作業 -->
-        <section id="staff-cl" data-category="staff" hidden>
+        <section id="staff-cl" data-category="staff">
             <h2>CL作業（クローズ作業）</h2>
             <div class="card">
                 <h3>退勤時の作業</h3>
@@ -3160,7 +3156,7 @@
 
 
         <!-- スタッフマニュアル > 清掃業務 -->
-        <section id="staff-cleaning" data-category="staff" hidden>
+        <section id="staff-cleaning" data-category="staff">
             <h2>清掃業務</h2>
             <div class="card">
                 <h3>日常清掃</h3>
@@ -3200,7 +3196,7 @@
 
 
         <!-- スタッフマニュアル > 接客・受付対応 -->
-        <section id="staff-customer" data-category="staff" hidden>
+        <section id="staff-customer" data-category="staff">
             <h2>接客・受付対応</h2>
             <div class="card">
                 <h3>基本マナー</h3>
@@ -3297,7 +3293,7 @@
 
 
         <!-- スタッフマニュアル > 各種手続き対応 -->
-        <section id="staff-procedures" data-category="staff" hidden>
+        <section id="staff-procedures" data-category="staff">
             <h2>各種手続き対応</h2>
             <div class="card" style="background: #FFF9C4;">
                 <h3>入会手続きの流れ</h3>
@@ -3426,7 +3422,7 @@
 
 
         <!-- スタッフマニュアル > 備品・発注管理 -->
-        <section id="staff-equipment-mgmt" data-category="staff" hidden>
+        <section id="staff-equipment-mgmt" data-category="staff">
             <h2>備品・発注管理</h2>
             <div class="card">
                 <h3>消耗品の管理</h3>
@@ -3476,7 +3472,7 @@
 
 
         <!-- スタッフマニュアル > 報告・連絡 -->
-        <section id="staff-report" data-category="staff" hidden>
+        <section id="staff-report" data-category="staff">
             <h2>報告・連絡</h2>
             <div class="card">
                 <h3>チャットワーク</h3>
@@ -3512,7 +3508,7 @@
 
 
         <!-- スタッフマニュアル > ロープレ動画 -->
-        <section id="staff-roleplay" data-category="staff" hidden>
+        <section id="staff-roleplay" data-category="staff">
             <h2>ロープレ動画</h2>
             <div class="card">
                 <p class="preparing-notice">ロープレ動画は準備中です。完成次第、ここに掲載されます。</p>
@@ -3574,7 +3570,7 @@
 
 
         <!-- スタッフマニュアル > スタジオ別情報 -->
-        <section id="staff-studio" data-category="staff" hidden>
+        <section id="staff-studio" data-category="staff">
             <h2>スタジオ別情報</h2>
             <div class="card">
                 <h3>新宿スタジオ</h3>
@@ -3667,6 +3663,7 @@
             { name: '古俣', pin: '0000' },
             { name: '清水', pin: '0000' },
             { name: '新井', pin: '0000' },
+            { name: '前保', pin: '0000' },
         ];
 
         // スタッフPINの取得（localStorage優先、なければデフォルト）
@@ -4028,8 +4025,8 @@
         const categories = [
             { key: 'change', label: '3/1～変更点まとめ', color: '#1976D2' },
             { key: 'studygo', label: 'スタディGO', color: '#4CAF50' },
-            // { key: 'cafe', label: '勉強カフェ', color: '#8D6E63' },  // 今後実施予定
-            // { key: 'staff', label: 'スタッフマニュアル', color: '#FF7043' }  // 一旦非表示
+            { key: 'cafe', label: '勉強カフェ', color: '#8D6E63' },
+            { key: 'staff', label: 'スタッフマニュアル', color: '#FF7043' },
         ];
 
         // コンテキストバー（大項目・中項目の固定表示）
