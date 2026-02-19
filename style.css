@@ -1444,6 +1444,37 @@ footer .update-date {
     }
 }
 
+/* ダッシュボード画像+項目 横並び */
+.dash-overview-row {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    margin: 14px 0;
+}
+.dash-overview-img {
+    flex: 0 0 40%;
+    max-width: 40%;
+}
+.dash-overview-img .admin-screenshot {
+    max-width: 100% !important;
+    cursor: pointer;
+}
+.dash-overview-items {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+@media (max-width: 640px) {
+    .dash-overview-row {
+        flex-direction: column;
+    }
+    .dash-overview-img {
+        flex: none;
+        max-width: 100%;
+    }
+}
+
 /* ダッシュボード確認項目カード */
 .dash-items {
     display: flex;
@@ -1452,8 +1483,8 @@ footer .update-date {
     margin: 14px 0;
 }
 .dash-item {
-    flex: 1 1 calc(50% - 10px);
-    min-width: 200px;
+    flex: 1 1 auto;
+    min-width: 0;
     padding: 12px 14px;
     border-radius: 10px;
     border-left: 4px solid;
