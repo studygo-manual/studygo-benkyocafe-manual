@@ -2696,42 +2696,48 @@
                 <h4>管理画面ログイン</h4>
                 <p><a href="https://dashboard.studygo.jp/alliance/login" target="_blank">https://dashboard.studygo.jp/alliance/login</a></p>
                 <img src="images/ログイン画面.jpg" alt="管理画面ログイン画面" class="admin-screenshot small" onclick="openScreenshot(this)">
-                <table class="info-table">
-                    <tr>
-                        <th>勉強カフェ新宿スタジオ</th>
-                        <td>
-                            メールアドレス：benkyocafe.shinjuku@gmail.com<br>
-                            パスワード：Base@1209
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>勉強カフェBPスタジオ</th>
-                        <td>
-                            メールアドレス：benkyo-cafe.sbp@b-pt.jp<br>
-                            パスワード：Base@1209
-                        </td>
-                    </tr>
-                </table>
                 <div class="tips">
                     <p>2段階認証で、メールアドレスに送られてくる6桁の番号を入力して、ログインしてください。</p>
                 </div>
 
                 <h4>ダッシュボード画面の見方</h4>
-                <img src="images/ダッシュボード.jpg" alt="ダッシュボード画面" class="admin-screenshot" style="max-width: 50%;" onclick="openScreenshot(this)">
+                <div class="dash-login-row">
+                    <img src="images/ダッシュボード.jpg" alt="ダッシュボード画面" class="admin-screenshot" onclick="openScreenshot(this)">
+                    <div class="dash-login-info">
+                        <table class="info-table">
+                            <tr>
+                                <th>勉強カフェ新宿スタジオ</th>
+                                <td>メールアドレス：benkyocafe.shinjuku@gmail.com<br>パスワード：Base@1209</td>
+                            </tr>
+                            <tr>
+                                <th>勉強カフェBPスタジオ</th>
+                                <td>メールアドレス：benkyo-cafe.sbp@b-pt.jp<br>パスワード：Base@1209</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
                 <p>ログイン後のトップ画面（ダッシュボード）で以下の内容が確認できます：</p>
-                <ul>
-                    <li><strong>未返信のメッセージがあるお客様</strong> ー 「メッセージへ」からやり取り可能</li>
-                    <li><strong>新規契約したお客様</strong> ー 店外契約の場合は来店手続きの連絡が必要</li>
-                    <li><strong>解約予定のお客様</strong> ー ロッカー撤去や鍵回収の確認</li>
-                </ul>
-
-                <div class="staff-action">
-                    <div class="staff-action-header">スタッフのやること</div>
-                    <ul>
-                        <li><strong>未返信のメッセージ</strong> → <strong>必ずその日のうちに返信してください</strong>。対応が遅れるとお客様の不信感につながります。</li>
-                        <li><strong>新規契約したお客様</strong> → 来店手続きの連絡を送ってください（メッセージ機能から）。初回来店日のアポイントを取得します。</li>
-                        <li><strong>解約予定のお客様</strong> → ロッカー契約の有無を確認し、ある場合は荷物撤去・鍵返却のリマインドを行ってください。</li>
-                    </ul>
+                <div class="dash-items">
+                    <div class="dash-item msg">
+                        <div class="dash-item-title">未返信のメッセージがあるお客様</div>
+                        <div class="dash-item-desc">「メッセージへ」からやり取り可能。<strong>必ずその日のうちに返信</strong>してください</div>
+                    </div>
+                    <div class="dash-item new">
+                        <div class="dash-item-title">新規契約したお客様</div>
+                        <div class="dash-item-desc">店外契約の場合はメッセージで<strong>来店手続きの連絡</strong>が必要</div>
+                    </div>
+                    <div class="dash-item cancel">
+                        <div class="dash-item-title">解約予定のお客様</div>
+                        <div class="dash-item-desc">ロッカー契約がある場合は<strong>荷物撤去・鍵返却</strong>の確認</div>
+                    </div>
+                    <div class="dash-item pause">
+                        <div class="dash-item-title">休会予定のお客様</div>
+                        <div class="dash-item-desc">ロッカー契約がある場合は<strong>荷物撤去・鍵返却</strong>の確認</div>
+                    </div>
+                    <div class="dash-item fail">
+                        <div class="dash-item-title">支払いに失敗したお客様</div>
+                        <div class="dash-item-desc"><strong>決済エラー</strong>が発生。マネージャーに報告してください</div>
+                    </div>
                 </div>
 
                 <div class="card critical" style="margin-top: 15px; box-shadow: none;">

@@ -1558,6 +1558,73 @@ footer .update-date {
     max-width: 480px;
 }
 
+/* ダッシュボード画像＋ログイン横並び */
+.dash-login-row {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    margin: 12px 0;
+}
+.dash-login-row .admin-screenshot {
+    flex: 0 0 45%;
+    max-width: 45% !important;
+    margin: 0;
+}
+.dash-login-info {
+    flex: 1;
+    min-width: 0;
+}
+.dash-login-info table {
+    width: 100%;
+    font-size: 0.85rem;
+}
+@media screen and (max-width: 640px) {
+    .dash-login-row {
+        flex-direction: column;
+    }
+    .dash-login-row .admin-screenshot {
+        flex: none;
+        max-width: 100% !important;
+    }
+}
+
+/* ダッシュボード確認項目カード */
+.dash-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 14px 0;
+}
+.dash-item {
+    flex: 1 1 calc(50% - 10px);
+    min-width: 200px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border-left: 4px solid;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+.dash-item-title {
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+}
+.dash-item-desc {
+    font-size: 0.82rem;
+    color: #555;
+    line-height: 1.5;
+}
+.dash-item.msg    { border-color: #1565C0; background: #E3F2FD; }
+.dash-item.msg .dash-item-title { color: #1565C0; }
+.dash-item.new    { border-color: #2E7D32; background: #E8F5E9; }
+.dash-item.new .dash-item-title { color: #2E7D32; }
+.dash-item.cancel { border-color: #EF6C00; background: #FFF3E0; }
+.dash-item.cancel .dash-item-title { color: #EF6C00; }
+.dash-item.pause  { border-color: #F9A825; background: #FFFDE7; }
+.dash-item.pause .dash-item-title { color: #F9A825; }
+.dash-item.fail   { border-color: #C62828; background: #FFEBEE; }
+.dash-item.fail .dash-item-title { color: #C62828; }
+
 /* 情報チップ（横並びバッジ） */
 .info-chips {
     display: flex;
