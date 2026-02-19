@@ -1567,7 +1567,7 @@ footer .update-date {
 }
 .dash-login-row .admin-screenshot {
     flex: 0 0 auto;
-    max-width: 45% !important;
+    max-width: 35% !important;
     margin: 0;
     object-fit: contain;
     align-self: stretch;
@@ -1580,6 +1580,9 @@ footer .update-date {
 .dash-login-info table {
     width: 100%;
     font-size: 0.85rem;
+}
+.dash-login-info table th {
+    white-space: nowrap;
 }
 @media screen and (max-width: 640px) {
     .dash-login-row {
