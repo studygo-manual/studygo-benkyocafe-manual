@@ -3518,19 +3518,19 @@ footer .update-date {
 }
 
 .dual-flow-staff {
-    background: #F3E8FD;
-}
-
-.dual-flow-staff .dual-flow-header {
-    background: #7B1FA2;
-}
-
-.dual-flow-customer {
     background: #E3F2FD;
 }
 
-.dual-flow-customer .dual-flow-header {
+.dual-flow-staff .dual-flow-header {
     background: #1565C0;
+}
+
+.dual-flow-customer {
+    background: #FFF3E0;
+}
+
+.dual-flow-customer .dual-flow-header {
+    background: #E65100;
 }
 
 .dual-flow-steps {
@@ -3565,11 +3565,11 @@ footer .update-date {
 }
 
 .dual-flow-staff .dual-flow-step-num {
-    background: #7B1FA2;
+    background: #1976D2;
 }
 
 .dual-flow-customer .dual-flow-step-num {
-    background: #1565C0;
+    background: #EF6C00;
 }
 
 .dual-flow-step-body h4 {
@@ -3679,9 +3679,9 @@ footer .update-date {
     font-weight: bold;
     color: #fff;
 }
-.pattern-step-num.customer { background: #1565C0; }
-.pattern-step-num.staff { background: #7B1FA2; }
-.pattern-step-num.both { background: linear-gradient(135deg, #1565C0 50%, #7B1FA2 50%); }
+.pattern-step-num.customer { background: #EF6C00; }
+.pattern-step-num.staff { background: #1976D2; }
+.pattern-step-num.both { background: linear-gradient(135deg, #EF6C00 50%, #1976D2 50%); }
 .pattern-step-body {
     flex: 1;
     min-width: 0;
@@ -3692,8 +3692,8 @@ footer .update-date {
     font-weight: bold;
     line-height: 1.4;
 }
-.pattern-step-body h5.customer-label { color: #1565C0; }
-.pattern-step-body h5.staff-label { color: #7B1FA2; }
+.pattern-step-body h5.customer-label { color: #E65100; }
+.pattern-step-body h5.staff-label { color: #1565C0; }
 .pattern-step-body h5.both-label { color: #4A148C; }
 .pattern-step-body p,
 .pattern-step-body ul {
@@ -3744,8 +3744,8 @@ footer .update-date {
     border-radius: 50%;
     display: inline-block;
 }
-.pattern-legend-dot.customer { background: #1565C0; }
-.pattern-legend-dot.staff { background: #7B1FA2; }
+.pattern-legend-dot.customer { background: #E65100; }
+.pattern-legend-dot.staff { background: #1565C0; }
 
 /* 共通・固有ステップのバッジ */
 .pattern-step-badge {
@@ -4280,26 +4280,6 @@ footer .update-date {
     padding: 8px 16px;
     letter-spacing: 1px;
     background: #37474F;
-}
-/* パネル内スタッフ列 — 青系 */
-.flow-panel .dual-flow-staff {
-    background: #E3F2FD;
-}
-.flow-panel .dual-flow-staff .dual-flow-header {
-    background: #1565C0;
-}
-.flow-panel .dual-flow-staff .dual-flow-step-num {
-    background: #1976D2;
-}
-/* パネル内お客様列 — オレンジ系 */
-.flow-panel .dual-flow-customer {
-    background: #FFF3E0;
-}
-.flow-panel .dual-flow-customer .dual-flow-header {
-    background: #E65100;
-}
-.flow-panel .dual-flow-customer .dual-flow-step-num {
-    background: #EF6C00;
 }
 
 /* 即日入会アラート */
