@@ -1540,6 +1540,50 @@ footer .update-date {
     min-width: 100px;
 }
 
+/* 管理画面スクリーンショット */
+.admin-screenshot {
+    display: block;
+    max-width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 12px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+}
+.admin-screenshot:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+}
+.admin-screenshot.small {
+    max-width: 480px;
+}
+.screenshot-caption {
+    font-size: 0.8rem;
+    color: #888;
+    margin: 4px 0 12px 0;
+    text-align: center;
+}
+/* スクリーンショット拡大モーダル */
+.screenshot-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+    cursor: zoom-out;
+}
+.screenshot-modal-overlay.active {
+    display: flex;
+}
+.screenshot-modal-overlay img {
+    max-width: 95vw;
+    max-height: 95vh;
+    border-radius: 8px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+
 /* 準備中メッセージ */
 .preparing-notice {
     color: var(--text-light);
@@ -3790,4 +3834,132 @@ footer .update-date {
     display: flex;
     align-items: center;
     gap: 4px;
+}
+
+/* ===================================
+   対応フロー全体像 — 横4列グリッド
+   =================================== */
+.flow-overview-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 10px;
+}
+.flow-overview-col {
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    display: flex;
+    flex-direction: column;
+}
+.flow-overview-col-header {
+    padding: 10px 14px;
+    font-weight: bold;
+    font-size: 0.88rem;
+    color: #fff;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+.flow-overview-col-body {
+    padding: 10px 12px 14px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+/* スタッフ・お客様 区画 */
+.flow-overview-role {
+    border-radius: 6px;
+    padding: 8px 10px;
+}
+.flow-overview-role.staff-role {
+    background: #EBF5FB;
+    border-left: 4px solid #1565C0;
+}
+.flow-overview-role.customer-role {
+    background: #FFF7ED;
+    border-left: 4px solid #E65100;
+}
+.flow-overview-role-label {
+    font-weight: bold;
+    font-size: 0.75rem;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.flow-overview-role-label .role-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+.staff-role .role-badge { background: #1565C0; }
+.customer-role .role-badge { background: #E65100; }
+.flow-overview-role-label .role-text {
+    font-size: 0.78rem;
+}
+.staff-role .role-text { color: #1565C0; }
+.customer-role .role-text { color: #E65100; }
+/* タスク一覧 */
+.flow-overview-tasks {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.flow-overview-tasks li {
+    font-size: 0.78rem;
+    line-height: 1.55;
+    padding: 2px 0 2px 18px;
+    position: relative;
+    color: #444;
+}
+.flow-overview-tasks li::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 9px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #bbb;
+}
+.staff-role .flow-overview-tasks li::before { background: #64B5F6; }
+.customer-role .flow-overview-tasks li::before { background: #FFB74D; }
+/* 番号付きステップ */
+.flow-overview-tasks li .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    font-size: 0.6rem;
+    font-weight: bold;
+    color: #fff;
+    margin-right: 3px;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+.staff-role .step-num { background: #1565C0; }
+.customer-role .step-num { background: #E65100; }
+.shared-step { background: #7B1FA2 !important; }
+
+/* レスポンシブ */
+@media screen and (max-width: 900px) {
+    .flow-overview-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media screen and (max-width: 640px) {
+    .flow-overview-grid {
+        grid-template-columns: 1fr;
+    }
 }
