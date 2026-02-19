@@ -2691,6 +2691,10 @@
                         <img src="images/ダッシュボード.jpg" alt="ダッシュボード画面" class="admin-screenshot" onclick="openScreenshot(this)">
                     </div>
                     <div class="dash-overview-items">
+                        <div class="dash-item fail">
+                            <div class="dash-item-title">支払いに失敗したお客様</div>
+                            <div class="dash-item-desc"><strong>決済エラー</strong>が発生。マネージャーに報告</div>
+                        </div>
                         <div class="dash-item msg">
                             <div class="dash-item-title">未返信のメッセージがあるお客様</div>
                             <div class="dash-item-desc">「メッセージへ」からやり取り可能。<strong>必ずその日のうちに返信</strong></div>
@@ -2707,10 +2711,6 @@
                             <div class="dash-item-title">休会予定のお客様</div>
                             <div class="dash-item-desc">ロッカー契約がある場合は<strong>荷物撤去・鍵返却</strong>の確認</div>
                         </div>
-                        <div class="dash-item fail">
-                            <div class="dash-item-title">支払いに失敗したお客様</div>
-                            <div class="dash-item-desc"><strong>決済エラー</strong>が発生。マネージャーに報告</div>
-                        </div>
                     </div>
                 </div>
 
@@ -2720,22 +2720,13 @@
                     <p><strong>マネージャーが対応完了を確認した上で操作します。</strong>スタッフは押さないでください。</p>
                 </div>
 
-                <h4>通知について</h4>
-                <p>下記内容の通知がスタジオのメールアドレスに届きます（詳細は「⑩ メール通知」を参照）：</p>
-                <ul>
-                    <li>見学予約の通知</li>
-                    <li>月額プラン契約・解約の通知</li>
-                    <li>プラン変更・休会の通知</li>
-                    <li>オプション（ロッカー）契約・解約の通知</li>
-                    <li>お客様からのメッセージ受信通知</li>
-                    <li>勉強カフェ会員番号の自動送信</li>
-                </ul>
+                <p style="margin-top: 15px;">通知の詳細は <a href="#" class="section-link" data-quick-section="admin-panel" data-quick-h3="メール通知">⑦ メール通知</a> を参照してください。</p>
             </div>
 
             <!-- ② 会員管理 -->
             <div class="card" id="member-management">
                 <h3>会員管理</h3>
-                <img src="images/会員管理.jpg" alt="会員管理画面" class="admin-screenshot" onclick="openScreenshot(this)">
+                <img src="images/会員管理②.jpg" alt="会員管理画面" class="admin-screenshot" onclick="openScreenshot(this)">
                 <p>会員一覧から各会員の詳細情報を確認できます。</p>
                 <h4>会員情報の確認方法</h4>
                 <div class="flow-steps">
@@ -2757,6 +2748,8 @@
                     <span class="info-chip">生年月日</span>
                     <span class="info-chip">職業</span>
                     <span class="info-chip">勉強内容</span>
+                    <span class="info-chip">契約履歴</span>
+                    <span class="info-chip">決済履歴</span>
                 </div>
                 <p class="note">※IDはスタディGO固有の番号です。勉強カフェの会員番号とは異なります。</p>
                 <p class="note">※会員番号は契約時にスタジオのメールアドレスに別途送られてきます。管理画面には表示されません。</p>
@@ -2767,8 +2760,6 @@
                         <li><strong>入会報告</strong>：チャットワーク【入会情報】新宿S・BPスタジオ に<strong>会員番号</strong>と<strong>氏名</strong>を必ず報告してください。</li>
                     </ul>
                 </div>
-                <h4>会員の検索</h4>
-                <p>氏名・メールアドレス・電話番号等で会員を検索できます。契約中・解約済みなどのステータスで絞り込みも可能です。</p>
             </div>
 
             <!-- ③ 店舗管理 -->
@@ -2785,23 +2776,8 @@
                     <p class="warning-text" style="font-size: 1.1em;">設定を0日のまま放置すると、すべての新規契約者が即日利用開始できてしまいます。</p>
                 </div>
 
-                <h4>その他の設定項目</h4>
-                <table class="info-table">
-                    <tr>
-                        <th>店舗コード</th>
-                        <td>QR読取エラー時にユーザーが手入力するコード（非推奨の代替手段）</td>
-                    </tr>
-                    <tr>
-                        <th>プラン設定</th>
-                        <td>月額プラン・時間利用プランの料金や条件の確認</td>
-                    </tr>
-                    <tr>
-                        <th>鍵（Akerun）設定</th>
-                        <td>Akerunの鍵付与時間帯の管理</td>
-                    </tr>
-                </table>
                 <div class="warning">
-                    <p><strong>注意：</strong>店舗管理の設定変更は影響範囲が大きいため、変更が必要な場合は運営に確認してから行ってください。</p>
+                    <p><strong>注意：</strong>店舗管理の設定変更は影響範囲が大きいため、変更が必要な場合はマネージャーに確認してから行ってください。</p>
                 </div>
             </div>
 
@@ -2844,7 +2820,7 @@
                         <li>該当ユーザーのチェックイン行の「編集」をクリック</li>
                         <li>正しいチェックイン時刻に修正して保存</li>
                     </ol>
-                    <p class="note" style="margin-top: 8px;">※別日のチェックイン修正は店舗側ではできません。運営にご相談ください。</p>
+                    <p class="note" style="margin-top: 8px;">※別日のチェックイン修正は店舗側ではできません。</p>
                 </div>
             </div>
 
@@ -2861,7 +2837,7 @@
                     </tr>
                     <tr>
                         <th>予約確定</th>
-                        <td>見学対応が可能な場合に設定</td>
+                        <td>見学対応が可能な場合に設定（<strong>お客様にメールが届きます</strong>）</td>
                     </tr>
                     <tr>
                         <th>見学実施</th>
@@ -2869,7 +2845,7 @@
                     </tr>
                     <tr>
                         <th>見学キャンセル</th>
-                        <td>予約日時に来店がなかった場合に設定</td>
+                        <td>予約日時に来店がなかった場合に設定（<strong>お客様にメールが届きます</strong>）</td>
                     </tr>
                 </table>
 
@@ -2885,29 +2861,7 @@
                 </div>
             </div>
 
-            <!-- ⑥ 営業日・営業時間管理 -->
-            <div class="card" id="business-hours-management">
-                <div class="manager-warning">この設定は通常マネージャーが行います。スタッフが変更する場合は必ずマネージャーに確認してください。</div>
-                <h3>営業日・営業時間管理</h3>
-                <img src="images/営業日・営業時間管理.jpg" alt="営業日・営業時間管理画面" class="admin-screenshot" onclick="openScreenshot(this)">
-                <p>営業日や営業時間の変更を管理する画面です。</p>
-                <h4>主な操作</h4>
-                <table class="info-table">
-                    <tr>
-                        <th>臨時休業</th>
-                        <td>年末年始やビル点検など、臨時で休業する日を設定</td>
-                    </tr>
-                    <tr>
-                        <th>営業時間変更</th>
-                        <td>特定の日の営業時間を変更する場合に設定</td>
-                    </tr>
-                </table>
-                <div class="tips">
-                    <p>営業時間の変更は店内掲示・Lステップ等にてご案内いたします。管理画面での設定変更が必要な場合は運営に確認してください。</p>
-                </div>
-            </div>
-
-            <!-- ⑨ メッセージ -->
+            <!-- ⑥ メッセージ -->
             <div class="card" id="message">
                 <h3>メッセージ</h3>
                 <p>アプリ内でお客様とやり取りできるメッセージ機能です。</p>
@@ -2932,7 +2886,7 @@
                 </div>
             </div>
 
-            <!-- ⑩ メール通知 -->
+            <!-- ⑦ メール通知 -->
             <div class="card" id="email-notification">
                 <h3>メール通知</h3>
                 <p>契約・解約・メッセージなどの通知がスタジオのメールアドレスに届きます。</p>
@@ -2955,6 +2909,28 @@
                     <li>お客様からのメッセージ受信通知</li>
                     <li>勉強カフェ会員番号の自動送信（月額契約後に BCBP○○ / BCS○○ がお客様・スタジオへ送信）</li>
                 </ul>
+            </div>
+
+            <!-- ⑩ 営業日・営業時間管理 -->
+            <div class="card" id="business-hours-management">
+                <div class="manager-warning">この設定は通常マネージャーが行います。スタッフが変更する場合は必ずマネージャーに確認してください。</div>
+                <h3>営業日・営業時間管理</h3>
+                <img src="images/営業日・営業時間管理.jpg" alt="営業日・営業時間管理画面" class="admin-screenshot" onclick="openScreenshot(this)">
+                <p>営業日や営業時間の変更を管理する画面です。</p>
+                <h4>主な操作</h4>
+                <table class="info-table">
+                    <tr>
+                        <th>臨時休業</th>
+                        <td>年末年始やビル点検など、臨時で休業する日を設定</td>
+                    </tr>
+                    <tr>
+                        <th>営業時間変更</th>
+                        <td>特定の日の営業時間を変更する場合に設定</td>
+                    </tr>
+                </table>
+                <div class="tips">
+                    <p>営業時間の変更は店内掲示・Lステップ等にてご案内いたします。管理画面での設定変更が必要な場合はマネージャーに確認してください。</p>
+                </div>
             </div>
         </section>
 
