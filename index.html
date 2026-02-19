@@ -2964,37 +2964,41 @@
             <p style="margin-bottom: 20px;">会員様がアプリで各手続きを行う際の画面遷移を、操作ごとにわかりやすく解説します。</p>
             <div class="card">
                 <h3>時間利用（ドロップイン）</h3>
-                <p>QRコード読み取りから利用開始までの画面遷移です。左右にスクロールして確認できます。</p>
-                <div class="app-flow-strip">
-                    <div class="app-flow-step">
-                        <span class="app-flow-step-num">1</span>
-                        <img src="images/チェックイン1.PNG" alt="QR読み取り画面" onclick="openScreenshot(this)">
-                        <span class="app-flow-step-label">QR読み取り</span>
+                <p>QRコード読み取りから利用開始までの画面遷移です。ボタンまたはスクロールで画面を確認できます。</p>
+                <div class="app-flow-container">
+                    <button class="app-flow-scroll-btn left" onclick="this.nextElementSibling.scrollBy({left:-300,behavior:'smooth'})">&lsaquo;</button>
+                    <div class="app-flow-strip">
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">1</span>
+                            <img src="images/チェックイン1.PNG" alt="QR読み取り画面" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">QR読み取り</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">2</span>
+                            <img src="images/ドロップイン2.PNG" alt="店舗チェックイン・プラン選択" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">プラン選択<br>（時間利用を選択）</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">3</span>
+                            <img src="images/ドロップイン3.PNG" alt="時間パック選択" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">時間パック選択<br>（1時間/3時間等）</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">4</span>
+                            <img src="images/ドロップイン4.PNG" alt="プラン詳細・支払い方法確認" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">プラン詳細<br>料金・支払い確認</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">5</span>
+                            <img src="images/ドロップイン5.PNG" alt="注意事項確認・利用開始" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">注意事項確認<br>「利用開始する」</span>
+                        </div>
                     </div>
-                    <div class="app-flow-arrow">→</div>
-                    <div class="app-flow-step">
-                        <span class="app-flow-step-num">2</span>
-                        <img src="images/ドロップイン2.PNG" alt="店舗チェックイン・プラン選択" onclick="openScreenshot(this)">
-                        <span class="app-flow-step-label">プラン選択<br>（時間利用を選択）</span>
-                    </div>
-                    <div class="app-flow-arrow">→</div>
-                    <div class="app-flow-step">
-                        <span class="app-flow-step-num">3</span>
-                        <img src="images/ドロップイン3.PNG" alt="時間パック選択" onclick="openScreenshot(this)">
-                        <span class="app-flow-step-label">時間パック選択<br>（1時間/3時間等）</span>
-                    </div>
-                    <div class="app-flow-arrow">→</div>
-                    <div class="app-flow-step">
-                        <span class="app-flow-step-num">4</span>
-                        <img src="images/ドロップイン4.PNG" alt="プラン詳細・支払い方法確認" onclick="openScreenshot(this)">
-                        <span class="app-flow-step-label">プラン詳細<br>料金・支払い確認</span>
-                    </div>
-                    <div class="app-flow-arrow">→</div>
-                    <div class="app-flow-step">
-                        <span class="app-flow-step-num">5</span>
-                        <img src="images/ドロップイン5.PNG" alt="注意事項確認・利用開始" onclick="openScreenshot(this)">
-                        <span class="app-flow-step-label">注意事項確認<br>「利用開始する」</span>
-                    </div>
+                    <button class="app-flow-scroll-btn right" onclick="this.previousElementSibling.scrollBy({left:300,behavior:'smooth'})">&rsaquo;</button>
                 </div>
                 <div class="app-flow-branch app-flow-error">
                     <div class="app-flow-branch-title">エラー：営業時間外の場合</div>
@@ -3010,61 +3014,65 @@
 
             <div class="card">
                 <h3>月額プラン契約</h3>
-                <p>店舗検索から月額プラン契約完了までの画面遷移です。左右にスクロールして確認できます。</p>
-                <div class="app-flow-strip">
-                    <div class="app-flow-step">
-                        <span class="app-flow-step-num">0</span>
-                        <img src="images/月額契約0.PNG" alt="店舗検索（地図）" onclick="openScreenshot(this)">
-                        <span class="app-flow-step-label">店舗検索<br>（地図表示）</span>
+                <p>店舗検索から月額プラン契約完了までの画面遷移です。ボタンまたはスクロールで画面を確認できます。</p>
+                <div class="app-flow-container">
+                    <button class="app-flow-scroll-btn left" onclick="this.nextElementSibling.scrollBy({left:-300,behavior:'smooth'})">&lsaquo;</button>
+                    <div class="app-flow-strip">
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">0</span>
+                            <img src="images/月額契約0.PNG" alt="店舗検索（地図）" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">店舗検索<br>（地図表示）</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">1</span>
+                            <img src="images/月額契約1.PNG" alt="店舗を選択" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">店舗を選択</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">2</span>
+                            <img src="images/月額契約2.PNG" alt="店舗詳細ページ" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">店舗詳細<br>「月額申込する」</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">3</span>
+                            <img src="images/月額契約3.PNG" alt="月額プラン一覧" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">プラン選択<br>（習慣化プラン等）</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">4</span>
+                            <img src="images/月額契約4.PNG" alt="利用開始日選択" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">利用開始日選択<br>+クーポン入力</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">5</span>
+                            <img src="images/月額契約5.PNG" alt="カレンダーで日付選択" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">カレンダーで<br>日付を選択</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">6</span>
+                            <img src="images/月額契約6.PNG" alt="利用開始確認・初回手続き説明" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">利用開始確認<br>初回手続き説明</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">7</span>
+                            <img src="images/月額契約7.PNG" alt="確認して次へ" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">確認して「次へ」</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">8</span>
+                            <img src="images/月額契約8 ロッカー.PNG" alt="オプション（ロッカー）選択" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">オプション選択<br>（ロッカー小/大）</span>
+                        </div>
                     </div>
-                    <div class="app-flow-arrow">→</div>
-                    <div class="app-flow-step">
-                        <span class="app-flow-step-num">1</span>
-                        <img src="images/月額契約1.PNG" alt="店舗を選択" onclick="openScreenshot(this)">
-                        <span class="app-flow-step-label">店舗を選択</span>
-                    </div>
-                    <div class="app-flow-arrow">→</div>
-                    <div class="app-flow-step">
-                        <span class="app-flow-step-num">2</span>
-                        <img src="images/月額契約2.PNG" alt="店舗詳細ページ" onclick="openScreenshot(this)">
-                        <span class="app-flow-step-label">店舗詳細<br>「月額申込する」</span>
-                    </div>
-                    <div class="app-flow-arrow">→</div>
-                    <div class="app-flow-step">
-                        <span class="app-flow-step-num">3</span>
-                        <img src="images/月額契約3.PNG" alt="月額プラン一覧" onclick="openScreenshot(this)">
-                        <span class="app-flow-step-label">プラン選択<br>（習慣化プラン等）</span>
-                    </div>
-                    <div class="app-flow-arrow">→</div>
-                    <div class="app-flow-step">
-                        <span class="app-flow-step-num">4</span>
-                        <img src="images/月額契約4.PNG" alt="利用開始日選択" onclick="openScreenshot(this)">
-                        <span class="app-flow-step-label">利用開始日選択<br>+クーポン入力</span>
-                    </div>
-                    <div class="app-flow-arrow">→</div>
-                    <div class="app-flow-step">
-                        <span class="app-flow-step-num">5</span>
-                        <img src="images/月額契約5.PNG" alt="カレンダーで日付選択" onclick="openScreenshot(this)">
-                        <span class="app-flow-step-label">カレンダーで<br>日付を選択</span>
-                    </div>
-                    <div class="app-flow-arrow">→</div>
-                    <div class="app-flow-step">
-                        <span class="app-flow-step-num">6</span>
-                        <img src="images/月額契約6.PNG" alt="利用開始確認・初回手続き説明" onclick="openScreenshot(this)">
-                        <span class="app-flow-step-label">利用開始確認<br>初回手続き説明</span>
-                    </div>
-                    <div class="app-flow-arrow">→</div>
-                    <div class="app-flow-step">
-                        <span class="app-flow-step-num">7</span>
-                        <img src="images/月額契約7.PNG" alt="確認して次へ" onclick="openScreenshot(this)">
-                        <span class="app-flow-step-label">確認して「次へ」</span>
-                    </div>
-                    <div class="app-flow-arrow">→</div>
-                    <div class="app-flow-step">
-                        <span class="app-flow-step-num">8</span>
-                        <img src="images/月額契約8 ロッカー.PNG" alt="オプション（ロッカー）選択" onclick="openScreenshot(this)">
-                        <span class="app-flow-step-label">オプション選択<br>（ロッカー小/大）</span>
-                    </div>
+                    <button class="app-flow-scroll-btn right" onclick="this.previousElementSibling.scrollBy({left:300,behavior:'smooth'})">&rsaquo;</button>
                 </div>
 
                 <div class="app-flow-branch">
