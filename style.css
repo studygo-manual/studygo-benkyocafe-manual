@@ -1562,13 +1562,16 @@ footer .update-date {
 .dash-login-row {
     display: flex;
     gap: 20px;
-    align-items: flex-start;
+    align-items: stretch;
     margin: 12px 0;
 }
 .dash-login-row .admin-screenshot {
-    flex: 0 0 45%;
+    flex: 0 0 auto;
     max-width: 45% !important;
     margin: 0;
+    object-fit: contain;
+    align-self: stretch;
+    height: auto;
 }
 .dash-login-info {
     flex: 1;
