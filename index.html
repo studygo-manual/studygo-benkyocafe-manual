@@ -2973,18 +2973,20 @@
                             <img src="images/ドロップイン5.PNG" alt="注意事項確認・利用開始" onclick="openScreenshot(this)">
                             <span class="app-flow-step-label">注意事項確認<br>「利用開始する」</span>
                         </div>
-                    </div>
-                    <button class="app-flow-scroll-btn right" onclick="this.previousElementSibling.scrollBy({left:300,behavior:'smooth'})">&rsaquo;</button>
-                </div>
-                <div class="app-flow-branch app-flow-error">
-                    <div class="app-flow-branch-title">エラー：営業時間外の場合</div>
-                    <div class="app-flow-strip">
-                        <div class="app-flow-step">
-                            <span class="app-flow-step-num">!</span>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step app-flow-step-error">
+                            <span class="app-flow-step-num" style="background:#C62828;">!</span>
                             <img src="images/ドロップイン6　失敗.PNG" alt="営業時間外エラー" onclick="openScreenshot(this)">
-                            <span class="app-flow-step-label">「営業時間外のため<br>ドロップインの契約は<br>できません」</span>
+                            <span class="app-flow-step-label">営業時間外の場合<br>エラーが表示される</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">6</span>
+                            <img src="images/ドロップイン6.PNG" alt="チェックイン完了" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">チェックインが<br>完了しました</span>
                         </div>
                     </div>
+                    <button class="app-flow-scroll-btn right" onclick="this.previousElementSibling.scrollBy({left:300,behavior:'smooth'})">&rsaquo;</button>
                 </div>
             </div>
 
@@ -3051,25 +3053,64 @@
                     <button class="app-flow-scroll-btn right" onclick="this.previousElementSibling.scrollBy({left:300,behavior:'smooth'})">&rsaquo;</button>
                 </div>
 
-                <div class="app-flow-branch">
-                    <div class="app-flow-branch-title">パターンA：月額契約のみ（ロッカーなし）</div>
-                    <div class="app-flow-strip">
-                        <div class="app-flow-step">
-                            <span class="app-flow-step-num">9</span>
-                            <img src="images/月額契約9.PNG" alt="契約内容確認（ロッカーなし）" onclick="openScreenshot(this)">
-                            <span class="app-flow-step-label">契約内容確認<br>日割り+翌月分</span>
-                        </div>
+                <h4 style="margin-top: 16px; margin-bottom: 8px;">ステップ⑨：契約内容確認（2パターン）</h4>
+                <div class="app-flow-strip app-flow-branch-row">
+                    <div class="app-flow-step">
+                        <span class="app-flow-step-num">A</span>
+                        <img src="images/月額契約9.PNG" alt="契約内容確認（ロッカーなし）" onclick="openScreenshot(this)">
+                        <span class="app-flow-step-label">パターンA<br>月額契約のみ<br>（ロッカーなし）</span>
+                    </div>
+                    <div class="app-flow-step">
+                        <span class="app-flow-step-num">B</span>
+                        <img src="images/月額契約9　ロッカーあり.PNG" alt="契約内容確認（ロッカーあり）" onclick="openScreenshot(this)">
+                        <span class="app-flow-step-label">パターンB<br>月額契約＋ロッカー<br>（初期費用+ロッカー込）</span>
                     </div>
                 </div>
-                <div class="app-flow-branch">
-                    <div class="app-flow-branch-title">パターンB：月額契約＋ロッカー</div>
+            </div>
+
+            <div class="card">
+                <h3>チェックイン～開錠～チェックアウトまで</h3>
+                <p>来店時のQR読み取りからAkerun開錠、退店時のチェックアウトまでの画面遷移です。</p>
+                <div class="app-flow-container">
+                    <button class="app-flow-scroll-btn left" onclick="this.nextElementSibling.scrollBy({left:-300,behavior:'smooth'})">&lsaquo;</button>
                     <div class="app-flow-strip">
                         <div class="app-flow-step">
-                            <span class="app-flow-step-num">9</span>
-                            <img src="images/月額契約9　ロッカーあり.PNG" alt="契約内容確認（ロッカーあり）" onclick="openScreenshot(this)">
-                            <span class="app-flow-step-label">契約内容確認<br>初期費用+ロッカー込</span>
+                            <span class="app-flow-step-num">1</span>
+                            <img src="images/チェックイン1.PNG" alt="QR読み取り" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">QR読み取り</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">2</span>
+                            <img src="images/Akerun1.PNG" alt="チェックイン中" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">チェックイン中<br>（会員カード表示）</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">3</span>
+                            <img src="images/Akerun2.PNG" alt="ドアを開錠しました" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">ドアを開錠しました！<br>（Akerun連携）</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">4</span>
+                            <img src="images/チェックアウト1.PNG" alt="QR読み取り（チェックアウト）" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">QR読み取り<br>（チェックアウト）</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">5</span>
+                            <img src="images/チェックアウト2.PNG" alt="チェックアウト確認" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">チェックアウト<br>確認ダイアログ</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">6</span>
+                            <img src="images/チェックアウト3.PNG" alt="おつかれさまでした" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">おつかれさまでした！<br>（レビュー画面）</span>
                         </div>
                     </div>
+                    <button class="app-flow-scroll-btn right" onclick="this.previousElementSibling.scrollBy({left:300,behavior:'smooth'})">&rsaquo;</button>
                 </div>
             </div>
 

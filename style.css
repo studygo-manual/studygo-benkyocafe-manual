@@ -1639,6 +1639,22 @@ footer .update-date {
 .app-flow-error .app-flow-step-num {
     background: #C62828;
 }
+.app-flow-step-error {
+    border: 3px solid #C62828 !important;
+    background: #FFF5F5;
+    border-radius: 12px;
+}
+.app-flow-step-error .app-flow-step-label {
+    color: #C62828;
+    font-weight: bold;
+}
+.app-flow-branch-row {
+    background: #F5F5F5;
+    border-radius: 10px;
+    padding: 14px;
+    border: 1px dashed #ccc;
+    gap: 24px;
+}
 
 /* スクリーンショット拡大モーダル */
 .screenshot-modal-overlay {
