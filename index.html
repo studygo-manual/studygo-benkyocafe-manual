@@ -2879,12 +2879,12 @@
                 <h4>予約ステータスの管理</h4>
                 <table class="info-table">
                     <tr>
-                        <th>予約確定</th>
-                        <td>見学対応が可能な場合に設定</td>
+                        <th style="color: #E65100;">△不明（未確認）</th>
+                        <td><strong>予約が入った直後のデフォルト表示。</strong>仮予約の状態であり、スタッフの対応が必要です</td>
                     </tr>
                     <tr>
-                        <th>仮予約</th>
-                        <td>対応可否が不明な場合に一時的に設定</td>
+                        <th>予約確定</th>
+                        <td>見学対応が可能な場合に設定</td>
                     </tr>
                     <tr>
                         <th>見学実施</th>
@@ -2895,13 +2895,12 @@
                         <td>予約日時に来店がなかった場合に設定</td>
                     </tr>
                 </table>
-                <p class="note">ステータス変更後、一覧から非表示になりアーカイブされます。</p>
 
                 <div class="staff-action">
                     <div class="staff-action-header">スタッフのやること</div>
                     <ol>
-                        <li><strong>メール通知を確認</strong> → 管理画面「見学予約一覧」で<strong>ステータス変更</strong>（予約確定／仮予約）</li>
-                        <li><strong>メール通知を確認</strong> → 管理画面「見学予約一覧」で<strong>お客様情報を確認</strong></li>
+                        <li><strong>メール通知を確認</strong> → 管理画面「見学予約一覧」で予約内容・<strong>お客様情報を確認</strong></li>
+                        <li>ステータスを<strong>「予約確定」に変更</strong>する</li>
                         <li><strong>メッセージでお客様に確認連絡</strong>を送る <a href="#" class="section-link" style="margin-left: 8px; background: #FFF9C4; padding: 2px 8px; border-radius: 4px; font-weight: bold; color: #E65100; text-decoration: none;">【送信文章】（後日用意）</a></li>
                         <li><strong>見学当日</strong>：来店があれば「見学実施」に変更。見学対応を行う</li>
                         <li><strong>来店がなかった場合</strong>：予約時間を30分過ぎても来店がなければ「見学キャンセル」に変更する</li>
@@ -2931,53 +2930,51 @@
                 </div>
             </div>
 
-            <!-- メール・メッセージ -->
-            <div class="card" id="email-message">
-                <h3>メール・メッセージ</h3>
-                <img src="images/メール・メッセージ.jpg" alt="メール・メッセージ画面" class="admin-screenshot" onclick="openScreenshot(this)">
-                <p>ユーザーへのメールやメッセージの送受信内容を確認・管理できます。</p>
-                <h4>メッセージ（アプリ内）</h4>
+            <!-- ⑨ メッセージ -->
+            <div class="card" id="message">
+                <h3>メッセージ</h3>
+                <p>アプリ内でお客様とやり取りできるメッセージ機能です。</p>
+                <h4>メッセージの利用場面</h4>
+                <ul>
+                    <li>見学予約が入った際の確認連絡やリスケ対応</li>
+                    <li>店外で契約したユーザーへの来店案内・手続き連絡</li>
+                </ul>
+                <h4>確認方法</h4>
                 <ul>
                     <li>ダッシュボードの「メッセージへ」またはメニューの「メッセージ」から確認</li>
-                    <li>見学予約時のやり取り、店外契約時の来店案内に利用</li>
                     <li>ユーザーからのメッセージがあるとメール通知が届く</li>
                 </ul>
-                <h4>メール通知</h4>
-                <ul>
-                    <li>契約・解約・メッセージの通知がスタジオのメールアドレスに届く</li>
-                    <li>新宿スタジオ：benkyocafe.shinjuku@gmail.com</li>
-                    <li>BPスタジオ：benkyo-cafe.sbp@b-pt.jp</li>
-                </ul>
-                <h4>メッセージの利用場面</h4>
-                <div class="flow-steps">
-                    <div class="flow-step">
-                        <h4>見学予約対応</h4>
-                        <p>見学予約が入った際の確認連絡やリスケ対応</p>
-                    </div>
-                    <div class="flow-step">
-                        <h4>店外契約対応</h4>
-                        <p>店外で契約したユーザーへの来店案内・手続き連絡</p>
-                    </div>
-                </div>
-                <p class="note">※Lステップとの併用（スタディGOユーザー用の自動応答を設置）も可能です。</p>
-
                 <div class="staff-action">
                     <div class="staff-action-header">スタッフの対応フロー</div>
                     <ol>
                         <li>メール通知が届く（スタジオのメールアドレスに届く）</li>
-                        <li>管理画面にログイン</li>
-                        <li>ダッシュボードの「メッセージへ」をクリック</li>
-                        <li>該当ユーザーのメッセージを開く</li>
-                        <li>内容を確認し、返信する
-                            <ul>
-                                <li><strong>見学予約の確認</strong> → 「ご予約ありがとうございます。○日○時にお待ちしております」</li>
-                                <li><strong>来店日調整</strong> → 日程を調整し返信</li>
-                                <li><strong>質問対応</strong> → 回答できる範囲で返信</li>
-                                <li><strong>対応判断に迷う場合</strong> → マネージャーにチャットワークで相談してから返信</li>
-                            </ul>
-                        </li>
+                        <li>管理画面にログイン → ダッシュボードの「メッセージへ」をクリック</li>
+                        <li>該当ユーザーのメッセージを開き、内容を確認して返信する</li>
+                        <li><strong>対応判断に迷う場合</strong> → マネージャーにチャットワークで相談してから返信</li>
                     </ol>
                 </div>
+            </div>
+
+            <!-- ⑩ メール通知 -->
+            <div class="card" id="email-notification">
+                <h3>メール通知</h3>
+                <p>契約・解約・メッセージなどの通知がスタジオのメールアドレスに届きます。</p>
+                <table class="info-table">
+                    <tr>
+                        <th>新宿スタジオ</th>
+                        <td>benkyocafe.shinjuku@gmail.com</td>
+                    </tr>
+                    <tr>
+                        <th>BPスタジオ</th>
+                        <td>benkyo-cafe.sbp@b-pt.jp</td>
+                    </tr>
+                </table>
+                <h4>届く通知の種類</h4>
+                <ul>
+                    <li>見学予約の通知</li>
+                    <li>月額プラン契約・解約の通知</li>
+                    <li>お客様からのメッセージ受信通知</li>
+                </ul>
             </div>
         </section>
 
