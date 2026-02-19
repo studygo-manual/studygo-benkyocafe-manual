@@ -1557,6 +1557,24 @@ footer .update-date {
 .admin-screenshot.small {
     max-width: 480px;
 }
+
+/* 情報チップ（横並びバッジ） */
+.info-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 10px 0;
+}
+.info-chip {
+    display: inline-block;
+    padding: 6px 16px;
+    background: #E3F2FD;
+    color: #1565C0;
+    border: 1px solid #90CAF9;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
 .screenshot-caption {
     font-size: 0.8rem;
     color: #888;
