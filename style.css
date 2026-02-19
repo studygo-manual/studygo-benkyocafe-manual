@@ -3956,7 +3956,9 @@ footer .update-date {
     font-weight: bold;
     text-align: center;
     position: relative;
+    -webkit-writing-mode: vertical-rl;
     writing-mode: vertical-rl;
+    -webkit-text-orientation: mixed;
     text-orientation: mixed;
 }
 /* ルートノード */
@@ -4023,42 +4025,51 @@ footer .update-date {
 .org-staff .org-role-header { color: #1565C0; }
 .org-cust .org-role-header { color: #E65100; }
 
-/* ===== タスクリスト（縦書き列） ===== */
+/* ===== タスクリスト（ツリーul/liスタイルの完全オーバーライド） ===== */
 .org-tasks {
+    display: block !important;
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 0 !important;
+    position: static !important;
+}
+/* ツリーul::beforeの接続線を無効化 */
+.org-tasks::before {
+    display: none !important;
 }
 .org-tasks li {
-    display: block;
+    display: block !important;
+    flex-direction: initial !important;
+    align-items: initial !important;
     font-size: 0.82rem;
     line-height: 1.7;
-    padding: 6px 3px 4px 3px;
+    padding: 6px 3px 4px 3px !important;
     position: relative;
     color: #333;
     white-space: nowrap;
     border-right: 1px solid rgba(0,0,0,0.06);
 }
 .org-tasks li:last-child { border-right: none; }
-/* タスクliの接続線を無効化（ツリーli::before/afterの継承防止） */
+/* ツリーli::before/afterの接続線を完全無効化し、ドットマーカーに置き換え */
 .org-tasks li::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 50% !important;
+    right: auto !important;
     transform: translateX(-50%);
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    border: none;
-    right: auto;
-    width: 6px;
+    width: 6px !important;
+    height: 6px !important;
+    border: none !important;
+    border-radius: 50% !important;
 }
-.org-tasks li::after { display: none; }
-.org-staff .org-tasks li::before { background: #90CAF9; }
-.org-cust .org-tasks li::before { background: #FFCC80; }
+.org-tasks li::after {
+    display: none !important;
+}
+.org-staff .org-tasks li::before { background: #90CAF9 !important; }
+.org-cust .org-tasks li::before { background: #FFCC80 !important; }
 /* 番号付きタスクはドット非表示 */
-.org-tasks li:has(.sn)::before { display: none; }
+.org-tasks li:has(.sn)::before { display: none !important; }
 
 /* 番号丸（縦書き対応） */
 .org-tasks .sn {
