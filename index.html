@@ -1820,113 +1820,134 @@
         <section id="procedures" data-category="studygo">
             <h2>★対応フロー</h2>
 
-            <!-- 対応フロー 全体像（横4列グリッド） -->
-            <div class="card" style="border-left: 5px solid #607D8B;">
-                <h4 style="border-left: none; padding-left: 0; color: #37474F; margin-bottom: 8px;">対応フロー 全体像（スタッフ／お客様の役割一覧）</h4>
-                <div class="tree-legend" style="margin-bottom: 8px;">
-                    <div class="tree-legend-item"><span class="tree-leaf-num staff-num" style="font-size: 0.6rem;">S</span> スタッフ</div>
-                    <div class="tree-legend-item"><span class="tree-leaf-num customer-num" style="font-size: 0.6rem;">C</span> お客様</div>
-                    <div class="tree-legend-item"><span class="tree-leaf-num shared-num" style="font-size: 0.6rem;">=</span> 両者</div>
+            <!-- 対応フロー 全体像（組織図スタイル樹形図） -->
+            <div class="org-chart-card">
+                <div class="org-chart-title">対応フロー 全体像（スタッフ／お客様の役割一覧）</div>
+                <div class="org-chart-legend">
+                    <div class="org-chart-legend-item"><span class="org-chart-legend-badge s-badge">S</span> スタッフ</div>
+                    <div class="org-chart-legend-item"><span class="org-chart-legend-badge c-badge">C</span> お客様</div>
+                    <div class="org-chart-legend-item"><span class="org-chart-legend-badge eq-badge">=</span> 両者</div>
                 </div>
-                <div class="flow-overview-grid">
-                    <!-- 1. 見学・お客様対応 -->
-                    <div class="flow-overview-col">
-                        <div class="flow-overview-col-header" style="background: linear-gradient(135deg, #00897B, #00695C);">見学・お客様対応</div>
-                        <div class="flow-overview-col-body">
-                            <div class="flow-overview-role staff-role">
-                                <div class="flow-overview-role-label"><span class="role-badge">S</span><span class="role-text">スタッフ</span></div>
-                                <ul class="flow-overview-tasks">
-                                    <li>予約確認（メール・管理画面）</li>
-                                    <li>お客様情報の確認</li>
-                                    <li>確認連絡（メッセージ）</li>
-                                    <li>来店受付（名前確認 → 席案内）</li>
-                                    <li>アイスブレイク・ヒアリング</li>
-                                    <li>サービス説明・案内・プラン説明</li>
-                                    <li>来店報告シートの記入</li>
+                <ul class="org-tree">
+                    <li>
+                        <div class="org-node org-node-root">対応フロー</div>
+                        <ul>
+                            <!-- 1. 見学・お客様対応 -->
+                            <li>
+                                <div class="org-node org-node-cat" style="background: linear-gradient(135deg, #00897B, #00695C);">見学・お客様対応</div>
+                                <ul>
+                                    <li>
+                                        <div class="org-node org-node-role org-staff">
+                                            <div class="org-role-header"><span class="org-role-badge">S</span> スタッフ</div>
+                                            <ul class="org-tasks">
+                                                <li>予約確認（メール・管理画面）</li>
+                                                <li>お客様情報の確認</li>
+                                                <li>確認連絡（メッセージ）</li>
+                                                <li>来店受付（名前確認→席案内）</li>
+                                                <li>アイスブレイク・ヒアリング</li>
+                                                <li>サービス説明・案内・プラン説明</li>
+                                                <li>来店報告シートの記入</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="org-node org-node-role org-cust">
+                                            <div class="org-role-header"><span class="org-role-badge">C</span> お客様</div>
+                                            <ul class="org-tasks">
+                                                <li>見学予約（アプリ/HP/電話/LINE）</li>
+                                                <li>来店</li>
+                                                <li>体験利用（希望時）</li>
+                                                <li>アンケート記入（入会しない場合）</li>
+                                            </ul>
+                                        </div>
+                                    </li>
                                 </ul>
-                            </div>
-                            <div class="flow-overview-role customer-role">
-                                <div class="flow-overview-role-label"><span class="role-badge">C</span><span class="role-text">お客様</span></div>
-                                <ul class="flow-overview-tasks">
-                                    <li>見学予約（アプリ/HP/電話/LINE）</li>
-                                    <li>来店</li>
-                                    <li>体験利用（希望時）</li>
-                                    <li>アンケート記入（入会しない場合）</li>
+                            </li>
+                            <!-- 2. 月額契約 -->
+                            <li>
+                                <div class="org-node org-node-cat" style="background: linear-gradient(135deg, #F9A825, #F57F17);">月額契約</div>
+                                <ul>
+                                    <li>
+                                        <div class="org-node org-node-role org-staff">
+                                            <div class="org-role-header"><span class="org-role-badge">S</span> スタッフ</div>
+                                            <ul class="org-tasks">
+                                                <li><span class="sn">4</span>新規契約の確認（会員番号）</li>
+                                                <li><span class="sn">5</span>来店手続きの案内</li>
+                                                <li><span class="sn">7</span>利用説明（案内・プラン・解約等）</li>
+                                                <li><span class="sn shared">8</span>初回来店手続き（Lステップ・身分証）</li>
+                                                <li><span class="sn">9</span>ご案内資料のお渡し</li>
+                                                <li><span class="sn">10</span>入会報告（チャットワーク）</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="org-node org-node-role org-cust">
+                                            <div class="org-role-header"><span class="org-role-badge">C</span> お客様</div>
+                                            <ul class="org-tasks">
+                                                <li><span class="sn">1</span>アプリDL・会員登録</li>
+                                                <li><span class="sn">2</span>クレジットカード登録</li>
+                                                <li><span class="sn">3</span>月額プラン契約</li>
+                                                <li><span class="sn">6</span>来店（有人時間帯）</li>
+                                                <li><span class="sn shared">8</span>初回来店手続き（アンケート・身分証）</li>
+                                            </ul>
+                                        </div>
+                                    </li>
                                 </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 2. 月額契約 -->
-                    <div class="flow-overview-col">
-                        <div class="flow-overview-col-header" style="background: linear-gradient(135deg, #F9A825, #F57F17);">月額契約</div>
-                        <div class="flow-overview-col-body">
-                            <div class="flow-overview-role staff-role">
-                                <div class="flow-overview-role-label"><span class="role-badge">S</span><span class="role-text">スタッフ</span></div>
-                                <ul class="flow-overview-tasks">
-                                    <li><span class="step-num">4</span>新規契約の確認（会員番号）</li>
-                                    <li><span class="step-num">5</span>来店手続きの案内</li>
-                                    <li><span class="step-num">7</span>利用説明（案内・プラン・解約等）</li>
-                                    <li><span class="step-num shared-step">8</span>初回来店手続き（Lステップ・身分証）</li>
-                                    <li><span class="step-num">9</span>ご案内資料のお渡し</li>
-                                    <li><span class="step-num">10</span>入会報告（チャットワーク）</li>
+                            </li>
+                            <!-- 3. チェックイン・チェックアウト -->
+                            <li>
+                                <div class="org-node org-node-cat" style="background: linear-gradient(135deg, #1976D2, #0D47A1);">チェックイン・アウト</div>
+                                <ul>
+                                    <li>
+                                        <div class="org-node org-node-role org-staff">
+                                            <div class="org-role-header"><span class="org-role-badge">S</span> スタッフ</div>
+                                            <ul class="org-tasks">
+                                                <li>チェックイン画面の確認</li>
+                                                <li>チェックイン忘れ→案内→管理画面で時刻修正</li>
+                                                <li>チェックアウト忘れ→店舗コード入力を案内</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="org-node org-node-role org-cust">
+                                            <div class="org-role-header"><span class="org-role-badge">C</span> お客様</div>
+                                            <ul class="org-tasks">
+                                                <li>QR読み取り（チェックイン）</li>
+                                                <li>チェックイン画面をスタッフに提示</li>
+                                                <li>QR読み取り（チェックアウト）</li>
+                                            </ul>
+                                        </div>
+                                    </li>
                                 </ul>
-                            </div>
-                            <div class="flow-overview-role customer-role">
-                                <div class="flow-overview-role-label"><span class="role-badge">C</span><span class="role-text">お客様</span></div>
-                                <ul class="flow-overview-tasks">
-                                    <li><span class="step-num">1</span>アプリDL・会員登録</li>
-                                    <li><span class="step-num">2</span>クレジットカード登録</li>
-                                    <li><span class="step-num">3</span>月額プラン契約</li>
-                                    <li><span class="step-num">6</span>来店（有人時間帯）</li>
-                                    <li><span class="step-num shared-step">8</span>初回来店手続き（アンケート・身分証）</li>
+                            </li>
+                            <!-- 4. プラン解約（退会）・休会 -->
+                            <li>
+                                <div class="org-node org-node-cat" style="background: linear-gradient(135deg, #EF6C00, #E65100);">解約（退会）・休会</div>
+                                <ul>
+                                    <li>
+                                        <div class="org-node org-node-role org-staff">
+                                            <div class="org-role-header"><span class="org-role-badge">S</span> スタッフ</div>
+                                            <ul class="org-tasks">
+                                                <li><span class="sn">3</span>ダッシュボードで解約者確認</li>
+                                                <li><span class="sn">4</span>ロッカー対応（荷物撤去・鍵返却・解約処理）</li>
+                                                <li><span class="sn">5</span>鍵回収ステータス更新</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="org-node org-node-role org-cust">
+                                            <div class="org-role-header"><span class="org-role-badge">C</span> お客様</div>
+                                            <ul class="org-tasks">
+                                                <li><span class="sn">1</span>アプリで解約申請（毎月10日締め）</li>
+                                                <li><span class="sn">2</span>有人時間帯に来店</li>
+                                            </ul>
+                                        </div>
+                                    </li>
                                 </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 3. チェックイン・チェックアウト -->
-                    <div class="flow-overview-col">
-                        <div class="flow-overview-col-header" style="background: linear-gradient(135deg, #1976D2, #0D47A1);">チェックイン・アウト</div>
-                        <div class="flow-overview-col-body">
-                            <div class="flow-overview-role staff-role">
-                                <div class="flow-overview-role-label"><span class="role-badge">S</span><span class="role-text">スタッフ</span></div>
-                                <ul class="flow-overview-tasks">
-                                    <li>チェックイン画面の確認</li>
-                                    <li>チェックイン忘れ → 案内 → 管理画面で時刻修正</li>
-                                    <li>チェックアウト忘れ → 店舗コード入力を案内</li>
-                                </ul>
-                            </div>
-                            <div class="flow-overview-role customer-role">
-                                <div class="flow-overview-role-label"><span class="role-badge">C</span><span class="role-text">お客様</span></div>
-                                <ul class="flow-overview-tasks">
-                                    <li>QR読み取り（チェックイン）</li>
-                                    <li>チェックイン画面をスタッフに提示</li>
-                                    <li>QR読み取り（チェックアウト）</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 4. プラン解約（退会）・休会 -->
-                    <div class="flow-overview-col">
-                        <div class="flow-overview-col-header" style="background: linear-gradient(135deg, #EF6C00, #E65100);">解約（退会）・休会</div>
-                        <div class="flow-overview-col-body">
-                            <div class="flow-overview-role staff-role">
-                                <div class="flow-overview-role-label"><span class="role-badge">S</span><span class="role-text">スタッフ</span></div>
-                                <ul class="flow-overview-tasks">
-                                    <li><span class="step-num">3</span>ダッシュボードで解約者確認</li>
-                                    <li><span class="step-num">4</span>ロッカー対応（荷物撤去・鍵返却・解約処理）</li>
-                                    <li><span class="step-num">5</span>鍵回収ステータス更新</li>
-                                </ul>
-                            </div>
-                            <div class="flow-overview-role customer-role">
-                                <div class="flow-overview-role-label"><span class="role-badge">C</span><span class="role-text">お客様</span></div>
-                                <ul class="flow-overview-tasks">
-                                    <li><span class="step-num">1</span>アプリで解約申請（毎月10日締め）</li>
-                                    <li><span class="step-num">2</span>有人時間帯に来店</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
 
             <!-- 見学・お客様対応 -->

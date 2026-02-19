@@ -3837,59 +3837,180 @@ footer .update-date {
 }
 
 /* ===================================
-   対応フロー全体像 — 横4列グリッド
+   対応フロー全体像 — 組織図スタイル樹形図
    =================================== */
-.flow-overview-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin-top: 10px;
-}
-.flow-overview-col {
+.org-chart-card {
+    background: var(--card-bg);
     border-radius: 10px;
-    overflow: hidden;
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-    display: flex;
-    flex-direction: column;
+    padding: 20px 16px 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-left: -20px;
+    margin-right: -20px;
+    overflow-x: auto;
 }
-.flow-overview-col-header {
-    padding: 10px 14px;
-    font-weight: bold;
-    font-size: 0.88rem;
-    color: #fff;
+.org-chart-title {
     text-align: center;
-    letter-spacing: 0.5px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    color: #37474F;
+    margin-bottom: 6px;
 }
-.flow-overview-col-body {
-    padding: 10px 12px 14px;
-    flex: 1;
+.org-chart-legend {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    font-size: 0.78rem;
+    color: #555;
+}
+.org-chart-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.org-chart-legend-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 0.6rem;
+    font-weight: bold;
+}
+.org-chart-legend-badge.s-badge { background: #1565C0; }
+.org-chart-legend-badge.c-badge { background: #E65100; }
+.org-chart-legend-badge.eq-badge { background: #7B1FA2; }
+
+/* ===== 樹形図本体 ===== */
+.org-tree,
+.org-tree ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.org-tree {
+    display: flex;
+    justify-content: center;
+    min-width: max-content;
+}
+.org-tree ul {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    padding-top: 24px;
+}
+/* 親ノードから下へ伸びる縦線 */
+.org-tree ul::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 0;
+    height: 24px;
+    border-left: 2px solid #bbb;
+}
+.org-tree li {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    align-items: center;
+    position: relative;
+    padding: 24px 6px 0;
 }
-/* スタッフ・お客様 区画 */
-.flow-overview-role {
-    border-radius: 6px;
-    padding: 8px 10px;
+/* 兄弟間の横線 + 縦線 */
+.org-tree li::before,
+.org-tree li::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    height: 24px;
 }
-.flow-overview-role.staff-role {
-    background: #EBF5FB;
-    border-left: 4px solid #1565C0;
+.org-tree li::before {
+    right: 50%;
+    width: 50%;
+    border-top: 2px solid #bbb;
 }
-.flow-overview-role.customer-role {
-    background: #FFF7ED;
-    border-left: 4px solid #E65100;
+.org-tree li::after {
+    left: 50%;
+    width: 50%;
+    border-top: 2px solid #bbb;
+    border-left: 2px solid #bbb;
 }
-.flow-overview-role-label {
+/* 最初の子: 左側の横線を消す */
+.org-tree li:first-child::before { border-top: none; }
+.org-tree li:first-child::after { border-radius: 4px 0 0 0; }
+/* 最後の子: 右側の横線を消す */
+.org-tree li:last-child::after { border-top: none; }
+.org-tree li:last-child::before { border-right: 2px solid #bbb; border-radius: 0 4px 0 0; }
+/* 一人っ子: 横線なし、縦線のみ */
+.org-tree li:only-child::before,
+.org-tree li:only-child::after { border: none; }
+.org-tree li:only-child::after { border-left: 2px solid #bbb; }
+/* ルート（最上位li）は線なし */
+.org-tree > li { padding-top: 0; }
+.org-tree > li::before,
+.org-tree > li::after { display: none; }
+
+/* ===== ノードのスタイル ===== */
+.org-node {
+    display: inline-block;
+    border-radius: 8px;
+    padding: 6px 14px;
     font-weight: bold;
-    font-size: 0.75rem;
-    margin-bottom: 4px;
+    font-size: 0.85rem;
+    text-align: center;
+    white-space: nowrap;
+    position: relative;
+}
+/* ルートノード */
+.org-node-root {
+    background: linear-gradient(135deg, #455A64, #37474F);
+    color: #fff;
+    font-size: 0.9rem;
+    padding: 8px 24px;
+    border-radius: 24px;
+    letter-spacing: 1px;
+}
+/* カテゴリノード（4つの大項目） */
+.org-node-cat {
+    color: #fff;
+    padding: 7px 16px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    min-width: 130px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+/* 担当ノード（スタッフ・お客様） */
+.org-node-role {
+    border-radius: 8px;
+    padding: 8px 10px 10px;
+    min-width: 180px;
+    max-width: 240px;
+    text-align: left;
+    font-weight: normal;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.org-node-role.org-staff {
+    background: #E3F2FD;
+    border: 2px solid #1565C0;
+}
+.org-node-role.org-cust {
+    background: #FFF3E0;
+    border: 2px solid #E65100;
+}
+.org-role-header {
+    font-weight: bold;
+    font-size: 0.78rem;
+    margin-bottom: 5px;
     display: flex;
     align-items: center;
     gap: 5px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
 }
-.flow-overview-role-label .role-badge {
+.org-role-badge {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -3901,65 +4022,65 @@ footer .update-date {
     font-weight: bold;
     flex-shrink: 0;
 }
-.staff-role .role-badge { background: #1565C0; }
-.customer-role .role-badge { background: #E65100; }
-.flow-overview-role-label .role-text {
-    font-size: 0.78rem;
-}
-.staff-role .role-text { color: #1565C0; }
-.customer-role .role-text { color: #E65100; }
-/* タスク一覧 */
-.flow-overview-tasks {
+.org-staff .org-role-badge { background: #1565C0; }
+.org-cust .org-role-badge { background: #E65100; }
+.org-staff .org-role-header { color: #1565C0; }
+.org-cust .org-role-header { color: #E65100; }
+/* タスクリスト */
+.org-tasks {
     list-style: none;
     margin: 0;
     padding: 0;
 }
-.flow-overview-tasks li {
-    font-size: 0.78rem;
-    line-height: 1.55;
-    padding: 2px 0 2px 18px;
+.org-tasks li {
+    font-size: 0.73rem;
+    line-height: 1.5;
+    padding: 2px 0 2px 14px;
     position: relative;
     color: #444;
+    white-space: normal;
 }
-.flow-overview-tasks li::before {
+.org-tasks li::before {
     content: '';
     position: absolute;
-    left: 4px;
-    top: 9px;
-    width: 6px;
-    height: 6px;
+    left: 2px;
+    top: 8px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
-    background: #bbb;
 }
-.staff-role .flow-overview-tasks li::before { background: #64B5F6; }
-.customer-role .flow-overview-tasks li::before { background: #FFB74D; }
-/* 番号付きステップ */
-.flow-overview-tasks li .step-num {
+.org-staff .org-tasks li::before { background: #64B5F6; }
+.org-cust .org-tasks li::before { background: #FFB74D; }
+/* 番号丸 */
+.org-tasks .sn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 17px;
-    height: 17px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
-    font-size: 0.6rem;
+    font-size: 0.58rem;
     font-weight: bold;
     color: #fff;
-    margin-right: 3px;
+    margin-right: 2px;
     vertical-align: middle;
-    flex-shrink: 0;
 }
-.staff-role .step-num { background: #1565C0; }
-.customer-role .step-num { background: #E65100; }
-.shared-step { background: #7B1FA2 !important; }
+.org-staff .sn { background: #1565C0; }
+.org-cust .sn { background: #E65100; }
+.sn.shared { background: #7B1FA2 !important; }
 
-/* レスポンシブ */
+/* レスポンシブ: 小画面では横スクロール */
 @media screen and (max-width: 900px) {
-    .flow-overview-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .org-chart-card {
+        margin-left: -30px;
+        margin-right: -30px;
+        padding: 16px 10px 20px;
     }
 }
 @media screen and (max-width: 640px) {
-    .flow-overview-grid {
-        grid-template-columns: 1fr;
+    .org-chart-card {
+        margin-left: -16px;
+        margin-right: -16px;
+        padding: 12px 6px 16px;
     }
 }
