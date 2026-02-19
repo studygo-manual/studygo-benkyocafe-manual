@@ -4019,6 +4019,8 @@ footer .update-date {
     font-size: 0.7rem;
     font-weight: bold;
     flex-shrink: 0;
+    -webkit-text-orientation: upright;
+    text-orientation: upright;
 }
 .org-staff .org-role-badge { background: #1565C0; }
 .org-cust .org-role-badge { background: #E65100; }
@@ -4082,6 +4084,8 @@ footer .update-date {
     font-size: 0.62rem;
     font-weight: bold;
     color: #fff;
+    -webkit-text-orientation: upright;
+    text-orientation: upright;
 }
 .org-staff .sn { background: #1565C0; }
 .org-cust .sn { background: #E65100; }
