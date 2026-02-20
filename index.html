@@ -3119,23 +3119,161 @@
                 <p class="preparing-notice">情報が入り次第、更新されます。</p>
             </div>
             <div class="card">
+                <h3>プラン変更</h3>
+                <p>現在のプランから別のプランへ変更する際の画面遷移です。</p>
+                <div class="app-flow-container">
+                    <button class="app-flow-scroll-btn left" onclick="this.nextElementSibling.scrollBy({left:-300,behavior:'smooth'})">&lsaquo;</button>
+                    <div class="app-flow-strip">
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">1</span>
+                            <img src="images/プラン変更1.PNG" alt="利用プラン変更・解約" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">プラン変更・解約<br>変更先を選択</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">2</span>
+                            <img src="images/プラン変更2.PNG" alt="利用プラン変更確認" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">プラン変更確認<br>（変更後の詳細）</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">3</span>
+                            <img src="images/プラン変更3.PNG" alt="利用プラン変更確認（続き）" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">確認して<br>「プランを変更する」</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">4</span>
+                            <img src="images/プラン変更4.PNG" alt="利用プラン変更完了" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">プラン変更完了</span>
+                        </div>
+                    </div>
+                    <button class="app-flow-scroll-btn right" onclick="this.previousElementSibling.scrollBy({left:300,behavior:'smooth'})">&rsaquo;</button>
+                </div>
+            </div>
+
+            <div class="card">
                 <h3>休会</h3>
-                <p class="preparing-notice">情報が入り次第、更新されます。</p>
+                <p>プランを休会する際の画面遷移です。</p>
                 <div class="tips">
                     <p><strong>休会からの再開には2か月分の決済が必要です。</strong>休会を検討されている会員様にはこの点をお伝えください。</p>
                 </div>
+                <div class="app-flow-container">
+                    <button class="app-flow-scroll-btn left" onclick="this.nextElementSibling.scrollBy({left:-300,behavior:'smooth'})">&lsaquo;</button>
+                    <div class="app-flow-strip">
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">1</span>
+                            <img src="images/休会1.PNG" alt="利用プラン休会" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">休会するプランを<br>選択</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">2</span>
+                            <img src="images/休会2.PNG" alt="利用プラン休会（注意事項）" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">注意事項確認<br>「次へ」</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">3</span>
+                            <img src="images/休会3.PNG" alt="利用プラン休会確認" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">休会確認<br>+理由アンケート</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">4</span>
+                            <img src="images/休会4.PNG" alt="利用プラン休会完了" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">休会完了</span>
+                        </div>
+                    </div>
+                    <button class="app-flow-scroll-btn right" onclick="this.previousElementSibling.scrollBy({left:300,behavior:'smooth'})">&rsaquo;</button>
+                </div>
             </div>
+
             <div class="card">
                 <h3>プラン解約（退会）</h3>
-                <p class="preparing-notice">情報が入り次第、更新されます。</p>
+                <p>プランの解約には<strong>店頭での手続き</strong>が必要です。アプリから来店予約を行い、店頭で手続きを完了します。</p>
+                <div class="app-flow-container">
+                    <button class="app-flow-scroll-btn left" onclick="this.nextElementSibling.scrollBy({left:-300,behavior:'smooth'})">&lsaquo;</button>
+                    <div class="app-flow-strip">
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">1</span>
+                            <img src="images/プラン解約（退会）1.PNG" alt="利用プラン解約" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">解約するプランを<br>選択（店頭手続き必要）</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">2</span>
+                            <img src="images/プラン解約（退会）2.PNG" alt="来店予約カレンダー" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">来店予約<br>日時を選択</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">3</span>
+                            <img src="images/プラン解約（退会）3.PNG" alt="来店予約内容確認" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">予約内容確認<br>+解約理由アンケート</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">4</span>
+                            <img src="images/プラン解約（退会）4.PNG" alt="来店予約完了" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">来店予約完了<br>（仮予約）</span>
+                        </div>
+                    </div>
+                    <button class="app-flow-scroll-btn right" onclick="this.previousElementSibling.scrollBy({left:300,behavior:'smooth'})">&rsaquo;</button>
+                </div>
             </div>
+
             <div class="card">
-                <h3>再開・プラン変更</h3>
-                <p class="preparing-notice">情報が入り次第、更新されます。</p>
+                <h3>再開・プラン変更（マイページから）</h3>
+                <p>マイページからプラン変更・休会・解約の操作を開始する画面遷移です。</p>
+                <div class="app-flow-container">
+                    <button class="app-flow-scroll-btn left" onclick="this.nextElementSibling.scrollBy({left:-300,behavior:'smooth'})">&lsaquo;</button>
+                    <div class="app-flow-strip">
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">1</span>
+                            <img src="images/再開・プラン変更1.PNG" alt="マイページ" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">マイページ<br>「プランを変更・解約する」</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">2</span>
+                            <img src="images/再開・プラン変更2.PNG" alt="利用プラン変更・解約" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">プラン変更・解約画面<br>（各操作の起点）</span>
+                        </div>
+                    </div>
+                    <button class="app-flow-scroll-btn right" onclick="this.previousElementSibling.scrollBy({left:300,behavior:'smooth'})">&rsaquo;</button>
+                </div>
+                <div class="tips" style="margin-top: 12px;">
+                    <p><strong>画面②が「プラン変更」「休会」「解約」すべての起点画面です。</strong>この画面から、変更先プラン選択・休会ボタン・解約ボタンそれぞれに進めます。</p>
+                </div>
             </div>
+
             <div class="card">
                 <h3>連絡先・支払い方法の変更</h3>
-                <p class="preparing-notice">情報が入り次第、更新されます。</p>
+                <p>マイページから利用者情報や支払い方法を変更する画面遷移です。</p>
+                <div class="app-flow-container">
+                    <button class="app-flow-scroll-btn left" onclick="this.nextElementSibling.scrollBy({left:-300,behavior:'smooth'})">&lsaquo;</button>
+                    <div class="app-flow-strip">
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">1</span>
+                            <img src="images/連絡先・支払い方法の変更1.PNG" alt="マイページメニュー" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">マイページ<br>メニュー一覧</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">2</span>
+                            <img src="images/連絡先・支払い方法の変更2.PNG" alt="利用者情報" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">利用者情報表示<br>（各項目を変更可能）</span>
+                        </div>
+                        <div class="app-flow-arrow">→</div>
+                        <div class="app-flow-step">
+                            <span class="app-flow-step-num">3</span>
+                            <img src="images/連絡先・支払い方法の変更3.PNG" alt="支払い情報登録・変更" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">支払い方法変更<br>（クレジットカード登録）</span>
+                        </div>
+                    </div>
+                    <button class="app-flow-scroll-btn right" onclick="this.previousElementSibling.scrollBy({left:300,behavior:'smooth'})">&rsaquo;</button>
+                </div>
             </div>
         </section>
 
