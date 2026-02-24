@@ -152,17 +152,9 @@
                             <span class="quick-link-icon">&#9989;</span>
                             <span>チェックイン・チェックアウト</span>
                         </a>
-                        <a href="#" class="quick-link-item" data-quick-section="cafe-basic" data-quick-h3="料金">
-                            <span class="quick-link-icon">&#128176;</span>
-                            <span>料金</span>
-                        </a>
                         <a href="#" class="quick-link-item" data-quick-section="admin-panel" data-quick-h3="ダッシュボード">
                             <span class="quick-link-icon">&#128187;</span>
                             <span>管理画面ログイン</span>
-                        </a>
-                        <a href="#" class="quick-link-item" data-quick-section="cafe-studio-compare" data-quick-h3="緊急連絡先">
-                            <span class="quick-link-icon">&#128222;</span>
-                            <span>緊急連絡先</span>
                         </a>
                     </div>
                 </div>
@@ -184,10 +176,6 @@
                         <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="時間利用（ドロップイン）">
                             <span class="quick-link-icon">&#128336;</span>
                             <span>時間利用</span>
-                        </a>
-                        <a href="#" class="quick-link-item" data-quick-section="cafe-basic" data-quick-h3="営業時間">
-                            <span class="quick-link-icon">&#128336;</span>
-                            <span>営業時間</span>
                         </a>
                         <a href="#" class="quick-link-item" data-quick-section="procedures" data-quick-h3="月額契約">
                             <span class="quick-link-icon">&#128273;</span>
@@ -943,7 +931,10 @@
             <!-- 転籍 -->
             <div class="card">
                 <h3>転籍</h3>
-                <p class="preparing-notice">内容は後日更新予定です。</p>
+                <p>クーポン機能の実装（3/10目途）に合わせて対応フローを整備予定です。</p>
+                <div class="card critical" style="margin-top: 10px; box-shadow: none;">
+                    <p><strong>それまでに転籍の対応が発生した場合は、國松まで連絡してください。</strong></p>
+                </div>
             </div>
 
             <!-- 機器トラブル対応 -->
@@ -1586,13 +1577,11 @@
                 </ul>
             </div>
 
-            <div class="card" style="border-left: 5px solid #9E9E9E; background: #F5F5F5;">
-                <h3>未対応箇所</h3>
-                <p>以下の項目は情報が揃い次第、更新予定です。</p>
-                <ul>
+            <div class="card" style="border-left: 5px solid #E0E0E0; background: #FAFAFA; opacity: 0.7; font-size: 0.85rem;">
+                <h3 style="color: #9E9E9E; border-left-color: #E0E0E0;">今後対応予定</h3>
+                <ul style="color: #9E9E9E;">
                     <li>避難情報（避難経路図・一時避難場所・広域避難場所・避難所）</li>
-                    <li>転籍セクション</li>
-                    <li>見学予約の送信文章テンプレート</li>
+                    <li>転籍セクション（クーポン機能実装後に整備 3/10目途）</li>
                     <li>ロープレ動画</li>
                     <li>管理画面ログインパスワードの管理方法の見直し</li>
                 </ul>
@@ -1941,7 +1930,19 @@
                     </tr>
                     <tr>
                         <th>お客様に連絡</th>
-                        <td>メッセージでお客様に確認連絡 <a href="#" class="section-link" style="margin-left: 10px; background: #FFF9C4; padding: 2px 8px; border-radius: 4px; font-weight: bold; color: #E65100; text-decoration: none;">【送信文章】（後日用意）</a></td>
+                        <td>メッセージでお客様に確認連絡
+                            <div class="card" style="margin-top: 10px; background: #FFF9C4; border-left: 4px solid #E65100; padding: 12px 15px; font-size: 0.9rem; line-height: 1.8;">
+                                <strong style="color: #E65100;">【送信文章テンプレート】</strong><br><br>
+                                この度はご契約いただき、誠にありがとうございます。<br><br>
+                                初回ご利用前の手続きのため、下記のお時間内でご来店いただける日時を教えていただけますでしょうか。<br><br>
+                                ■ 受付可能時間<br>
+                                平日： 17:00 〜 21:00<br>
+                                土日祝： 12:00 〜 21:00<br><br>
+                                ご来店の際は、受付スタッフへ「契約済み」である旨をお伝えください。<br>
+                                日程の返信をいただいた後、こちらで確定のご連絡をいたします。<br><br>
+                                よろしくお願いいたします。
+                            </div>
+                        </td>
                     </tr>
                     <tr>
                         <th>不来店時</th>
@@ -2864,7 +2865,19 @@
                     <ol>
                         <li><strong>メール通知を確認</strong> → 管理画面「来店予約一覧」で予約内容・<strong>お客様情報を確認</strong></li>
                         <li>ステータスを<strong>「予約確定」に変更</strong>する</li>
-                        <li><strong>メッセージでお客様に確認連絡</strong>を送る <a href="#" class="section-link" style="margin-left: 8px; background: #FFF9C4; padding: 2px 8px; border-radius: 4px; font-weight: bold; color: #E65100; text-decoration: none;">【送信文章】（後日用意）</a></li>
+                        <li><strong>メッセージでお客様に確認連絡</strong>を送る
+                            <div class="card" style="margin-top: 10px; background: #FFF9C4; border-left: 4px solid #E65100; padding: 12px 15px; font-size: 0.9rem; line-height: 1.8;">
+                                <strong style="color: #E65100;">【送信文章テンプレート】</strong><br><br>
+                                この度はご契約いただき、誠にありがとうございます。<br><br>
+                                初回ご利用前の手続きのため、下記のお時間内でご来店いただける日時を教えていただけますでしょうか。<br><br>
+                                ■ 受付可能時間<br>
+                                平日： 17:00 〜 21:00<br>
+                                土日祝： 12:00 〜 21:00<br><br>
+                                ご来店の際は、受付スタッフへ「契約済み」である旨をお伝えください。<br>
+                                日程の返信をいただいた後、こちらで確定のご連絡をいたします。<br><br>
+                                よろしくお願いいたします。
+                            </div>
+                        </li>
                         <li><strong>見学当日</strong>：来店があれば「見学実施」に変更。見学対応を行う</li>
                         <li><strong>来店がなかった場合</strong>：予約時間を30分過ぎても来店がなければ「見学キャンセル」に変更する</li>
                     </ol>
@@ -4056,8 +4069,8 @@
             loginOverlay.classList.add('active');
         }
 
-        // 最終更新日を表示
-        document.getElementById('lastUpdate').textContent = new Date().toLocaleDateString('ja-JP');
+        // 最終更新日を表示（手動更新）
+        document.getElementById('lastUpdate').textContent = '2026/2/24';
 
         // ハンバーガーメニュー
         const menuToggle = document.getElementById('menuToggle');
@@ -4250,8 +4263,8 @@
         const categories = [
             { key: 'change', label: '3/1～変更点まとめ', color: '#1976D2' },
             { key: 'studygo', label: 'スタディGO', color: '#4CAF50' },
-            { key: 'cafe', label: '勉強カフェ', color: '#8D6E63' },
-            { key: 'staff', label: 'スタッフマニュアル', color: '#FF7043' },
+            { key: 'cafe', label: '勉強カフェ', color: '#BDBDBD', disabled: true },
+            { key: 'staff', label: 'スタッフマニュアル', color: '#BDBDBD', disabled: true },
         ];
 
         // コンテキストバー（大項目・中項目の固定表示）
@@ -4314,6 +4327,14 @@
                 catHeader.className = 'nav-category-header';
                 catHeader.setAttribute('data-cat', cat.key);
                 catHeader.style.borderLeftColor = cat.color;
+                if (cat.disabled) {
+                    catHeader.innerHTML = '<span class="cat-toggle" style="color:#BDBDBD;">&#9654;</span> ' + catNum + '. ' + cat.label + ' <span style="font-size:0.75rem; color:#9E9E9E; font-weight:normal;">（今後実施予定）</span>';
+                    catHeader.style.color = '#BDBDBD';
+                    catHeader.style.cursor = 'default';
+                    catLi.appendChild(catHeader);
+                    navList.appendChild(catLi);
+                    return; // このカテゴリのセクション一覧は表示しない
+                }
                 catHeader.innerHTML = '<span class="cat-toggle">&#9654;</span> ' + catNum + '. ' + cat.label;
                 catLi.appendChild(catHeader);
 
@@ -4395,6 +4416,7 @@
                 navList.appendChild(catLi);
 
                 // カテゴリヘッダーのクリックで開閉
+                if (cat.disabled) return; // 無効カテゴリはイベント登録しない
                 catHeader.addEventListener('click', function() {
                     const isOpen = catList.classList.contains('open');
                     // 全カテゴリを閉じる
@@ -4712,6 +4734,9 @@
             // ヒットしたカテゴリを追跡
             const hitCategories = new Set();
 
+            // 無効カテゴリのキーを取得
+            const disabledCats = categories.filter(c => c.disabled).map(c => c.key);
+
             // 検索実行：セクションとナビゲーション両方をフィルタリング
             sections.forEach(section => {
                 const text = section.textContent.toLowerCase();
@@ -4719,6 +4744,13 @@
                 const category = section.getAttribute('data-category');
                 const navItem = document.querySelector('#navList a[data-section="' + sectionId + '"]');
                 const parentLi = navItem ? navItem.closest('.nav-category-list > li') : null;
+
+                // 無効カテゴリのセクションは常に非表示
+                if (disabledCats.includes(category)) {
+                    section.classList.add('collapsed');
+                    if (parentLi) parentLi.style.display = 'none';
+                    return;
+                }
 
                 if (text.includes(query.toLowerCase())) {
                     section.classList.remove('collapsed');
