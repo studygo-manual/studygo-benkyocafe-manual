@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スタディGO 手続きフロー一覧</title>
+    <style>
+        @page { size: A4; margin: 12mm; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+            font-size: 11px; line-height: 1.55; color: #333; background: #f5f5f5;
+        }
+
+        /* === Header === */
+        .header {
+            background: linear-gradient(135deg, #1565C0, #0D47A1);
+            color: #fff; padding: 14px 20px; text-align: center;
+        }
+        .header h1 { font-size: 18px; margin-bottom: 2px; }
+        .header .sub { font-size: 11px; opacity: 0.8; }
+
+        /* === Tabs === */
+        .tab-bar {
+            display: flex; background: #263238; overflow-x: auto;
+        }
+        .tab-btn {
+            flex: 1; min-width: 0; padding: 10px 6px; text-align: center;
+            background: #263238; color: #B0BEC5; border: none; cursor: pointer;
+            font-size: 11px; font-weight: bold; font-family: inherit;
+            border-bottom: 3px solid transparent; transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .tab-btn:hover { background: #37474F; color: #fff; }
+        .tab-btn.active { color: #fff; border-bottom-color: #FF9800; background: #37474F; }
+
+        /* === Tab Content === */
+        .tab-content { display: none; background: #fff; padding: 16px 20px; min-height: 60vh; }
+        .tab-content.active { display: block; }
+
+        /* === Print button === */
+        .print-bar {
+            padding: 8px 20px; background: #ECEFF1; text-align: right; border-bottom: 1px solid #ddd;
+        }
+        .print-btn {
+            padding: 6px 16px; background: #1565C0; color: #fff; border: none;
+            border-radius: 4px; cursor: pointer; font-size: 11px; font-family: inherit;
+        }
+        .print-btn:hover { background: #0D47A1; }
+
+        /* === Common Elements === */
+        h2.section-title {
+            font-size: 15px; color: #fff; padding: 7px 12px; border-radius: 5px; margin-bottom: 10px;
+        }
+        h2.monthly { background: #E65100; }
+        h2.dropin { background: #0097A7; }
+        h2.checkin { background: #1565C0; }
+        h2.visit { background: #2E7D32; }
+        h2.option { background: #7B1FA2; }
+
+        h3.sec {
+            font-size: 12px; padding-left: 8px; margin: 12px 0 6px; font-weight: bold;
+        }
+        h3.monthly { color: #E65100; border-left: 3px solid #E65100; }
+        h3.dropin { color: #0097A7; border-left: 3px solid #0097A7; }
+        h3.checkin { color: #1565C0; border-left: 3px solid #1565C0; }
+        h3.visit { color: #2E7D32; border-left: 3px solid #2E7D32; }
+        h3.option { color: #7B1FA2; border-left: 3px solid #7B1FA2; }
+
+        table { width: 100%; border-collapse: collapse; margin: 6px 0; font-size: 9.5px; }
+        th, td { border: 1px solid #ccc; padding: 4px 6px; text-align: left; vertical-align: top; }
+        th { background: #F5F5F5; font-weight: bold; }
+        thead th { background: #37474F; color: #fff; text-align: center; }
+
+        .info-box { padding: 6px 8px; border-radius: 4px; margin: 6px 0; font-size: 9.5px; }
+        .info-box.warning { background: #FFF3E0; border-left: 3px solid #E65100; }
+        .info-box.critical { background: #FFEBEE; border-left: 3px solid #C62828; }
+        .info-box.tip { background: #E8F5E9; border-left: 3px solid #4CAF50; }
+        .info-box.info { background: #E3F2FD; border-left: 3px solid #1565C0; }
+
+        ul, ol { margin-left: 14px; font-size: 9.5px; }
+        li { margin-bottom: 1px; }
+
+        /* Flow boxes */
+        .flow-row { display: flex; gap: 5px; margin: 6px 0; flex-wrap: wrap; }
+        .flow-box {
+            flex: 1; min-width: 70px; background: #E3F2FD; border-left: 3px solid #1565C0;
+            padding: 5px 7px; border-radius: 3px; font-size: 9.5px;
+        }
+        .flow-box.staff { background: #FFF3E0; border-left-color: #E65100; }
+        .flow-box.warn { background: #FFEBEE; border-left-color: #C62828; }
+        .flow-box b.num {
+            display: inline-block; width: 16px; height: 16px; border-radius: 50%;
+            background: #1565C0; color: #fff; text-align: center; line-height: 16px;
+            font-size: 9px; margin-right: 3px;
+        }
+        .flow-box.staff b.num { background: #E65100; }
+        .flow-box.warn b.num { background: #C62828; }
+
+        /* Pattern columns */
+        .cols { display: flex; gap: 8px; margin: 6px 0; }
+        .col { flex: 1; border: 1px solid #ddd; border-radius: 5px; overflow: hidden; }
+        .col-head { padding: 5px 8px; font-weight: bold; font-size: 10px; text-align: center; color: #fff; }
+        .col-body { padding: 5px 7px; }
+        .col-step { padding: 3px 0; border-bottom: 1px dashed #eee; font-size: 9.5px; display: flex; gap: 4px; }
+        .col-step:last-child { border-bottom: none; }
+        .col-step .snum {
+            min-width: 15px; height: 15px; border-radius: 50%; text-align: center;
+            line-height: 15px; font-size: 8px; font-weight: bold; color: #fff; flex-shrink: 0;
+        }
+        .bg-c { background: #1565C0; } .bg-s { background: #E65100; }
+        .bg-b { background: #4CAF50; } .bg-w { background: #C62828; }
+        .badge { font-size: 7.5px; padding: 1px 3px; border-radius: 2px; margin-left: 3px; }
+        .badge.common { background: #C8E6C9; color: #2E7D32; }
+        .badge.unique { background: #FFE0B2; color: #E65100; }
+        .badge.warn { background: #FFCDD2; color: #C62828; }
+
+        .footer { text-align: center; font-size: 8px; color: #999; margin-top: 10px; border-top: 1px solid #eee; padding-top: 4px; }
+        .page-break { page-break-before: always; }
+
+        /* Legend */
+        .legend { display: flex; gap: 10px; margin: 4px 0; font-size: 9px; }
+        .legend-item { display: flex; align-items: center; gap: 3px; }
+        .ldot { width: 9px; height: 9px; border-radius: 50%; }
+
+        /* Print */
+        @media print {
+            .header, .tab-bar, .print-bar { display: none; }
+            .tab-content { display: none !important; }
+            .tab-content.printing { display: block !important; padding: 0; }
+            body { background: #fff; font-size: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>スタディGO 手続きフロー一覧</h1>
+    <div class="sub">勉強カフェ スタッフ向け資料</div>
+</div>
+
+<div class="tab-bar">
+    <button class="tab-btn active" onclick="showTab('monthly')">月額契約</button>
+    <button class="tab-btn" onclick="showTab('dropin')">ドロップイン</button>
+    <button class="tab-btn" onclick="showTab('checkin')">チェックイン・アウト</button>
+    <button class="tab-btn" onclick="showTab('visit')">見学予約</button>
+    <button class="tab-btn" onclick="showTab('option')">オプション契約・解約</button>
+</div>
+
+<div class="print-bar">
+    <button class="print-btn" onclick="printTab()">このページを印刷 / PDF保存</button>
+</div>
+
+<!-- ==================== 月額契約 ==================== -->
+<div id="tab-monthly" class="tab-content active">
+    <h2 class="section-title monthly">月額契約（入会手続きチェックリスト）</h2>
+
+    <table>
+        <thead><tr><th style="width:24px;">No</th><th style="width:28%;">手続き項目</th><th>詳細・注意事項</th></tr></thead>
+        <tbody>
+            <tr>
+                <td style="text-align:center;font-weight:bold;">1</td>
+                <td><strong>事前確認・ミスマッチ防止</strong><br><span style="font-size:8px;color:#888;">※施設・非常口案内も実施</span></td>
+                <td>・全館BGMあり / 無音空間なし<br>・WSもPC・電卓持込可（音量配慮）<br>・ラウンジでの会話・電話・WEB会議は10分以内</td>
+            </tr>
+            <tr>
+                <td style="text-align:center;font-weight:bold;">2</td>
+                <td><strong>ご希望プランのヒアリング</strong><br><span style="font-size:8px;">・初期費用の確認<br>・継続課金の確認</span></td>
+                <td>・利用目的・頻度を伺いプランを提案<br><span style="color:#C62828;">・プラン時間帯前の無人時間は利用不可 / 変更は月1回・取消不可 / 時間外はドロップイン必要（有人のみ）</span><br>・入会金11,000円+当月日割り+翌月分 → アプリ上でクレカ決済<br>・毎月15日に翌月分を決済されることを伝える</td>
+            </tr>
+            <tr style="background:#FAFAFA;">
+                <td style="text-align:center;font-weight:bold;">3</td>
+                <td><strong>入会特典利用の場合</strong><br><span style="font-size:8px;color:#888;">→ 提携先会員証コピー</span></td>
+                <td>適用確認 / 詳細はマネージャーに確認<span style="font-size:8px;color:#888;"> / 該当なしはスキップ</span></td>
+            </tr>
+            <tr>
+                <td style="text-align:center;font-weight:bold;">4</td>
+                <td><strong>ルール・非常口・無人時間帯の説明</strong></td>
+                <td>・声を出す作業の可能性を確認 ・非常口案内 ・無人営業時間帯の説明<br>・緊急連絡先（<strong>050-3199-1446</strong>）</td>
+            </tr>
+            <tr>
+                <td style="text-align:center;font-weight:bold;">5</td>
+                <td><strong>スタディGOアプリのDL</strong></td>
+                <td>App Store / Google Play で「スタディGO」を検索しDL</td>
+            </tr>
+            <tr>
+                <td style="text-align:center;font-weight:bold;">6</td>
+                <td><strong>アプリで会員登録</strong><br><span style="font-size:8px;color:#888;">※18歳未満→保護者同意書</span></td>
+                <td>メール認証→個人情報→クレカ登録<br>・クレカ必須（デビット可・プリペイド不可）・18歳未満は保護者同意書</td>
+            </tr>
+            <tr style="background:#FFF3E0;">
+                <td style="text-align:center;font-weight:bold;color:#E65100;">7</td>
+                <td><strong style="color:#E65100;">即日入会の場合：設定変更</strong><br><span style="font-size:8px;color:#888;">※非即日はスキップ</span></td>
+                <td>管理画面「店舗管理」→「最短利用開始日」を<strong style="color:#C62828;">【0日】</strong>に変更</td>
+            </tr>
+            <tr>
+                <td style="text-align:center;font-weight:bold;">8</td>
+                <td><strong>アプリで月額プラン契約</strong></td>
+                <td>アプリでプラン・利用開始日を選択し契約<br><span style="color:#C62828;font-weight:bold;">・プラン間違いないか必ず確認 ・利用開始日を確認</span></td>
+            </tr>
+            <tr style="background:#FFEBEE;">
+                <td style="text-align:center;font-weight:bold;color:#C62828;">9</td>
+                <td><strong style="color:#C62828;">即日入会の場合：設定を戻す【重要】</strong></td>
+                <td style="color:#C62828;font-weight:bold;">「最短利用開始日」を【1日】に必ず戻す（戻し忘れ→他客が即日契約可能に）</td>
+            </tr>
+            <tr style="background:#FFF9C4;">
+                <td style="text-align:center;font-weight:bold;">10</td>
+                <td><strong>重要事項の説明</strong></td>
+                <td>①時間外料金は即日自動決済（チェックアウト時クレカ精算）<br>②チェックイン・アウトはお客様の責任（返金不可）<br>③プラン変更・休会は月1回のみ・取消不可<br>④締日（10日21時まで→当月末 / 11日以降→翌月末）<br>⑤最低継続期間2ヶ月</td>
+            </tr>
+            <tr>
+                <td style="text-align:center;font-weight:bold;">11</td>
+                <td><strong>アプリの利用説明</strong></td>
+                <td>①チェックイン実演（QR読取） ②Akerun解錠実演 ③チェックアウト説明 ④アプリ機能説明</td>
+            </tr>
+            <tr>
+                <td style="text-align:center;font-weight:bold;">12</td>
+                <td><strong>LINE登録＆アンケート</strong><br><span style="color:#C62828;font-size:8px;">※放置しないこと！</span></td>
+                <td>①LINE友達追加（Lステップ）②入会アンケート回答（来店予定日入力）③回答確認→アイスブレイク</td>
+            </tr>
+            <tr>
+                <td style="text-align:center;font-weight:bold;">13</td>
+                <td><strong>身分証コピー</strong></td>
+                <td>現住所記載のもの / 保険証・マイナンバーカードはマスキング必須</td>
+            </tr>
+            <tr>
+                <td style="text-align:center;font-weight:bold;">14</td>
+                <td><strong>マイゴール記入</strong></td>
+                <td>名前はイニシャル可 / 表面に会員番号記入</td>
+            </tr>
+            <tr style="background:#FAFAFA;">
+                <td style="text-align:center;font-weight:bold;">15</td>
+                <td><strong>オプション追加</strong><br><span style="font-size:8px;">ロッカー大/小</span></td>
+                <td>①空き確認 ②番号・暗証番号決定 ③アプリ契約（お客様操作）④鍵貸与・注意事項説明<br><span style="font-size:8px;color:#888;">鍵紛失・破損→再発行3,300円 / 該当なしはスキップ</span></td>
+            </tr>
+            <tr>
+                <td style="text-align:center;font-weight:bold;">16</td>
+                <td><strong>会員向け書類の受け渡し</strong></td>
+                <td>入会書類をお渡し</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Page 2 -->
+    <div class="page-break"></div>
+
+    <h3 class="sec monthly">処理チェックリスト（手続き後のスタッフ処理）</h3>
+    <table>
+        <thead><tr><th style="width:24px;">No</th><th style="width:30%;">処理項目</th><th>詳細</th></tr></thead>
+        <tbody>
+            <tr><td style="text-align:center;font-weight:bold;">1</td><td><strong>契約確認</strong></td><td>管理画面で契約ステータス確認 / 会員番号確認（自動送信メール）</td></tr>
+            <tr><td style="text-align:center;font-weight:bold;">2</td><td><strong>現住所確認</strong></td><td>身分証と登録情報の住所一致を確認</td></tr>
+            <tr><td style="text-align:center;font-weight:bold;">3</td><td><strong>入会チャットに投稿</strong></td><td>チャットワーク【入会情報】に会員番号・氏名を報告</td></tr>
+            <tr style="background:#FAFAFA;"><td style="text-align:center;font-weight:bold;">4</td><td><strong>オプション追加</strong></td><td>ロッカー管理表の記入 <span style="font-size:8px;color:#888;">※該当時のみ</span></td></tr>
+            <tr style="background:#FAFAFA;"><td style="text-align:center;font-weight:bold;">5</td><td><strong>未成年なら保護者同意書</strong></td><td><span style="font-size:8px;color:#888;">※該当時のみ</span></td></tr>
+            <tr style="background:#FAFAFA;"><td style="text-align:center;font-weight:bold;">6</td><td><strong>提携割引申請フォーム入力</strong></td><td><span style="font-size:8px;color:#888;">※該当時のみ</span></td></tr>
+            <tr style="background:#FFEBEE;"><td style="text-align:center;font-weight:bold;color:#C62828;">7</td><td><strong style="color:#C62828;">即日入会設定の戻し確認</strong></td><td style="color:#C62828;">「最短利用開始日」が【1日】に戻っているか最終確認</td></tr>
+        </tbody>
+    </table>
+    <div class="info-box warning"><strong>マネージャーチェック → Wチェック</strong>を実施して完了。</div>
+
+    <h3 class="sec monthly">月額プランの仕組み</h3>
+    <table>
+        <tr><th>入会金</th><td><strong>11,000円</strong></td></tr>
+        <tr><th>契約時の請求</th><td>入会金 + 日割り + 翌月分 → アプリ上クレカ決済</td></tr>
+        <tr><th>継続課金</th><td>毎月15日に翌月分決済（クレカ自動引落し）</td></tr>
+        <tr><th>最低継続期間</th><td><strong>2ヶ月</strong>（利用開始月+翌月）</td></tr>
+        <tr><th>締日ルール</th><td><strong>10日21時まで</strong>→当月末終了 ／ <strong>11日以降</strong>→翌月末終了</td></tr>
+        <tr><th>プラン変更・休会</th><td>月1回のみ・取消不可</td></tr>
+    </table>
+
+    <h3 class="sec monthly">月額会員の利用パターン</h3>
+    <table>
+        <thead><tr><th>パターン</th><th>チェックイン方法</th><th>料金</th></tr></thead>
+        <tbody>
+            <tr><td><strong>プラン時間内</strong></td><td>QR読取→チェックイン</td><td>追加なし</td></tr>
+            <tr><td><strong>時間超過</strong></td><td>チェックアウト時に自動精算</td><td style="color:#C62828;font-weight:bold;">1分13円</td></tr>
+            <tr><td><strong>時間外利用</strong></td><td>ドロップインとして契約</td><td><strong>770円/h</strong>（最大3,300円/日）</td></tr>
+        </tbody>
+    </table>
+
+    <div class="footer">勉強カフェ 入会書類チェックリストに基づく</div>
+</div>
+
+<!-- ==================== ドロップイン ==================== -->
+<div id="tab-dropin" class="tab-content">
+    <h2 class="section-title dropin">時間利用（ドロップイン）の流れ</h2>
+
+    <h3 class="sec dropin">料金体系</h3>
+    <table>
+        <tr><th>利用料金</th><td><strong>1時間パック 770円（税込）</strong></td></tr>
+        <tr><th>1日最大料金</th><td><strong>3,300円</strong></td></tr>
+        <tr><th>延長料金</th><td><strong>1分あたり13円（税込）</strong></td></tr>
+        <tr><th>対応時間</th><td><strong>有人営業時間帯のみ</strong>（平日 17-21時 / 土日祝 12-21時）</td></tr>
+        <tr><th>決済方法</th><td>チェックアウト時にクレジットカードで<strong>自動精算</strong></td></tr>
+    </table>
+
+    <h3 class="sec dropin">対応フロー（初めて / 2回目以降）</h3>
+    <div class="legend">
+        <div class="legend-item"><span class="ldot" style="background:#1565C0;"></span> お客様</div>
+        <div class="legend-item"><span class="ldot" style="background:#E65100;"></span> スタッフ</div>
+    </div>
+    <div class="cols">
+        <div class="col">
+            <div class="col-head" style="background:#E65100;">初めてのお客様</div>
+            <div class="col-body">
+                <div class="col-step"><span class="snum bg-c">-</span><div><strong>アプリDL・会員登録</strong> <span class="badge unique">初回のみ</span><br>アプリDL→会員登録→クレカ登録</div></div>
+                <div class="col-step"><span class="snum bg-c">1</span><div><strong>来店</strong>（有人時間帯）</div></div>
+                <div class="col-step"><span class="snum bg-c">2</span><div><strong>チェックイン</strong><br>QR読取→時間利用プラン選択→契約<br><span style="font-size:8px;color:#888;">※1日最大料金を先に請求</span></div></div>
+                <div class="col-step"><span class="snum bg-s">3</span><div><strong>完了画面を確認</strong><br>チェックイン完了画面を必ず確認</div></div>
+                <div class="col-step"><span class="snum bg-c">4</span><div><strong>チェックアウト・精算</strong><br>QR読取→精算</div></div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="col-head" style="background:#283593;">2回目以降のお客様</div>
+            <div class="col-body">
+                <div class="col-step"><span class="snum bg-c">1</span><div><strong>来店</strong>（有人時間帯）</div></div>
+                <div class="col-step"><span class="snum bg-c">2</span><div><strong>チェックイン</strong><br>QR読取→時間利用プラン選択→契約<br><span style="font-size:8px;color:#888;">※1日最大料金を先に請求</span></div></div>
+                <div class="col-step"><span class="snum bg-s">3</span><div><strong>完了画面を確認</strong><br>チェックイン完了画面を必ず確認</div></div>
+                <div class="col-step"><span class="snum bg-c">4</span><div><strong>チェックアウト・精算</strong><br>QR読取→精算</div></div>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="sec dropin">月額利用とドロップインの違い</h3>
+    <table>
+        <thead><tr><th>項目</th><th>月額プラン利用</th><th>時間利用（ドロップイン）</th></tr></thead>
+        <tbody>
+            <tr><td><strong>対象</strong></td><td>月額契約中の会員</td><td>誰でも（要アプリ登録）</td></tr>
+            <tr><td><strong>利用可能時間</strong></td><td>契約プランの時間帯</td><td><strong>有人時間帯のみ</strong></td></tr>
+            <tr><td><strong>料金</strong></td><td>月額固定（超過時は超過料金）</td><td>770円/h（最大3,300円/日）</td></tr>
+            <tr><td><strong>チェックイン</strong></td><td>QR読取→チェックイン</td><td>QR読取→プラン選択→契約</td></tr>
+            <tr><td><strong>決済タイミング</strong></td><td>なし（月額請求）</td><td>1日最大料金を先に請求</td></tr>
+            <tr><td><strong>チェックアウト精算</strong></td><td>超過分の算出・請求</td><td>最大料金からの精算</td></tr>
+            <tr><td><strong>入退室</strong></td><td>アプリで解錠</td><td>退室ボタンで退出</td></tr>
+        </tbody>
+    </table>
+
+    <h3 class="sec dropin">想定シーン</h3>
+    <ul>
+        <li>月額利用を検討中で、まずはお試し</li>
+        <li><strong>月額会員だが、プラン時間外に利用したい</strong></li>
+        <li>月額会員だが残時間がない</li>
+        <li>勉強場所を近辺で探していた人</li>
+    </ul>
+
+    <div class="info-box critical"><strong>重要：</strong>スタディGO未登録者のドロップインは<strong>受付不可</strong>。店頭でアプリ登録をご案内。有人時間帯のみ対応。</div>
+    <div class="info-box warning"><strong>月額会員の時間外利用：</strong>ドロップインとして別途チェックインが必要。プラン時間外に自動入室はできません。</div>
+
+    <div class="footer">スタディGO スタッフマニュアルより抜粋</div>
+</div>
+
+<!-- ==================== チェックイン・アウト ==================== -->
+<div id="tab-checkin" class="tab-content">
+    <h2 class="section-title checkin">チェックイン・チェックアウト</h2>
+    <p style="font-size:9.5px;color:#666;margin-bottom:8px;">月額会員・ドロップイン共通の流れです。</p>
+
+    <h3 class="sec checkin">チェックインの流れ</h3>
+    <div class="flow-row">
+        <div class="flow-box"><b class="num">1</b> <strong>QR読取</strong><br>アプリでQRコードを読み取る</div>
+        <div class="flow-box"><b class="num">2</b> <strong>チェックイン完了</strong><br>完了画面表示（ドロップインはプラン選択後に契約）</div>
+        <div class="flow-box staff"><b class="num">3</b> <strong>完了画面の確認</strong><br><strong>有人時間帯は必ず確認する</strong></div>
+    </div>
+
+    <h3 class="sec checkin">チェックアウトの流れ</h3>
+    <div class="flow-row">
+        <div class="flow-box"><b class="num">1</b> <strong>QR読取</strong><br>アプリでQRコードを読み取る</div>
+        <div class="flow-box"><b class="num">2</b> <strong>精算完了</strong><br>チェックアウト完了・精算画面が表示</div>
+    </div>
+    <div class="info-box warning"><strong>重要：</strong>チェックアウトされるまで課金対象。営業終了時間に強制チェックアウトが行われます。</div>
+
+    <h3 class="sec checkin">月額会員の利用パターン</h3>
+    <table>
+        <thead><tr><th>パターン</th><th>チェックイン方法</th><th>料金</th></tr></thead>
+        <tbody>
+            <tr><td><strong>プラン時間内</strong></td><td>QR読取→チェックイン</td><td>月額に含まれる（追加なし）</td></tr>
+            <tr><td><strong>時間超過</strong></td><td>チェックアウト時に自動精算</td><td style="color:#C62828;font-weight:bold;">1分13円の超過料金</td></tr>
+            <tr><td><strong>時間外利用</strong></td><td>QR読取→ドロップインとして契約</td><td><strong>770円/h</strong>（最大3,300円/日）</td></tr>
+        </tbody>
+    </table>
+
+    <h3 class="sec checkin">忘れた場合の対応</h3>
+    <table>
+        <tr><th>チェックイン忘れ</th><td>その場でチェックインしてもらう → 管理画面「チェックイン実績」→「編集」で時刻修正</td></tr>
+        <tr><th>チェックアウト忘れ</th><td>アプリ→「QR読取」→「QRが読み取れない場合」→ 店舗コードを入力</td></tr>
+        <tr><th>誤チェックアウト</th><td>再度QR読取でチェックイン</td></tr>
+        <tr><th>チェックインの間違い</th><td>ありえない（QR読取→確認画面の操作が必要なため誤操作では発生しない）</td></tr>
+    </table>
+
+    <div class="info-box tip"><strong>ドロップインの変更点：</strong>スタディGO未登録者のドロップインは受付不可。店頭でスタディGOでの利用をご案内すること。有人営業時間のみ対応。</div>
+
+    <div class="footer">スタディGO スタッフマニュアルより抜粋</div>
+</div>
+
+<!-- ==================== 見学予約 ==================== -->
+<div id="tab-visit" class="tab-content">
+    <h2 class="section-title visit">見学予約・お客様対応</h2>
+
+    <h3 class="sec visit">見学予約の事前対応（スタディGO経由）</h3>
+    <table>
+        <tr><th>予約確認</th><td>メール通知を確認 → 管理画面「来店予約一覧」で予約確認</td></tr>
+        <tr><th>お客様情報確認</th><td>管理画面「来店予約一覧」の<strong>氏名を選択</strong>してお客様情報を確認</td></tr>
+        <tr><th>お客様に連絡<br><span style="font-size:8px;color:#888;">（見学の場合）</span></th><td>メッセージで見学日時の確認連絡</td></tr>
+        <tr><th>お客様に連絡<br><span style="font-size:8px;color:#888;">（契約済み初来店）</span></th>
+            <td>メッセージで来店案内を送る<br>
+                <div style="background:#FFF9C4; border-left:3px solid #E65100; padding:4px 6px; margin-top:4px; font-size:9px; line-height:1.5;">
+                    <strong style="color:#E65100;">【契約済み来店案内テンプレート】</strong><br>
+                    この度はご契約いただき、誠にありがとうございます。<br>
+                    初回ご利用前の手続きのため、下記のお時間内でご来店いただける日時を教えていただけますでしょうか。<br>
+                    ■受付可能時間 平日17:00〜21:00 / 土日祝12:00〜21:00<br>
+                    ご来店の際は、受付スタッフへ「契約済み」である旨をお伝えください。
+                </div>
+            </td>
+        </tr>
+        <tr><th>不来店時</th><td>予約時間から30分経過後「見学キャンセル」に変更</td></tr>
+    </table>
+
+    <h3 class="sec visit">見学予約の事前対応（スタディGO以外）</h3>
+    <table>
+        <tr><th>予約確認</th><td>HP・電話・LINE経由の予約内容（日時・氏名・連絡先）を確認<br><span style="color:#C62828;font-size:8.5px;">※無人営業時間の場合はマネージャーに対応可否を確認</span></td></tr>
+        <tr><th>来店フォーム登録</th><td>Googleフォーム（来店フォーム）で登録 → スプレッドシート・カレンダーに反映確認</td></tr>
+        <tr><th>不来店時</th><td>LINE・メール・電話で連絡し、30分経過後キャンセル扱い</td></tr>
+    </table>
+
+    <h3 class="sec visit">来店時の対応手順（見学会・トライアル）</h3>
+    <div class="flow-row">
+        <div class="flow-box"><b class="num">1</b> <strong>来店受付</strong><br>名前確認→席へご案内</div>
+        <div class="flow-box" style="background:#FFF8E1;border-left-color:#FF9800;"><b class="num" style="background:#FF9800;">2</b> <strong>アイスブレイク</strong><br>飲み物案内、見学/トライアル/入会確認、ヒアリング</div>
+        <div class="flow-box"><b class="num">3</b> <strong>勉強カフェ説明</strong><br>サービス内容の説明</div>
+    </div>
+    <div class="flow-row">
+        <div class="flow-box"><b class="num">4</b> <strong>スタジオ案内</strong><br>実際に案内（貴重品持参）</div>
+        <div class="flow-box"><b class="num">5</b> <strong>プラン説明</strong><br>プラン＆営業時間の確認</div>
+        <div class="flow-box"><b class="num">6</b> <strong>体験開始</strong><br>ビジターボードを用意</div>
+        <div class="flow-box"><b class="num">7</b> <strong>体験終了</strong><br>アンケート記入・資料渡し</div>
+    </div>
+    <div class="info-box tip"><strong>追加タスク：</strong>日別来店・来店報告シートの記入。飛び込みの場合は来店フォームも記入。</div>
+
+    <!-- Page 2 -->
+    <div class="page-break"></div>
+
+    <h3 class="sec visit">対応フロー全体像</h3>
+    <div class="legend">
+        <div class="legend-item"><span class="ldot" style="background:#1565C0;"></span> お客様</div>
+        <div class="legend-item"><span class="ldot" style="background:#E65100;"></span> スタッフ</div>
+    </div>
+    <div class="cols">
+        <div class="col">
+            <div class="col-head" style="background:#E65100;">スタッフ</div>
+            <div class="col-body">
+                <div class="col-step"><span class="snum bg-s">1</span><div>予約確認（メール・管理画面）</div></div>
+                <div class="col-step"><span class="snum bg-s">2</span><div>お客様情報の確認</div></div>
+                <div class="col-step"><span class="snum bg-s">3</span><div>確認連絡（メッセージ）</div></div>
+                <div class="col-step"><span class="snum bg-s">4</span><div>来店受付（名前確認→席案内）</div></div>
+                <div class="col-step"><span class="snum bg-s">5</span><div>アイスブレイク・ヒアリング</div></div>
+                <div class="col-step"><span class="snum bg-s">6</span><div>サービス説明・案内・プラン説明</div></div>
+                <div class="col-step"><span class="snum bg-s">7</span><div>来店報告シートの記入</div></div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="col-head" style="background:#1565C0;">お客様</div>
+            <div class="col-body">
+                <div class="col-step"><span class="snum bg-c">1</span><div>見学予約（アプリ/HP/電話/LINE）</div></div>
+                <div class="col-step"><span class="snum bg-c">2</span><div>来店</div></div>
+                <div class="col-step"><span class="snum bg-c">3</span><div>体験利用（希望時）</div></div>
+                <div class="col-step"><span class="snum bg-c">4</span><div>アンケート記入（入会しない場合）</div></div>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="sec visit">プラン解約（退会）・休会の全体像</h3>
+    <div class="cols">
+        <div class="col">
+            <div class="col-head" style="background:#E65100;">スタッフ</div>
+            <div class="col-body">
+                <div class="col-step"><span class="snum bg-s">1</span><div>ダッシュボードで解約予定者を確認</div></div>
+                <div class="col-step"><span class="snum bg-s">2</span><div>ロッカー対応（荷物撤去・鍵返却・解約処理）</div></div>
+                <div class="col-step"><span class="snum bg-s">3</span><div>管理画面で退会処理・チャットワーク報告</div></div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="col-head" style="background:#1565C0;">お客様</div>
+            <div class="col-body">
+                <div class="col-step"><span class="snum bg-c">1</span><div>アプリで解約申請（毎月10日21時締め）</div></div>
+                <div class="col-step"><span class="snum bg-c">2</span><div>有人時間帯に来店→Googleフォーム回答</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="info-box info"><strong>休会について：</strong>お客様がアプリから申請するだけで完了（店頭来店不要・スタッフ処理不要）。<br><strong>休会からの再開には2ヶ月分の決済が必要。</strong>お客様に事前にお伝えください。</div>
+
+    <div class="footer">スタディGO スタッフマニュアルより抜粋</div>
+</div>
+
+<!-- ==================== オプション契約・解約 ==================== -->
+<div id="tab-option" class="tab-content">
+    <h2 class="section-title option">オプション（ロッカー）契約・解約</h2>
+
+    <h3 class="sec option">ロッカー料金</h3>
+    <table>
+        <tr><th>ロッカー（小）</th><td><strong>1,650円/月（税込）</strong></td></tr>
+        <tr><th>ロッカー（大）</th><td><strong>2,200円/月（税込）</strong></td></tr>
+        <tr><th>鍵紛失・破損</th><td>再発行手数料 <strong>3,300円</strong></td></tr>
+    </table>
+
+    <h3 class="sec option">ロッカー新規契約フロー</h3>
+    <div class="legend">
+        <div class="legend-item"><span class="ldot" style="background:#1565C0;"></span> お客様</div>
+        <div class="legend-item"><span class="ldot" style="background:#E65100;"></span> スタッフ</div>
+    </div>
+    <div class="flow-row">
+        <div class="flow-box staff"><b class="num">1</b> <strong>空きロッカー確認</strong><br>管理表で空き状況確認</div>
+        <div class="flow-box staff"><b class="num">2</b> <strong>番号・暗証番号決定</strong><br>お客様と場所を決める</div>
+        <div class="flow-box"><b class="num">3</b> <strong>アプリでオプション契約</strong><br>お客様操作（日割り・即時決済）</div>
+        <div class="flow-box staff"><b class="num">4</b> <strong>鍵貸与・注意事項説明</strong><br>鍵を渡し利用ルールを説明</div>
+    </div>
+
+    <h3 class="sec option">ロッカー解約フロー</h3>
+    <div class="flow-row">
+        <div class="flow-box"><b class="num">1</b> <strong>アプリから解約</strong><br>店頭来店不要</div>
+        <div class="flow-box"><b class="num">2</b> <strong>荷物撤去</strong><br>解約日までに全て持ち帰る</div>
+        <div class="flow-box"><b class="num">3</b> <strong>鍵返却</strong><br>受付に返却（紛失→3,300円）</div>
+    </div>
+
+    <h3 class="sec option">契約時の注意事項</h3>
+    <div class="info-box warning">
+        <ul>
+            <li>ロッカーは<strong>店頭での手続きが必要</strong>（有人時間帯にご来店）</li>
+            <li>アプリで契約はできるが、<strong>場所決めのため店頭来店必須</strong></li>
+        </ul>
+    </div>
+
+    <h3 class="sec option">解約時の注意事項</h3>
+    <div class="info-box critical">
+        <ul>
+            <li>解約はアプリで申請（<strong>店頭来店不要</strong>）</li>
+            <li>解約日までに荷物をすべて持ち帰る（<strong>残置物→翌月分請求の可能性</strong>）</li>
+            <li>鍵は受付に返却 / 紛失→再発行手数料 <strong>3,300円</strong></li>
+        </ul>
+    </div>
+
+    <h3 class="sec option">導入前後の違い</h3>
+    <table>
+        <thead><tr><th>項目</th><th>導入前</th><th>スタディGO</th></tr></thead>
+        <tbody>
+            <tr><td><strong>ロッカー契約</strong></td><td>Googleフォーム＋会費ペイ事後決済</td><td>アプリで契約（日割り・即時決済）<br><span style="font-size:8px;color:#C62828;">※場所決めのため店頭来店は必要</span></td></tr>
+            <tr><td><strong>ロッカー解約</strong></td><td>店頭でGoogleフォーム</td><td>アプリで解約（店頭不要）</td></tr>
+            <tr><td><strong>ロッカー管理</strong></td><td colspan="2" style="text-align:center;">スプレッドシートで管理</td></tr>
+        </tbody>
+    </table>
+
+    <h3 class="sec option">月額契約時のオプション選択</h3>
+    <div class="info-box info">
+        <strong>月額プラン契約時にロッカーも同時契約可能。</strong><br>
+        アプリの月額契約フロー ステップ8で「オプション選択」画面が表示されます。<br>
+        <strong>A:</strong> 月額のみ（ロッカーなし） ／ <strong>B:</strong> 月額+ロッカー（初期費用+月額+ロッカー料金）
+    </div>
+
+    <div class="footer">スタディGO スタッフマニュアルより抜粋</div>
+</div>
+
+<script>
+function showTab(id) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    event.target.classList.add('active');
+}
+
+function printTab() {
+    const active = document.querySelector('.tab-content.active');
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('printing'));
+    active.classList.add('printing');
+    window.print();
+    setTimeout(() => active.classList.remove('printing'), 500);
+}
+</script>
+
+</body>
+</html>
