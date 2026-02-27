@@ -141,7 +141,7 @@
 
 <div class="tab-bar">
     <button class="tab-btn active" onclick="showTab('monthly')">月額契約</button>
-    <button class="tab-btn" onclick="showTab('dropin')">ドロップイン</button>
+    <button class="tab-btn" onclick="showTab('dropin')">時間利用（ドロップイン）</button>
     <button class="tab-btn" onclick="showTab('checkin')">チェックイン・アウト</button>
     <button class="tab-btn" onclick="showTab('visit')">見学予約</button>
     <button class="tab-btn" onclick="showTab('option')">オプション契約・解約</button>
@@ -318,7 +318,7 @@
                 <td style="text-align:center;font-weight:bold;">3</td>
                 <td><strong>施設・ルールの簡易説明</strong></td>
                 <td>・全館BGMあり / 無音空間なし<br>
-                ・ラウンジでの会話・電話・WEB会議は10分以内<br>
+                ・ラウンジでの会話・電話・WEB会議は10分以内<span style="font-size:8px;color:#888;"> ※新宿スタジオのみ</span><br>
                 ・非常口の場所をご案内<br>
                 ・ドリンクコーナーは自由利用<br>
                 <span style="font-size:8.5px;color:#888;">※初回のお客様には丁寧に、2回目以降は省略可</span></td>
@@ -327,7 +327,7 @@
                 <td style="text-align:center;font-weight:bold;">4</td>
                 <td><strong>チェックイン操作のご案内</strong></td>
                 <td>入口のQRコードの場所をご案内 →「アプリでQRを読み取ってください」<br>
-                ・<strong>「時間利用」を選択</strong> → 時間パック選択（1時間/3時間等）<br>
+                ・<strong>「時間利用」を選択</strong> → 1時間パックを選択<br>
                 ・プラン詳細・支払い確認 → 注意事項確認 → 「利用開始する」<br>
                 <span style="font-size:8.5px;color:#C62828;">※プラン間違いがないかスタッフも目視で確認</span></td>
             </tr>
@@ -340,14 +340,9 @@
             </tr>
             <tr>
                 <td style="text-align:center;font-weight:bold;">6</td>
-                <td><strong>身分証の確認</strong></td>
-                <td>氏名・現住所が記載されているものを確認<br>
-                <span style="font-size:8.5px;color:#888;">※健康保険証・マイナンバーカードはマスキング処理</span></td>
-            </tr>
-            <tr>
-                <td style="text-align:center;font-weight:bold;">7</td>
-                <td><strong>席へのご案内</strong></td>
-                <td>空いている席をご案内 → 荷物かご・ブランケット等の貸出品を紹介<br>
+                <td><strong>ビジターボードのお渡し</strong></td>
+                <td>ビジターボードをお客様にお渡しする<br>
+                「お好きな席をご利用ください」とご案内<br>
                 「退店時はQRコードを読み取ってチェックアウトをお願いします」と伝える</td>
             </tr>
         </tbody>
@@ -374,7 +369,12 @@
             </tr>
             <tr>
                 <td style="text-align:center;font-weight:bold;">4</td>
-                <td><strong>席利用 → チェックアウト</strong></td>
+                <td><strong>ビジターボードのお渡し</strong></td>
+                <td>ビジターボードをお渡し →「お好きな席をご利用ください」</td>
+            </tr>
+            <tr>
+                <td style="text-align:center;font-weight:bold;">5</td>
+                <td><strong>チェックアウト</strong></td>
                 <td>退店時にQR読取でチェックアウト → 自動精算</td>
             </tr>
         </tbody>
@@ -403,12 +403,17 @@
             </tr>
             <tr>
                 <td style="text-align:center;font-weight:bold;">4</td>
+                <td><strong>ビジターボードのお渡し</strong></td>
+                <td>ビジターボードをお渡し →「お好きな席をご利用ください」</td>
+            </tr>
+            <tr>
+                <td style="text-align:center;font-weight:bold;">5</td>
                 <td><strong>チェックアウト</strong></td>
                 <td>退店時にQR読取 → 自動精算</td>
             </tr>
         </tbody>
     </table>
-    <div class="info-box warning"><strong>注意：</strong>プラン時間外は自動的に入室できません。必ずドロップインとして別途チェックインが必要です。</div>
+    <div class="info-box warning"><strong>注意：</strong>プラン時間外は自動的に入室できません。必ず時間利用（ドロップイン）として別途チェックインが必要です。</div>
 
     <!-- Page 2 -->
     <div class="page-break"></div>
