@@ -125,10 +125,20 @@
 
         /* Print */
         @media print {
+            @page { margin: 0; }
             .header, .tab-bar, .print-bar { display: none; }
             .tab-content { display: none !important; }
-            .tab-content.printing { display: block !important; padding: 0; }
-            body { background: #fff; font-size: 10px; }
+            .tab-content.printing {
+                display: block !important;
+                padding: 10mm 12mm;
+                font-size: 9px;
+                line-height: 1.45;
+            }
+            .tab-content.printing h3.sec { margin: 8px 0 4px; font-size: 11px; }
+            .tab-content.printing table { font-size: 8.5px; margin: 4px 0; }
+            .tab-content.printing th, .tab-content.printing td { padding: 2.5px 5px; }
+            .tab-content.printing .info-box { padding: 4px 6px; font-size: 8.5px; margin: 4px 0; }
+            body { background: #fff; }
         }
     </style>
 </head>
@@ -153,8 +163,6 @@
 
 <!-- ==================== 月額契約 ==================== -->
 <div id="tab-monthly" class="tab-content active">
-    <h2 class="section-title monthly">月額契約（入会手続きチェックリスト）</h2>
-
     <table>
         <thead><tr><th style="width:24px;">No</th><th style="width:28%;">手続き項目</th><th>詳細・注意事項</th></tr></thead>
         <tbody>
@@ -279,13 +287,10 @@
         </tbody>
     </table>
 
-    <div class="footer">勉強カフェ 入会書類チェックリストに基づく</div>
 </div>
 
 <!-- ==================== ドロップイン ==================== -->
 <div id="tab-dropin" class="tab-content">
-    <h2 class="section-title dropin">時間利用（ドロップイン）の流れ</h2>
-
     <h3 class="sec dropin">料金体系</h3>
     <table>
         <tr><th>利用料金</th><td><strong>1時間パック 770円（税込）</strong></td></tr>
@@ -456,7 +461,6 @@
         </tbody>
     </table>
 
-    <div class="footer">スタディGO スタッフマニュアルより抜粋</div>
 </div>
 
 <!-- ==================== チェックイン・アウト ==================== -->
