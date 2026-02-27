@@ -78,8 +78,13 @@
     <nav id="sidebar">
         <div class="nav-section">
             <div class="search-box">
-                <input type="text" id="searchInput" placeholder="検索...">
+                <input type="text" id="searchInput" placeholder="検索...（Enterで次へ）">
                 <button class="search-clear" id="searchClear" aria-label="検索をクリア">&times;</button>
+            </div>
+            <div class="search-nav" id="searchNav" style="display:none;">
+                <span class="search-nav-count" id="searchNavCount"></span>
+                <button class="search-nav-btn" id="searchPrev" aria-label="前へ">&#9650;</button>
+                <button class="search-nav-btn" id="searchNext" aria-label="次へ">&#9660;</button>
             </div>
             <div class="nav-header-row">
                 <h3>目次</h3>
@@ -537,7 +542,7 @@
                 <div class="rule-card" style="border-color: #FFC107;">
                     <div class="rule-card-title" style="background: #FFC107; color: #333;">&#10109; 駐輪・駐車について</div>
                     <div class="rule-card-body">
-                        <p>BPスタジオでは<strong>自転車の駐輪・バイク・車でのご来店はお断り</strong>しております。ルール違反による撤去や紛争等の責任は負いかねます。</p>
+                        <p>新宿BPスタジオ（西口）では<strong>自転車の駐輪・バイク・車でのご来店はお断り</strong>しております。ルール違反による撤去や紛争等の責任は負いかねます。</p>
                     </div>
                 </div>
                 <div class="rule-card" style="border-color: #2196F3;">
@@ -572,7 +577,7 @@
             <div style="display: flex; gap: 0; margin-top: 10px;">
                 <!-- BPスタジオ（左） -->
                 <div style="flex: 1; padding-right: 10px; border-right: 3px solid #9C27B0;">
-                    <h4 style="text-align: center; color: #E65100; margin: 0 0 8px; font-size: 0.95rem;">&#x1F7E0; BPスタジオ</h4>
+                    <h4 style="text-align: center; color: #E65100; margin: 0 0 8px; font-size: 0.95rem;">&#x1F7E0; 新宿BPスタジオ（西口）</h4>
                     <div class="rule-card" style="border-color: #E65100;">
                         <div class="rule-card-title" style="background: #E65100;">&#9453; テルブースについて</div>
                         <div class="rule-card-body">
@@ -588,7 +593,7 @@
                 </div>
                 <!-- 新宿スタジオ（右） -->
                 <div style="flex: 1; padding-left: 10px;">
-                    <h4 style="text-align: center; color: #1565C0; margin: 0 0 8px; font-size: 0.95rem;">&#x1F535; 新宿スタジオ</h4>
+                    <h4 style="text-align: center; color: #1565C0; margin: 0 0 8px; font-size: 0.95rem;">&#x1F535; 新宿スタジオ（南口）</h4>
                     <div class="rule-card" style="border-color: #1565C0;">
                         <div class="rule-card-title" style="background: #1565C0;">&#9453; 会議室について</div>
                         <div class="rule-card-body">
@@ -1535,9 +1540,9 @@
                     <tr>
                         <th style="background: #FFF3E0; color: #E65100;">
                             <span style="display: block; font-size: 1.1rem; letter-spacing: 2px; margin-bottom: 4px;">★★☆☆☆</span>
-                            Akerun対応不要
+                            お客様への Akerun対応は不要
                         </th>
-                        <td>入館はスタディGOアプリで解錠。<strong>Akerunについてスタッフの対応は不要</strong>です。</td>
+                        <td>入館はお客様がスタディGOアプリで解錠します。<strong>お客様へのAkerun操作案内は不要</strong>です。<br><span style="font-size: 0.85rem; color: #666;">※BPスタジオのワークスペースのみ、有人時間帯はスタッフがオートロックをOFFに設定します（OP/CL作業参照）</span></td>
                     </tr>
                     <tr>
                         <th style="background: #FFF3E0; color: #E65100;">
@@ -1575,7 +1580,53 @@
                     <li>解約日までにロッカー内の荷物をすべて持ち帰ること（残置物がある場合は翌月分請求の可能性あり）</li>
                     <li>鍵は受付に返却。紛失の場合は再発行手数料 <strong>3,300円</strong></li>
                 </ul>
+
             </div>
+
+            <!-- ロッカー請求パターン -->
+            <div class="card" style="border-left: 5px solid #1565C0;">
+                <h3>ロッカー（オプション）請求パターン</h3>
+                <p>ロッカーのオプション契約は、<strong>月額プランの契約月</strong>と<strong>オプションの契約日</strong>によって請求金額が変わります。</p>
+                <p style="font-size: 0.85rem; color: #666;">以下は例として「2月にオプション契約」した場合の全パターンです。</p>
+
+                <!-- パターン① -->
+                <div style="background: #E8F5E9; border: 1px solid #A5D6A7; border-radius: 8px; padding: 12px 15px; margin: 12px 0;">
+                    <h4 style="margin: 0 0 8px; color: #2E7D32; font-size: 0.95rem;">パターン① プラン契約が前月（1月）＋ オプション契約が14日以前（2/14）</h4>
+                    <table class="info-table" style="margin: 8px 0;">
+                        <tr><th>契約時の請求</th><td><strong>2月分の日割り料金</strong>のみ</td></tr>
+                        <tr><th>プラン休会・解約済みの場合</th><td>オプション次回請求 → <strong style="color: #C62828;">発生しない（×）</strong></td></tr>
+                        <tr><th>プラン継続中の場合</th><td>オプション次回請求 → <strong>2/15に3月分料金</strong></td></tr>
+                    </table>
+                </div>
+
+                <!-- パターン② -->
+                <div style="background: #FFF8E1; border: 1px solid #FFE082; border-radius: 8px; padding: 12px 15px; margin: 12px 0;">
+                    <h4 style="margin: 0 0 8px; color: #F57F17; font-size: 0.95rem;">パターン② プラン契約が前月（1月）＋ オプション契約が15日以降（2/15）</h4>
+                    <table class="info-table" style="margin: 8px 0;">
+                        <tr><th>仕様</th><td>15日1:00以降に契約した場合</td></tr>
+                        <tr><th>プラン休会・解約済みの場合</th><td>契約時請求 → <strong>2月分日割り料金</strong>のみ<br>オプション次回請求 → <strong style="color: #C62828;">発生しない（×）</strong></td></tr>
+                        <tr><th>プラン継続中の場合</th><td>契約時請求 → <strong>2月分日割り料金 ＋ 3月分料金</strong><br>オプション次回請求 → <strong>3/15に4月分料金</strong></td></tr>
+                    </table>
+                </div>
+
+                <!-- パターン③ -->
+                <div style="background: #E3F2FD; border: 1px solid #90CAF9; border-radius: 8px; padding: 12px 15px; margin: 12px 0;">
+                    <h4 style="margin: 0 0 8px; color: #1565C0; font-size: 0.95rem;">パターン③ プラン契約と同じ月にオプション契約（2月中）</h4>
+                    <table class="info-table" style="margin: 8px 0;">
+                        <tr><th>契約時の請求</th><td><strong>2月分日割り料金 ＋ 3月分料金</strong>（契約日が14日でも15日でも同額）</td></tr>
+                        <tr><th>プラン休会・解約済みの場合</th><td>オプション次回請求 → <strong style="color: #C62828;">発生しない（×）</strong></td></tr>
+                        <tr><th>プラン継続中の場合</th><td>オプション次回請求 → <strong>3/15に4月分料金</strong></td></tr>
+                    </table>
+                </div>
+
+                <div class="warning" style="margin-top: 12px;">
+                    <p><strong>ポイント：</strong></p>
+                    <ul style="margin: 5px 0 0 15px;">
+                        <li>月額プランが<strong>休会・解約済み</strong>（2/10までに申請済み）の場合、オプション次回請求は<strong>発生しません</strong></li>
+                        <li><strong>15日</strong>を境に請求金額が変わります（前月契約の場合）</li>
+                        <li>プラン契約と同月の場合は、契約日に関わらず<strong>日割り＋翌月分</strong>が請求されます</li>
+                    </ul>
+                </div>
 
             <div class="card" style="border-left: 5px solid #E0E0E0; background: #FAFAFA; opacity: 0.7; font-size: 0.85rem;">
                 <h3 style="color: #9E9E9E; border-left-color: #E0E0E0;">今後対応予定</h3>
@@ -1856,13 +1907,9 @@
                         </div>
                         <!-- 即日入会の手順 -->
                         <div class="flow-panel-alert">
-                            <div class="flow-panel-alert-title">&#9888; 即日入会の手順（必ず順番通りに）</div>
-                            <ol>
-                                <li>管理画面 →「店舗管理」→ 編集アイコンをクリック</li>
-                                <li>「最短利用開始日」を <strong>0日</strong> に変更して保存</li>
-                                <li>お客様にアプリで契約してもらう</li>
-                                <li class="flow-panel-alert-critical">契約完了を確認したら、すぐに「最短利用開始日」を 1日 に戻す</li>
-                            </ol>
+                            <div class="flow-panel-alert-title">&#9888; 即日入会の場合</div>
+                            <p>見学当日にそのまま入会する場合、管理画面で「最短利用開始日」の設定変更が必要です。</p>
+                            <p><a href="#" class="section-link" data-link-section="procedures" data-link-h3="即日入会の手順" style="color: #C62828; font-weight: bold;">→ 即日入会の手順（詳細）を参照</a></p>
                         </div>
                     </div>
                     <!-- 3. チェックイン・チェックアウト -->
@@ -1929,10 +1976,19 @@
                         <td>管理画面「来店予約一覧」の<strong>氏名を選択</strong>して、お客様情報を確認</td>
                     </tr>
                     <tr>
-                        <th>お客様に連絡</th>
-                        <td>メッセージでお客様に確認連絡
+                        <th>お客様に連絡<br><span style="font-size: 0.8rem; color: #888;">（見学の場合）</span></th>
+                        <td>メッセージでお客様に見学日時の確認連絡
+                            <div class="card" style="margin-top: 10px; background: #E0E0E0; border-left: 4px solid #9E9E9E; padding: 12px 15px; font-size: 0.9rem;">
+                                <strong style="color: #616161;">【見学確認テンプレート】</strong><br>
+                                <span style="color: #999;">※作成予定</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>お客様に連絡<br><span style="font-size: 0.8rem; color: #888;">（契約済み初来店の場合）</span></th>
+                        <td>メッセージで来店案内を送る
                             <div class="card" style="margin-top: 10px; background: #FFF9C4; border-left: 4px solid #E65100; padding: 12px 15px; font-size: 0.9rem; line-height: 1.8;">
-                                <strong style="color: #E65100;">【送信文章テンプレート】</strong><br><br>
+                                <strong style="color: #E65100;">【契約済み来店案内テンプレート】</strong><br><br>
                                 この度はご契約いただき、誠にありがとうございます。<br><br>
                                 初回ご利用前の手続きのため、下記のお時間内でご来店いただける日時を教えていただけますでしょうか。<br><br>
                                 ■ 受付可能時間<br>
@@ -1950,11 +2006,11 @@
                     </tr>
                 </table>
 
-                <h4 style="margin-top: 25px; color: #7B1FA2;">見学予約の事前対応（スタディGO以外）</h4>
+                <h4 style="margin-top: 25px; color: #7B1FA2;">見学予約の事前対応（スタディGO以外からの予約）</h4>
                 <table class="info-table">
                     <tr>
                         <th>予約確認</th>
-                        <td>HP・電話・LINE（Lステップ）経由で見学予約が入った場合、予約内容（日時・氏名・連絡先）を確認<br><span class="note" style="color: #C62828;">※平日13:30〜17:00などの<strong>無人営業時間</strong>の場合は、マネージャーに対応可否を確認してください</span></td>
+                        <td>HP・電話・LINE（Lステップ）・スタディGO経由で見学予約が入った場合、予約内容（日時・氏名・連絡先）を確認<br><span class="note" style="color: #C62828;">※平日13:30〜17:00などの<strong>無人営業時間</strong>の場合は、マネージャーに対応可否を確認してください</span></td>
                     </tr>
                     <tr>
                         <th>来店フォーム登録</th>
@@ -2220,7 +2276,7 @@
                     </tr>
                     <tr>
                         <th>自動請求</th>
-                        <td>当月10日までに解約申請が無ければ、15日に翌月分請求。1日に1ヶ月単位で自動請求</td>
+                        <td>プランは毎月1日に1ヶ月単位で更新されます。当月10日までに解約申請が無ければ、15日に翌月分が請求されます</td>
                     </tr>
                 </table>
 
@@ -2228,7 +2284,7 @@
                 <p>スタディGOアプリと連携して入退室を管理しています。</p>
                 <ul>
                     <li>BPスタジオのワークスペースを除き、<strong>ラウンジの扉はどちらのスタジオもオートロック</strong>の仕組みです</li>
-                    <li>ユーザーは<strong>スタディGOアプリを使わないと入室できません</strong></li>
+                    <li>お客様は<strong>スタディGOアプリを使わないと入室できません</strong></li>
                 </ul>
                 <div class="flow-steps">
                     <div class="flow-step">
@@ -2393,7 +2449,7 @@
                         <tr>
                             <td><strong>入退室</strong></td>
                             <td>スタディGOアプリで解錠</td>
-                            <td>スタッフが解錠対応（有人時間帯のみ）</td>
+                            <td>退室ボタンでお客様自身が退出</td>
                         </tr>
                     </tbody>
                 </table>
@@ -2480,7 +2536,7 @@
                 <div class="flow-steps">
                     <div class="flow-step">
                         <h4>1. QR読取</h4>
-                        <p>ユーザーがアプリでQRコードを読み取る</p>
+                        <p>お客様がアプリでQRコードを読み取る</p>
                     </div>
                     <div class="flow-step">
                         <h4>2. チェックイン完了</h4>
@@ -2500,7 +2556,7 @@
                 <div class="flow-steps">
                     <div class="flow-step">
                         <h4>1. QR読取</h4>
-                        <p>ユーザーがアプリでQRコードを読み取る</p>
+                        <p>お客様がアプリでQRコードを読み取る</p>
                     </div>
                     <div class="flow-step">
                         <h4>2. 精算完了</h4>
@@ -2555,10 +2611,6 @@
                     <li>月額会員だが、〇〇分プランの残時間が無い状態</li>
                     <li>勉強場所を近辺で探していた人</li>
                 </ul>
-                <div class="tips">
-                    <p>月額会員でもプラン時間前に時間利用（ドロップイン）→ プラン時間内に突入 → プラン時間外の超過利用が可能です。これを容認する場合、鍵付与の際にプラン時間内に限定せず、営業時間全ての鍵付与を行う必要があります。</p>
-                </div>
-
                 <h4 style="margin-top: 25px; color: #E65100;">チェックイン・チェックアウトを忘れた場合</h4>
                 <table class="info-table">
                     <tr>
@@ -2845,7 +2897,7 @@
             <div class="card" id="visit-reservation">
                 <h3>来店予約一覧</h3>
                 <img src="images/来店予約一覧.jpg" alt="来店予約一覧画面" class="admin-screenshot" onclick="openScreenshot(this)">
-                <p>見学予約の管理を行う画面です。ユーザーがアプリから見学予約を行うと、この一覧に表示されます。</p>
+                <p>見学予約の管理を行う画面です。お客様がアプリから見学予約を行うと、この一覧に表示されます。</p>
                 <h4>予約ステータスの管理</h4>
                 <table class="info-table">
                     <tr>
@@ -2873,7 +2925,7 @@
                         <li>ステータスを<strong>「予約確定」に変更</strong>する</li>
                         <li><strong>メッセージでお客様に確認連絡</strong>を送る
                             <div class="card" style="margin-top: 10px; background: #FFF9C4; border-left: 4px solid #E65100; padding: 12px 15px; font-size: 0.9rem; line-height: 1.8;">
-                                <strong style="color: #E65100;">【送信文章テンプレート】</strong><br><br>
+                                <strong style="color: #E65100;">【契約済み来店案内テンプレート】</strong><br><br>
                                 この度はご契約いただき、誠にありがとうございます。<br><br>
                                 初回ご利用前の手続きのため、下記のお時間内でご来店いただける日時を教えていただけますでしょうか。<br><br>
                                 ■ 受付可能時間<br>
@@ -2883,6 +2935,7 @@
                                 日程の返信をいただいた後、こちらで確定のご連絡をいたします。<br><br>
                                 よろしくお願いいたします。
                             </div>
+                            <p class="note" style="margin-top: 8px;">※見学予約の場合は別の見学確認テンプレートを使用してください（作成予定）</p>
                         </li>
                         <li><strong>見学当日</strong>：来店があれば「見学実施」に変更。見学対応を行う</li>
                         <li><strong>来店がなかった場合</strong>：予約時間を30分過ぎても来店がなければ「見学キャンセル」に変更する</li>
@@ -2897,12 +2950,12 @@
                 <h4>メッセージの利用場面</h4>
                 <ul>
                     <li>見学予約が入った際の確認連絡やリスケ対応</li>
-                    <li>店外で契約したユーザーへの来店案内・手続き連絡</li>
+                    <li>店外で契約したお客様への来店案内・手続き連絡</li>
                 </ul>
                 <h4>確認方法</h4>
                 <ul>
                     <li>ダッシュボードの「メッセージへ」またはメニューの「メッセージ」から確認</li>
-                    <li>ユーザーからのメッセージがあるとメール通知が届く</li>
+                    <li>お客様からのメッセージがあるとメール通知が届く</li>
                 </ul>
                 <div class="staff-action">
                     <div class="staff-action-header">スタッフの対応フロー</div>
@@ -3098,8 +3151,8 @@
             </div>
 
             <div class="card">
-                <h3>チェックイン～開錠～チェックアウトまで</h3>
-                <p>来店時のQR読み取りからAkerun開錠、退店時のチェックアウトまでの画面遷移です。</p>
+                <h3>チェックイン～解錠～チェックアウトまで</h3>
+                <p>来店時のQR読み取りからAkerun解錠、退店時のチェックアウトまでの画面遷移です。</p>
                 <div class="app-flow-container">
                     <button class="app-flow-scroll-btn left" onclick="this.nextElementSibling.scrollBy({left:-300,behavior:'smooth'})">&lsaquo;</button>
                     <div class="app-flow-strip">
@@ -3117,8 +3170,8 @@
                         <div class="app-flow-arrow">→</div>
                         <div class="app-flow-step">
                             <span class="app-flow-step-num">3</span>
-                            <img src="images/Akerun2.PNG" alt="ドアを開錠しました" onclick="openScreenshot(this)">
-                            <span class="app-flow-step-label">ドアを開錠しました！<br>（Akerun連携）</span>
+                            <img src="images/Akerun2.PNG" alt="ドアを解錠しました" onclick="openScreenshot(this)">
+                            <span class="app-flow-step-label">ドアを解錠しました！<br>（Akerun連携）</span>
                         </div>
                         <div class="app-flow-arrow">→</div>
                         <div class="app-flow-step">
@@ -3333,8 +3386,8 @@
                     <ul>
                         <li>頻繁な変更は推奨しません</li>
                         <li>現在提供中のプランと干渉しないようにご注意ください</li>
-                        <li>月額契約中ユーザーに事前連絡が必要な場合があります</li>
-                        <li>終了時間1分前にチェックイン中ユーザーの強制チェックアウトが行われます</li>
+                        <li>月額契約中のお客様に事前連絡が必要な場合があります</li>
+                        <li>終了時間1分前にチェックイン中のお客様の強制チェックアウトが行われます</li>
                     </ul>
                 </div>
             </div>
@@ -3359,7 +3412,7 @@
                     </tr>
                     <tr>
                         <th>契約前同意事項</th>
-                        <td>契約前にユーザーに同意を求める内容を記載</td>
+                        <td>契約前にお客様に同意を求める内容を記載</td>
                     </tr>
                     <tr style="background: #FFEBEE;">
                         <th style="background: #FFCDD2; color: #B71C1C; font-weight: bold;">最短利用開始日</th>
@@ -3393,7 +3446,7 @@
                     <label><input type="checkbox"> ドリンクコーナーOP（コーヒーマシン・給茶機）</label>
                     <label><input type="checkbox"> 備品セッティング・貸出備品の整理</label>
                     <label><input type="checkbox"> 留守番電話の解除</label>
-                    <label><input type="checkbox"> Akerunオートロック解除（有人時間帯）</label>
+                    <label><input type="checkbox"> Akerunオートロック解除（BPスタジオWSのみ・有人時間帯）</label>
                     <label><input type="checkbox"> 外看板の設置・ポスト確認</label>
                     <label><input type="checkbox"> 深夜Akerun履歴確認（22時〜5時の不正利用チェック）</label>
                     <label><input type="checkbox"> 会費ペイ支払い状況の確認（旧BPアプリ会員のみ）</label>
@@ -3413,8 +3466,8 @@
                 </ul>
             </div>
             <div class="card">
-                <h3>Akerun設定（有人時間帯）</h3>
-                <p>有人時間帯はオートロックを解除し、お客様がスムーズに入退室できるようにします。</p>
+                <h3>Akerun設定（BPスタジオ ワークスペースのみ）</h3>
+                <p>BPスタジオのワークスペースのみ、有人時間帯はオートロックをOFFにします。ラウンジ・スタジオ入口のドアは常時オートロックのままです。</p>
                 <ol>
                     <li>Akerun管理画面にログイン</li>
                     <li>オートロック設定を<strong>OFF</strong>に変更</li>
@@ -3461,7 +3514,7 @@
                     <label><input type="checkbox"> ゴミの回収・ゴミ袋の交換</label>
                     <label><input type="checkbox"> 窓の施錠確認</label>
                     <label><input type="checkbox"> PCのシャットダウン</label>
-                    <label><input type="checkbox"> Akerunオートロック設定を<strong>ON</strong>に戻す</label>
+                    <label><input type="checkbox"> Akerunオートロック設定を<strong>ON</strong>に戻す（BPスタジオWSのみ）</label>
                     <label><input type="checkbox"> 空調・照明のOFF（タイマー設定の場合は確認）</label>
                     <label><input type="checkbox"> 退勤打刻（タッチオンタイム）</label>
                     <label><input type="checkbox"> チャットワークで退勤報告</label>
@@ -3551,10 +3604,7 @@
             <div class="card">
                 <h3>入会対応</h3>
                 <p>アプリ案内 → 契約（お客様操作） → 身分証確認 → ルール説明 → 解錠確認 → 連絡先案内 → チャットワーク報告</p>
-                <div class="warning">
-                    <p><strong>即日入会</strong>の場合は管理画面「店舗管理」→「最短利用開始日」を0日に変更 → 契約完了後に必ず1日に戻す</p>
-                </div>
-                <p style="margin-top: 8px;"><a href="#" class="section-link" data-link-section="procedures" data-link-h3="月額契約" style="color: #1565C0;">→ 月額契約の詳細フローを参照</a></p>
+                <p class="note" style="margin-top: 8px;"><a href="#" class="section-link" data-link-section="procedures" data-link-h3="即日入会の手順" style="color: #C62828; font-weight: bold;">→ 即日入会の場合はこちら</a>　|　<a href="#" class="section-link" data-link-section="procedures" data-link-h3="月額契約" style="color: #1565C0;">→ 月額契約の詳細フロー</a></p>
             </div>
             <div class="card">
                 <h3>よくある質問への回答例</h3>
@@ -3586,20 +3636,17 @@
             <div class="card" style="background: #FFF9C4;">
                 <h3>入会手続きの流れ</h3>
                 <p>見学対応 → アプリ案内 → 契約（お客様操作） → 身分証確認 → ルール説明 → 解錠確認 → 連絡先案内 → チャットワーク報告</p>
-                <div class="warning">
-                    <p><strong>即日入会の場合：</strong>管理画面「店舗管理」→「最短利用開始日」を0日に変更 → 契約完了後に<strong>必ず1日に戻す</strong></p>
-                </div>
-                <p style="margin-top: 8px;"><a href="#" class="section-link" data-link-section="procedures" data-link-h3="月額契約" style="color: #1565C0;">→ 月額契約の詳細フロー（WEB契約・来店契約パターン）を参照</a></p>
+                <p class="note" style="margin-top: 8px;"><a href="#" class="section-link" data-link-section="procedures" data-link-h3="即日入会の手順" style="color: #C62828; font-weight: bold;">→ 即日入会の場合はこちら</a>　|　<a href="#" class="section-link" data-link-section="procedures" data-link-h3="月額契約" style="color: #1565C0;">→ 月額契約の詳細フロー</a></p>
             </div>
             <div class="card" style="background: #FFF9C4;">
                 <h3>プラン解約（退会）手続きの流れ</h3>
-                <p>ヒアリング → プラン解約届記入 → ロッカー確認（該当者のみ） → 管理画面で退会処理 → チャットワーク報告</p>
+                <p>ヒアリング → Googleフォーム回答 → ロッカー確認（該当者のみ） → 管理画面で退会処理 → チャットワーク報告</p>
                 <p class="note">※締日: 10日21時まで → 当月末退会 ／ 11日以降 → 翌月末退会</p>
                 <p class="note">※休会はお客様がアプリから申請するだけで完了（スタッフ対応不要）</p>
                 <p style="margin-top: 8px;"><a href="#" class="section-link" data-link-section="procedures" data-link-h3="プラン解約（退会）・休会" style="color: #1565C0;">→ プラン解約・休会の詳細フローを参照</a></p>
             </div>
             <div class="card" style="background: #E3F2FD;">
-                <h3>ビジター（時間利用）対応</h3>
+                <h3>時間利用（ドロップイン）対応</h3>
                 <div class="flow-steps">
                     <div class="flow-step">
                         <h4>1. アプリ案内</h4>
@@ -4686,10 +4733,80 @@
             });
         }
 
-        // 検索クリアボタン
+        // 検索要素の取得
         const searchInput = document.getElementById('searchInput');
         const searchClear = document.getElementById('searchClear');
+        const searchNav = document.getElementById('searchNav');
+        const searchNavCount = document.getElementById('searchNavCount');
+        const searchPrevBtn = document.getElementById('searchPrev');
+        const searchNextBtn = document.getElementById('searchNext');
 
+        let currentHighlightIndex = -1;
+        let allHighlights = [];
+
+        function updateSearchNav() {
+            allHighlights = Array.from(document.querySelectorAll('.search-highlight'));
+            if (allHighlights.length > 0) {
+                searchNav.style.display = 'flex';
+                currentHighlightIndex = 0;
+                updateCurrentHighlight();
+                scrollToCurrentHighlight();
+            } else if (searchInput.value.trim() !== '') {
+                searchNav.style.display = 'flex';
+                searchNavCount.textContent = '0 件';
+                currentHighlightIndex = -1;
+            } else {
+                searchNav.style.display = 'none';
+                currentHighlightIndex = -1;
+            }
+        }
+
+        function updateCurrentHighlight() {
+            allHighlights.forEach(el => el.classList.remove('current'));
+            if (currentHighlightIndex >= 0 && currentHighlightIndex < allHighlights.length) {
+                allHighlights[currentHighlightIndex].classList.add('current');
+                searchNavCount.textContent = (currentHighlightIndex + 1) + ' / ' + allHighlights.length + ' 件';
+            }
+        }
+
+        function scrollToCurrentHighlight() {
+            if (currentHighlightIndex >= 0 && currentHighlightIndex < allHighlights.length) {
+                const el = allHighlights[currentHighlightIndex];
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        // Enterで次へ、Shift+Enterで前へ
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                if (allHighlights.length === 0) return;
+                if (e.shiftKey) {
+                    currentHighlightIndex = (currentHighlightIndex - 1 + allHighlights.length) % allHighlights.length;
+                } else {
+                    currentHighlightIndex = (currentHighlightIndex + 1) % allHighlights.length;
+                }
+                updateCurrentHighlight();
+                scrollToCurrentHighlight();
+            }
+        });
+
+        // ▲▼ボタン
+        searchPrevBtn.addEventListener('click', function() {
+            if (allHighlights.length === 0) return;
+            currentHighlightIndex = (currentHighlightIndex - 1 + allHighlights.length) % allHighlights.length;
+            updateCurrentHighlight();
+            scrollToCurrentHighlight();
+        });
+
+        searchNextBtn.addEventListener('click', function() {
+            if (allHighlights.length === 0) return;
+            currentHighlightIndex = (currentHighlightIndex + 1) % allHighlights.length;
+            updateCurrentHighlight();
+            scrollToCurrentHighlight();
+        });
+
+        // 検索クリアボタン
         function updateClearButton() {
             if (searchInput.value.trim() !== '') {
                 searchClear.classList.add('visible');
@@ -4726,6 +4843,10 @@
                 document.querySelectorAll('.nav-category-list').forEach(cl => cl.classList.remove('open'));
                 document.querySelectorAll('.nav-category-header').forEach(ch => ch.classList.remove('active'));
                 document.querySelectorAll('#navList .sub-menu').forEach(sm => sm.classList.remove('open'));
+                // 検索ナビゲーションを非表示
+                searchNav.style.display = 'none';
+                allHighlights = [];
+                currentHighlightIndex = -1;
                 return;
             }
 
@@ -4785,6 +4906,9 @@
                     cat.style.display = 'none';
                 }
             });
+
+            // 検索ナビゲーション更新（ヒット数表示＆最初の結果にスクロール）
+            updateSearchNav();
         });
 
         // スクロール時のアクティブリンク更新（大項目＋小項目）
@@ -5168,7 +5292,7 @@
                         q: '店外で契約したお客様がダッシュボードに表示された場合の対応は？',
                         options: ['何もしなくてよい', 'メッセージで来店手続きの連絡を送る', '管理画面から契約を取り消す', '電話で連絡する'],
                         correct: 1,
-                        explanation: '店外で契約したユーザーには、メッセージ機能で来店案内・手続き連絡を送ります。初回来店時に身分証確認やルール説明が必要です。'
+                        explanation: '店外で契約したお客様には、メッセージ機能で来店案内・手続き連絡を送ります。初回来店時に身分証確認やルール説明が必要です。'
                     },
                     {
                         q: '見学予約のお客様が来店しなかった場合、いつ「見学キャンセル」に変更する？',
@@ -5463,9 +5587,9 @@
                     },
                     {
                         q: '営業時間設定に関連する自動処理について正しいものは？',
-                        options: ['営業終了時にすべて自動チェックアウト', '終了時間1分前にチェックイン中ユーザーの強制チェックアウトが行われる', '終了時間30分前に通知が送られる', '自動処理は行われない'],
+                        options: ['営業終了時にすべて自動チェックアウト', '終了時間1分前にチェックイン中のお客様の強制チェックアウトが行われる', '終了時間30分前に通知が送られる', '自動処理は行われない'],
                         correct: 1,
-                        explanation: '設定した営業時間の終了時間1分前に、チェックイン中ユーザーの強制チェックアウトが行われます。'
+                        explanation: '設定した営業時間の終了時間1分前に、チェックイン中のお客様の強制チェックアウトが行われます。'
                     },
                     {
                         q: '見学予約を「見学キャンセル」に変更するとどうなる？',
@@ -5487,9 +5611,9 @@
                     },
                     {
                         q: '月額会員向け営業時間設定について正しいものは？',
-                        options: ['いつでも自由に変更してよい', '頻繁な変更は推奨しない（契約中ユーザーへの影響を考慮）', '月1回のみ変更可能', '変更は不可'],
+                        options: ['いつでも自由に変更してよい', '頻繁な変更は推奨しない（契約中のお客様への影響を考慮）', '月1回のみ変更可能', '変更は不可'],
                         correct: 1,
-                        explanation: '頻繁な変更は推奨されません。現在提供中のプランとの干渉や、契約中ユーザーへの事前連絡が必要な場合があります。'
+                        explanation: '頻繁な変更は推奨されません。現在提供中のプランとの干渉や、契約中のお客様への事前連絡が必要な場合があります。'
                     },
                     {
                         q: '管理画面のメッセージ機能を使う場面として正しくないものは？',

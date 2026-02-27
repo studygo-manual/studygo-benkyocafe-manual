@@ -221,6 +221,47 @@ header .subtitle {
     border-radius: 3px;
     border-bottom: 2px solid #f44336;
 }
+.search-highlight.current {
+    background-color: #F44336;
+    color: #fff;
+    border-bottom-color: #B71C1C;
+}
+
+/* 検索ナビゲーション（ヒット数・前へ/次へ） */
+.search-nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    background: #FFF9C4;
+    border-radius: 6px;
+    margin: 4px 0 6px;
+    font-size: 0.78rem;
+}
+.search-nav-count {
+    flex: 1;
+    color: #E65100;
+    font-weight: bold;
+    white-space: nowrap;
+}
+.search-nav-btn {
+    width: 26px;
+    height: 26px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+}
+.search-nav-btn:hover {
+    background: #E3F2FD;
+    border-color: #1565C0;
+    color: #1565C0;
+}
 
 .search-box input::placeholder {
     color: #999;
