@@ -12,8 +12,17 @@
             <button class="menu-toggle" id="menuToggle" aria-label="メニューを開く">&#9776;</button>
             <div class="header-logo-placeholder" aria-label="スタディGO">StudyGO</div>
             <h1>スタッフマニュアル<span class="subtitle">～勉強カフェ～</span></h1>
-            <div class="header-guide" id="headerGuide">
-                左の目次から項目を選択、または検索してご覧ください
+            <div class="header-search" id="headerSearch">
+                <div class="header-search-wrapper">
+                    <input type="text" id="headerSearchInput" placeholder="キーワードで検索..." aria-label="検索">
+                    <button class="header-search-clear" id="headerSearchClear" aria-label="検索をクリア">&times;</button>
+                </div>
+                <div class="header-search-nav" id="headerSearchNav" style="display:none;">
+                    <span class="header-search-nav-count" id="headerSearchNavCount"></span>
+                    <button class="header-search-nav-btn" id="headerSearchPrev" aria-label="前へ">&#9650;</button>
+                    <button class="header-search-nav-btn" id="headerSearchNext" aria-label="次へ">&#9660;</button>
+                </div>
+                <div class="search-preview-dropdown" id="searchPreviewDropdown"></div>
             </div>
             <div class="user-info" id="userInfo" style="display: none;">
                 <span class="user-name" id="userNameDisplay"></span>
@@ -114,6 +123,16 @@
                     <div class="notice-card" data-notice-idx="0">
                         <div class="notice-priority high">重要</div>
                         <div class="notice-body">
+                            <div class="notice-title">マニュアルを更新しました（2/20以降の変更点） <span class="notice-date-inline">2026-02-28</span></div>
+                            <div class="notice-text" data-full-text="【検索機能の改善】TOP画面に大きな検索バーを追加しました。人気キーワードのタグからワンタップで検索できます。ヘッダーにも検索バーを常時表示し、どのページからでもすぐに検索できます。&#10;&#10;【ドロップイン関連の修正】ドロップインは1時間パック（770円）のみです（3時間プランの誤記載を修正）。お客様対応フローの詳細チェックリストを追加しました。飲食ルール、ビジターボードの案内、新宿スタジオのルール補足を追加しています。&#10;&#10;【チェックイン関連】有人時間帯はチェックイン完了画面を必ず見せてもらうルールを追加しました。チェックイン時に表示する推奨メッセージを記載しています。&#10;&#10;【各種手続き】手続きフロー一覧ページを新規追加しました。会員番号の開始番号や重複なしの説明を追加し、プラン解約の名称理由を追記しています。&#10;&#10;【クイズ機能】研修クイズを100問に拡大しました。マネージャーは全問題一覧を確認できます。&#10;&#10;【ロッカー】ロッカー請求パターンの説明を追加しました。">【検索機能の改善】TOP画面に大きな検索バーを追加。人気キーワードのタグからワンタップで検索できます。ヘッダーにも常時検索バーを表示。【ドロップイン】1時間パック（770円）のみに修正。対応フローチェックリスト追加。【チェックイン】完了画面を見せてもらうルール追加。【各種手続き】手続きフロー一覧ページ追加。【クイズ】100問に拡大。　※詳細は「お知らせ一覧」からご確認ください。</div>
+                        </div>
+                        <div class="notice-actions" data-notice-id="notice-003">
+                            <button class="notice-confirm-btn" onclick="confirmNotice(this, 'notice-003')">確認しました</button>
+                        </div>
+                    </div>
+                    <div class="notice-card" data-notice-idx="1">
+                        <div class="notice-priority high">重要</div>
+                        <div class="notice-body">
                             <div class="notice-title">マニュアルが新しくなりました <span class="notice-date-inline">2026-02-10</span></div>
                             <div class="notice-text" data-full-text="クイズ機能やトラブル対応ガイドが追加されました。各セクション末尾の「理解度チェック」ボタンから、研修クイズに挑戦してください。">クイズ機能やトラブル対応ガイドが追加されました。各セクション末尾の「理解度チェック」ボタンから、研修クイズに挑戦してください。</div>
                         </div>
@@ -121,7 +140,7 @@
                             <button class="notice-confirm-btn" onclick="confirmNotice(this, 'notice-001')">確認しました</button>
                         </div>
                     </div>
-                    <div class="notice-card" data-notice-idx="1">
+                    <div class="notice-card" data-notice-idx="2">
                         <div class="notice-priority normal">連絡</div>
                         <div class="notice-body">
                             <div class="notice-title">清掃チェックリストを更新しました <span class="notice-date-inline">2026-02-10</span></div>
@@ -138,9 +157,24 @@
             </div>
         </div>
 
-        <!-- マニュアルの使い方（シンプル版） -->
-        <div id="usage-guide" class="usage-guide-compact">
-            <p><strong>使い方：</strong>左の目次から項目を選択、または上部の検索バーでキーワード検索できます。</p>
+        <!-- ヒーロー検索エリア -->
+        <div id="usage-guide" class="hero-search-area">
+            <div class="hero-search-title">知りたい情報をすぐに検索</div>
+            <div class="hero-search-box">
+                <input type="text" id="heroSearchInput" placeholder="キーワードで検索（例：契約、チェックイン、管理画面）" aria-label="検索">
+                <button class="hero-search-clear" id="heroSearchClear" aria-label="検索をクリア">&times;</button>
+            </div>
+            <div class="hero-search-tags">
+                <span class="hero-tag-label">よく検索：</span>
+                <button class="hero-tag" data-search="契約">契約</button>
+                <button class="hero-tag" data-search="解約">解約</button>
+                <button class="hero-tag" data-search="チェックイン">チェックイン</button>
+                <button class="hero-tag" data-search="ドロップイン">ドロップイン</button>
+                <button class="hero-tag" data-search="Akerun">Akerun</button>
+                <button class="hero-tag" data-search="管理画面">管理画面</button>
+                <button class="hero-tag" data-search="プラン変更">プラン変更</button>
+                <button class="hero-tag" data-search="休会">休会</button>
+            </div>
         </div>
 
         <!-- よく見られている項目 & よく検索されている項目（下部中央配置） -->
@@ -3042,7 +3076,7 @@
                         <div class="app-flow-step">
                             <span class="app-flow-step-num">3</span>
                             <img src="images/ドロップイン3.PNG" alt="時間パック選択" onclick="openScreenshot(this)">
-                            <span class="app-flow-step-label">時間パック選択<br>（1時間/3時間等）</span>
+                            <span class="app-flow-step-label">時間パック選択<br>（1時間パック）</span>
                         </div>
                         <div class="app-flow-arrow">→</div>
                         <div class="app-flow-step">
@@ -6494,6 +6528,311 @@
         if (allQBtn) {
             allQBtn.addEventListener('click', showAllQuizReview);
         }
+
+        // ===================================
+        // 検索UI改善：ヘッダー・ヒーロー検索バー連動 + プレビュードロップダウン
+        // ===================================
+        (function() {
+            const sidebarSearch = document.getElementById('searchInput');
+            const headerSearchInput = document.getElementById('headerSearchInput');
+            const headerSearchClear = document.getElementById('headerSearchClear');
+            const headerSearchNav = document.getElementById('headerSearchNav');
+            const headerSearchNavCount = document.getElementById('headerSearchNavCount');
+            const headerSearchPrev = document.getElementById('headerSearchPrev');
+            const headerSearchNext = document.getElementById('headerSearchNext');
+            const heroSearchInput = document.getElementById('heroSearchInput');
+            const heroSearchClear = document.getElementById('heroSearchClear');
+            const previewDropdown = document.getElementById('searchPreviewDropdown');
+
+            let previewDebounceTimer = null;
+            let isSyncing = false;
+
+            // 検索入力の同期（どの入力欄に入力しても他と連動）
+            function syncSearchInputs(source, value) {
+                if (isSyncing) return;
+                isSyncing = true;
+                if (source !== sidebarSearch) {
+                    sidebarSearch.value = value;
+                    sidebarSearch.dispatchEvent(new Event('input'));
+                }
+                if (source !== headerSearchInput) {
+                    headerSearchInput.value = value;
+                }
+                if (source !== heroSearchInput) {
+                    heroSearchInput.value = value;
+                }
+                // クリアボタン表示更新
+                updateHeaderClear();
+                updateHeroClear();
+                isSyncing = false;
+            }
+
+            function updateHeaderClear() {
+                if (headerSearchInput.value.trim() !== '') {
+                    headerSearchClear.classList.add('visible');
+                } else {
+                    headerSearchClear.classList.remove('visible');
+                }
+            }
+
+            function updateHeroClear() {
+                if (heroSearchInput.value.trim() !== '') {
+                    heroSearchClear.classList.add('visible');
+                } else {
+                    heroSearchClear.classList.remove('visible');
+                }
+            }
+
+            // ヘッダー検索入力
+            headerSearchInput.addEventListener('input', function() {
+                syncSearchInputs(this, this.value);
+                showPreviewDropdown(this.value.trim());
+            });
+
+            headerSearchInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    hidePreviewDropdown();
+                    // サイドバーのEnterと同じ動き
+                    if (allHighlights.length === 0) return;
+                    if (e.shiftKey) {
+                        currentHighlightIndex = (currentHighlightIndex - 1 + allHighlights.length) % allHighlights.length;
+                    } else {
+                        currentHighlightIndex = (currentHighlightIndex + 1) % allHighlights.length;
+                    }
+                    updateCurrentHighlight();
+                    scrollToCurrentHighlight();
+                    updateHeaderSearchNav();
+                }
+                if (e.key === 'Escape') {
+                    hidePreviewDropdown();
+                }
+            });
+
+            headerSearchInput.addEventListener('focus', function() {
+                if (this.value.trim() !== '') {
+                    showPreviewDropdown(this.value.trim());
+                }
+            });
+
+            headerSearchClear.addEventListener('click', function() {
+                syncSearchInputs(headerSearchInput, '');
+                headerSearchInput.focus();
+                hidePreviewDropdown();
+            });
+
+            // ヘッダー検索ナビ（前へ/次へ）
+            headerSearchPrev.addEventListener('click', function() {
+                if (allHighlights.length === 0) return;
+                currentHighlightIndex = (currentHighlightIndex - 1 + allHighlights.length) % allHighlights.length;
+                updateCurrentHighlight();
+                scrollToCurrentHighlight();
+                updateHeaderSearchNav();
+            });
+
+            headerSearchNext.addEventListener('click', function() {
+                if (allHighlights.length === 0) return;
+                currentHighlightIndex = (currentHighlightIndex + 1) % allHighlights.length;
+                updateCurrentHighlight();
+                scrollToCurrentHighlight();
+                updateHeaderSearchNav();
+            });
+
+            // ヒーロー検索入力
+            heroSearchInput.addEventListener('input', function() {
+                syncSearchInputs(this, this.value);
+            });
+
+            heroSearchInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (allHighlights.length === 0) return;
+                    if (e.shiftKey) {
+                        currentHighlightIndex = (currentHighlightIndex - 1 + allHighlights.length) % allHighlights.length;
+                    } else {
+                        currentHighlightIndex = (currentHighlightIndex + 1) % allHighlights.length;
+                    }
+                    updateCurrentHighlight();
+                    scrollToCurrentHighlight();
+                }
+            });
+
+            heroSearchClear.addEventListener('click', function() {
+                syncSearchInputs(heroSearchInput, '');
+                heroSearchInput.focus();
+            });
+
+            // サイドバー検索の変更をヘッダー・ヒーローに反映
+            sidebarSearch.addEventListener('input', function() {
+                syncSearchInputs(this, this.value);
+                updateHeaderSearchNav();
+            });
+
+            // ヘッダー検索ナビ更新
+            function updateHeaderSearchNav() {
+                if (allHighlights.length > 0) {
+                    headerSearchNav.style.display = 'flex';
+                    headerSearchNavCount.textContent = (currentHighlightIndex + 1) + ' / ' + allHighlights.length + ' 件';
+                } else if (headerSearchInput.value.trim() !== '') {
+                    headerSearchNav.style.display = 'flex';
+                    headerSearchNavCount.textContent = '0 件';
+                } else {
+                    headerSearchNav.style.display = 'none';
+                }
+            }
+
+            // 既存のupdateSearchNav関数の後にヘッダーも更新
+            const origUpdateSearchNav = updateSearchNav;
+            updateSearchNav = function() {
+                origUpdateSearchNav();
+                updateHeaderSearchNav();
+            };
+
+            // 人気検索タグ
+            document.querySelectorAll('.hero-tag').forEach(function(tag) {
+                tag.addEventListener('click', function() {
+                    const keyword = this.getAttribute('data-search');
+                    syncSearchInputs(heroSearchInput, keyword);
+                    // ヒーローのinputに値をセットし直してサイドバー検索を発火
+                    heroSearchInput.value = keyword;
+                    sidebarSearch.value = keyword;
+                    sidebarSearch.dispatchEvent(new Event('input'));
+                    headerSearchInput.value = keyword;
+                    updateHeaderClear();
+                    updateHeroClear();
+                    // ヒーロー入力欄にフォーカス
+                    heroSearchInput.focus();
+                });
+            });
+
+            // プレビュードロップダウン
+            function showPreviewDropdown(query) {
+                if (previewDebounceTimer) clearTimeout(previewDebounceTimer);
+                if (!query || query.length < 1) {
+                    hidePreviewDropdown();
+                    return;
+                }
+                previewDebounceTimer = setTimeout(function() {
+                    buildPreviewResults(query);
+                }, 150);
+            }
+
+            function hidePreviewDropdown() {
+                previewDropdown.classList.remove('visible');
+            }
+
+            function buildPreviewResults(query) {
+                const lowerQuery = query.toLowerCase();
+                const results = [];
+                const disabledCats = categories.filter(function(c) { return c.disabled; }).map(function(c) { return c.key; });
+
+                sections.forEach(function(section) {
+                    const sectionId = section.getAttribute('id');
+                    const category = section.getAttribute('data-category');
+                    if (disabledCats.includes(category)) return;
+
+                    const text = section.textContent;
+                    const lowerText = text.toLowerCase();
+                    const idx = lowerText.indexOf(lowerQuery);
+                    if (idx === -1) return;
+
+                    // セクション名を取得
+                    var h2El = section.querySelector('h2');
+                    var sectionName = h2El ? h2El.textContent.trim() : sectionId;
+
+                    // カテゴリラベルを取得
+                    var catLabel = '';
+                    categories.forEach(function(c) {
+                        if (c.key === category) catLabel = c.label;
+                    });
+
+                    // マッチした文脈テキストを取得（前後20文字）
+                    var contextStart = Math.max(0, idx - 20);
+                    var contextEnd = Math.min(text.length, idx + query.length + 20);
+                    var contextText = (contextStart > 0 ? '...' : '') +
+                        text.substring(contextStart, idx) +
+                        '<mark>' + text.substring(idx, idx + query.length) + '</mark>' +
+                        text.substring(idx + query.length, contextEnd) +
+                        (contextEnd < text.length ? '...' : '');
+                    // 改行を除去
+                    contextText = contextText.replace(/[\n\r\t]+/g, ' ').replace(/\s+/g, ' ');
+
+                    // h3もチェックしてより具体的な場所を特定
+                    var matchH3 = '';
+                    var h3Els = section.querySelectorAll('h3');
+                    h3Els.forEach(function(h3) {
+                        if (matchH3) return;
+                        var card = h3.closest('.card');
+                        if (card && card.textContent.toLowerCase().indexOf(lowerQuery) !== -1) {
+                            matchH3 = h3.textContent.trim();
+                        }
+                    });
+
+                    results.push({
+                        sectionId: sectionId,
+                        sectionName: sectionName,
+                        catLabel: catLabel,
+                        context: contextText,
+                        h3Text: matchH3
+                    });
+                });
+
+                // 最大8件
+                var displayResults = results.slice(0, 8);
+
+                if (displayResults.length === 0) {
+                    previewDropdown.innerHTML = '<div class="search-preview-empty">該当なし</div>';
+                    previewDropdown.classList.add('visible');
+                    return;
+                }
+
+                var html = '';
+                displayResults.forEach(function(r) {
+                    html += '<div class="search-preview-item" data-section="' + r.sectionId + '"' +
+                        (r.h3Text ? ' data-h3="' + r.h3Text.replace(/"/g, '&quot;') + '"' : '') + '>';
+                    html += '<div class="search-preview-section">';
+                    if (r.catLabel) html += '<span class="search-preview-category">' + r.catLabel + '</span>';
+                    html += r.sectionName;
+                    if (r.h3Text) html += ' &gt; ' + r.h3Text;
+                    html += '</div>';
+                    html += '<div class="search-preview-context">' + r.context + '</div>';
+                    html += '</div>';
+                });
+
+                previewDropdown.innerHTML = html;
+                previewDropdown.classList.add('visible');
+
+                // クリックでセクションにジャンプ
+                previewDropdown.querySelectorAll('.search-preview-item').forEach(function(item) {
+                    item.addEventListener('click', function() {
+                        var sectionId = this.getAttribute('data-section');
+                        var h3Text = this.getAttribute('data-h3');
+                        hidePreviewDropdown();
+                        showSection(sectionId, true);
+                        // h3がある場合はそこまでスクロール
+                        if (h3Text) {
+                            setTimeout(function() {
+                                var section = document.getElementById(sectionId);
+                                if (!section) return;
+                                var h3s = section.querySelectorAll('h3');
+                                h3s.forEach(function(h3) {
+                                    if (h3.textContent.trim() === h3Text) {
+                                        h3.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                    }
+                                });
+                            }, 300);
+                        }
+                    });
+                });
+            }
+
+            // プレビュー外クリックで閉じる
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.header-search') && !e.target.closest('.search-preview-dropdown')) {
+                    hidePreviewDropdown();
+                }
+            });
+        })();
 
         </script>
 </body>
