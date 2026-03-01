@@ -24,6 +24,19 @@
                 </div>
                 <div class="search-preview-dropdown" id="searchPreviewDropdown"></div>
             </div>
+            <div class="notification-bell" id="notificationBell">
+                <button class="bell-btn" id="bellBtn" aria-label="お知らせ">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                    <span class="bell-badge" id="bellBadge" style="display:none;">0</span>
+                </button>
+                <div class="bell-dropdown" id="bellDropdown">
+                    <div class="bell-dropdown-header">お知らせ</div>
+                    <div class="bell-dropdown-list" id="bellDropdownList"></div>
+                    <div class="bell-dropdown-footer">
+                        <a href="#" id="bellShowAllLink">お知らせ一覧を確認する</a>
+                    </div>
+                </div>
+            </div>
             <div class="user-info" id="userInfo" style="display: none;">
                 <span class="user-name" id="userNameDisplay"></span>
                 <button class="user-info-btn" id="pinChangeBtn">PIN変更</button>
@@ -114,49 +127,6 @@
             <span id="contextH3Sep" class="context-separator" style="display:none;">›</span>
             <span id="contextH3" class="context-h3" style="display:none;"></span>
         </div>
-        <!-- マネージャーからのお知らせ（TOP：最新1件のみ表示） -->
-        <div id="manager-notice" class="manager-notice">
-            <div class="card" style="border-left: 5px solid #FF7043;">
-                <h3 style="border-left-color: #FF7043; color: #E64A19;">最新のお知らせ</h3>
-                <div id="noticeList">
-                    <!-- お知らせデータ（JSで表示制御） -->
-                    <div class="notice-card" data-notice-idx="0">
-                        <div class="notice-priority high">重要</div>
-                        <div class="notice-body">
-                            <div class="notice-title">マニュアルを更新しました（2/20以降の変更点） <span class="notice-date-inline">2026-02-28</span></div>
-                            <div class="notice-text" data-full-text="【検索機能の改善】TOP画面に大きな検索バーを追加しました。人気キーワードのタグからワンタップで検索できます。ヘッダーにも検索バーを常時表示し、どのページからでもすぐに検索できます。&#10;&#10;【ドロップイン関連の修正】ドロップインは1時間パック（770円）のみです（3時間プランの誤記載を修正）。お客様対応フローの詳細チェックリストを追加しました。飲食ルール、ビジターボードの案内、新宿スタジオのルール補足を追加しています。&#10;&#10;【チェックイン関連】有人時間帯はチェックイン完了画面を必ず見せてもらうルールを追加しました。チェックイン時に表示する推奨メッセージを記載しています。&#10;&#10;【各種手続き】手続きフロー一覧ページを新規追加しました。会員番号の開始番号や重複なしの説明を追加し、プラン解約の名称理由を追記しています。&#10;&#10;【クイズ機能】研修クイズを100問に拡大しました。マネージャーは全問題一覧を確認できます。&#10;&#10;【ロッカー】ロッカー請求パターンの説明を追加しました。">【検索機能の改善】TOP画面に大きな検索バーを追加。人気キーワードのタグからワンタップで検索できます。ヘッダーにも常時検索バーを表示。【ドロップイン】1時間パック（770円）のみに修正。対応フローチェックリスト追加。【チェックイン】完了画面を見せてもらうルール追加。【各種手続き】手続きフロー一覧ページ追加。【クイズ】100問に拡大。　※詳細は「お知らせ一覧」からご確認ください。</div>
-                        </div>
-                        <div class="notice-actions" data-notice-id="notice-003">
-                            <button class="notice-confirm-btn" onclick="confirmNotice(this, 'notice-003')">確認しました</button>
-                        </div>
-                    </div>
-                    <div class="notice-card" data-notice-idx="1">
-                        <div class="notice-priority high">重要</div>
-                        <div class="notice-body">
-                            <div class="notice-title">マニュアルが新しくなりました <span class="notice-date-inline">2026-02-10</span></div>
-                            <div class="notice-text" data-full-text="クイズ機能やトラブル対応ガイドが追加されました。各セクション末尾の「理解度チェック」ボタンから、研修クイズに挑戦してください。">クイズ機能やトラブル対応ガイドが追加されました。各セクション末尾の「理解度チェック」ボタンから、研修クイズに挑戦してください。</div>
-                        </div>
-                        <div class="notice-actions" data-notice-id="notice-001">
-                            <button class="notice-confirm-btn" onclick="confirmNotice(this, 'notice-001')">確認しました</button>
-                        </div>
-                    </div>
-                    <div class="notice-card" data-notice-idx="2">
-                        <div class="notice-priority normal">連絡</div>
-                        <div class="notice-body">
-                            <div class="notice-title">清掃チェックリストを更新しました <span class="notice-date-inline">2026-02-10</span></div>
-                            <div class="notice-text" data-full-text="CL作業の清掃チェックリストに新しい項目を追加しています。確認をお願いします。">CL作業の清掃チェックリストに新しい項目を追加しています。確認をお願いします。</div>
-                        </div>
-                        <div class="notice-actions" data-notice-id="notice-002">
-                            <button class="notice-confirm-btn" onclick="confirmNotice(this, 'notice-002')">確認しました</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="notice-footer">
-                    <a href="#" id="showAllNoticesLink" class="notice-all-link">お知らせ一覧を確認する</a>
-                </div>
-            </div>
-        </div>
-
         <!-- ヒーロー検索エリア -->
         <div id="usage-guide" class="hero-search-area">
             <div class="hero-search-title">知りたい情報をすぐに検索</div>
@@ -254,6 +224,48 @@
                     <span id="apiUrlSaveMsg" style="margin-left: 8px; color: #2E7D32; font-size: 0.82rem; display: none;">保存しました（ページを再読み込みしてください）</span>
                 </div>
             </details>
+        </div>
+
+        <!-- マネージャーからのお知らせ（ベルボタンのドロップダウンで表示、TOP画面には非表示） -->
+        <div id="manager-notice" class="manager-notice" style="display: none;">
+            <div class="card" style="border-left: 5px solid #FF7043;">
+                <h3 style="border-left-color: #FF7043; color: #E64A19;">最新のお知らせ</h3>
+                <div id="noticeList">
+                    <div class="notice-card" data-notice-idx="0">
+                        <div class="notice-priority high">重要</div>
+                        <div class="notice-body">
+                            <div class="notice-title">マニュアルを更新しました（2/20以降の変更点） <span class="notice-date-inline">2026-02-28</span></div>
+                            <div class="notice-text" data-full-text="【検索機能の改善】TOP画面に大きな検索バーを追加しました。人気キーワードのタグからワンタップで検索できます。ヘッダーにも検索バーを常時表示し、どのページからでもすぐに検索できます。&#10;&#10;【ドロップイン関連の修正】ドロップインは1時間パック（770円）のみです（3時間プランの誤記載を修正）。お客様対応フローの詳細チェックリストを追加しました。飲食ルール、ビジターボードの案内、新宿スタジオのルール補足を追加しています。&#10;&#10;【チェックイン関連】有人時間帯はチェックイン完了画面を必ず見せてもらうルールを追加しました。チェックイン時に表示する推奨メッセージを記載しています。&#10;&#10;【各種手続き】手続きフロー一覧ページを新規追加しました。会員番号の開始番号や重複なしの説明を追加し、プラン解約の名称理由を追記しています。&#10;&#10;【クイズ機能】研修クイズを100問に拡大しました。マネージャーは全問題一覧を確認できます。&#10;&#10;【ロッカー】ロッカー請求パターンの説明を追加しました。">【検索機能の改善】TOP画面に大きな検索バーを追加。人気キーワードのタグからワンタップで検索できます。ヘッダーにも常時検索バーを表示。【ドロップイン】1時間パック（770円）のみに修正。対応フローチェックリスト追加。【チェックイン】完了画面を見せてもらうルール追加。【各種手続き】手続きフロー一覧ページ追加。【クイズ】100問に拡大。　※詳細は「お知らせ一覧」からご確認ください。</div>
+                        </div>
+                        <div class="notice-actions" data-notice-id="notice-003">
+                            <button class="notice-confirm-btn" onclick="confirmNotice(this, 'notice-003')">確認しました</button>
+                        </div>
+                    </div>
+                    <div class="notice-card" data-notice-idx="1">
+                        <div class="notice-priority high">重要</div>
+                        <div class="notice-body">
+                            <div class="notice-title">マニュアルが新しくなりました <span class="notice-date-inline">2026-02-10</span></div>
+                            <div class="notice-text" data-full-text="クイズ機能やトラブル対応ガイドが追加されました。各セクション末尾の「理解度チェック」ボタンから、研修クイズに挑戦してください。">クイズ機能やトラブル対応ガイドが追加されました。各セクション末尾の「理解度チェック」ボタンから、研修クイズに挑戦してください。</div>
+                        </div>
+                        <div class="notice-actions" data-notice-id="notice-001">
+                            <button class="notice-confirm-btn" onclick="confirmNotice(this, 'notice-001')">確認しました</button>
+                        </div>
+                    </div>
+                    <div class="notice-card" data-notice-idx="2">
+                        <div class="notice-priority normal">連絡</div>
+                        <div class="notice-body">
+                            <div class="notice-title">清掃チェックリストを更新しました <span class="notice-date-inline">2026-02-10</span></div>
+                            <div class="notice-text" data-full-text="CL作業の清掃チェックリストに新しい項目を追加しています。確認をお願いします。">CL作業の清掃チェックリストに新しい項目を追加しています。確認をお願いします。</div>
+                        </div>
+                        <div class="notice-actions" data-notice-id="notice-002">
+                            <button class="notice-confirm-btn" onclick="confirmNotice(this, 'notice-002')">確認しました</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="notice-footer">
+                    <a href="#" id="showAllNoticesLink" class="notice-all-link">お知らせ一覧を確認する</a>
+                </div>
+            </div>
         </div>
 
         <!-- お知らせ一覧（専用表示エリア） -->
@@ -3980,6 +3992,7 @@
             { name: '清水', pin: '0000' },
             { name: '新井', pin: '0000' },
             { name: '前保', pin: '0000' },
+            { name: '遠藤', pin: '0000' },
         ];
 
         // スタッフPINの取得（localStorage優先、なければデフォルト）
@@ -4148,6 +4161,7 @@
 
         function onLoginSuccess() {
             if (typeof loadNoticeStatus === 'function') loadNoticeStatus();
+            if (typeof updateBellBadge === 'function') updateBellBadge();
             if (typeof updateTrainingDashboard === 'function') updateTrainingDashboard();
             if (typeof updateQuizButtons === 'function') updateQuizButtons();
             if (typeof updateAdminDashboard === 'function') updateAdminDashboard();
@@ -5011,7 +5025,6 @@
         // ===================================
         // お知らせ確認機能
         // ===================================
-        const managerNotice = document.getElementById('manager-notice');
         const trainingDashboard = document.getElementById('training-dashboard');
         const adminQuizDash = document.getElementById('admin-quiz-dashboard');
 
@@ -5026,6 +5039,10 @@
             // UIを更新
             const actions = btn.parentElement;
             actions.innerHTML = '<span class="notice-confirmed">&#10003; 確認済み</span>';
+            // ベルバッジを更新
+            updateBellBadge();
+            // ドロップダウン内の同じお知らせも更新
+            updateBellDropdownList();
         }
 
         // 既に確認済みのお知らせを反映（ユーザー切り替え対応）
@@ -5047,6 +5064,102 @@
             });
         }
         loadNoticeStatus();
+
+        // ===================================
+        // ベルボタン制御（お知らせドロップダウン）
+        // ===================================
+        const bellBtn = document.getElementById('bellBtn');
+        const bellDropdown = document.getElementById('bellDropdown');
+        const bellBadge = document.getElementById('bellBadge');
+        const bellDropdownList = document.getElementById('bellDropdownList');
+
+        // 未確認お知らせ数を取得
+        function getUnconfirmedCount() {
+            const user = getCurrentUser();
+            if (!user) return 0;
+            const key = 'studygo_notices_' + user;
+            const confirmedData = JSON.parse(localStorage.getItem(key) || '{}');
+            const allNoticeIds = [];
+            document.querySelectorAll('#noticeList .notice-actions[data-notice-id]').forEach(el => {
+                allNoticeIds.push(el.dataset.noticeId);
+            });
+            return allNoticeIds.filter(id => !confirmedData[id]).length;
+        }
+
+        // ベルバッジ更新
+        function updateBellBadge() {
+            const count = getUnconfirmedCount();
+            if (count > 0) {
+                bellBadge.textContent = count;
+                bellBadge.style.display = '';
+            } else {
+                bellBadge.style.display = 'none';
+            }
+        }
+
+        // ドロップダウンにお知らせカード一覧を構築
+        function updateBellDropdownList() {
+            bellDropdownList.innerHTML = '';
+            const user = getCurrentUser();
+            const key = user ? 'studygo_notices_' + user : '';
+            const confirmedData = user ? JSON.parse(localStorage.getItem(key) || '{}') : {};
+            const cards = document.querySelectorAll('#noticeList .notice-card');
+            cards.forEach(card => {
+                const actionsEl = card.querySelector('.notice-actions[data-notice-id]');
+                const noticeId = actionsEl ? actionsEl.dataset.noticeId : '';
+                const isConfirmed = user && confirmedData[noticeId];
+                const title = card.querySelector('.notice-title');
+                const priority = card.querySelector('.notice-priority');
+                const item = document.createElement('div');
+                item.className = 'bell-dropdown-item' + (isConfirmed ? ' confirmed' : '');
+                item.innerHTML =
+                    '<div class="bell-item-header">' +
+                        '<span class="bell-item-priority ' + (priority ? priority.className.replace('notice-priority', '').trim() : '') + '">' +
+                            (priority ? priority.textContent : '') +
+                        '</span>' +
+                        '<span class="bell-item-title">' + (title ? title.textContent : '') + '</span>' +
+                    '</div>' +
+                    (isConfirmed
+                        ? '<span class="notice-confirmed">&#10003; 確認済み</span>'
+                        : (user
+                            ? '<button class="notice-confirm-btn bell-confirm-btn" onclick="confirmNotice(this, \'' + noticeId + '\')">確認しました</button>'
+                            : '<span style="font-size:0.75rem;color:#999;">ログインしてください</span>'));
+                bellDropdownList.appendChild(item);
+            });
+        }
+
+        // ベルボタンのクリックでドロップダウン開閉
+        bellBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const isOpen = bellDropdown.classList.contains('open');
+            if (isOpen) {
+                bellDropdown.classList.remove('open');
+            } else {
+                updateBellDropdownList();
+                bellDropdown.classList.add('open');
+            }
+        });
+
+        // ドロップダウン内クリックは伝播させない
+        bellDropdown.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // ドロップダウン外クリックで閉じる
+        document.addEventListener('click', function() {
+            bellDropdown.classList.remove('open');
+        });
+
+        // ドロップダウン内の「お知らせ一覧を確認する」リンク
+        document.getElementById('bellShowAllLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            bellDropdown.classList.remove('open');
+            // showAllNoticesLinkと同じ処理
+            document.getElementById('showAllNoticesLink').click();
+        });
+
+        // 初期バッジ更新
+        updateBellBadge();
 
         // ===================================
         // お知らせ表示制御（TOP: 最新1件のみ、テキスト省略）
@@ -5101,7 +5214,6 @@
         document.getElementById('showAllNoticesLink').addEventListener('click', function(e) {
             e.preventDefault();
             // TOP要素をすべて非表示
-            if (managerNotice) managerNotice.style.display = 'none';
             if (trainingDashboard) trainingDashboard.style.display = 'none';
             if (adminQuizDash) adminQuizDash.style.display = 'none';
             if (quickAccess) quickAccess.style.display = 'none';
@@ -5117,7 +5229,6 @@
         // 「TOPに戻る」ボタン
         document.getElementById('backToTopFromNotices').addEventListener('click', function() {
             noticeListPage.style.display = 'none';
-            if (managerNotice) managerNotice.style.display = '';
             if (trainingDashboard) trainingDashboard.style.display = '';
             if (adminQuizDash) updateAdminDashboard();
             if (quickAccess) quickAccess.style.display = '';
@@ -5125,37 +5236,33 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // showSection時にお知らせ・研修進捗・クイックアクセス・お知らせ一覧を非表示にする（既存関数の拡張）
+        // showSection時に研修進捗・クイックアクセス・お知らせ一覧を非表示にする（既存関数の拡張）
         const originalShowSection = showSection;
         showSection = function(sectionId, scroll) {
-            if (managerNotice) managerNotice.style.display = 'none';
             if (trainingDashboard) trainingDashboard.style.display = 'none';
             if (adminQuizDash) adminQuizDash.style.display = 'none';
             if (noticeListPage) noticeListPage.style.display = 'none';
             originalShowSection(sectionId, scroll);
         };
 
-        // TOP画面ボタン拡張：お知らせと研修進捗を再表示
+        // TOP画面ボタン拡張：研修進捗を再表示
         const topButtonEl = document.getElementById('topButton');
         const originalTopClick = topButtonEl.onclick;
         topButtonEl.addEventListener('click', function() {
-            if (managerNotice) managerNotice.style.display = '';
             if (trainingDashboard) trainingDashboard.style.display = '';
             if (adminQuizDash) updateAdminDashboard();
             if (noticeListPage) noticeListPage.style.display = 'none';
         });
 
-        // 検索時にお知らせを非表示
+        // 検索時に研修進捗を非表示
         const origSearchInput = document.getElementById('searchInput');
         origSearchInput.addEventListener('input', function() {
             const q = this.value.trim();
             if (q !== '') {
-                if (managerNotice) managerNotice.style.display = 'none';
                 if (trainingDashboard) trainingDashboard.style.display = 'none';
                 if (adminQuizDash) adminQuizDash.style.display = 'none';
                 if (noticeListPage) noticeListPage.style.display = 'none';
             } else {
-                if (managerNotice) managerNotice.style.display = '';
                 if (trainingDashboard) trainingDashboard.style.display = '';
                 if (adminQuizDash) updateAdminDashboard();
             }
