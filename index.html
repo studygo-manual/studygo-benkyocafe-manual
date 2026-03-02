@@ -2163,12 +2163,19 @@
                             <div class="pattern-step step-common">
                                 <div class="pattern-step-num staff">8</div>
                                 <div class="pattern-step-body">
+                                    <h5 class="staff-label">新規契約の確認（会員番号） <span class="pattern-step-badge badge-common">共通</span></h5>
+                                    <p>管理画面で契約状態を確認。別メールで届く<strong>会員番号</strong>を確認し、メモ欄に記入</p>
+                                </div>
+                            </div>
+                            <div class="pattern-step step-common">
+                                <div class="pattern-step-num staff">9</div>
+                                <div class="pattern-step-body">
                                     <h5 class="staff-label">利用説明 <span class="pattern-step-badge badge-common">共通</span></h5>
                                     <p>休会・解約の説明、緊急連絡先、スマートロック操作の実演</p>
                                 </div>
                             </div>
                             <div class="pattern-step step-common">
-                                <div class="pattern-step-num both">9</div>
+                                <div class="pattern-step-num both">10</div>
                                 <div class="pattern-step-body">
                                     <h5 class="both-label">初回来店手続き <span class="pattern-step-badge badge-common">共通</span></h5>
                                     <ul>
@@ -2181,13 +2188,13 @@
                                 </div>
                             </div>
                             <div class="pattern-step step-common">
-                                <div class="pattern-step-num staff">10</div>
+                                <div class="pattern-step-num staff">11</div>
                                 <div class="pattern-step-body">
                                     <h5 class="staff-label">ご案内資料のお渡し <span class="pattern-step-badge badge-common">共通</span></h5>
                                 </div>
                             </div>
                             <div class="pattern-step step-common">
-                                <div class="pattern-step-num staff">11</div>
+                                <div class="pattern-step-num staff">12</div>
                                 <div class="pattern-step-body">
                                     <h5 class="staff-label">入会報告 <span class="pattern-step-badge badge-common">共通</span></h5>
                                     <p>チャットワーク【入会情報】に会員番号・氏名を報告</p>
@@ -2222,18 +2229,18 @@
                                 </div>
                             </div>
                             <div class="pattern-divider">&#9660; オンライン完結 ／ 以降スタッフ対応 &#9660;</div>
-                            <div class="pattern-step step-unique">
+                            <div class="pattern-step step-common">
                                 <div class="pattern-step-num staff">4</div>
                                 <div class="pattern-step-body">
-                                    <h5 class="staff-label">新規契約の確認 <span class="pattern-step-badge badge-unique">オンラインのみ</span></h5>
-                                    <p>契約状態を確認。別メールで<strong>会員番号</strong>を確認</p>
+                                    <h5 class="staff-label">新規契約の確認（会員番号） <span class="pattern-step-badge badge-common">共通</span></h5>
+                                    <p>管理画面で契約状態を確認。別メールで届く<strong>会員番号</strong>を確認し、メモ欄に記入</p>
                                 </div>
                             </div>
                             <div class="pattern-step step-unique">
                                 <div class="pattern-step-num staff">5</div>
                                 <div class="pattern-step-body">
                                     <h5 class="staff-label">来店手続きの案内 <span class="pattern-step-badge badge-unique">オンラインのみ</span></h5>
-                                    <p>メッセージで来店案内・アポイント取得</p>
+                                    <p>会員番号メールにご来店案内が含まれているため、<strong>お客様からの返信を待つだけでOK</strong>です。返信があったら来店日時を確定してください。</p>
                                 </div>
                             </div>
                             <div class="pattern-step step-unique">
@@ -2876,6 +2883,50 @@
                         <li><strong>入会報告</strong>：チャットワーク【入会情報】新宿S・BPスタジオ に<strong>会員番号</strong>と<strong>氏名</strong>を必ず報告してください。</li>
                     </ul>
                 </div>
+
+                <!-- 会員番号メールテンプレート -->
+                <details style="margin-top: 16px;">
+                    <summary style="cursor: pointer; color: #1565C0; font-weight: bold; font-size: 0.9rem;">会員番号メールの内容を確認する</summary>
+                    <div style="margin-top: 12px;">
+                        <p style="font-size: 0.85rem; color: #666; margin-bottom: 12px;">契約が完了すると、以下の2通のメールが自動送信されます。</p>
+
+                        <div style="background: #E3F2FD; border-radius: 8px; padding: 14px 18px; margin-bottom: 14px;">
+                            <div style="font-size: 0.78rem; font-weight: bold; color: #1565C0; margin-bottom: 8px;">お客様宛メール</div>
+                            <div style="font-size: 0.75rem; color: #666; margin-bottom: 4px;">送信元：スタジオのメールアドレス（BP: benkyo-cafe.sbp@b-pt.jp / 新宿: benkyocafe.shinjuku@gmail.com）</div>
+                            <div style="background: white; border-radius: 6px; padding: 14px 16px; font-size: 0.82rem; line-height: 1.7;">
+                                <div style="font-weight: bold; margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 8px;">件名：【勉強カフェ】会員番号のお知らせ</div>
+                                <p>○○ 様</p>
+                                <p>この度はプランのご契約ありがとうございます。<br>勉強カフェの会員番号をお知らせいたします。</p>
+                                <div style="background: #F5F5F5; border-radius: 4px; padding: 10px 16px; margin: 10px 0; text-align: center; font-size: 1rem; font-weight: bold;">会員番号: BCBP○○ / BCS○○</div>
+                                <p style="font-size: 0.8rem;">【ご契約内容】<br>プラン名: ○○プラン<br>利用開始日: ○○○○-○○-○○</p>
+                                <div style="background: #FFF3E0; border: 2px solid #E65100; border-radius: 6px; padding: 12px 16px; margin-top: 12px;">
+                                    <p style="font-weight: bold; color: #E65100; margin-bottom: 6px; font-size: 0.9rem;">【オンラインで契約された方へ】</p>
+                                    <p style="font-size: 0.8rem;">初回ご利用前の手続きのため、下記のお時間内でご来店いただける日時をご連絡ください。</p>
+                                    <div style="background: white; border-radius: 4px; padding: 8px; text-align: center; font-weight: bold; margin: 6px 0; font-size: 0.85rem;">
+                                        平日：17:00〜21:00 ／ 土日祝：12:00〜21:00
+                                    </div>
+                                    <p style="font-size: 0.8rem;">ご来店の際は、受付スタッフへ「契約済み」である旨をお伝えください。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="background: #F3E5F5; border-radius: 8px; padding: 14px 18px;">
+                            <div style="font-size: 0.78rem; font-weight: bold; color: #6A1B9A; margin-bottom: 8px;">スタジオ宛メール</div>
+                            <div style="font-size: 0.75rem; color: #666; margin-bottom: 4px;">送信元：info.studygo@b-pt.jp</div>
+                            <div style="background: white; border-radius: 6px; padding: 14px 16px; font-size: 0.82rem; line-height: 1.7;">
+                                <div style="font-weight: bold; margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 8px;">件名：【契約通知】○○ 様 - 会員番号 BCBP○○</div>
+                                <p>スタッフ各位</p>
+                                <p>新規プラン契約がありました。会員番号を割り当て済みです。</p>
+                                <div style="background: #F5F5F5; border-radius: 4px; padding: 10px 16px; margin: 10px 0; text-align: center; font-size: 1rem; font-weight: bold;">会員番号: BCBP○○ / BCS○○</div>
+                                <p style="font-size: 0.8rem;">【契約情報】<br>お客様名: ○○<br>メールアドレス: ○○@example.com<br>プラン名: ○○プラン<br>利用開始日: ○○○○-○○-○○<br>決済料金: ○,○○○円</p>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 12px; padding: 10px 14px; background: #E8F5E9; border-radius: 6px; font-size: 0.82rem;">
+                            <strong>ポイント：</strong>お客様宛メールに来店案内（受付可能時間・来店手続きの依頼）が含まれているため、オンライン契約の場合は<strong>お客様からの返信を待つだけ</strong>でOKです。
+                        </div>
+                    </div>
+                </details>
             </div>
 
             <!-- ③ 店舗管理 -->
