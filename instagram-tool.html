@@ -93,10 +93,13 @@ body { font-family: 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif; bac
 }
 .canvas-preview:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
 
-.img-options { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
-.img-options .btn { font-size: 11px; padding: 5px 10px; }
-.theme-btn { border: 2px solid transparent !important; }
-.theme-btn.active { border-color: #333 !important; }
+.img-options { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; max-width: 340px; }
+.theme-dot {
+  width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent;
+  cursor: pointer; transition: all 0.15s; padding: 0;
+}
+.theme-dot:hover { transform: scale(1.2); }
+.theme-dot.active { border-color: #333; box-shadow: 0 0 0 2px rgba(0,0,0,0.2); }
 
 .settings-panel {
   background: #fff; border-radius: 12px; padding: 20px; margin-bottom: 20px;
@@ -759,14 +762,37 @@ ${areaTag}
 // 画像生成テーマ
 // ============================================================
 const THEMES = {
-  green: { bg: '#1b5e20', accent: '#6abf69', text: '#fff', sub: '#c8e6c9', label: 'グリーン' },
-  lightgreen: { bg: '#33691e', accent: '#8bc34a', text: '#fff', sub: '#dcedc8', label: 'ライトグリーン' },
-  white: { bg: '#ffffff', accent: '#4a8c3f', text: '#333', sub: '#666', label: 'ホワイト' },
-  dark: { bg: '#212121', accent: '#6abf69', text: '#fff', sub: '#e0e0e0', label: 'ダーク' },
-  navy: { bg: '#1a237e', accent: '#6abf69', text: '#fff', sub: '#bbdefb', label: 'ネイビー' },
-  orange: { bg: '#e65100', accent: '#ffb74d', text: '#fff', sub: '#ffe0b2', label: 'オレンジ' },
+  green:      { bg: '#1b5e20', accent: '#6abf69', text: '#fff', sub: '#c8e6c9' },
+  lightgreen: { bg: '#33691e', accent: '#8bc34a', text: '#fff', sub: '#dcedc8' },
+  teal:       { bg: '#004d40', accent: '#4db6ac', text: '#fff', sub: '#b2dfdb' },
+  navy:       { bg: '#1a237e', accent: '#5c6bc0', text: '#fff', sub: '#c5cae9' },
+  blue:       { bg: '#0d47a1', accent: '#42a5f5', text: '#fff', sub: '#bbdefb' },
+  skyblue:    { bg: '#01579b', accent: '#4fc3f7', text: '#fff', sub: '#b3e5fc' },
+  purple:     { bg: '#4a148c', accent: '#ab47bc', text: '#fff', sub: '#e1bee7' },
+  pink:       { bg: '#880e4f', accent: '#f06292', text: '#fff', sub: '#f8bbd0' },
+  red:        { bg: '#b71c1c', accent: '#ef5350', text: '#fff', sub: '#ffcdd2' },
+  orange:     { bg: '#e65100', accent: '#ffb74d', text: '#fff', sub: '#ffe0b2' },
+  brown:      { bg: '#3e2723', accent: '#a1887f', text: '#fff', sub: '#d7ccc8' },
+  dark:       { bg: '#212121', accent: '#6abf69', text: '#fff', sub: '#e0e0e0' },
+  gray:       { bg: '#37474f', accent: '#78909c', text: '#fff', sub: '#cfd8dc' },
+  white:      { bg: '#ffffff', accent: '#4a8c3f', text: '#333', sub: '#666' },
 };
 let currentTheme = 'green';
+
+// カスタムテキスト（店舗ごと）
+const customTexts = {};
+
+function updateCustomText(id) {
+  const input = document.getElementById(`customText-${id}`);
+  customTexts[id] = input ? input.value : '';
+  const store = STORES.find(s => s.id === id);
+  const card = document.querySelector(`.store-card[data-id="${id}"]`);
+  const activeDot = card ? card.querySelector('.theme-dot.active') : null;
+  let theme = currentTheme;
+  if (activeDot) { const t = activeDot.getAttribute('title'); if (t) theme = t; }
+  const canvas = document.getElementById(`canvas-${id}`);
+  drawStoreImage(canvas, store, theme, 340);
+}
 
 // ロゴ画像の読み込み
 const LOGO_IMG = new Image();
@@ -973,6 +999,16 @@ function drawStoreImage(canvas, store, theme, size) {
     ctx.fillText(store.month, w * 0.5, boxY + boxH * 0.72);
   }
 
+  // カスタムテキスト（料金ボックスとURLの間）
+  const customText = customTexts[store.id] || '';
+  if (customText) {
+    const ctSize = Math.round(w * 0.028);
+    ctx.font = `bold ${ctSize}px 'Hiragino Sans', 'Noto Sans JP', sans-serif`;
+    ctx.fillStyle = t.accent;
+    ctx.textAlign = 'center';
+    ctx.fillText(customText, w / 2, boxY + boxH + h * 0.045);
+  }
+
   // 下部: URL
   const footSize = Math.round(w * 0.02);
   ctx.font = `${footSize}px 'Segoe UI', sans-serif`;
@@ -1160,9 +1196,10 @@ function renderStores() {
           </div>
           <div class="img-options">
             ${Object.entries(THEMES).map(([k, v]) =>
-              `<button class="btn theme-btn ${k === currentTheme ? 'active' : ''}" style="background:${v.bg};color:${v.text}" onclick="changeTheme(${store.id},'${k}',this)">${v.label}</button>`
+              `<button class="theme-dot ${k === currentTheme ? 'active' : ''}" style="background:${v.bg};" title="${k}" onclick="changeTheme(${store.id},'${k}',this)"></button>`
             ).join('')}
           </div>
+          <input type="text" id="customText-${store.id}" placeholder="ひとことコメントを入力（画像下部に表示）" style="width:100%;max-width:340px;padding:6px 10px;border:1px solid #ccc;border-radius:6px;font-size:12px;" oninput="updateCustomText(${store.id})">
           <button class="btn btn-dl" onclick="downloadImage(${store.id})">TOP画像DL (1080x1080)</button>
         </div>
         <div class="card-img-col">
@@ -1252,9 +1289,9 @@ function handleStorePhoto(id, input) {
       storePhotos[id] = img;
       const canvas = document.getElementById(`canvas-${id}`);
       const card = document.querySelector(`.store-card[data-id="${id}"]`);
-      const activeBtn = card ? card.querySelector('.theme-btn.active') : null;
+      const activeDot = card ? card.querySelector('.theme-dot.active') : null;
       let theme = currentTheme;
-      if (activeBtn) { const m = activeBtn.getAttribute('onclick').match(/'(\w+)'/); if (m) theme = m[1]; }
+      if (activeDot) { const t = activeDot.getAttribute('title'); if (t) theme = t; }
       drawStoreImage(canvas, STORES.find(s => s.id === id), theme, 340);
       document.getElementById(`clearStorePhoto-${id}`).style.display = '';
     };
@@ -1267,9 +1304,9 @@ function clearStorePhoto(id) {
   delete storePhotos[id];
   const canvas = document.getElementById(`canvas-${id}`);
   const card = document.querySelector(`.store-card[data-id="${id}"]`);
-  const activeBtn = card ? card.querySelector('.theme-btn.active') : null;
+  const activeDot = card ? card.querySelector('.theme-dot.active') : null;
   let theme = currentTheme;
-  if (activeBtn) { const m = activeBtn.getAttribute('onclick').match(/'(\w+)'/); if (m) theme = m[1]; }
+  if (activeDot) { const t = activeDot.getAttribute('title'); if (t) theme = t; }
   drawStoreImage(canvas, STORES.find(s => s.id === id), theme, 340);
   document.getElementById(`clearStorePhoto-${id}`).style.display = 'none';
 }
@@ -1341,7 +1378,7 @@ function changeTheme(id, theme, btn) {
   const canvas = document.getElementById(`canvas-${id}`);
   drawStoreImage(canvas, store, theme, 340);
   const card = btn.closest('.card-img-col');
-  card.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+  card.querySelectorAll('.theme-dot').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 }
 
@@ -1349,13 +1386,9 @@ function downloadImage(id) {
   const store = STORES.find(s => s.id === id);
   const offscreen = document.getElementById('offscreenCanvas');
   const card = document.querySelector(`.store-card[data-id="${id}"]`);
-  const activeBtn = card ? card.querySelector('.theme-btn.active') : null;
+  const activeDot = card ? card.querySelector('.theme-dot.active') : null;
   let theme = currentTheme;
-  if (activeBtn) {
-    const onclick = activeBtn.getAttribute('onclick');
-    const m = onclick.match(/'(\w+)'/);
-    if (m) theme = m[1];
-  }
+  if (activeDot) { const t = activeDot.getAttribute('title'); if (t) theme = t; }
   drawStoreImage(offscreen, store, theme, 1080);
   const link = document.createElement('a');
   link.download = `StudyGO_${store.name.replace(/[\s　\/\\]/g, '_')}.png`;
