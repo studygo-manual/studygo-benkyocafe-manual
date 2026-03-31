@@ -462,19 +462,13 @@ function generatePostText(store) {
   };
   areaTag = areaMap[region] || '';
 
-  // カテゴリ情報
-  let catLabel = '';
-  if (store.cat === '自習室専業') catLabel = '自習室';
-  else if (store.cat === 'カフェ') catLabel = 'カフェ';
-  else catLabel = 'コワーキングスペース';
-
   // 料金情報
   let priceLines = [];
   if (store.drop) priceLines.push(`ドロップイン ${store.drop}`);
   if (store.month) priceLines.push(`月額 ${store.month}`);
   let priceText = priceLines.length > 0 ? priceLines.join(' / ') : '詳細はリンクから';
 
-  let text = `【${catLabel}紹介】${store.name}
+  let text = `【勉強場所紹介】${store.name}
 
 スタディGO掲載店舗をご紹介します！
 
@@ -518,6 +512,9 @@ LOGO_IMG.onload = () => { logoLoaded = true; renderStores(); };
 LOGO_IMG.onerror = () => { console.warn('ロゴ画像が読み込めませんでした'); logoLoaded = false; renderStores(); };
 LOGO_IMG.src = 'studygo-icon.png';
 
+// 店舗写真データ（生成画像用）
+const storePhotos = {}; // { storeId: Image }
+
 function drawStoreImage(canvas, store, theme, size) {
   const t = THEMES[theme];
   const isWhite = (theme === 'white');
@@ -525,145 +522,186 @@ function drawStoreImage(canvas, store, theme, size) {
   const w = size, h = size;
   canvas.width = w; canvas.height = h;
 
-  // 背景グラデーション
-  const grad = ctx.createLinearGradient(0, 0, w, h);
-  grad.addColorStop(0, t.bg);
-  grad.addColorStop(1, isWhite ? '#f5f5f5' : adjustColor(t.bg, 30));
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, w, h);
+  const photoImg = storePhotos[store.id];
+  const hasPhoto = !!photoImg;
 
-  // 装飾パターン（斜線）
-  ctx.strokeStyle = isWhite ? 'rgba(0,0,0,0.03)' : 'rgba(255,255,255,0.05)';
-  ctx.lineWidth = 2;
-  for (let i = -h; i < w + h; i += 40) {
-    ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i + h, h); ctx.stroke();
-  }
+  // === 上半分: 店舗写真エリア (48%) ===
+  const photoH = Math.round(h * 0.48);
 
-  // 上部帯
-  ctx.fillStyle = isWhite ? 'rgba(74,140,63,0.06)' : 'rgba(255,255,255,0.1)';
-  ctx.fillRect(0, 0, w, h * 0.18);
+  if (hasPhoto) {
+    // 写真をカバーフィットで描画
+    const imgRatio = photoImg.width / photoImg.height;
+    const areaRatio = w / photoH;
+    let sx = 0, sy = 0, sw = photoImg.width, sh = photoImg.height;
+    if (imgRatio > areaRatio) {
+      sw = photoImg.height * areaRatio;
+      sx = (photoImg.width - sw) / 2;
+    } else {
+      sh = photoImg.width / areaRatio;
+      sy = (photoImg.height - sh) / 2;
+    }
+    ctx.drawImage(photoImg, sx, sy, sw, sh, 0, 0, w, photoH);
 
-  // ロゴ画像を描画
-  if (logoLoaded) {
-    const logoH = Math.round(h * 0.11);
-    const logoW = Math.round(logoH * (LOGO_IMG.naturalWidth / LOGO_IMG.naturalHeight));
-    const logoX = w * 0.03;
-    const logoY = h * 0.02;
-    ctx.drawImage(LOGO_IMG, logoX, logoY, logoW, logoH);
+    // 写真下部にグラデーションオーバーレイ（情報エリアとなじませる）
+    const fadeGrad = ctx.createLinearGradient(0, photoH - h * 0.08, 0, photoH);
+    fadeGrad.addColorStop(0, 'rgba(0,0,0,0)');
+    fadeGrad.addColorStop(1, isWhite ? 'rgba(255,255,255,0.6)' : hexToRgba(t.bg, 0.6));
+    ctx.fillStyle = fadeGrad;
+    ctx.fillRect(0, photoH - h * 0.08, w, h * 0.08);
   } else {
-    // フォールバック: テキスト表示
-    const logoSize = Math.round(w * 0.04);
-    ctx.font = `bold ${logoSize}px 'Segoe UI', sans-serif`;
-    ctx.fillStyle = t.accent;
-    ctx.textAlign = 'left';
-    ctx.fillText('スタディGO', w * 0.06, h * 0.09);
+    // 写真なし: プレースホルダー
+    const grad = ctx.createLinearGradient(0, 0, w, photoH);
+    grad.addColorStop(0, isWhite ? '#e8e8e8' : adjustColor(t.bg, 40));
+    grad.addColorStop(1, isWhite ? '#d0d0d0' : adjustColor(t.bg, 20));
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, w, photoH);
+
+    // カメラアイコン風プレースホルダー
+    ctx.fillStyle = isWhite ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)';
+    const iconSize = w * 0.08;
+    const cx = w / 2, cy = photoH / 2;
+    roundRect(ctx, cx - iconSize, cy - iconSize * 0.7, iconSize * 2, iconSize * 1.4, 8);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(cx, cy, iconSize * 0.4, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = isWhite ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.15)';
+    const phSize = Math.round(w * 0.025);
+    ctx.font = `${phSize}px 'Hiragino Sans', sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText('下の「店舗写真を選択」から写真を追加', cx, cy + iconSize * 1.2);
   }
 
-  // 「掲載店舗紹介」
-  const subLogoSize = Math.round(w * 0.035);
-  ctx.font = `bold ${subLogoSize}px 'Hiragino Sans', 'Noto Sans JP', sans-serif`;
-  ctx.fillStyle = isWhite ? '#666' : t.sub;
-  ctx.textAlign = 'right';
-  ctx.fillText('掲載店舗紹介', w * 0.94, h * 0.10);
-
-  // アクセントライン（StudyGOブランドグリーン）
-  ctx.fillStyle = t.accent;
-  ctx.fillRect(w * 0.06, h * 0.15, w * 0.88, 3);
-
-  // カテゴリラベル
-  let catLabel = store.cat === '自習室専業' ? '自習室' : store.cat === 'カフェ' ? 'カフェ' : 'コワーキング';
-  const catSize = Math.round(w * 0.032);
-  ctx.font = `bold ${catSize}px 'Hiragino Sans', 'Noto Sans JP', sans-serif`;
-  const catW = ctx.measureText(catLabel).width + w * 0.04;
-  const catH = catSize * 1.8;
-  const catX = w * 0.06;
-  const catY = h * 0.20;
-  roundRect(ctx, catX, catY, catW, catH, 6);
-  ctx.fillStyle = t.accent;
+  // 写真上に「勉強場所紹介」ラベル（左上）
+  const labelSize = Math.round(w * 0.028);
+  const labelText = '勉強場所紹介';
+  ctx.font = `bold ${labelSize}px 'Hiragino Sans', 'Noto Sans JP', sans-serif`;
+  const lblW = ctx.measureText(labelText).width + w * 0.04;
+  const lblH = labelSize * 2;
+  const lblX = w * 0.04;
+  const lblY = w * 0.04;
+  roundRect(ctx, lblX, lblY, lblW, lblH, 6);
+  ctx.fillStyle = 'rgba(74,140,63,0.9)';
   ctx.fill();
-  ctx.fillStyle = isWhite ? '#fff' : t.bg;
+  ctx.fillStyle = '#fff';
   ctx.textAlign = 'left';
-  ctx.fillText(catLabel, catX + w * 0.02, catY + catH * 0.7);
+  ctx.fillText(labelText, lblX + w * 0.02, lblY + lblH * 0.68);
 
-  // 店舗名（自動改行）
-  const nameSize = Math.round(w * 0.058);
+  // 写真上にロゴ（右上）
+  if (logoLoaded) {
+    const lh = Math.round(h * 0.07);
+    const lw = Math.round(lh * (LOGO_IMG.naturalWidth / LOGO_IMG.naturalHeight));
+    const lx = w - lw - w * 0.04;
+    const ly = w * 0.03;
+    const pad = Math.round(lw * 0.1);
+    roundRect(ctx, lx - pad, ly - pad, lw + pad * 2, lh + pad * 2, 6);
+    ctx.fillStyle = 'rgba(255,255,255,0.88)';
+    ctx.fill();
+    ctx.drawImage(LOGO_IMG, lx, ly, lw, lh);
+  }
+
+  // === 下半分: 情報エリア (52%) ===
+  const infoY = photoH;
+  const infoH = h - photoH;
+
+  // 情報エリア背景
+  const infoGrad = ctx.createLinearGradient(0, infoY, 0, h);
+  infoGrad.addColorStop(0, t.bg);
+  infoGrad.addColorStop(1, isWhite ? '#f5f5f5' : adjustColor(t.bg, 20));
+  ctx.fillStyle = infoGrad;
+  ctx.fillRect(0, infoY, w, infoH);
+
+  // 装飾パターン（斜線、情報エリアのみ）
+  ctx.strokeStyle = isWhite ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.04)';
+  ctx.lineWidth = 1;
+  for (let i = -infoH; i < w + infoH; i += 30) {
+    ctx.beginPath(); ctx.moveTo(i, infoY); ctx.lineTo(i + infoH, h); ctx.stroke();
+  }
+
+  // 店舗名
+  const nameSize = Math.round(w * 0.05);
   ctx.font = `bold ${nameSize}px 'Hiragino Sans', 'Noto Sans JP', sans-serif`;
   ctx.fillStyle = t.text;
   ctx.textAlign = 'left';
-  const nameLines = wrapText(ctx, store.name, w * 0.82);
-  let nameY = h * 0.34;
-  nameLines.forEach(line => {
+  const nameLines = wrapText(ctx, store.name, w * 0.88);
+  let nameY = infoY + h * 0.06;
+  nameLines.slice(0, 2).forEach(line => {
     ctx.fillText(line, w * 0.06, nameY);
-    nameY += nameSize * 1.3;
+    nameY += nameSize * 1.25;
   });
 
   // 区切り線
-  const divY = nameY + h * 0.02;
   ctx.fillStyle = t.accent;
-  ctx.fillRect(w * 0.06, divY, w * 0.2, 2);
+  ctx.fillRect(w * 0.06, nameY + h * 0.01, w * 0.15, 2);
 
   // アクセス情報
-  const accSize = Math.round(w * 0.03);
+  const accSize = Math.round(w * 0.027);
   ctx.font = `${accSize}px 'Hiragino Sans', 'Noto Sans JP', sans-serif`;
   ctx.fillStyle = isWhite ? '#666' : t.sub;
   const accLines = wrapText(ctx, store.access, w * 0.82);
-  let accY = divY + h * 0.06;
-  accLines.slice(0, 3).forEach((line, i) => {
+  let accY = nameY + h * 0.055;
+  accLines.slice(0, 2).forEach((line, i) => {
     ctx.fillText((i === 0 ? '\u{1F689} ' : '    ') + line, w * 0.06, accY);
     accY += accSize * 1.5;
   });
 
   // 料金ボックス
-  const boxY = h * 0.70;
-  const boxH = h * 0.16;
-  roundRect(ctx, w * 0.06, boxY, w * 0.88, boxH, 12);
+  const boxY = h - h * 0.18;
+  const boxH = h * 0.12;
+  roundRect(ctx, w * 0.06, boxY, w * 0.88, boxH, 10);
   ctx.fillStyle = isWhite ? 'rgba(74,140,63,0.06)' : 'rgba(255,255,255,0.08)';
   ctx.fill();
-  ctx.strokeStyle = isWhite ? 'rgba(74,140,63,0.2)' : 'rgba(255,255,255,0.2)';
+  ctx.strokeStyle = isWhite ? 'rgba(74,140,63,0.2)' : 'rgba(255,255,255,0.15)';
   ctx.lineWidth = 1;
   ctx.stroke();
 
-  const priceSize = Math.round(w * 0.035);
-  const priceLabelSize = Math.round(w * 0.025);
+  const priceSize = Math.round(w * 0.032);
+  const priceLabelSize = Math.round(w * 0.022);
   ctx.textAlign = 'center';
 
   if (store.drop && store.month) {
     ctx.fillStyle = isWhite ? '#666' : t.sub;
     ctx.font = `${priceLabelSize}px 'Hiragino Sans', sans-serif`;
-    ctx.fillText('ドロップイン', w * 0.3, boxY + boxH * 0.35);
+    ctx.fillText('ドロップイン', w * 0.3, boxY + boxH * 0.38);
     ctx.fillStyle = t.accent;
     ctx.font = `bold ${priceSize}px 'Hiragino Sans', sans-serif`;
-    ctx.fillText(store.drop, w * 0.3, boxY + boxH * 0.7);
-    ctx.strokeStyle = isWhite ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.2)';
+    ctx.fillText(store.drop, w * 0.3, boxY + boxH * 0.72);
+    ctx.strokeStyle = isWhite ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.15)';
     ctx.beginPath(); ctx.moveTo(w * 0.5, boxY + boxH * 0.15); ctx.lineTo(w * 0.5, boxY + boxH * 0.85); ctx.stroke();
     ctx.fillStyle = isWhite ? '#666' : t.sub;
     ctx.font = `${priceLabelSize}px 'Hiragino Sans', sans-serif`;
-    ctx.fillText('月額プラン', w * 0.7, boxY + boxH * 0.35);
+    ctx.fillText('月額プラン', w * 0.7, boxY + boxH * 0.38);
     ctx.fillStyle = t.accent;
     ctx.font = `bold ${priceSize}px 'Hiragino Sans', sans-serif`;
-    ctx.fillText(store.month, w * 0.7, boxY + boxH * 0.7);
+    ctx.fillText(store.month, w * 0.7, boxY + boxH * 0.72);
   } else if (store.drop) {
     ctx.fillStyle = isWhite ? '#666' : t.sub;
     ctx.font = `${priceLabelSize}px 'Hiragino Sans', sans-serif`;
-    ctx.fillText('ドロップイン', w * 0.5, boxY + boxH * 0.35);
+    ctx.fillText('ドロップイン', w * 0.5, boxY + boxH * 0.38);
     ctx.fillStyle = t.accent;
     ctx.font = `bold ${priceSize}px 'Hiragino Sans', sans-serif`;
-    ctx.fillText(store.drop, w * 0.5, boxY + boxH * 0.7);
+    ctx.fillText(store.drop, w * 0.5, boxY + boxH * 0.72);
   } else if (store.month) {
     ctx.fillStyle = isWhite ? '#666' : t.sub;
     ctx.font = `${priceLabelSize}px 'Hiragino Sans', sans-serif`;
-    ctx.fillText('月額プラン', w * 0.5, boxY + boxH * 0.35);
+    ctx.fillText('月額プラン', w * 0.5, boxY + boxH * 0.38);
     ctx.fillStyle = t.accent;
     ctx.font = `bold ${priceSize}px 'Hiragino Sans', sans-serif`;
-    ctx.fillText(store.month, w * 0.5, boxY + boxH * 0.7);
+    ctx.fillText(store.month, w * 0.5, boxY + boxH * 0.72);
   }
 
-  // 下部: URL + ロゴ小
-  const footSize = Math.round(w * 0.022);
+  // 下部: URL
+  const footSize = Math.round(w * 0.02);
   ctx.font = `${footSize}px 'Segoe UI', sans-serif`;
-  ctx.fillStyle = isWhite ? 'rgba(0,0,0,0.3)' : 'rgba(255,255,255,0.4)';
+  ctx.fillStyle = isWhite ? 'rgba(0,0,0,0.25)' : 'rgba(255,255,255,0.35)';
   ctx.textAlign = 'center';
-  ctx.fillText(`https://studygo.jp/store?shopId=${store.id}`, w / 2, h * 0.95);
+  ctx.fillText(`https://studygo.jp/store?shopId=${store.id}`, w / 2, h * 0.97);
+}
+
+function hexToRgba(hex, alpha) {
+  const num = parseInt(hex.replace('#', ''), 16);
+  return `rgba(${(num >> 16) & 0xff},${(num >> 8) & 0xff},${num & 0xff},${alpha})`;
 }
 
 function adjustColor(hex, amount) {
@@ -759,6 +797,13 @@ function renderStores() {
       </div>
       <div class="card-right">
         <canvas class="canvas-preview" id="canvas-${store.id}" width="360" height="360"></canvas>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;align-items:center;">
+          <label class="btn" style="background:#4a8c3f;color:#fff;cursor:pointer;">
+            店舗写真を選択
+            <input type="file" accept="image/*" style="display:none" onchange="handleStorePhoto(${store.id},this)">
+          </label>
+          <button class="btn btn-edit" id="clearStorePhoto-${store.id}" style="display:none" onclick="clearStorePhoto(${store.id})">写真クリア</button>
+        </div>
         <div class="img-options">
           ${Object.entries(THEMES).map(([k, v]) =>
             `<button class="btn theme-btn ${k === currentTheme ? 'active' : ''}" style="background:${v.bg};color:${v.text}" onclick="changeTheme(${store.id},'${k}',this)">${v.label}</button>`
@@ -830,6 +875,39 @@ function editText(id) {
     el.style.background = '#fff8e1';
     el.focus();
   }
+}
+
+function handleStorePhoto(id, input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = new Image();
+    img.onload = () => {
+      storePhotos[id] = img;
+      // プレビュー再描画
+      const canvas = document.getElementById(`canvas-${id}`);
+      const card = document.querySelector(`.store-card[data-id="${id}"]`);
+      const activeBtn = card ? card.querySelector('.theme-btn.active') : null;
+      let theme = currentTheme;
+      if (activeBtn) { const m = activeBtn.getAttribute('onclick').match(/'(\w+)'/); if (m) theme = m[1]; }
+      drawStoreImage(canvas, STORES.find(s => s.id === id), theme, 360);
+      document.getElementById(`clearStorePhoto-${id}`).style.display = '';
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearStorePhoto(id) {
+  delete storePhotos[id];
+  const canvas = document.getElementById(`canvas-${id}`);
+  const card = document.querySelector(`.store-card[data-id="${id}"]`);
+  const activeBtn = card ? card.querySelector('.theme-btn.active') : null;
+  let theme = currentTheme;
+  if (activeBtn) { const m = activeBtn.getAttribute('onclick').match(/'(\w+)'/); if (m) theme = m[1]; }
+  drawStoreImage(canvas, STORES.find(s => s.id === id), theme, 360);
+  document.getElementById(`clearStorePhoto-${id}`).style.display = 'none';
 }
 
 function changeTheme(id, theme, btn) {
