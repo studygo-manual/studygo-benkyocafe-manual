@@ -49,7 +49,7 @@ body { padding-top: 125px; }
   background: #fff; border-radius: 12px; margin-bottom: 20px; overflow: hidden;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-left: 4px solid transparent;
 }
-.store-card.posted { border-left-color: #4a8c3f; }
+.store-card.posted { border-left-color: #4a8c3f; background: #f6fdf6; }
 .card-top { padding: 20px; }
 .card-images {
   display: flex; gap: 12px; padding: 0 20px 20px; flex-wrap: wrap;
@@ -1210,9 +1210,14 @@ function renderStores() {
       <div class="card-top">
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
           <div class="store-name" style="flex:1;">${store.name}</div>
-          <div style="display:flex;align-items:center;gap:6px;font-size:12px;">
-            <span style="color:${isPosted ? '#2e7d32' : '#999'};">${isPosted ? '投稿済' : '未投稿'}</span>
-            <input type="date" value="${postDate}" onchange="setPostDate(${store.id},this.value)" style="padding:4px 6px;border:1px solid #ccc;border-radius:4px;font-size:12px;">
+          <div style="display:flex;align-items:center;gap:8px;font-size:13px;">
+            ${isPosted
+              ? `<span style="background:#2e7d32;color:#fff;padding:4px 12px;border-radius:20px;font-weight:700;font-size:12px;">投稿済 ${postDate}</span>
+                 <button onclick="setPostDate(${store.id},'')" style="background:none;border:none;color:#999;cursor:pointer;font-size:11px;">取消</button>`
+              : `<span style="background:#f5f5f5;color:#999;padding:4px 12px;border-radius:20px;font-size:12px;">未投稿</span>
+                 <input type="date" onchange="setPostDate(${store.id},this.value)" style="padding:4px 6px;border:1px solid #ccc;border-radius:4px;font-size:12px;">
+                 <button onclick="setPostDate(${store.id},new Date().toISOString().split('T')[0])" class="btn btn-green" style="padding:3px 10px;font-size:11px;">今日投稿</button>`
+            }
           </div>
         </div>
         <div class="store-meta">${tags.join('')}</div>
