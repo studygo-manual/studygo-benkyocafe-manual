@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyGO Instagram投稿ツール - 掲載店舗紹介</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: #f5f5f5; color: #333; }
+
+.header {
+  background: linear-gradient(135deg, #2e7d32, #4a8c3f, #6abf69, #4a8c3f, #2e7d32);
+  color: #fff; padding: 24px; text-align: center; position: sticky; top: 0; z-index: 100;
+}
+.header h1 { font-size: 22px; margin-bottom: 8px; }
+.header p { font-size: 13px; opacity: 0.9; }
+
+.toolbar {
+  background: #fff; border-bottom: 1px solid #ddd; padding: 12px 20px;
+  display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+  position: sticky; top: 80px; z-index: 99;
+}
+.toolbar input[type="text"] {
+  flex: 1; min-width: 200px; padding: 8px 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px;
+}
+.toolbar select {
+  padding: 8px 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; background: #fff;
+}
+.toolbar .count { font-size: 13px; color: #888; margin-left: auto; }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+.store-card {
+  background: #fff; border-radius: 12px; margin-bottom: 20px; overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: flex; flex-wrap: wrap;
+}
+.card-left { flex: 1; min-width: 320px; padding: 20px; }
+.card-right { width: 400px; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 12px; border-left: 1px solid #eee; }
+
+.store-name { font-size: 18px; font-weight: 700; color: #262626; margin-bottom: 4px; }
+.store-meta { font-size: 12px; color: #888; margin-bottom: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+.store-meta span { background: #f0f0f0; padding: 2px 8px; border-radius: 10px; }
+.store-meta .tag-drop { background: #e8f5e9; color: #2e7d32; }
+.store-meta .tag-month { background: #e3f2fd; color: #1565c0; }
+.store-meta .tag-cafe { background: #fff3e0; color: #e65100; }
+.store-meta .tag-jishu { background: #f3e5f5; color: #7b1fa2; }
+
+.post-text {
+  background: #fafafa; border: 1px solid #e0e0e0; border-radius: 8px; padding: 14px;
+  font-size: 13px; line-height: 1.8; white-space: pre-wrap; word-break: break-all;
+  max-height: 300px; overflow-y: auto; position: relative;
+}
+
+.btn-row { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.btn {
+  padding: 8px 16px; border: none; border-radius: 6px; font-size: 13px; cursor: pointer;
+  font-weight: 600; transition: all 0.2s;
+}
+.btn-copy { background: #405DE6; color: #fff; }
+.btn-copy:hover { background: #3048c8; }
+.btn-copy.copied { background: #2e7d32; }
+.btn-dl { background: #E1306C; color: #fff; }
+.btn-dl:hover { background: #c1255a; }
+.btn-edit { background: #f0f0f0; color: #333; }
+.btn-edit:hover { background: #e0e0e0; }
+
+.canvas-preview {
+  border-radius: 8px; border: 1px solid #ddd;
+  width: 360px; height: 360px; cursor: pointer;
+}
+.canvas-preview:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
+
+.img-options { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+.img-options .btn { font-size: 11px; padding: 5px 10px; }
+.theme-btn { border: 2px solid transparent !important; }
+.theme-btn.active { border-color: #333 !important; }
+
+.settings-panel {
+  background: #fff; border-radius: 12px; padding: 20px; margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.settings-panel h3 { margin-bottom: 12px; font-size: 16px; }
+.settings-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
+.settings-row label { font-size: 13px; color: #666; display: block; margin-bottom: 4px; }
+.settings-row input, .settings-row textarea {
+  padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px;
+}
+.settings-row textarea { width: 100%; min-height: 60px; font-family: inherit; }
+
+.hidden { display: none !important; }
+
+@media (max-width: 800px) {
+  .card-right { width: 100%; border-left: none; border-top: 1px solid #eee; }
+  .canvas-preview { width: 300px; height: 300px; }
+}
+
+/* 全件一括DL用 */
+.bulk-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.bulk-actions .btn { font-size: 14px; padding: 10px 20px; }
+
+/* 写真インポート */
+.photo-section {
+  width: 100%; border-top: 1px solid #eee; padding-top: 12px; margin-top: 8px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+.photo-drop {
+  width: 360px; height: 80px; border: 2px dashed #ccc; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: #999; font-size: 13px; cursor: pointer; transition: all 0.2s;
+  background: #fafafa; text-align: center; padding: 8px;
+}
+.photo-drop:hover, .photo-drop.dragover { border-color: #4a8c3f; background: #f0f8f0; color: #4a8c3f; }
+.photo-drop input[type="file"] { display: none; }
+.photo-preview-wrap { position: relative; }
+.photo-preview {
+  border-radius: 8px; border: 1px solid #ddd; max-width: 360px; max-height: 360px;
+}
+.logo-size-row { display: flex; gap: 6px; align-items: center; font-size: 12px; color: #666; }
+.logo-size-row input[type="range"] { width: 120px; }
+.logo-pos-row { display: flex; gap: 4px; flex-wrap: wrap; }
+.logo-pos-row .btn { font-size: 11px; padding: 4px 8px; }
+.logo-pos-row .btn.active { background: #4a8c3f; color: #fff; }
+
+@media (max-width: 800px) {
+  .photo-drop, .photo-preview { max-width: 300px; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>StudyGO Instagram投稿ツール</h1>
+  <p>掲載店舗紹介の投稿文コピー & 画像ダウンロード</p>
+</div>
+
+<div class="toolbar">
+  <input type="text" id="searchBox" placeholder="店舗名・エリアで検索..." oninput="filterStores()">
+  <select id="categoryFilter" onchange="filterStores()">
+    <option value="">全カテゴリ</option>
+    <option value="自習室専業">自習室専業</option>
+    <option value="カフェ">カフェ</option>
+    <option value="コワーキング">コワーキング</option>
+    <option value="勉強カフェ">勉強カフェ</option>
+    <option value="SoloTime">SoloTime</option>
+    <option value="アントレサロン">アントレサロン</option>
+    <option value="MIRAIYA">MIRAIYA</option>
+  </select>
+  <select id="regionFilter" onchange="filterStores()">
+    <option value="">全エリア</option>
+    <option value="北海道・東北">北海道・東北</option>
+    <option value="関東">関東</option>
+    <option value="中部・北陸">中部・北陸</option>
+    <option value="関西">関西</option>
+    <option value="中国・四国">中国・四国</option>
+    <option value="九州・沖縄">九州・沖縄</option>
+  </select>
+  <div class="count" id="storeCount">0件表示</div>
+</div>
+
+<div class="container">
+  <div class="settings-panel">
+    <h3>投稿テンプレート設定</h3>
+    <div class="settings-row" style="margin-bottom:12px;">
+      <div style="flex:1;min-width:300px;">
+        <label>共通ハッシュタグ</label>
+        <textarea id="commonHashtags">#StudyGO #スタディGO #勉強 #自習室 #コワーキング #勉強場所 #勉強垢 #社会人勉強 #資格勉強 #勉強カフェ #集中できる場所 #ノマド #テレワーク #リモートワーク</textarea>
+      </div>
+    </div>
+    <div class="bulk-actions">
+      <button class="btn btn-copy" onclick="copyAllTexts()">全投稿文を一括コピー</button>
+      <button class="btn btn-dl" onclick="downloadAllImages()">表示中の画像を一括DL</button>
+      <button class="btn btn-edit" onclick="toggleSettings()">テンプレート編集</button>
+    </div>
+  </div>
+
+  <div id="storeList"></div>
+</div>
+
+<!-- 非表示のフルサイズcanvas -->
+<canvas id="offscreenCanvas" width="1080" height="1080" style="display:none;"></canvas>
+
+<script>
+// ============================================================
+// 店舗データ
+// ============================================================
+const STORES = [
+  {id:2,name:"勉強カフェ新宿ベースポイントスタジオ",access:"都営大江戸線「新宿西口」駅徒歩5分",dropNow:true,drop:"770円～",month:"4,400円～",cat:"自習室専業",cat2:"勉強カフェ"},
+  {id:3,name:"勉強カフェ新宿スタジオ",access:"都営新宿線・大江戸線・京王新線「新宿」駅6番出口 徒歩1分",dropNow:true,drop:"770円～",month:"4,400円～",cat:"自習室専業",cat2:"勉強カフェ"},
+  {id:5,name:"勉強カフェ横浜関内スタジオ",access:"横浜市営地下鉄ブルーライン「関内」駅3番出口直結 徒歩1分",drop:"660円～",month:"6,600円～",cat:"自習室専業",cat2:"勉強カフェ"},
+  {id:6,name:"勉強カフェ吉祥寺スタジオ",access:"JR中央線・総武線・京王井の頭線「吉祥寺」駅 徒歩1分",drop:"660円～",month:"6,600円～",cat:"自習室専業",cat2:"勉強カフェ"},
+  {id:7,name:"勉強カフェ虎ノ門スタジオ",access:"東京メトロ日比谷線「神谷町」3番出口 徒歩3分",drop:"660円～",month:"6,600円～",cat:"自習室専業",cat2:"勉強カフェ"},
+  {id:10,name:"勉強カフェ町田マルイスタジオ",access:"JR横浜線「町田駅」徒歩1分 / 小田急線「町田駅」徒歩2分",drop:"660円～",month:"6,600円～",cat:"自習室専業",cat2:"勉強カフェ"},
+  {id:12,name:"勉強カフェ名古屋グローバルゲートスタジオ",access:"あおなみ線「ささしまライブ」駅直結 / JR「名古屋」駅 徒歩12分",drop:"660円～",month:"6,600円～",cat:"自習室専業",cat2:"勉強カフェ"},
+  {id:13,name:"勉強カフェ両国スタジオ",access:"JR中央・総武線「両国」駅東口 徒歩30秒",drop:"660円～",month:"6,600円～",cat:"自習室専業",cat2:"勉強カフェ"},
+  {id:14,name:"ベンチャーデスク VD銀座5",access:"東京メトロ日比谷線 東銀座駅 徒歩1分",dropNow:true,drop:"440円～"},
+  {id:15,name:"ベンチャーデスク VD銀座6",access:"東京メトロ銀座線・日比谷線・丸の内線 銀座駅 徒歩2分",dropNow:true,drop:"440円～"},
+  {id:17,name:"コワーキングスペース ツナグ",access:"東武伊勢崎線「五反野駅」徒歩4分",dropNow:true,drop:"550円～",month:"9,900円～"},
+  {id:18,name:"8Beat",access:"JR八王子駅北口 徒歩4分",dropNow:true,drop:"500円～",month:"5,500円～"},
+  {id:19,name:"五反田コワーキングスペースpao",access:"五反田駅東口 徒歩3分",dropNow:true,drop:"600円～",month:"5,500円～"},
+  {id:20,name:"勉強カフェ 日本橋茅場町スタジオ",access:"東京メトロ日比谷線・東西線「茅場町」駅 徒歩2分",dropNow:true,drop:"550円～",month:"6,600円～",cat:"自習室専業",cat2:"勉強カフェ"},
+  {id:21,name:"日本橋・茅場町自習室One",access:"東京メトロ日比谷線「茅場町駅」2番出口 徒歩1分",month:"8,800円～",cat:"自習室専業"},
+  {id:22,name:"大崎ブックカフェ",access:"大崎駅 徒歩5分",drop:"300円～",cat:"カフェ"},
+  {id:23,name:"サクセス・ロード茅場町",access:"茅場町駅6分 / 水天宮前駅3分",dropNow:true,drop:"1,100円～",cat:"自習室専業"},
+  {id:25,name:"高円寺デポ",access:"JR高円寺駅 徒歩2分",month:"6,000円～"},
+  {id:26,name:"Work and Play SOSHIGAYA",access:"祖師ヶ谷大蔵駅 徒歩5分 / 成城学園前駅 徒歩9分",month:"5,000円～"},
+  {id:28,name:"マフィス 北参道",access:"東京メトロ副都心線「北参道」駅 徒歩3分",month:"11,000円～"},
+  {id:29,name:"ツクル・ワーク",access:"JR新宿駅西口 徒歩5分 / 都営大江戸線 都庁前駅 徒歩3分",month:"5,500円～"},
+  {id:32,name:"Funshare 浅草橋・秋葉原",access:"JR秋葉原駅 徒歩8分 / 浅草橋駅 徒歩6分",dropNow:true,drop:"1,100円～",month:"7,700円～"},
+  {id:34,name:"Cafe Kolm",access:"三軒茶屋駅 徒歩13分",drop:"660円～",month:"5,000円～",cat:"カフェ"},
+  {id:35,name:"Tatami Works",access:"小田急線 千歳船橋駅 徒歩3分",dropNow:true,drop:"500円～",month:"8,000円～"},
+  {id:36,name:"自習室at home",access:"あざみ野駅 徒歩7分",dropNow:true,drop:"300円～",month:"10,000円～",cat:"自習室専業"},
+  {id:37,name:"勉強できるカフェ ガクト",access:"JR新宿駅南口 徒歩3分",dropNow:true,drop:"700円～",month:"14,500円～",cat:"自習室専業"},
+  {id:38,name:"オフィスAMOREA",access:"小田急線「向ヶ丘遊園」駅北口 徒歩2分",dropNow:true,drop:"550円～",month:"5,500円～"},
+  {id:39,name:"＆tenna",access:"JR線「高円寺」駅 徒歩10分",dropNow:true,drop:"550円～",month:"16,500円～"},
+  {id:40,name:"BUSO AGORA",access:"小田急線町田駅 東出口 徒歩3分",dropNow:true,drop:"500円～",month:"8,000円～"},
+  {id:41,name:"HAPON新宿",access:"都営大江戸線 新宿西口駅D5出口 徒歩3分",drop:"1,950円～"},
+  {id:42,name:"小田原ラボ",access:"小田原駅 徒歩3分",month:"13,200円～"},
+  {id:43,name:"アイル study&work studio",access:"横浜駅 徒歩3分",dropNow:true,drop:"400円～",month:"6,000円～",cat:"自習室専業"},
+  {id:44,name:"おおたfab",access:"蒲田駅 徒歩2分",dropNow:true,drop:"650円～",month:"12,000円～"},
+  {id:45,name:"GARAGE WASEDA",access:"早稲田駅 徒歩5分（東西線）",dropNow:true,drop:"660円～"},
+  {id:46,name:"DOTEMA",access:"池ノ上駅 徒歩4分（京王井の頭線）",dropNow:true,drop:"550円～"},
+  {id:47,name:"8knot",access:"五反野駅 徒歩1分（東武伊勢崎線）",dropNow:true,drop:"550円～",month:"8,800円～"},
+  {id:48,name:"コワーキングスペース100work",access:"松陰神社前駅 徒歩1分（東急世田谷線）",drop:"550円～",month:"5,280円～"},
+  {id:49,name:"resoffice.藤沢駅前",access:"藤沢駅 徒歩3分",month:"9,900円～"},
+  {id:50,name:"resoffice.湘南藤沢",access:"藤沢駅 徒歩5分",month:"9,900円～"},
+  {id:51,name:"A-LOUNGE",access:"能見台駅 徒歩2分（京急線）",dropNow:true,drop:"660円～"},
+  {id:52,name:"ナレッジソサエティ九段下",access:"九段下駅 徒歩1分（半蔵門線・東西線・新宿線）",drop:"550円～",month:"8,000円～"},
+  {id:53,name:"コワーキングスペースAr",access:"新松田駅 徒歩5分（小田急線）",month:"3,300円～"},
+  {id:54,name:"自習室フィット24",access:"池袋駅 徒歩5分",dropNow:true,cat:"自習室専業"},
+  {id:55,name:"コワーキングスペース カケルハコ",access:"三河島駅 徒歩7分（JR線）",dropNow:true,drop:"500円～",month:"12,000円～"},
+  {id:56,name:"1/3rd Life",access:"末広町駅 徒歩1分（銀座線）",dropNow:true,drop:"800円～"},
+  {id:57,name:"U-make Workspace",access:"青物横丁駅 徒歩1分（京急本線）",month:"3,630円～"},
+  {id:58,name:"コワーキングスペース TakasunaBASE",access:"茅ヶ崎駅 徒歩3分（JR線）",dropNow:true,drop:"2,500円～",month:"9,000円～"},
+  {id:59,name:"LiFEREE WORK 新橋",access:"新橋駅 徒歩1分（JR線）",dropNow:true,drop:"550円～",month:"14,300円～"},
+  {id:60,name:"S PLACE 名古屋駅前",access:"名古屋駅 徒歩5分（JR線）",month:"14,300円～"},
+  {id:63,name:"PAX Coworking Gotanda",access:"五反田駅 徒歩8分（JR山手線）",month:"22,000円～"},
+  {id:64,name:"IZUMI-SO",access:"高岳駅 徒歩6分（地下鉄桜通線）",month:"4,400円～"},
+  {id:65,name:"NAYUTA BLD（ナユタビル）",access:"久屋大通駅 徒歩3分（地下鉄桜通線・名城線）",drop:"660円～",month:"5,500円～"},
+  {id:66,name:"My Studia高円寺店",access:"高円寺駅北口 徒歩30秒（JR中央線・総武線）",dropNow:true,month:"5,000円～",cat:"自習室専業"},
+  {id:67,name:"My Studia野方1号店",access:"野方駅南口 徒歩30秒（西武新宿線）",dropNow:true,month:"5,000円～",cat:"自習室専業"},
+  {id:68,name:"プロコワ",access:"名古屋駅 徒歩7分 / 国際センター駅 徒歩1分",dropNow:true,drop:"1,500円～",month:"5,500円～"},
+  {id:69,name:"コワーキングスペースBreath",access:"三鷹駅北口 徒歩5分（JR中央線・総武線）",dropNow:true,drop:"3,300円～"},
+  {id:70,name:"CoWorks24佐世保店",access:"佐世保中央駅 徒歩3分（松浦鉄道）",dropNow:true,drop:"990円～"},
+  {id:71,name:"WORK茶房PEOPLE",access:"遠野駅 徒歩3分（JR線）",dropNow:true,drop:"220円～",month:"13,200円～"},
+  {id:74,name:"ジユウノハコ",access:"名古屋駅 徒歩6分（JR線）",dropNow:true,drop:"1,100円～",month:"32,780円～"},
+  {id:75,name:"knowledge and idea なれあい",access:"山形駅よりバス10分（県庁前下車）",dropNow:true,drop:"500円～",month:"11,000円～"},
+  {id:77,name:"コワーキング・コミュニティスペースみちくさ",access:"高速バス「鹿島神宮」バス停 徒歩1分",dropNow:true,drop:"500円～",month:"2,200円～"},
+  {id:78,name:"コワーキングスペースもりおか",access:"盛岡駅 徒歩10分",dropNow:true,drop:"200円～",month:"10,000円～"},
+  {id:79,name:"銀座アントレサロン",access:"銀座駅 徒歩5分（銀座線）",dropNow:true,drop:"220円～",month:"5,500円～",cat2:"アントレサロン"},
+  {id:83,name:"東京アントレサロン",access:"東京駅 徒歩3分（JR線）",dropNow:true,drop:"220円～",month:"5,500円～",cat2:"アントレサロン"},
+  {id:84,name:"秋葉原アントレサロン",access:"秋葉原駅 徒歩1分（JR線・日比谷線）",dropNow:true,drop:"220円～",month:"5,500円～",cat2:"アントレサロン"},
+  {id:85,name:"赤坂アントレサロン",access:"赤坂見附駅 徒歩4分（銀座線・丸ノ内線）",dropNow:true,drop:"220円～",month:"5,500円～",cat2:"アントレサロン"},
+  {id:86,name:"新宿アントレサロン",access:"新宿三丁目駅 徒歩1分（丸ノ内線・副都心線）",dropNow:true,drop:"220円～",month:"5,500円～",cat2:"アントレサロン"},
+  {id:87,name:"西新宿アントレサロン",access:"西新宿駅 徒歩1分（丸ノ内線）",dropNow:true,drop:"220円～",month:"5,500円～",cat2:"アントレサロン"},
+  {id:88,name:"渋谷宮益坂アントレサロン",access:"渋谷駅 徒歩3分",dropNow:true,drop:"220円～",month:"5,500円～",cat2:"アントレサロン"},
+  {id:89,name:"渋谷道玄坂アントレサロン",access:"神泉駅 徒歩2分（京王井の頭線）",dropNow:true,drop:"220円～",month:"5,500円～",cat2:"アントレサロン"},
+  {id:90,name:"池袋アントレサロン",access:"池袋駅 徒歩5分（JR線）",dropNow:true,drop:"220円～",month:"5,500円～",cat2:"アントレサロン"},
+  {id:91,name:"横浜アントレサロン",access:"横浜駅 徒歩4分",dropNow:true,drop:"220円～",month:"5,500円～",cat2:"アントレサロン"},
+  {id:92,name:"桜木町アントレサロン",access:"桜木町駅 徒歩1分（JR・横浜市営地下鉄）",dropNow:true,drop:"220円～",month:"5,500円～",cat2:"アントレサロン"},
+  {id:93,name:"川崎アントレサロン",access:"川崎駅 徒歩2分（JR線）",dropNow:true,drop:"220円～",month:"5,500円～",cat2:"アントレサロン"},
+  {id:95,name:"大宮アントレサロン",access:"大宮駅 徒歩2分（JR線）",dropNow:true,drop:"220円～",month:"5,500円～",cat2:"アントレサロン"},
+  {id:96,name:"0→1高知Booster",access:"土佐電気鉄道 グランド通停留所 徒歩1分",month:"5,000円～"},
+  {id:98,name:"コトリ コワーキング＆ホステル 高松",access:"瓦町駅 徒歩7分（ことでん）",dropNow:true,drop:"1,500円～"},
+  {id:99,name:"CO-WORKING SALON 四季のいろ",access:"千代県庁口駅 徒歩2分（地下鉄貝塚線）",drop:"550円～",month:"9,900円～"},
+  {id:100,name:"ヨカラボ天神",access:"天神駅 徒歩4分（福岡市地下鉄空港線）",dropNow:true,drop:"600円～"},
+  {id:101,name:"co-ba ikebukuro",access:"池袋駅 徒歩1分（東京メトロ）",month:"6,600円～"},
+  {id:103,name:"AreaDrive",access:"明石駅 徒歩3分（JR線・山陽電鉄）",dropNow:true,drop:"500円～",month:"7,700円～"},
+  {id:104,name:"神宿る古民家",access:"広島交通バス「春日野口」下車 徒歩4分",drop:"550円～"},
+  {id:105,name:"熊谷オフィス",access:"熊谷駅 徒歩3分（JR線）",dropNow:true,drop:"260円～",month:"2,900円～"},
+  {id:106,name:"Office TAKASAKI BASE",access:"高崎駅 改札より徒歩30秒（JR線）",dropNow:true,drop:"260円～",month:"5,000円～"},
+  {id:107,name:"COVO",access:"鞍馬口駅 徒歩0分（京都市営地下鉄）",drop:"1,650円～",month:"8,800円～"},
+  {id:108,name:"SoloTime あざみ野",access:"あざみ野駅 徒歩2分（東急田園都市線）",dropNow:true,drop:"770円～",month:"6,600円～",cat2:"SoloTime"},
+  {id:109,name:"SoloTime センター北",access:"センター北駅 徒歩2分（横浜市営地下鉄）",dropNow:true,drop:"770円～",month:"6,600円～",cat2:"SoloTime"},
+  {id:110,name:"SoloTime たまプラーザ",access:"たまプラーザ駅 徒歩3分（東急田園都市線）",dropNow:true,drop:"770円～",month:"6,600円～",cat2:"SoloTime"},
+  {id:111,name:"SoloTime 横浜西口",access:"横浜駅 徒歩1分（JR線）",dropNow:true,drop:"770円～",month:"6,600円～",cat2:"SoloTime"},
+  {id:112,name:"SoloTime 海老名",access:"海老名駅 徒歩1分（小田急線・相鉄線・JR相模線）",dropNow:true,drop:"770円～",month:"6,600円～",cat2:"SoloTime"},
+  {id:113,name:"SoloTime 京都",access:"四条駅 徒歩30秒（地下鉄烏丸線）",dropNow:true,drop:"770円～",month:"6,600円～",cat2:"SoloTime"},
+  {id:114,name:"SoloTime 三鷹",access:"三鷹駅 徒歩1分（JR線）",dropNow:true,drop:"770円～",month:"6,600円～",cat2:"SoloTime"},
+  {id:115,name:"SoloTime 三島",access:"三島駅 徒歩2分（JR線）",dropNow:true,drop:"770円～",month:"6,600円～",cat2:"SoloTime"},
+  {id:116,name:"SoloTime 渋谷",access:"渋谷駅A1番出口直結（田園都市線・半蔵門線）",dropNow:true,drop:"770円～",month:"9,900円～",cat2:"SoloTime"},
+  {id:117,name:"SoloTime 松山",access:"松山市駅 徒歩4分（伊予鉄道）",dropNow:true,drop:"770円～",month:"6,600円～",cat2:"SoloTime"},
+  {id:118,name:"SoloTime 赤羽",access:"赤羽駅 徒歩3分（JR線）",dropNow:true,drop:"770円～",month:"6,600円～",cat2:"SoloTime"},
+  {id:119,name:"SoloTime 川崎",access:"川崎駅 徒歩2分（JR線）",dropNow:true,drop:"770円～",month:"6,600円～",cat2:"SoloTime"},
+  {id:120,name:"SoloTime 中目黒",access:"中目黒駅 徒歩2分（日比谷線・東急東横線）",dropNow:true,drop:"770円～",month:"9,900円～",cat2:"SoloTime"},
+  {id:121,name:"SoloTime 調布",access:"調布駅 徒歩2分（京王線）",dropNow:true,drop:"770円～",month:"6,600円～",cat2:"SoloTime"},
+  {id:122,name:"SoloTime 津田沼",access:"津田沼駅 徒歩3分（JR線）",dropNow:true,drop:"770円～",month:"6,600円～",cat2:"SoloTime"},
+  {id:123,name:"SoloTime 鶴見",access:"鶴見駅 徒歩1分（JR線）",dropNow:true,drop:"770円～",month:"6,600円～",cat2:"SoloTime"},
+  {id:124,name:"SoloTime 東戸塚",access:"東戸塚駅 徒歩1分（JR線）",dropNow:true,drop:"770円～",month:"6,600円～",cat2:"SoloTime"},
+  {id:125,name:"SoloTime 藤沢",access:"藤沢駅 徒歩3分（JR線）",dropNow:true,drop:"770円～",month:"6,600円～",cat2:"SoloTime"},
+  {id:126,name:"SoloTime 八王子",access:"八王子駅 徒歩3分（JR線）",dropNow:true,drop:"770円～",month:"9,900円～",cat2:"SoloTime"},
+  {id:127,name:"SoloTime 登戸",access:"登戸駅 徒歩2分（JR南武線・小田急線）",dropNow:true,drop:"770円～",month:"6,600円～",cat2:"SoloTime"},
+  {id:128,name:"コワークス365うねの駅前店",access:"畦野駅 徒歩1分（能勢電鉄妙見線）",dropNow:true,drop:"330円～",month:"3,300円～"},
+  {id:130,name:"MYST",access:"川口駅 徒歩8分（JR線）",dropNow:true,drop:"480円～",month:"4,500円～"},
+  {id:131,name:"コワーキング＆シェアオフィスCOMMUNE",access:"泉佐野駅 徒歩9分（南海本線）",dropNow:true,drop:"750円～",month:"8,000円～"},
+  {id:132,name:"KIKCAFE",access:"保土ケ谷駅 徒歩3分（JR線）",dropNow:true,drop:"500円～",month:"4,400円～",cat:"カフェ"},
+  {id:133,name:"コワーキングスペースUmidass",access:"大阪モノレール「柴原阪大前駅」徒歩5分",dropNow:true,drop:"200円～",month:"4,200円～"},
+  {id:134,name:"TIMESKY",access:"JR黒崎駅 徒歩5分",dropNow:true,drop:"400円～",month:"2,200円～"},
+  {id:135,name:"ROUGH LABO TECH扇町",access:"扇町駅 徒歩1分（大阪メトロ堺筋線）",dropNow:true,drop:"330円～",month:"6,600円～"},
+  {id:137,name:"UPDRAFT",access:"長瀞駅 徒歩1分（秩父鉄道）",dropNow:true,drop:"500円～"},
+  {id:138,name:"コワーキングスペースAxEL,",access:"原爆ドーム前駅 徒歩2分（広島電鉄）",drop:"550円～",month:"5,000円～"},
+  {id:139,name:"Coworking Space Flat Cafe&Bar",access:"新松戸駅 徒歩12分（JR線）",drop:"550円～",month:"7,700円～"},
+  {id:140,name:"テレワーク＆喫茶 パステル",access:"生駒駅 徒歩1分（近鉄けいはんな線）",dropNow:true,drop:"490円～",month:"10,000円～"},
+  {id:142,name:"akeruto名張",access:"名張駅 徒歩10分（近鉄大阪線）",dropNow:true,drop:"500円～",month:"2,000円～"},
+  {id:143,name:"Heart Space",access:"久屋大通駅 徒歩3分（地下鉄名城線・桜通線）",dropNow:true,drop:"550円～",month:"6,600円～"},
+  {id:144,name:"フルサットアップス",access:"上越妙高駅 徒歩1分（妙高はねうまライン）",dropNow:true,drop:"660円～",month:"2,500円～"},
+  {id:145,name:"section9",access:"松戸駅 徒歩1分（JR線）",dropNow:true,drop:"330円～",month:"3,300円～"},
+  {id:146,name:"space bb",access:"野江内代駅 徒歩3分（大阪メトロ谷町線）",dropNow:true,drop:"800円～",month:"15,000円～"},
+  {id:147,name:"コワーキングスペース錦糸町",access:"錦糸町駅 徒歩4分（JR線）",dropNow:true,drop:"440円～",month:"11,000円～"},
+  {id:148,name:"Pono books & time",access:"盛岡駅 徒歩7分（JR線）",drop:"660円～",cat:"カフェ"},
+  {id:150,name:"シェアスペースGAKUYA",access:"成田駅 徒歩1分（JR線）",dropNow:true,drop:"770円～",month:"8,800円～"},
+  {id:152,name:"Idea Sync",access:"武生駅 徒歩9分（ハピラインふくい線）",dropNow:true,drop:"550円～",month:"6,600円～"},
+  {id:153,name:"TOKICAFE 神楽坂",access:"東京メトロ各線 飯田橋駅 徒歩3分",drop:"490円～",cat:"カフェ"},
+  {id:154,name:"Glamping&Port結",access:"島田駅からタクシー15分",dropNow:true,drop:"330円～"},
+  {id:155,name:"Room8 春日井勝川店",access:"勝川駅 徒歩3分（JR線）",dropNow:true,drop:"420円～",month:"5,500円～"},
+  {id:157,name:"ヨコハマホップ",access:"横浜駅 徒歩7分（JR線）",dropNow:true,drop:"330円～",month:"3,300円～"},
+  {id:159,name:"OrangeWork Nakamozu",access:"中百舌鳥駅 徒歩6分（南海高野線）",dropNow:true,drop:"660円～",month:"3,300円～"},
+  {id:161,name:"コワーキングスペース HamaPort",access:"横浜駅 徒歩1分（JR線）",dropNow:true,drop:"660円～",month:"3,000円～"},
+  {id:162,name:"Y-Valley Coworking Space YCS",access:"南新宿駅 徒歩1分（小田急線）",drop:"500円～",month:"4,000円～"},
+  {id:163,name:"静岡シェアオフィス",access:"静岡駅 徒歩3分（JR線）",dropNow:true,drop:"1,100円～",month:"5,500円～"},
+  {id:164,name:"quantum cross point 飯田橋",access:"飯田橋駅 徒歩4分（JR線・東京メトロ東西線）",drop:"550円～",month:"33,000円～"},
+  {id:165,name:"quantum cross point 市ヶ谷I",access:"市ヶ谷駅 徒歩4分（都営新宿線・南北線）",drop:"550円～",month:"33,000円～"},
+  {id:166,name:"コワーキングCoCoプレイス",access:"多摩センター駅 徒歩5分（京王線・小田急線）",dropNow:true,drop:"2,200円～"},
+  {id:168,name:"co-ba takamatsu",access:"瓦町駅 徒歩9分（琴電琴平線）",dropNow:true,drop:"550円～",month:"8,800円～"},
+  {id:171,name:"コワーキングスペースリコード久米川栄町店",access:"久米川駅 徒歩4分（西武新宿線）",dropNow:true,drop:"1,100円～",month:"6,600円～"},
+  {id:172,name:"KOITTO TERRACE",access:"小岩駅 徒歩30秒（JR線）",dropNow:true,month:"4,000円～"},
+  {id:173,name:"横浜都筑ビジネス＆コミュニティ",access:"都筑ふれあいの丘駅 徒歩7分（横浜市営地下鉄）",drop:"200円～",month:"5,500円～"},
+  {id:175,name:"コダテル",access:"八幡浜駅 徒歩40分（予讃線）",dropNow:true,drop:"500円～"},
+  {id:177,name:"スタディクラブ観音教室",access:"南観音3丁目バス停 徒歩3分",drop:"550円～",month:"3,630円～",cat:"自習室専業"},
+  {id:178,name:"アルコワーキング",access:"名古屋駅 徒歩15分 / 丸の内駅 徒歩10分",dropNow:true,drop:"1,500円～"},
+  {id:180,name:"workshop studio canvas",access:"鎌倉駅西口 徒歩1分",drop:"440円～"},
+  {id:181,name:"SHARE BLUE国府宮",access:"国府宮駅「西出口」徒歩2分",dropNow:true,drop:"165円～",month:"3,300円～"},
+  {id:182,name:"SHARE WORK LOUNGE稲沢",access:"稲沢駅 徒歩11分",dropNow:true,drop:"165円～",month:"3,300円～"},
+  {id:183,name:"SHARE BLUE一宮",access:"開明駅 徒歩33分",dropNow:true,drop:"165円～",month:"3,300円～"},
+  {id:184,name:"Cafe Salon Kiranasu",access:"JR那須塩原駅 西口 徒歩5分",dropNow:true,drop:"500円～",month:"9,000円～",cat:"カフェ"},
+  {id:185,name:"FullHouse",access:"永田町駅4番出口 徒歩1分",dropNow:true,drop:"660円～",month:"16,500円～"},
+  {id:186,name:"Attic cafe",access:"JR旭川駅 徒歩5分",dropNow:true,drop:"650円～",month:"6,500円～"},
+  {id:188,name:"Your Kitchen",access:"JR福井駅 近く",dropNow:true,drop:"550円～",month:"38,500円～"},
+  {id:189,name:"cafe＆Bar eight",access:"西武池袋線「桜台駅」徒歩2分",drop:"600円～",cat:"カフェ"},
+  {id:190,name:"Co育て×Coワーキング 結 -You-",access:"十三駅 徒歩6分",dropNow:true,drop:"440円～",month:"9,000円～"},
+  {id:191,name:"勉強スペース 練馬ジム",access:"練馬駅 徒歩5分（都営大江戸線・西武池袋線）",dropNow:true,drop:"660円～",month:"3,980円～",cat:"自習室専業"},
+  {id:192,name:"スタディ＆ワーキングルームSABO",access:"淵野辺駅北口 徒歩1分（JR横浜線）",dropNow:true,drop:"550円～",month:"4,400円～"},
+  {id:194,name:"コワーキングスペース SUGUNI",access:"八王子駅 徒歩2分（JR中央線）",dropNow:true,drop:"220円～",month:"5,500円～"},
+  {id:195,name:"イービジネスセンター",access:"北千住駅 徒歩7分（千代田線・日比谷線・JR常磐線）",dropNow:true,drop:"660円～"},
+  {id:197,name:"マーキュリークラブ",access:"新前橋駅から車5分",dropNow:true,drop:"300円～",month:"7,000円～"},
+  {id:198,name:"個別指導塾ビオスタディ",access:"柏駅東口 徒歩8分（JR常磐線）",dropNow:true,drop:"400円～",month:"16,500円～",cat:"自習室専業"},
+  {id:199,name:"SOLOTASU",access:"加古川エリア かこバス「稲屋中央」下車 徒歩3分",dropNow:true,drop:"400円～",month:"5,000円～"},
+  {id:200,name:"アスリート自習室 名古屋駅前セブンスター店",access:"名古屋駅 徒歩3分（JR線）",dropNow:true,drop:"490円～",month:"2,000円～",cat:"自習室専業"},
+  {id:201,name:"アスリート自習室 本山駅前店",access:"地下鉄本山駅 徒歩1分（東山線・名城線）",dropNow:true,drop:"490円～",month:"7,800円～",cat:"自習室専業"},
+  {id:204,name:"SOLFIL",access:"竹原駅 徒歩6分（JR線）",dropNow:true,drop:"300円～"},
+  {id:205,name:"ZORKS沖縄",access:"安里駅 徒歩5分（モノレール）",dropNow:true,drop:"330円～"},
+  {id:206,name:"Spectrum Space",access:"高崎駅 徒歩2分（JR線）",dropNow:true,month:"30,000円～"},
+  {id:211,name:"越乃バレー",access:"福井駅 徒歩2分",dropNow:true,drop:"880円～",month:"13,200円～"},
+  {id:212,name:"YAMATO BASE 奈良店",access:"奈良駅 徒歩4分（JR線）",dropNow:true,drop:"550円～",month:"6,600円～"},
+  {id:213,name:"YAMATO BASE 大和西大寺店",access:"大和西大寺駅 徒歩7分（近鉄線）",dropNow:true,drop:"660円～",month:"6,600円～"},
+  {id:224,name:"虎ノ門アントレサロン",access:"虎ノ門駅 徒歩1分（東京メトロ銀座線）",dropNow:true,drop:"220円～",month:"5,500円～",cat2:"アントレサロン"},
+  {id:225,name:"恵比寿アントレサロン",access:"恵比寿駅 徒歩1分（JR線・日比谷線）",dropNow:true,drop:"220円～",month:"5,500円～",cat2:"アントレサロン"},
+  {id:233,name:"HSビル・ワーキングスペース",access:"大和西大寺駅 徒歩4分（近鉄線）",dropNow:true,drop:"400円～",month:"5,000円～"},
+  {id:238,name:"コワーキングスペースarica",access:"三原駅 徒歩5分（JR山陽新幹線・山陽本線）",dropNow:true,drop:"550円～",month:"16,500円～"},
+  {id:251,name:"勉強カフェ高松スタジオ",access:"高松駅 徒歩7分（JR線）",drop:"550円～",cat:"自習室専業",cat2:"勉強カフェ"},
+  {id:252,name:"フォルテ・オクターヴハウス",access:"池袋駅 徒歩3分",dropNow:true,drop:"440円～",month:"4,400円～"},
+  {id:255,name:"自習室VERIA天神",access:"天神駅 徒歩5分（福岡市地下鉄）",dropNow:true,drop:"480円～",cat:"自習室専業"},
+  {id:256,name:"四ツ谷ビジネスラウンジ",access:"四ツ谷駅 徒歩4分（JR中央線・総武線）",dropNow:true,drop:"500円～"},
+  {id:257,name:"MIRAIYA Bookmark Lounge幕張店",access:"海浜幕張駅 徒歩7分（JR京葉線）",dropNow:true,drop:"300円～",cat2:"MIRAIYA"},
+  {id:258,name:"MIRAIYA Bookmark Lounge八千代緑が丘店",access:"八千代緑が丘駅 直結",dropNow:true,drop:"300円～",cat2:"MIRAIYA"},
+  {id:259,name:"MIRAIYA Bookmark Lounge多摩平の森店",access:"豊田駅 徒歩3分（JR中央本線）",dropNow:true,drop:"300円～",cat2:"MIRAIYA"},
+  {id:260,name:"MIRAIYA Bookmark Lounge市川妙典店",access:"妙典駅 徒歩3分（東京メトロ東西線）",dropNow:true,drop:"300円～",cat2:"MIRAIYA"},
+  {id:261,name:"MIRAIYA Bookmark Lounge福津店",access:"福間駅 徒歩22分（JR線）",dropNow:true,drop:"300円～",cat2:"MIRAIYA"},
+  {id:262,name:"MIRAIYA Bookmark Lounge古川橋店",access:"古川橋駅 徒歩3分（京阪本線）",dropNow:true,drop:"300円～",cat2:"MIRAIYA"},
+  {id:263,name:"MIRAIYA Bookmark Lounge津田沼店",access:"新津田沼駅 徒歩1分（新京成線）",dropNow:true,drop:"300円～",cat2:"MIRAIYA"},
+  {id:264,name:"MIRAIYA Bookmark Lounge南砂店",access:"南砂駅 徒歩7分（東京メトロ東西線）",dropNow:true,drop:"400円～",cat2:"MIRAIYA"},
+  {id:266,name:"壱岐アイランドハブ",access:"郷ノ浦港 徒歩12分",dropNow:true,drop:"660円～"},
+  {id:267,name:"Sincerely yours 久留米",access:"花畑駅 徒歩3分（西日本鉄道）",dropNow:true,drop:"550円～",month:"8,800円～"},
+  {id:269,name:"work izu",access:"伊東駅 徒歩3分（JR伊東線・伊豆急行線）",dropNow:true,drop:"550円～",month:"5,500円～"},
+  {id:270,name:"GALYEA前橋",access:"中央前橋駅 徒歩8分（上毛線）",dropNow:true,drop:"500円～",month:"3,000円～"},
+  {id:271,name:"FEEEP立川店",access:"立川駅 徒歩1分（JR線）",dropNow:true,drop:"400円～",month:"4,400円～"},
+  {id:272,name:"Reticle（レティクル）",access:"尼崎駅 徒歩20分（JR線・阪神線）",dropNow:true,drop:"500円～",month:"4,000円～"},
+  {id:273,name:"スタディルーム千葉駅前店",access:"千葉駅 徒歩5分（JR線）",dropNow:true,drop:"1,200円～",cat:"自習室専業"},
+  {id:274,name:"DESIGNITE（デザナイト）",access:"福岡天神駅 徒歩7分（西日本鉄道）",dropNow:true,drop:"275円～",month:"9,800円～"},
+  {id:275,name:"六本木100feet",access:"六本木駅 徒歩1分（東京メトロ日比谷線）",dropNow:true,drop:"550円～",month:"5,500円～"},
+  {id:276,name:"コワーキングスペース KanadeBako",access:"下北沢駅 徒歩2分（小田急線・京王井の頭線）",dropNow:true,drop:"330円～",month:"8,800円～"},
+  {id:277,name:"学習室Seldy",access:"名島駅 徒歩3分（西鉄貝塚線）",dropNow:true,month:"16,500円～",cat:"自習室専業"},
+  {id:280,name:"SAKURA CAFE TERRACE",access:"金沢エリア バス「旭町一丁目」下車 徒歩3分",drop:"330円～",month:"3,000円～",cat:"カフェ"},
+  {id:283,name:"コワーキングスペースITAMI",access:"伊丹駅 徒歩7分（JR福知山線）",dropNow:true,drop:"550円～"},
+  {id:288,name:"ROOM3030",access:"祝園駅/新祝園駅からバス",dropNow:true,drop:"1,000円～",month:"8,800円～"},
+  {id:289,name:"co-ba nakanoshima",access:"肥後橋駅 徒歩5分（地下鉄四つ橋線）",drop:"500円～"},
+  {id:291,name:"Qucurcus",access:"芽室駅 徒歩3分（JR根室本線）",dropNow:true,drop:"250円～"},
+  {id:292,name:"ShareOffice 結う-You-",access:"神田駅 徒歩3分（JR山手線・銀座線）",dropNow:true,drop:"660円～",month:"5,500円～"},
+  {id:293,name:"midscape",access:"渋川駅 徒歩13分（JR線）",dropNow:true,drop:"500円～"},
+  {id:298,name:"ノースエイム",access:"北18条駅 徒歩5分（地下鉄南北線）",dropNow:true,drop:"300円～",cat:"自習室専業"},
+  {id:299,name:"いいオフィス芝浦",access:"芝浦ふ頭駅 徒歩2分（ゆりかもめ）",dropNow:true,drop:"440円～",month:"13,200円～"},
+  {id:301,name:"ひかりまち交差店",access:"広島駅北口 徒歩7分",drop:"500円～",month:"7,000円～"},
+  {id:306,name:"リブポート浜松町",access:"浜松町駅南口 徒歩1分（JR線）",dropNow:true,drop:"825円～",month:"27,500円～"},
+  {id:307,name:"リブポート大宮",access:"大宮駅東口 徒歩2分（JR線）",dropNow:true,drop:"990円～",month:"28,600円～"},
+  {id:308,name:"燕三条Gスクエア",access:"燕三条駅 徒歩12分（JR上越新幹線）",drop:"330円～",month:"3,300円～"},
+  {id:310,name:"ユナイテッドシェア大分",access:"大分駅 徒歩5分（JR線）",month:"4,400円～"},
+  {id:314,name:"STUDY CAMP西新宿B.O",access:"西新宿駅 徒歩6分（東京メトロ丸の内線）",dropNow:true,cat:"自習室専業"},
+  {id:315,name:"STUDY CAMP新江古田B.O",access:"新江古田駅 徒歩4分（都営大江戸線）",dropNow:true,cat:"自習室専業"},
+  {id:317,name:"STUDY CAMP前橋敷島B.O",access:"群馬総社駅 徒歩6分",dropNow:true,cat:"自習室専業"},
+  {id:318,name:"いつでも自習室 北野白梅町店",access:"北野白梅町駅 徒歩3分（京福電鉄北野線）",month:"11,000円～",cat:"自習室専業"},
+  {id:319,name:"いつでも自習室 甲東園店",access:"甲東園駅西口 徒歩2分（阪急今津線）",month:"11,000円～",cat:"自習室専業"},
+  {id:320,name:"いつでも自習室 宇治店",access:"JR黄檗駅 徒歩2分（JR奈良線）",month:"11,000円～",cat:"自習室専業"},
+  {id:321,name:"いつでも自習室 寺田町店",access:"寺田町駅 徒歩5分（JR大阪環状線）",month:"11,000円～",cat:"自習室専業"},
+  {id:322,name:"Coworking Salon plusC",access:"武庫之荘駅 徒歩7分（阪急神戸本線）",dropNow:true,drop:"220円～"},
+  {id:324,name:"BE-CON六甲本店",access:"六甲駅 徒歩1分（阪急神戸線）",dropNow:true,drop:"550円～",month:"3,800円～",cat:"自習室専業"},
+  {id:327,name:"謎解きカフェ繭玉",access:"池ノ上駅 徒歩1分（京王井の頭線）",dropNow:true,drop:"800円～",month:"6,000円～",cat:"カフェ"},
+  {id:329,name:"勉強カフェ大阪上本町ANNEX",access:"上本町駅11号出口 徒歩10秒（近鉄線）",dropNow:true,drop:"847円～",month:"23,100円～",cat:"自習室専業",cat2:"勉強カフェ"},
+  {id:330,name:"Co-working&Community Space K.I.T",access:"福井駅 約30分",drop:"550円～",month:"5,000円～"},
+  {id:332,name:"cafe 明日も発酵ごはん nippon",access:"下北沢駅 徒歩6分（小田急線・京王井の頭線）",dropNow:true,drop:"660円～",cat:"カフェ"},
+  {id:334,name:"Cafe Lotus",access:"スポーツセンター駅 徒歩15分（千葉都市モノレール）",dropNow:true,drop:"550円～",cat:"カフェ"},
+  {id:335,name:"池袋大塚ビジネスサロン",access:"大塚駅 徒歩1分（JR山手線）",cat:"自習室専業"},
+  {id:338,name:"My Studia厚木店",access:"本厚木駅北口 徒歩2分（小田急線）",dropNow:true,month:"5,000円～",cat:"自習室専業"},
+  {id:339,name:"My Studia野方2号店",access:"野方駅南口 徒歩30秒（西武新宿線）",month:"5,800円～",cat:"自習室専業"},
+  {id:343,name:"FRINGEE hands on cafe",access:"中野駅 徒歩10分（JR中央線・東西線）",drop:"600円～",cat:"カフェ"},
+  {id:344,name:"リタCOFFEE",access:"近鉄「向島駅」徒歩10分",drop:"800円～",cat:"カフェ"},
+  {id:345,name:"フロンティア倶楽部早稲田会館",access:"早稲田駅3b出口 徒歩3分（東京メトロ東西線）",dropNow:true,drop:"440円～",month:"6,600円～"},
+  {id:346,name:"Cafe あひるの小路",access:"幸手駅西口 徒歩10分（東武日光線）",drop:"800円～",cat:"カフェ"},
+  {id:349,name:"SaCuLa芦花公園",access:"芦花公園駅 徒歩3分（京王線）",dropNow:true,drop:"700円～"},
+  {id:350,name:"廉や（かどや）",access:"東中野駅西口 徒歩5分（JR線）/ 落合駅 徒歩2分（東西線）",drop:"660円～",month:"6,600円～",cat:"カフェ"},
+  {id:351,name:"kenohi",access:"武蔵小山駅 西口 徒歩8分（東急目黒線）",drop:"700円～",cat:"カフェ"},
+  {id:352,name:"会員制自習室Rise神戸",access:"神戸駅 徒歩5分（JR神戸線）",drop:"500円～",cat:"自習室専業"},
+  {id:354,name:"SPACE on the Station",access:"天神駅中央口 徒歩3分（市営地下鉄空港線）",dropNow:true,drop:"500円～"},
+  {id:358,name:"自習室トライ",access:"JR三ノ宮駅 徒歩4分",dropNow:true,drop:"300円～",month:"5,280円～",cat:"自習室専業"},
+];
+
+// ============================================================
+// エリア判定
+// ============================================================
+const REGION_KEYWORDS = {
+  "北海道・東北": ["札幌","旭川","盛岡","山形","遠野","八雲","芽室","福島","亘理","高畠","鹿角","雫石","岩手","住田","横手","北18条"],
+  "関東": ["東京","新宿","渋谷","池袋","銀座","秋葉原","赤坂","品川","五反田","大崎","六本木","浜松町","四ツ谷","虎ノ門","恵比寿","目黒","中目黒","神田","飯田橋","市ヶ谷","早稲田","錦糸町","両国","茅場町","日本橋","北千住","蒲田","八王子","吉祥寺","三鷹","高円寺","中野","練馬","野方","調布","成城","祖師ヶ谷","町田","立川","多摩","芦花","東中野","武蔵小山","大塚","小岩","桜台","豊田","南砂","久米川","津田沼","松戸","千葉","柏","成田","海浜幕張","八千代","妙典","横浜","関内","保土ケ谷","鶴見","東戸塚","藤沢","海老名","鎌倉","茅ヶ崎","あざみ野","センター北","たまプラーザ","都筑","能見台","川崎","大宮","川口","熊谷","幸手","淵野辺","厚木","小田原","三島","新松戸","浅草橋","高崎","前橋","桐生","渋川","青物横丁","芝浦","永田町","九段下","南新宿","西新宿","新江古田","池ノ上","下北沢","本厚木","登戸","赤羽"],
+  "中部・北陸": ["名古屋","国際センター","久屋大通","高岳","勝川","稲沢","国府宮","一宮","四日市","静岡","島田","上越妙高","燕三条","福井","武生","長瀞","七尾","金沢","富山","道志","小千谷","伊東","竜王","越乃"],
+  "関西": ["京都","四条","鞍馬口","黄檗","宇治","向島","北野白梅町","大阪","扇町","十三","野江内代","泉佐野","中百舌鳥","柴原","神戸","六甲","三ノ宮","明石","尼崎","伊丹","武庫之荘","甲東園","寺田町","畦野","上本町","生駒","名張","奈良","大和西大寺","祝園","肥後橋","加古川","福崎"],
+  "中国・四国": ["広島","三原","竹原","高松","松山","高知","八幡浜","阿武","三股"],
+  "九州・沖縄": ["福岡","天神","博多","黒崎","久留米","佐世保","大分","鹿島","壱岐","那覇","安里","沖縄","宮崎","鹿児島","花畑","名島"],
+};
+
+function getRegion(store) {
+  const text = store.name + store.access;
+  for (const [region, keywords] of Object.entries(REGION_KEYWORDS)) {
+    if (keywords.some(k => text.includes(k))) return region;
+  }
+  return "その他";
+}
+
+// ============================================================
+// 投稿文テンプレート
+// ============================================================
+function generatePostText(store) {
+  const hashtags = document.getElementById('commonHashtags').value.trim();
+  const url = `https://studygo.jp/store?shopId=${store.id}`;
+
+  // エリアハッシュタグ
+  let areaTag = '';
+  const region = getRegion(store);
+  const areaMap = {
+    "北海道・東北": "#北海道 #東北",
+    "関東": "#東京 #関東",
+    "中部・北陸": "#名古屋 #中部 #北陸",
+    "関西": "#大阪 #京都 #関西",
+    "中国・四国": "#中国地方 #四国",
+    "九州・沖縄": "#九州 #沖縄"
+  };
+  areaTag = areaMap[region] || '';
+
+  // カテゴリ情報
+  let catLabel = '';
+  if (store.cat === '自習室専業') catLabel = '自習室';
+  else if (store.cat === 'カフェ') catLabel = 'カフェ';
+  else catLabel = 'コワーキングスペース';
+
+  // 料金情報
+  let priceLines = [];
+  if (store.drop) priceLines.push(`ドロップイン ${store.drop}`);
+  if (store.month) priceLines.push(`月額 ${store.month}`);
+  let priceText = priceLines.length > 0 ? priceLines.join(' / ') : '詳細はリンクから';
+
+  let text = `【${catLabel}紹介】${store.name}
+
+スタディGO掲載店舗をご紹介します！
+
+${store.name}
+
+${store.access}
+
+${priceText}
+
+スタディGOアプリから簡単予約・チェックイン！
+全国の提携スペースが1つのアプリで利用可能です。
+
+詳しい店舗情報はこちらから！
+${url}
+
+${hashtags}
+${areaTag}
+#${store.name.replace(/[\s　・＆&()（）]/g, '')}`;
+
+  return text.replace(/\n{3,}/g, '\n\n');
+}
+
+// ============================================================
+// 画像生成テーマ
+// ============================================================
+const THEMES = {
+  green: { bg: '#1b5e20', accent: '#6abf69', text: '#fff', sub: '#c8e6c9', label: 'グリーン' },
+  lightgreen: { bg: '#33691e', accent: '#8bc34a', text: '#fff', sub: '#dcedc8', label: 'ライトグリーン' },
+  white: { bg: '#ffffff', accent: '#4a8c3f', text: '#333', sub: '#666', label: 'ホワイト' },
+  dark: { bg: '#212121', accent: '#6abf69', text: '#fff', sub: '#e0e0e0', label: 'ダーク' },
+  navy: { bg: '#1a237e', accent: '#6abf69', text: '#fff', sub: '#bbdefb', label: 'ネイビー' },
+  orange: { bg: '#e65100', accent: '#ffb74d', text: '#fff', sub: '#ffe0b2', label: 'オレンジ' },
+};
+let currentTheme = 'green';
+
+// ロゴ画像の読み込み
+const LOGO_IMG = new Image();
+LOGO_IMG.crossOrigin = 'anonymous';
+let logoLoaded = false;
+LOGO_IMG.onload = () => { logoLoaded = true; renderStores(); };
+LOGO_IMG.onerror = () => { console.warn('ロゴ画像が読み込めませんでした'); logoLoaded = false; renderStores(); };
+LOGO_IMG.src = 'studygo-icon.png';
+
+function drawStoreImage(canvas, store, theme, size) {
+  const t = THEMES[theme];
+  const isWhite = (theme === 'white');
+  const ctx = canvas.getContext('2d');
+  const w = size, h = size;
+  canvas.width = w; canvas.height = h;
+
+  // 背景グラデーション
+  const grad = ctx.createLinearGradient(0, 0, w, h);
+  grad.addColorStop(0, t.bg);
+  grad.addColorStop(1, isWhite ? '#f5f5f5' : adjustColor(t.bg, 30));
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, w, h);
+
+  // 装飾パターン（斜線）
+  ctx.strokeStyle = isWhite ? 'rgba(0,0,0,0.03)' : 'rgba(255,255,255,0.05)';
+  ctx.lineWidth = 2;
+  for (let i = -h; i < w + h; i += 40) {
+    ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i + h, h); ctx.stroke();
+  }
+
+  // 上部帯
+  ctx.fillStyle = isWhite ? 'rgba(74,140,63,0.06)' : 'rgba(255,255,255,0.1)';
+  ctx.fillRect(0, 0, w, h * 0.18);
+
+  // ロゴ画像を描画
+  if (logoLoaded) {
+    const logoH = Math.round(h * 0.11);
+    const logoW = Math.round(logoH * (LOGO_IMG.naturalWidth / LOGO_IMG.naturalHeight));
+    const logoX = w * 0.03;
+    const logoY = h * 0.02;
+    ctx.drawImage(LOGO_IMG, logoX, logoY, logoW, logoH);
+  } else {
+    // フォールバック: テキスト表示
+    const logoSize = Math.round(w * 0.04);
+    ctx.font = `bold ${logoSize}px 'Segoe UI', sans-serif`;
+    ctx.fillStyle = t.accent;
+    ctx.textAlign = 'left';
+    ctx.fillText('スタディGO', w * 0.06, h * 0.09);
+  }
+
+  // 「掲載店舗紹介」
+  const subLogoSize = Math.round(w * 0.035);
+  ctx.font = `bold ${subLogoSize}px 'Hiragino Sans', 'Noto Sans JP', sans-serif`;
+  ctx.fillStyle = isWhite ? '#666' : t.sub;
+  ctx.textAlign = 'right';
+  ctx.fillText('掲載店舗紹介', w * 0.94, h * 0.10);
+
+  // アクセントライン（StudyGOブランドグリーン）
+  ctx.fillStyle = t.accent;
+  ctx.fillRect(w * 0.06, h * 0.15, w * 0.88, 3);
+
+  // カテゴリラベル
+  let catLabel = store.cat === '自習室専業' ? '自習室' : store.cat === 'カフェ' ? 'カフェ' : 'コワーキング';
+  const catSize = Math.round(w * 0.032);
+  ctx.font = `bold ${catSize}px 'Hiragino Sans', 'Noto Sans JP', sans-serif`;
+  const catW = ctx.measureText(catLabel).width + w * 0.04;
+  const catH = catSize * 1.8;
+  const catX = w * 0.06;
+  const catY = h * 0.20;
+  roundRect(ctx, catX, catY, catW, catH, 6);
+  ctx.fillStyle = t.accent;
+  ctx.fill();
+  ctx.fillStyle = isWhite ? '#fff' : t.bg;
+  ctx.textAlign = 'left';
+  ctx.fillText(catLabel, catX + w * 0.02, catY + catH * 0.7);
+
+  // 店舗名（自動改行）
+  const nameSize = Math.round(w * 0.058);
+  ctx.font = `bold ${nameSize}px 'Hiragino Sans', 'Noto Sans JP', sans-serif`;
+  ctx.fillStyle = t.text;
+  ctx.textAlign = 'left';
+  const nameLines = wrapText(ctx, store.name, w * 0.82);
+  let nameY = h * 0.34;
+  nameLines.forEach(line => {
+    ctx.fillText(line, w * 0.06, nameY);
+    nameY += nameSize * 1.3;
+  });
+
+  // 区切り線
+  const divY = nameY + h * 0.02;
+  ctx.fillStyle = t.accent;
+  ctx.fillRect(w * 0.06, divY, w * 0.2, 2);
+
+  // アクセス情報
+  const accSize = Math.round(w * 0.03);
+  ctx.font = `${accSize}px 'Hiragino Sans', 'Noto Sans JP', sans-serif`;
+  ctx.fillStyle = isWhite ? '#666' : t.sub;
+  const accLines = wrapText(ctx, store.access, w * 0.82);
+  let accY = divY + h * 0.06;
+  accLines.slice(0, 3).forEach((line, i) => {
+    ctx.fillText((i === 0 ? '\u{1F689} ' : '    ') + line, w * 0.06, accY);
+    accY += accSize * 1.5;
+  });
+
+  // 料金ボックス
+  const boxY = h * 0.70;
+  const boxH = h * 0.16;
+  roundRect(ctx, w * 0.06, boxY, w * 0.88, boxH, 12);
+  ctx.fillStyle = isWhite ? 'rgba(74,140,63,0.06)' : 'rgba(255,255,255,0.08)';
+  ctx.fill();
+  ctx.strokeStyle = isWhite ? 'rgba(74,140,63,0.2)' : 'rgba(255,255,255,0.2)';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  const priceSize = Math.round(w * 0.035);
+  const priceLabelSize = Math.round(w * 0.025);
+  ctx.textAlign = 'center';
+
+  if (store.drop && store.month) {
+    ctx.fillStyle = isWhite ? '#666' : t.sub;
+    ctx.font = `${priceLabelSize}px 'Hiragino Sans', sans-serif`;
+    ctx.fillText('ドロップイン', w * 0.3, boxY + boxH * 0.35);
+    ctx.fillStyle = t.accent;
+    ctx.font = `bold ${priceSize}px 'Hiragino Sans', sans-serif`;
+    ctx.fillText(store.drop, w * 0.3, boxY + boxH * 0.7);
+    ctx.strokeStyle = isWhite ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.2)';
+    ctx.beginPath(); ctx.moveTo(w * 0.5, boxY + boxH * 0.15); ctx.lineTo(w * 0.5, boxY + boxH * 0.85); ctx.stroke();
+    ctx.fillStyle = isWhite ? '#666' : t.sub;
+    ctx.font = `${priceLabelSize}px 'Hiragino Sans', sans-serif`;
+    ctx.fillText('月額プラン', w * 0.7, boxY + boxH * 0.35);
+    ctx.fillStyle = t.accent;
+    ctx.font = `bold ${priceSize}px 'Hiragino Sans', sans-serif`;
+    ctx.fillText(store.month, w * 0.7, boxY + boxH * 0.7);
+  } else if (store.drop) {
+    ctx.fillStyle = isWhite ? '#666' : t.sub;
+    ctx.font = `${priceLabelSize}px 'Hiragino Sans', sans-serif`;
+    ctx.fillText('ドロップイン', w * 0.5, boxY + boxH * 0.35);
+    ctx.fillStyle = t.accent;
+    ctx.font = `bold ${priceSize}px 'Hiragino Sans', sans-serif`;
+    ctx.fillText(store.drop, w * 0.5, boxY + boxH * 0.7);
+  } else if (store.month) {
+    ctx.fillStyle = isWhite ? '#666' : t.sub;
+    ctx.font = `${priceLabelSize}px 'Hiragino Sans', sans-serif`;
+    ctx.fillText('月額プラン', w * 0.5, boxY + boxH * 0.35);
+    ctx.fillStyle = t.accent;
+    ctx.font = `bold ${priceSize}px 'Hiragino Sans', sans-serif`;
+    ctx.fillText(store.month, w * 0.5, boxY + boxH * 0.7);
+  }
+
+  // 下部: URL + ロゴ小
+  const footSize = Math.round(w * 0.022);
+  ctx.font = `${footSize}px 'Segoe UI', sans-serif`;
+  ctx.fillStyle = isWhite ? 'rgba(0,0,0,0.3)' : 'rgba(255,255,255,0.4)';
+  ctx.textAlign = 'center';
+  ctx.fillText(`https://studygo.jp/store?shopId=${store.id}`, w / 2, h * 0.95);
+}
+
+function adjustColor(hex, amount) {
+  const num = parseInt(hex.replace('#', ''), 16);
+  const r = Math.min(255, ((num >> 16) & 0xff) + amount);
+  const g = Math.min(255, ((num >> 8) & 0xff) + amount);
+  const b = Math.min(255, (num & 0xff) + amount);
+  return `rgb(${r},${g},${b})`;
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+function wrapText(ctx, text, maxWidth) {
+  const chars = [...text];
+  const lines = [];
+  let line = '';
+  for (const ch of chars) {
+    const test = line + ch;
+    if (ctx.measureText(test).width > maxWidth && line.length > 0) {
+      lines.push(line);
+      line = ch;
+    } else {
+      line = test;
+    }
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
+// ============================================================
+// UI
+// ============================================================
+function renderStores() {
+  const list = document.getElementById('storeList');
+  list.innerHTML = '';
+
+  const search = document.getElementById('searchBox').value.toLowerCase();
+  const catFilter = document.getElementById('categoryFilter').value;
+  const regionFilter = document.getElementById('regionFilter').value;
+
+  let filtered = STORES.filter(s => {
+    const text = (s.name + s.access).toLowerCase();
+    if (search && !text.includes(search)) return false;
+    if (catFilter) {
+      if (catFilter === 'コワーキング' && (s.cat === '自習室専業' || s.cat === 'カフェ' || s.cat2)) return false;
+      if (catFilter === '自習室専業' && s.cat !== '自習室専業') return false;
+      if (catFilter === 'カフェ' && s.cat !== 'カフェ') return false;
+      if (catFilter === '勉強カフェ' && s.cat2 !== '勉強カフェ') return false;
+      if (catFilter === 'SoloTime' && s.cat2 !== 'SoloTime') return false;
+      if (catFilter === 'アントレサロン' && s.cat2 !== 'アントレサロン') return false;
+      if (catFilter === 'MIRAIYA' && s.cat2 !== 'MIRAIYA') return false;
+    }
+    if (regionFilter && getRegion(s) !== regionFilter) return false;
+    return true;
+  });
+
+  document.getElementById('storeCount').textContent = `${filtered.length}件表示 / 全${STORES.length}件`;
+
+  filtered.forEach(store => {
+    const card = document.createElement('div');
+    card.className = 'store-card';
+    card.dataset.id = store.id;
+
+    const postText = generatePostText(store);
+    const tags = [];
+    if (store.drop) tags.push(`<span class="tag-drop">ドロップイン ${store.drop}</span>`);
+    if (store.month) tags.push(`<span class="tag-month">月額 ${store.month}</span>`);
+    if (store.cat === 'カフェ') tags.push(`<span class="tag-cafe">カフェ</span>`);
+    if (store.cat === '自習室専業') tags.push(`<span class="tag-jishu">自習室</span>`);
+    if (store.dropNow) tags.push(`<span class="tag-drop">受付中</span>`);
+
+    card.innerHTML = `
+      <div class="card-left">
+        <div class="store-name">${store.name}</div>
+        <div class="store-meta">${tags.join('')}</div>
+        <div class="post-text" id="text-${store.id}">${escapeHtml(postText)}</div>
+        <div class="btn-row">
+          <button class="btn btn-copy" onclick="copyText(${store.id}, this)">投稿文をコピー</button>
+          <button class="btn btn-edit" onclick="editText(${store.id})">編集</button>
+        </div>
+      </div>
+      <div class="card-right">
+        <canvas class="canvas-preview" id="canvas-${store.id}" width="360" height="360"></canvas>
+        <div class="img-options">
+          ${Object.entries(THEMES).map(([k, v]) =>
+            `<button class="btn theme-btn ${k === currentTheme ? 'active' : ''}" style="background:${v.bg};color:${v.text}" onclick="changeTheme(${store.id},'${k}',this)">${v.label}</button>`
+          ).join('')}
+        </div>
+        <button class="btn btn-dl" onclick="downloadImage(${store.id})">画像をダウンロード (1080x1080)</button>
+        <div class="photo-section">
+          <div class="photo-drop" id="photoDrop-${store.id}" onclick="document.getElementById('photoInput-${store.id}').click()"
+               ondragover="event.preventDefault();this.classList.add('dragover')"
+               ondragleave="this.classList.remove('dragover')"
+               ondrop="event.preventDefault();this.classList.remove('dragover');handlePhotoDrop(${store.id},event)">
+            店舗写真をここにドロップ<br>またはクリックして選択
+            <input type="file" id="photoInput-${store.id}" accept="image/*" onchange="handlePhotoSelect(${store.id},this)">
+          </div>
+          <div id="photoResult-${store.id}" class="hidden">
+            <canvas class="photo-preview" id="photoCanvas-${store.id}" width="360" height="360"></canvas>
+            <div style="display:flex;gap:6px;align-items:center;margin-top:6px;flex-wrap:wrap;justify-content:center;">
+              <div class="logo-size-row">
+                <span>ロゴサイズ</span>
+                <input type="range" min="5" max="30" value="15" oninput="updatePhotoLogo(${store.id})">
+                <span id="logoSizeLabel-${store.id}">15%</span>
+              </div>
+              <div class="logo-pos-row">
+                <button class="btn" onclick="setLogoPos(${store.id},'tl',this)">左上</button>
+                <button class="btn active" onclick="setLogoPos(${store.id},'tr',this)">右上</button>
+                <button class="btn" onclick="setLogoPos(${store.id},'bl',this)">左下</button>
+                <button class="btn" onclick="setLogoPos(${store.id},'br',this)">右下</button>
+              </div>
+            </div>
+            <div style="display:flex;gap:6px;margin-top:8px;justify-content:center;">
+              <button class="btn btn-dl" onclick="downloadPhoto(${store.id})">ロゴ入り写真をDL</button>
+              <button class="btn btn-edit" onclick="clearPhoto(${store.id})">写真をクリア</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    list.appendChild(card);
+
+    // プレビュー描画
+    const previewCanvas = document.getElementById(`canvas-${store.id}`);
+    drawStoreImage(previewCanvas, store, currentTheme, 360);
+  });
+}
+
+function filterStores() { renderStores(); }
+
+function escapeHtml(str) {
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function copyText(id, btn) {
+  const el = document.getElementById(`text-${id}`);
+  const text = el.innerText || el.textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'コピー済み!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '投稿文をコピー'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function editText(id) {
+  const el = document.getElementById(`text-${id}`);
+  if (el.contentEditable === 'true') {
+    el.contentEditable = 'false';
+    el.style.background = '#fafafa';
+  } else {
+    el.contentEditable = 'true';
+    el.style.background = '#fff8e1';
+    el.focus();
+  }
+}
+
+function changeTheme(id, theme, btn) {
+  const store = STORES.find(s => s.id === id);
+  const canvas = document.getElementById(`canvas-${id}`);
+  drawStoreImage(canvas, store, theme, 360);
+
+  // ボタンのactive状態を更新
+  const card = btn.closest('.card-right');
+  card.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function downloadImage(id) {
+  const store = STORES.find(s => s.id === id);
+  const offscreen = document.getElementById('offscreenCanvas');
+
+  // プレビューから現在のテーマを取得
+  const card = document.querySelector(`.store-card[data-id="${id}"]`);
+  const activeBtn = card ? card.querySelector('.theme-btn.active') : null;
+  let theme = currentTheme;
+  if (activeBtn) {
+    const onclick = activeBtn.getAttribute('onclick');
+    const m = onclick.match(/'(\w+)'/);
+    if (m) theme = m[1];
+  }
+
+  drawStoreImage(offscreen, store, theme, 1080);
+  const link = document.createElement('a');
+  link.download = `StudyGO_${store.name.replace(/[\s　\/\\]/g, '_')}.png`;
+  link.href = offscreen.toDataURL('image/png');
+  link.click();
+}
+
+function copyAllTexts() {
+  const textEls = document.querySelectorAll('.post-text');
+  const allText = Array.from(textEls).map(el => el.innerText || el.textContent).join('\n\n' + '='.repeat(50) + '\n\n');
+  navigator.clipboard.writeText(allText).then(() => alert(`${textEls.length}件の投稿文をコピーしました`));
+}
+
+function downloadAllImages() {
+  const cards = document.querySelectorAll('.store-card');
+  if (cards.length > 50) {
+    if (!confirm(`${cards.length}件の画像をダウンロードします。よろしいですか？`)) return;
+  }
+  let delay = 0;
+  cards.forEach(card => {
+    const id = parseInt(card.dataset.id);
+    setTimeout(() => downloadImage(id), delay);
+    delay += 200;
+  });
+}
+
+// ============================================================
+// 写真インポート + ロゴ合成
+// ============================================================
+const photoData = {}; // { storeId: { img, pos:'tr', sizePct:15 } }
+
+function handlePhotoDrop(id, e) {
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith('image/')) loadPhoto(id, file);
+}
+
+function handlePhotoSelect(id, input) {
+  const file = input.files[0];
+  if (file) loadPhoto(id, file);
+}
+
+function loadPhoto(id, file) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = new Image();
+    img.onload = () => {
+      photoData[id] = { img, pos: 'tr', sizePct: 15 };
+      document.getElementById(`photoDrop-${id}`).classList.add('hidden');
+      document.getElementById(`photoResult-${id}`).classList.remove('hidden');
+      drawPhotoWithLogo(id, 360);
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function drawPhotoWithLogo(id, previewSize) {
+  const data = photoData[id];
+  if (!data) return;
+
+  const canvas = document.getElementById(`photoCanvas-${id}`);
+  const ctx = canvas.getContext('2d');
+  const img = data.img;
+
+  // プレビュー: アスペクト比維持で表示
+  const scale = Math.min(previewSize / img.width, previewSize / img.height);
+  const cw = Math.round(img.width * scale);
+  const ch = Math.round(img.height * scale);
+  canvas.width = cw;
+  canvas.height = ch;
+
+  ctx.drawImage(img, 0, 0, cw, ch);
+  drawLogoOnCanvas(ctx, cw, ch, data.pos, data.sizePct);
+}
+
+function drawLogoOnCanvas(ctx, cw, ch, pos, sizePct) {
+  if (!logoLoaded) return;
+
+  const logoW = Math.round(cw * sizePct / 100);
+  const logoH = Math.round(logoW * (LOGO_IMG.naturalHeight / LOGO_IMG.naturalWidth));
+  const margin = Math.round(cw * 0.03);
+
+  // 半透明白背景
+  let lx, ly;
+  if (pos === 'tl') { lx = margin; ly = margin; }
+  else if (pos === 'tr') { lx = cw - logoW - margin; ly = margin; }
+  else if (pos === 'bl') { lx = margin; ly = ch - logoH - margin; }
+  else { lx = cw - logoW - margin; ly = ch - logoH - margin; }
+
+  const pad = Math.round(logoW * 0.08);
+  ctx.fillStyle = 'rgba(255,255,255,0.85)';
+  roundRect(ctx, lx - pad, ly - pad, logoW + pad * 2, logoH + pad * 2, Math.round(pad * 0.8));
+  ctx.fill();
+
+  ctx.drawImage(LOGO_IMG, lx, ly, logoW, logoH);
+}
+
+function updatePhotoLogo(id) {
+  const data = photoData[id];
+  if (!data) return;
+  const slider = document.querySelector(`#photoResult-${id} input[type="range"]`);
+  data.sizePct = parseInt(slider.value);
+  document.getElementById(`logoSizeLabel-${id}`).textContent = data.sizePct + '%';
+  drawPhotoWithLogo(id, 360);
+}
+
+function setLogoPos(id, pos, btn) {
+  const data = photoData[id];
+  if (!data) return;
+  data.pos = pos;
+  btn.closest('.logo-pos-row').querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  drawPhotoWithLogo(id, 360);
+}
+
+function downloadPhoto(id) {
+  const data = photoData[id];
+  if (!data) return;
+  const store = STORES.find(s => s.id === id);
+
+  // フルサイズで描画
+  const offCanvas = document.createElement('canvas');
+  const ctx = offCanvas.getContext('2d');
+  offCanvas.width = data.img.width;
+  offCanvas.height = data.img.height;
+  ctx.drawImage(data.img, 0, 0);
+  drawLogoOnCanvas(ctx, data.img.width, data.img.height, data.pos, data.sizePct);
+
+  const link = document.createElement('a');
+  link.download = `StudyGO_${store.name.replace(/[\s　\/\\]/g, '_')}_photo.png`;
+  link.href = offCanvas.toDataURL('image/png');
+  link.click();
+}
+
+function clearPhoto(id) {
+  delete photoData[id];
+  document.getElementById(`photoDrop-${id}`).classList.remove('hidden');
+  document.getElementById(`photoResult-${id}`).classList.add('hidden');
+  // ファイル入力リセット
+  const input = document.getElementById(`photoInput-${id}`);
+  if (input) input.value = '';
+}
+
+function toggleSettings() {
+  // ハッシュタグを変更後、全投稿を再描画
+  renderStores();
+}
+
+// 初期化
+renderStores();
+</script>
+</body>
+</html>
