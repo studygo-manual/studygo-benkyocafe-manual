@@ -10,14 +10,15 @@ body { font-family: 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif; bac
 
 .header {
   background: linear-gradient(135deg, #2e7d32, #4a8c3f, #6abf69, #4a8c3f, #2e7d32);
-  color: #fff; padding: 24px; text-align: center; position: sticky; top: 0; z-index: 100;
+  color: #fff; padding: 24px; text-align: center; position: fixed; top: 0; left: 0; right: 0; z-index: 100;
 }
 .header h1 { font-size: 22px; margin-bottom: 8px; }
 .header p { font-size: 13px; opacity: 0.9; }
 
 .main-tabs {
-  background: #fff; border-bottom: 2px solid #2e7d32; display: flex; position: sticky; top: 76px; z-index: 100;
+  background: #fff; border-bottom: 2px solid #2e7d32; display: flex; position: fixed; top: 76px; left: 0; right: 0; z-index: 100;
 }
+body { padding-top: 125px; }
 .main-tab {
   flex: 1; text-align: center; padding: 14px 8px; font-size: 15px; font-weight: 700;
   cursor: pointer; border: none; background: #fff; color: #666; transition: all 0.2s;
