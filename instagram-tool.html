@@ -295,7 +295,6 @@ body { font-family: 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif; bac
     <div class="btn-row" style="margin-bottom:12px;">
       <button class="btn btn-green" onclick="addDmRow()">+ 新規追加</button>
       <button class="btn btn-copy" onclick="exportDmCsv()">CSV エクスポート</button>
-      <button class="btn btn-edit" onclick="clearAllDm()">全データクリア</button>
     </div>
     <div style="overflow-x:auto;">
       <table class="dm-table">
@@ -1693,12 +1692,6 @@ function exportDmCsv() {
   link.click();
 }
 
-function clearAllDm() {
-  if (!confirm('全てのDMデータを削除しますか？この操作は元に戻せません。')) return;
-  dmData = [];
-  saveDmData();
-  renderDmTable();
-}
 
 // ============================================================
 // 初期化
