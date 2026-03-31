@@ -47,8 +47,9 @@ body { padding-top: 125px; }
 
 .store-card {
   background: #fff; border-radius: 12px; margin-bottom: 20px; overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-left: 4px solid transparent;
 }
+.store-card.posted { border-left-color: #4a8c3f; }
 .card-top { padding: 20px; }
 .card-images {
   display: flex; gap: 12px; padding: 0 20px 20px; flex-wrap: wrap;
@@ -211,6 +212,11 @@ body { padding-top: 125px; }
   </select>
   <select id="areaFilter" onchange="filterStores()">
     <option value="">全市区町村</option>
+  </select>
+  <select id="postStatusFilter" onchange="filterStores()">
+    <option value="">投稿状況:全て</option>
+    <option value="未投稿">未投稿のみ</option>
+    <option value="投稿済">投稿済のみ</option>
   </select>
   <div class="count" id="storeCount">0件表示</div>
 </div>
@@ -781,6 +787,15 @@ const THEMES = {
 };
 let currentTheme = 'green';
 
+// 投稿日管理（localStorage）
+let postDates = {};
+try { const saved = localStorage.getItem('studygo_post_dates'); if (saved) postDates = JSON.parse(saved); } catch(e) {}
+function setPostDate(id, date) {
+  if (date) { postDates[id] = date; } else { delete postDates[id]; }
+  localStorage.setItem('studygo_post_dates', JSON.stringify(postDates));
+  renderStores();
+}
+
 // カスタムテキスト（店舗ごと）
 const customTexts = {};
 
@@ -1144,6 +1159,7 @@ function renderStores() {
   const catFilter = document.getElementById('categoryFilter').value;
   const regionFilter = document.getElementById('regionFilter').value;
   const areaFilterVal = document.getElementById('areaFilter').value;
+  const postStatusFilter = document.getElementById('postStatusFilter').value;
 
   let filtered = STORES.filter(s => {
     const text = (s.name + s.access + getArea(s)).toLowerCase();
@@ -1159,10 +1175,14 @@ function renderStores() {
     }
     if (regionFilter && getRegion(s) !== regionFilter) return false;
     if (areaFilterVal && getArea(s) !== areaFilterVal) return false;
+    if (postStatusFilter === '未投稿' && postDates[s.id]) return false;
+    if (postStatusFilter === '投稿済' && !postDates[s.id]) return false;
     return true;
   });
 
-  document.getElementById('storeCount').textContent = `${filtered.length}件表示 / 全${STORES.length}件`;
+  const postedCount = STORES.filter(s => postDates[s.id]).length;
+
+  document.getElementById('storeCount').textContent = `${filtered.length}件表示 / 全${STORES.length}件（投稿済: ${postedCount}件）`;
 
   filtered.forEach(store => {
     const card = document.createElement('div');
@@ -1182,9 +1202,19 @@ function renderStores() {
     const hasStorePhoto = !!storePhotoUploads[store.id];
     const hasSeatPhoto = !!seatPhotoUploads[store.id];
 
+    const postDate = postDates[store.id] || '';
+    const isPosted = !!postDate;
+    if (isPosted) card.classList.add('posted');
+
     card.innerHTML = `
       <div class="card-top">
-        <div class="store-name">${store.name}</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+          <div class="store-name" style="flex:1;">${store.name}</div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;">
+            <span style="color:${isPosted ? '#2e7d32' : '#999'};">${isPosted ? '投稿済' : '未投稿'}</span>
+            <input type="date" value="${postDate}" onchange="setPostDate(${store.id},this.value)" style="padding:4px 6px;border:1px solid #ccc;border-radius:4px;font-size:12px;">
+          </div>
+        </div>
         <div class="store-meta">${tags.join('')}</div>
         <div class="post-text" id="text-${store.id}">${escapeHtml(postText)}</div>
         <div class="btn-row">
