@@ -785,7 +785,13 @@ const customTexts = {};
 
 function updateCustomText(id) {
   const input = document.getElementById(`customText-${id}`);
-  customTexts[id] = input ? input.value : '';
+  const val = input ? input.value : '';
+  customTexts[id] = val;
+  const counter = document.getElementById(`customTextCount-${id}`);
+  if (counter) {
+    counter.textContent = `${val.length}/25`;
+    counter.style.color = val.length >= 25 ? '#c00' : '#999';
+  }
   const store = STORES.find(s => s.id === id);
   const card = document.querySelector(`.store-card[data-id="${id}"]`);
   const activeDot = card ? card.querySelector('.theme-dot.active') : null;
@@ -1201,7 +1207,10 @@ function renderStores() {
               `<button class="theme-dot ${k === currentTheme ? 'active' : ''}" style="background:${v.bg};" title="${k}" onclick="changeTheme(${store.id},'${k}',this)"></button>`
             ).join('')}
           </div>
-          <input type="text" id="customText-${store.id}" placeholder="ひとことコメントを入力（画像下部に表示）" style="width:100%;max-width:340px;padding:6px 10px;border:1px solid #ccc;border-radius:6px;font-size:12px;" oninput="updateCustomText(${store.id})">
+          <div style="width:100%;max-width:340px;position:relative;">
+            <input type="text" id="customText-${store.id}" placeholder="ひとことコメントを入力" style="width:100%;padding:6px 10px;padding-right:70px;border:1px solid #ccc;border-radius:6px;font-size:12px;" oninput="updateCustomText(${store.id})" maxlength="25">
+            <span id="customTextCount-${store.id}" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:11px;color:#999;">0/25</span>
+          </div>
           <button class="btn btn-dl" onclick="downloadImage(${store.id})">TOP画像DL (1080x1080)</button>
         </div>
         <div class="card-img-col">
