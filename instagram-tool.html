@@ -141,10 +141,10 @@ body { font-family: 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif; bac
 }
 .area-store-list { display: flex; flex-wrap: wrap; gap: 12px; margin: 16px 0; }
 .area-store-chip {
-  background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 8px; padding: 8px 14px;
-  font-size: 13px; cursor: pointer;
+  background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 8px 14px;
+  font-size: 13px; cursor: pointer; transition: all 0.15s;
 }
-.area-store-chip:hover { background: #c8e6c9; }
+.area-store-chip:hover { background: #f0f8f0; border-color: #4a8c3f; }
 .area-summary-canvas {
   border-radius: 8px; border: 1px solid #ddd; max-width: 100%;
 }
@@ -271,7 +271,11 @@ body { font-family: 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif; bac
         </div>
       </div>
       <div style="margin-top:16px;">
-        <h4 style="margin-bottom:8px;">エリア内の店舗一覧</h4>
+        <h4 style="margin-bottom:8px;">エリア内店舗一覧（チェックした店舗が投稿文・画像に反映されます）</h4>
+        <div style="margin-bottom:8px;display:flex;gap:8px;">
+          <button class="btn btn-edit" onclick="areaCheckAll(true)" style="font-size:12px;padding:4px 10px;">全選択</button>
+          <button class="btn btn-edit" onclick="areaCheckAll(false)" style="font-size:12px;padding:4px 10px;">全解除</button>
+        </div>
         <div id="areaStoreList" class="area-store-list"></div>
       </div>
     </div>
@@ -1410,50 +1414,104 @@ function populateAreaSummarySelect() {
   });
 }
 
+let areaSelectedIds = new Set();
+
 function updateAreaSummary() {
   const area = document.getElementById('areaSummarySelect').value;
   const resultDiv = document.getElementById('areaSummaryResult');
   if (!area) { resultDiv.classList.add('hidden'); return; }
   resultDiv.classList.remove('hidden');
 
-  const count = parseInt(document.getElementById('areaSummaryCount').value);
   const stores = STORES.filter(s => getArea(s) === area);
-  const selected = stores.slice(0, count);
 
-  // Short area name (city/ward only)
+  // 初回またはエリア変更時: 上位N件を自動選択
+  const count = parseInt(document.getElementById('areaSummaryCount').value);
+  const currentAreaStoreIds = new Set(stores.map(s => s.id));
+  const hasSelection = [...areaSelectedIds].some(id => currentAreaStoreIds.has(id));
+  if (!hasSelection) {
+    areaSelectedIds = new Set(stores.slice(0, count).map(s => s.id));
+  }
+
+  // チェックボックス付き店舗一覧を描画
+  renderAreaStoreList(stores);
+
+  // 選択された店舗で投稿文・画像を更新
+  refreshAreaContent(area, stores);
+}
+
+function renderAreaStoreList(stores) {
+  const div = document.getElementById('areaStoreList');
+  div.innerHTML = stores.map(s => {
+    const checked = areaSelectedIds.has(s.id) ? 'checked' : '';
+    const prices = [];
+    if (s.drop) prices.push(`ドロップイン${s.drop}`);
+    if (s.month) prices.push(`月額${s.month}`);
+    return `<label class="area-store-chip" style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:6px 10px;${checked ? 'background:#e8f5e9;border-color:#4a8c3f;' : ''}">
+      <input type="checkbox" ${checked} onchange="toggleAreaStore(${s.id})" style="cursor:pointer;">
+      <span><b>${s.name}</b><br><span style="font-size:11px;color:#888;">${s.access}${prices.length ? ' / ' + prices.join(' / ') : ''}</span></span>
+    </label>`;
+  }).join('');
+}
+
+function toggleAreaStore(id) {
+  if (areaSelectedIds.has(id)) {
+    areaSelectedIds.delete(id);
+  } else {
+    areaSelectedIds.add(id);
+  }
+  const area = document.getElementById('areaSummarySelect').value;
+  const stores = STORES.filter(s => getArea(s) === area);
+  renderAreaStoreList(stores);
+  refreshAreaContent(area, stores);
+}
+
+function areaCheckAll(checked) {
+  const area = document.getElementById('areaSummarySelect').value;
+  if (!area) return;
+  const stores = STORES.filter(s => getArea(s) === area);
+  if (checked) {
+    stores.forEach(s => areaSelectedIds.add(s.id));
+  } else {
+    stores.forEach(s => areaSelectedIds.delete(s.id));
+  }
+  renderAreaStoreList(stores);
+  refreshAreaContent(area, stores);
+}
+
+function refreshAreaContent(area, allStores) {
+  const selected = allStores.filter(s => areaSelectedIds.has(s.id));
   const shortArea = area.replace(/^.+[都道府県]/, '');
 
-  // Generate summary text
+  // 投稿文生成
   const hashtags = document.getElementById('commonHashtags').value.trim();
-  let text = `【エリアまとめ】${shortArea}で勉強できる場所 ${selected.length}選
+  let text = '';
+  if (selected.length === 0) {
+    text = '（店舗を選択してください）';
+  } else {
+    text = `【エリアまとめ】${shortArea}で勉強できる場所 ${selected.length}選
 
 ${shortArea}エリアでスタディGOが使えるおすすめスポットをまとめました！
 
 `;
-  selected.forEach((s, i) => {
-    text += `${i+1}. ${s.name}\n`;
-    text += `   ${s.access}\n`;
-    let prices = [];
-    if (s.drop) prices.push(`ドロップイン${s.drop}`);
-    if (s.month) prices.push(`月額${s.month}`);
-    if (prices.length) text += `   ${prices.join(' / ')}\n`;
-    text += '\n';
-  });
-  text += `スタディGOアプリから簡単予約・チェックイン！
-詳しくはプロフィールのリンクから。
+    selected.forEach((s, i) => {
+      text += `${i+1}. ${s.name}\n`;
+      text += `   ${s.access}\n`;
+      let prices = [];
+      if (s.drop) prices.push(`ドロップイン${s.drop}`);
+      if (s.month) prices.push(`月額${s.month}`);
+      if (prices.length) text += `   ${prices.join(' / ')}\n`;
+      text += '\n';
+    });
+    text += `スタディGOアプリから簡単予約・チェックイン！
+詳しい店舗情報はこちらから！
 
 ${hashtags}
 #${shortArea} #${shortArea}勉強 #${shortArea}自習室`;
+  }
 
   document.getElementById('areaSummaryText').textContent = text;
 
-  // Store list chips
-  const storeListDiv = document.getElementById('areaStoreList');
-  storeListDiv.innerHTML = stores.map(s =>
-    `<div class="area-store-chip">${s.name}</div>`
-  ).join('');
-
-  // Draw summary image
+  // 画像生成
   drawAreaSummaryImage(document.getElementById('areaSummaryCanvas'), shortArea, area, selected, 540);
 }
 
@@ -1566,8 +1624,7 @@ function downloadAreaSummary() {
   const area = document.getElementById('areaSummarySelect').value;
   if (!area) return;
   const shortArea = area.replace(/^.+[都道府県]/, '');
-  const count = parseInt(document.getElementById('areaSummaryCount').value);
-  const stores = STORES.filter(s => getArea(s) === area).slice(0, count);
+  const stores = STORES.filter(s => getArea(s) === area && areaSelectedIds.has(s.id));
 
   const offCanvas = document.getElementById('offscreenAreaCanvas');
   drawAreaSummaryImage(offCanvas, shortArea, area, stores, 1080);
