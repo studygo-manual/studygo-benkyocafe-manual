@@ -284,7 +284,13 @@ body { font-family: 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif; bac
 <div class="container">
   <div class="dm-panel">
     <h3>DM管理シート</h3>
-    <p style="font-size:13px;color:#666;margin-bottom:16px;">Instagram DMの送信状況を管理します。目標: 20件/週</p>
+    <div style="font-size:13px;color:#666;margin-bottom:16px;line-height:1.8;">
+      <p><b>使い方:</b></p>
+      <p>1. Instagram検索やChatGPT等で勉強できそうなカフェ・スペースのアカウントを探す</p>
+      <p>2. 「+ 新規追加」で見つけたアカウントを記録</p>
+      <p>3. DMを送ったら送信日を入力し、ステータスを「送信済」に変更</p>
+      <p style="margin-top:4px;color:#2e7d32;"><b>目標: 都内のカフェ中心に 20件/週 DM送信</b></p>
+    </div>
     <div class="dm-stats" id="dmStats"></div>
     <div class="btn-row" style="margin-bottom:12px;">
       <button class="btn btn-green" onclick="addDmRow()">+ 新規追加</button>
@@ -296,6 +302,7 @@ body { font-family: 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif; bac
         <thead>
           <tr>
             <th style="width:40px;">No.</th>
+            <th>検索ワード</th>
             <th>アカウントID</th>
             <th>店舗名</th>
             <th>店舗URL</th>
@@ -1587,10 +1594,11 @@ function saveDmData() {
 
 function addDmRow() {
   dmData.push({
+    searchWord: '',
     accountId: '',
     storeName: '',
     storeUrl: '',
-    sentDate: new Date().toISOString().split('T')[0],
+    sentDate: '',
     status: '未送信',
     memo: ''
   });
@@ -1641,9 +1649,12 @@ function renderDmTable() {
   tbody.innerHTML = '';
   dmData.forEach((row, idx) => {
     const tr = document.createElement('tr');
+    const statusColor = row.status === '送信済' ? '#e8f5e9' : row.status === '返信あり' ? '#fff3e0' : '';
+    tr.style.background = statusColor;
     tr.innerHTML = `
       <td style="text-align:center;color:#888;">${idx + 1}</td>
-      <td><input type="text" value="${escapeHtml(row.accountId)}" onchange="updateDmField(${idx},'accountId',this.value)" placeholder="@account"></td>
+      <td><input type="text" value="${escapeHtml(row.searchWord || '')}" onchange="updateDmField(${idx},'searchWord',this.value)" placeholder="新宿 カフェ 勉強"></td>
+      <td><input type="text" value="${escapeHtml(row.accountId)}" onchange="updateDmField(${idx},'accountId',this.value)" placeholder="@account_id"></td>
       <td><input type="text" value="${escapeHtml(row.storeName)}" onchange="updateDmField(${idx},'storeName',this.value)" placeholder="店舗名"></td>
       <td><input type="text" value="${escapeHtml(row.storeUrl)}" onchange="updateDmField(${idx},'storeUrl',this.value)" placeholder="https://..."></td>
       <td><input type="date" value="${row.sentDate || ''}" onchange="updateDmField(${idx},'sentDate',this.value)"></td>
@@ -1661,11 +1672,12 @@ function renderDmTable() {
 
 function exportDmCsv() {
   if (dmData.length === 0) { alert('データがありません'); return; }
-  const headers = ['No.', 'アカウントID', '店舗名', '店舗URL', '送信日', 'ステータス', 'メモ'];
+  const headers = ['No.', '検索ワード', 'アカウントID', '店舗名', '店舗URL', '送信日', 'ステータス', 'メモ'];
   let csv = '\uFEFF' + headers.join(',') + '\n';
   dmData.forEach((row, idx) => {
     csv += [
       idx + 1,
+      `"${(row.searchWord || '').replace(/"/g, '""')}"`,
       `"${(row.accountId || '').replace(/"/g, '""')}"`,
       `"${(row.storeName || '').replace(/"/g, '""')}"`,
       `"${(row.storeUrl || '').replace(/"/g, '""')}"`,
