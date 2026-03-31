@@ -954,6 +954,17 @@ function drawStoreImage(canvas, store, theme, size) {
     accY += accSize * 1.5;
   });
 
+  // カスタムテキスト（アクセスと料金ボックスの間）
+  const customText = customTexts[store.id] || '';
+  if (customText) {
+    const ctSize = Math.round(w * 0.028);
+    ctx.font = `bold ${ctSize}px 'Hiragino Sans', 'Noto Sans JP', sans-serif`;
+    ctx.fillStyle = t.accent;
+    ctx.textAlign = 'left';
+    const ctY = accY + h * 0.03;
+    ctx.fillText(customText, w * 0.06, ctY);
+  }
+
   // 料金ボックス
   const boxY = h - h * 0.18;
   const boxH = h * 0.12;
@@ -997,16 +1008,6 @@ function drawStoreImage(canvas, store, theme, size) {
     ctx.fillStyle = t.accent;
     ctx.font = `bold ${priceSize}px 'Hiragino Sans', sans-serif`;
     ctx.fillText(store.month, w * 0.5, boxY + boxH * 0.72);
-  }
-
-  // カスタムテキスト（料金ボックスとURLの間）
-  const customText = customTexts[store.id] || '';
-  if (customText) {
-    const ctSize = Math.round(w * 0.028);
-    ctx.font = `bold ${ctSize}px 'Hiragino Sans', 'Noto Sans JP', sans-serif`;
-    ctx.fillStyle = t.accent;
-    ctx.textAlign = 'center';
-    ctx.fillText(customText, w / 2, boxY + boxH + h * 0.045);
   }
 
   // 下部: URL
