@@ -871,7 +871,7 @@ function drawStoreImage(canvas, store, theme, size) {
 
   // 写真上にロゴ（右上）
   if (logoLoaded) {
-    const lh = Math.round(h * 0.07);
+    const lh = Math.round(h * 0.105);
     const lw = Math.round(lh * (LOGO_IMG.naturalWidth / LOGO_IMG.naturalHeight));
     const lx = w - lw - w * 0.04;
     const ly = w * 0.03;
@@ -899,17 +899,19 @@ function drawStoreImage(canvas, store, theme, size) {
     ctx.beginPath(); ctx.moveTo(i, infoY); ctx.lineTo(i + infoH, h); ctx.stroke();
   }
 
-  // 店舗名
-  const nameSize = Math.round(w * 0.05);
+  // 店舗名（1行に収まるようフォントサイズ自動調整）
+  const maxNameWidth = w * 0.88;
+  let nameSize = Math.round(w * 0.05);
   ctx.font = `bold ${nameSize}px 'Hiragino Sans', 'Noto Sans JP', sans-serif`;
+  while (ctx.measureText(store.name).width > maxNameWidth && nameSize > Math.round(w * 0.025)) {
+    nameSize--;
+    ctx.font = `bold ${nameSize}px 'Hiragino Sans', 'Noto Sans JP', sans-serif`;
+  }
   ctx.fillStyle = t.text;
   ctx.textAlign = 'left';
-  const nameLines = wrapText(ctx, store.name, w * 0.88);
   let nameY = infoY + h * 0.06;
-  nameLines.slice(0, 2).forEach(line => {
-    ctx.fillText(line, w * 0.06, nameY);
-    nameY += nameSize * 1.25;
-  });
+  ctx.fillText(store.name, w * 0.06, nameY);
+  nameY += nameSize * 1.25;
 
   // 区切り線
   ctx.fillStyle = t.accent;
