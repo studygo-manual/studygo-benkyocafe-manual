@@ -1097,9 +1097,10 @@ function drawSquareWithLogo(ctx, img, sq) {
   const ox = Math.round((sq - iw) / 2);
   const oy = Math.round((sq - ih) / 2);
   ctx.drawImage(img, ox, oy, iw, ih);
-  // ロゴ右上
+  // ロゴ右上（元画像サイズを超えないよう制限）
   if (logoLoaded) {
-    const logoW = Math.round(sq * 0.15);
+    let logoW = Math.round(sq * 0.15);
+    if (logoW > LOGO_IMG.naturalWidth) logoW = LOGO_IMG.naturalWidth;
     const logoH = Math.round(logoW * (LOGO_IMG.naturalHeight / LOGO_IMG.naturalWidth));
     const margin = Math.round(sq * 0.03);
     const lx = sq - logoW - margin;
