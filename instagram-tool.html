@@ -834,6 +834,8 @@ function drawStoreImage(canvas, store, theme, size) {
   const t = THEMES[theme];
   const isWhite = (theme === 'white');
   const ctx = canvas.getContext('2d');
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
   const w = size, h = size;
   canvas.width = w; canvas.height = h;
 
@@ -1087,6 +1089,8 @@ function wrapText(ctx, text, maxWidth) {
 // Draw photo with logo overlay (for store photo / seat photo)
 // 正方形キャンバスに画像を中央配置してロゴを右上に描画
 function drawSquareWithLogo(ctx, img, sq) {
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
   // 白背景で正方形
   ctx.fillStyle = '#ffffff';
   ctx.fillRect(0, 0, sq, sq);
@@ -1120,7 +1124,7 @@ function drawPhotoWithLogoOverlay(canvas, img, size) {
 }
 
 function drawPhotoWithLogoFull(img) {
-  const sq = Math.max(img.width, img.height);
+  const sq = 1080;
   const offCanvas = document.createElement('canvas');
   offCanvas.width = sq;
   offCanvas.height = sq;
