@@ -311,17 +311,21 @@ $('btnUpload').addEventListener('click', async () => {
   setStatus('statusResult', 'info', 'アップロード中...');
 
   let url = null;
+  const errors = [];
 
   // Try Telegraph
   try {
     const fd = new FormData();
     fd.append('file', croppedBlob, 'photo.png');
     const res = await fetch('https://telegra.ph/upload', { method: 'POST', body: fd });
-    const data = await res.json();
+    const text = await res.text();
+    const data = JSON.parse(text);
     if (data[0] && data[0].src) {
       url = 'https://telegra.ph' + data[0].src;
+    } else {
+      errors.push('Telegraph: ' + text.substring(0, 100));
     }
-  } catch (e) { /* try next */ }
+  } catch (e) { errors.push('Telegraph: ' + e.message); }
 
   // Try catbox.moe
   if (!url) {
@@ -331,24 +335,23 @@ $('btnUpload').addEventListener('click', async () => {
       fd.append('fileToUpload', croppedBlob, 'photo.png');
       const res = await fetch('https://catbox.moe/user/api.php', { method: 'POST', body: fd });
       const text = await res.text();
-      if (text.startsWith('https://')) url = text;
-    } catch (e) { /* try next */ }
+      if (text.startsWith('https://')) { url = text; }
+      else { errors.push('catbox: ' + text.substring(0, 100)); }
+    } catch (e) { errors.push('catbox: ' + e.message); }
   }
 
-  // Try freeimage.host
+  // Try imgbb (public demo key)
   if (!url) {
     try {
       const reader = new FileReader();
       const base64 = await new Promise(r => { reader.onload = () => r(reader.result.split(',')[1]); reader.readAsDataURL(croppedBlob); });
       const fd = new FormData();
-      fd.append('source', base64);
-      fd.append('type', 'base64');
-      fd.append('action', 'upload');
-      fd.append('format', 'json');
-      const res = await fetch('https://freeimage.host/api/1/upload?key=6d207e02198a847aa98d0a2a901485a5', { method: 'POST', body: fd });
+      fd.append('image', base64);
+      const res = await fetch('https://api.imgbb.com/1/upload?key=367e1c7d3c80b1650a498940a8aa1cb7', { method: 'POST', body: fd });
       const data = await res.json();
-      if (data.image && data.image.url) url = data.image.url;
-    } catch (e) { /* all failed */ }
+      if (data.success && data.data && data.data.url) { url = data.data.url; }
+      else { errors.push('imgbb: ' + JSON.stringify(data).substring(0, 100)); }
+    } catch (e) { errors.push('imgbb: ' + e.message); }
   }
 
   if (url) {
@@ -356,7 +359,7 @@ $('btnUpload').addEventListener('click', async () => {
     $('shortUrlBox').classList.remove('hidden');
     setStatus('statusResult', 'success', 'URLを生成しました! コピーしてお使いください。');
   } else {
-    setStatus('statusResult', 'error', 'アップロードに失敗しました。「画像をコピー」または「ダウンロード」をお使いください。');
+    setStatus('statusResult', 'error', '全サービス失敗: ' + errors.join(' / '));
   }
 
   btn.disabled = false;
