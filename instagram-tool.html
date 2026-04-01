@@ -227,7 +227,7 @@ body { padding-top: 125px; }
     <div class="settings-row" style="margin-bottom:12px;">
       <div style="flex:1;min-width:300px;">
         <label>共通ハッシュタグ</label>
-        <textarea id="commonHashtags">#StudyGO #スタディGO #勉強 #自習室 #コワーキング #勉強場所 #勉強垢 #社会人勉強 #資格勉強 #勉強カフェ #集中できる場所 #ノマド #テレワーク #リモートワーク</textarea>
+        <textarea id="commonHashtags">#スタディGO #StudyGO #勉強 #自習室 #コワーキング #勉強場所 #勉強垢 #社会人勉強 #資格勉強 #勉強カフェ #集中できる場所 #ノマド #テレワーク #リモートワーク</textarea>
       </div>
     </div>
     <div class="bulk-actions">
@@ -305,7 +305,6 @@ body { padding-top: 125px; }
       <p>1. Instagram検索やChatGPT等で勉強できそうなカフェ・スペースのアカウントを探す</p>
       <p>2. 「+ 新規追加」で見つけたアカウントを記録</p>
       <p>3. DMを送ったら送信日を入力し、ステータスを「送信済」に変更</p>
-      <p style="margin-top:4px;color:#2e7d32;"><b>目標: 都内のカフェ中心に 20件/週 DM送信</b></p>
     </div>
     <div class="dm-stats" id="dmStats"></div>
     <div class="btn-row" style="margin-bottom:12px;">
@@ -1086,20 +1085,24 @@ function wrapText(ctx, text, maxWidth) {
 }
 
 // Draw photo with logo overlay (for store photo / seat photo)
-function drawPhotoWithLogoOverlay(canvas, img, size) {
-  const ctx = canvas.getContext('2d');
-  const scale = Math.min(size / img.width, size / img.height);
-  const cw = Math.round(img.width * scale);
-  const ch = Math.round(img.height * scale);
-  canvas.width = cw;
-  canvas.height = ch;
-  ctx.drawImage(img, 0, 0, cw, ch);
-
+// 正方形キャンバスに画像を中央配置してロゴを右上に描画
+function drawSquareWithLogo(ctx, img, sq) {
+  // 白背景で正方形
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, sq, sq);
+  // 画像を中央にフィット
+  const scale = Math.min(sq / img.width, sq / img.height);
+  const iw = Math.round(img.width * scale);
+  const ih = Math.round(img.height * scale);
+  const ox = Math.round((sq - iw) / 2);
+  const oy = Math.round((sq - ih) / 2);
+  ctx.drawImage(img, ox, oy, iw, ih);
+  // ロゴ右上
   if (logoLoaded) {
-    const logoW = Math.round(cw * 0.15);
+    const logoW = Math.round(sq * 0.15);
     const logoH = Math.round(logoW * (LOGO_IMG.naturalHeight / LOGO_IMG.naturalWidth));
-    const margin = Math.round(cw * 0.03);
-    const lx = cw - logoW - margin;
+    const margin = Math.round(sq * 0.03);
+    const lx = sq - logoW - margin;
     const ly = margin;
     const pad = Math.round(logoW * 0.08);
     ctx.fillStyle = 'rgba(255,255,255,0.85)';
@@ -1109,24 +1112,18 @@ function drawPhotoWithLogoOverlay(canvas, img, size) {
   }
 }
 
+function drawPhotoWithLogoOverlay(canvas, img, size) {
+  canvas.width = size;
+  canvas.height = size;
+  drawSquareWithLogo(canvas.getContext('2d'), img, size);
+}
+
 function drawPhotoWithLogoFull(img) {
+  const sq = Math.max(img.width, img.height);
   const offCanvas = document.createElement('canvas');
-  const ctx = offCanvas.getContext('2d');
-  offCanvas.width = img.width;
-  offCanvas.height = img.height;
-  ctx.drawImage(img, 0, 0);
-  if (logoLoaded) {
-    const logoW = Math.round(img.width * 0.15);
-    const logoH = Math.round(logoW * (LOGO_IMG.naturalHeight / LOGO_IMG.naturalWidth));
-    const margin = Math.round(img.width * 0.03);
-    const lx = img.width - logoW - margin;
-    const ly = margin;
-    const pad = Math.round(logoW * 0.08);
-    ctx.fillStyle = 'rgba(255,255,255,0.85)';
-    roundRect(ctx, lx - pad, ly - pad, logoW + pad * 2, logoH + pad * 2, Math.round(pad * 0.8));
-    ctx.fill();
-    ctx.drawImage(LOGO_IMG, lx, ly, logoW, logoH);
-  }
+  offCanvas.width = sq;
+  offCanvas.height = sq;
+  drawSquareWithLogo(offCanvas.getContext('2d'), img, sq);
   return offCanvas;
 }
 
@@ -1780,7 +1777,7 @@ function renderDmStats() {
     <div class="dm-stat-card"><div class="num">${unsent}</div><div class="label">未送信</div></div>
     <div class="dm-stat-card"><div class="num">${sent}</div><div class="label">送信済</div></div>
     <div class="dm-stat-card"><div class="num">${replied}</div><div class="label">返信あり</div></div>
-    <div class="dm-stat-card"><div class="num">${thisWeek}/20</div><div class="label">今週の送信</div></div>
+    <div class="dm-stat-card"><div class="num">${thisWeek}</div><div class="label">今週の送信</div></div>
   `;
 }
 
