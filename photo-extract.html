@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>身分証明書 写真抽出ツール</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', 'Hiragino Sans', sans-serif; background: #f0f2f5; color: #333; min-height: 100vh; }
+
+.header {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #fff; padding: 20px 24px; text-align: center;
+}
+.header h1 { font-size: 22px; font-weight: 600; }
+.header p { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+
+.container { max-width: 900px; margin: 24px auto; padding: 0 16px; }
+
+.card {
+  background: #fff; border-radius: 12px; padding: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 20px;
+}
+.card h2 { font-size: 16px; margin-bottom: 16px; color: #1e40af; }
+
+.upload-area {
+  border: 2px dashed #cbd5e1; border-radius: 12px; padding: 48px 24px;
+  text-align: center; cursor: pointer; transition: all 0.2s; background: #f8fafc;
+}
+.upload-area:hover, .upload-area.dragover { border-color: #2563eb; background: #eff6ff; }
+.upload-area svg { width: 48px; height: 48px; color: #94a3b8; margin-bottom: 12px; }
+.upload-area p { color: #64748b; font-size: 14px; }
+.upload-area .sub { font-size: 12px; color: #94a3b8; margin-top: 4px; }
+#fileInput { display: none; }
+
+.canvas-wrapper {
+  position: relative; display: inline-block; cursor: crosshair; max-width: 100%; margin: 0 auto;
+}
+.canvas-wrapper canvas { max-width: 100%; height: auto; display: block; border-radius: 8px; }
+#selectionBox {
+  position: absolute; border: 2px dashed #ef4444; background: rgba(239,68,68,0.1);
+  pointer-events: none; display: none;
+}
+
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+.btn {
+  padding: 10px 20px; border: none; border-radius: 8px; font-size: 14px;
+  font-weight: 500; cursor: pointer; transition: all 0.2s; display: inline-flex;
+  align-items: center; gap: 6px;
+}
+.btn-primary { background: #2563eb; color: #fff; }
+.btn-primary:hover { background: #1d4ed8; }
+.btn-green { background: #16a34a; color: #fff; }
+.btn-green:hover { background: #15803d; }
+.btn-lg { padding: 14px 28px; font-size: 16px; }
+.btn-secondary { background: #e2e8f0; color: #475569; }
+.btn-secondary:hover { background: #cbd5e1; }
+.btn-danger { background: #fee2e2; color: #dc2626; }
+.btn-danger:hover { background: #fecaca; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.status {
+  padding: 10px 16px; border-radius: 8px; font-size: 13px; margin-top: 12px; display: none;
+}
+.status.info { display: block; background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+.status.success { display: block; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+.status.error { display: block; background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+
+.result-area { text-align: center; }
+.result-area img {
+  max-width: 200px; max-height: 260px; border-radius: 8px;
+  border: 2px solid #e2e8f0; margin-bottom: 16px;
+}
+
+.short-url-box {
+  background: #f0fdf4; border: 2px solid #86efac; border-radius: 12px;
+  padding: 20px; margin-top: 16px;
+}
+.short-url-box .url-display {
+  display: flex; gap: 8px; align-items: center;
+}
+.short-url-box .url-display input {
+  flex: 1; padding: 12px 16px; border: 1px solid #bbf7d0; border-radius: 8px;
+  font-size: 15px; font-family: monospace; background: #fff; color: #166534; font-weight: 600;
+}
+.spinner {
+  display: inline-block; width: 18px; height: 18px; border: 2px solid #fff;
+  border-top-color: transparent; border-radius: 50%; animation: spin 0.6s linear infinite;
+  vertical-align: middle; margin-right: 6px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.hidden { display: none !important; }
+
+.instructions {
+  background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px;
+  padding: 12px 16px; font-size: 13px; color: #92400e; margin-bottom: 16px;
+}
+.instructions strong { color: #78350f; }
+
+.copy-toast {
+  position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+  background: #166534; color: #fff; padding: 12px 24px; border-radius: 8px;
+  font-size: 14px; font-weight: 500; z-index: 9999; opacity: 0; transition: opacity 0.3s;
+  pointer-events: none;
+}
+.copy-toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div class="copy-toast" id="toast"></div>
+
+<div class="header">
+  <h1>身分証明書 写真抽出ツール</h1>
+  <p>身分証のコピー画像から顔写真を手動で切り抜き</p>
+</div>
+
+<div class="container">
+  <!-- Step 1: Upload -->
+  <div class="card" id="uploadCard">
+    <h2>① 画像をアップロード</h2>
+    <div class="upload-area" id="uploadArea">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M12 16V4m0 0L8 8m4-4l4 4M4 17v2a1 1 0 001 1h14a1 1 0 001-1v-2"/>
+      </svg>
+      <p>クリックまたはドラッグ&ドロップで画像を選択</p>
+      <p class="sub">JPG / PNG / HEIC 対応</p>
+    </div>
+    <input type="file" id="fileInput" accept="image/*">
+  </div>
+
+  <!-- Step 2: Crop -->
+  <div class="card hidden" id="editCard">
+    <h2>② 顔写真の範囲を選択</h2>
+    <div class="instructions">
+      <strong>使い方:</strong> 画像上でドラッグして顔写真の範囲を選択 → 「この範囲を切り出す」を押してください。
+    </div>
+    <div style="text-align:center;">
+      <div class="canvas-wrapper" id="canvasWrapper">
+        <canvas id="manualCanvas"></canvas>
+        <div id="selectionBox"></div>
+      </div>
+    </div>
+    <div class="btn-row" style="justify-content:center; margin-top:12px;">
+      <button class="btn btn-primary" id="btnCrop" disabled>この範囲を切り出す</button>
+      <button class="btn btn-secondary" id="btnResetSelection">選択をリセット</button>
+      <button class="btn btn-secondary" id="btnRetry">別の画像を選択</button>
+    </div>
+  </div>
+
+  <!-- Step 3: Result -->
+  <div class="card hidden" id="resultCard">
+    <h2>③ 抽出結果</h2>
+    <div class="result-area">
+      <img id="resultImg" alt="抽出された顔写真">
+
+      <!-- URL生成 -->
+      <div class="btn-row" style="justify-content:center;">
+        <button class="btn btn-green btn-lg" id="btnUpload">短いURLを生成</button>
+      </div>
+      <div class="short-url-box hidden" id="shortUrlBox">
+        <div class="url-display">
+          <input type="text" id="shortUrlOutput" readonly>
+          <button class="btn btn-green" id="btnCopyShort">コピー</button>
+        </div>
+      </div>
+      <div id="statusResult" class="status"></div>
+
+      <div class="btn-row" style="justify-content:center; margin-top:16px;">
+        <button class="btn btn-primary" id="btnCopyImg">画像をコピー</button>
+        <button class="btn btn-primary" id="btnDownload">ダウンロード</button>
+        <button class="btn btn-secondary" id="btnBackToEdit">やり直す</button>
+        <button class="btn btn-danger" id="btnReset">最初から</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+let originalImage = null;
+let croppedBlob = null;
+let selection = { startX: 0, startY: 0, endX: 0, endY: 0, active: false };
+let canvasScale = 1;
+
+function showToast(msg) {
+  const t = $('toast'); t.textContent = msg;
+  t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// Upload
+const uploadArea = $('uploadArea');
+const fileInput = $('fileInput');
+uploadArea.addEventListener('click', () => fileInput.click());
+uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.classList.add('dragover'); });
+uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
+uploadArea.addEventListener('drop', e => {
+  e.preventDefault(); uploadArea.classList.remove('dragover');
+  if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener('change', e => { if (e.target.files.length) handleFile(e.target.files[0]); });
+
+function handleFile(file) {
+  if (!file.type.startsWith('image/')) { alert('画像ファイルを選択してください'); return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => { originalImage = img; showEditCard(); };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function showEditCard() {
+  $('uploadCard').classList.add('hidden');
+  $('editCard').classList.remove('hidden');
+  $('resultCard').classList.add('hidden');
+  drawPreview();
+}
+
+function drawPreview() {
+  const canvas = $('manualCanvas');
+  const ctx = canvas.getContext('2d');
+  const maxW = 800, maxH = 600;
+  let w = originalImage.width, h = originalImage.height;
+  if (w > maxW) { h = h * maxW / w; w = maxW; }
+  if (h > maxH) { w = w * maxH / h; h = maxH; }
+  canvas.width = w; canvas.height = h;
+  canvasScale = originalImage.width / w;
+  ctx.drawImage(originalImage, 0, 0, w, h);
+}
+
+// Manual selection
+const manualCanvas = $('manualCanvas');
+const selBox = $('selectionBox');
+
+manualCanvas.addEventListener('mousedown', e => {
+  const rect = manualCanvas.getBoundingClientRect();
+  selection.startX = e.clientX - rect.left; selection.startY = e.clientY - rect.top;
+  selection.active = true; selBox.style.display = 'block'; updateSelBox(e, rect);
+});
+manualCanvas.addEventListener('mousemove', e => {
+  if (!selection.active) return; updateSelBox(e, manualCanvas.getBoundingClientRect());
+});
+document.addEventListener('mouseup', e => {
+  if (!selection.active) return; selection.active = false;
+  const rect = manualCanvas.getBoundingClientRect();
+  selection.endX = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+  selection.endY = Math.max(0, Math.min(e.clientY - rect.top, rect.height));
+  $('btnCrop').disabled = false;
+});
+
+manualCanvas.addEventListener('touchstart', e => {
+  e.preventDefault(); const t = e.touches[0]; const rect = manualCanvas.getBoundingClientRect();
+  selection.startX = t.clientX - rect.left; selection.startY = t.clientY - rect.top;
+  selection.active = true; selBox.style.display = 'block';
+}, { passive: false });
+manualCanvas.addEventListener('touchmove', e => {
+  e.preventDefault(); if (!selection.active) return;
+  updateSelBox(e.touches[0], manualCanvas.getBoundingClientRect());
+}, { passive: false });
+manualCanvas.addEventListener('touchend', () => { if (selection.active) { selection.active = false; $('btnCrop').disabled = false; } });
+
+function updateSelBox(e, rect) {
+  const curX = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+  const curY = Math.max(0, Math.min(e.clientY - rect.top, rect.height));
+  selection.endX = curX; selection.endY = curY;
+  selBox.style.left = Math.min(selection.startX, curX) + 'px';
+  selBox.style.top = Math.min(selection.startY, curY) + 'px';
+  selBox.style.width = Math.abs(curX - selection.startX) + 'px';
+  selBox.style.height = Math.abs(curY - selection.startY) + 'px';
+}
+
+$('btnCrop').addEventListener('click', () => {
+  const rect = manualCanvas.getBoundingClientRect();
+  const dsx = manualCanvas.width / rect.width, dsy = manualCanvas.height / rect.height;
+  const sx = Math.min(selection.startX, selection.endX) * dsx * canvasScale;
+  const sy = Math.min(selection.startY, selection.endY) * dsy * canvasScale;
+  const sw = Math.abs(selection.endX - selection.startX) * dsx * canvasScale;
+  const sh = Math.abs(selection.endY - selection.startY) * dsy * canvasScale;
+  if (sw < 10 || sh < 10) { alert('選択範囲が小さすぎます。'); return; }
+  cropAndShow(sx, sy, sw, sh);
+});
+
+$('btnResetSelection').addEventListener('click', () => {
+  selBox.style.display = 'none'; $('btnCrop').disabled = true; drawPreview();
+});
+
+function cropAndShow(x, y, w, h) {
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.round(w); canvas.height = Math.round(h);
+  canvas.getContext('2d').drawImage(originalImage, x, y, w, h, 0, 0, canvas.width, canvas.height);
+
+  const dataUrl = canvas.toDataURL('image/png');
+  $('resultImg').src = dataUrl;
+  canvas.toBlob(blob => { croppedBlob = blob; }, 'image/png');
+
+  $('editCard').classList.add('hidden');
+  $('resultCard').classList.remove('hidden');
+  setStatus('statusResult', 'info', `${canvas.width}×${canvas.height}px`);
+}
+
+// Upload to get short URL (try Telegraph → catbox → imgbb fallback)
+$('btnUpload').addEventListener('click', async () => {
+  if (!croppedBlob) return;
+  const btn = $('btnUpload');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>アップロード中...';
+  $('shortUrlBox').classList.add('hidden');
+  setStatus('statusResult', 'info', 'アップロード中...');
+
+  let url = null;
+
+  // Try Telegraph
+  try {
+    const fd = new FormData();
+    fd.append('file', croppedBlob, 'photo.png');
+    const res = await fetch('https://telegra.ph/upload', { method: 'POST', body: fd });
+    const data = await res.json();
+    if (data[0] && data[0].src) {
+      url = 'https://telegra.ph' + data[0].src;
+    }
+  } catch (e) { /* try next */ }
+
+  // Try catbox.moe
+  if (!url) {
+    try {
+      const fd = new FormData();
+      fd.append('reqtype', 'fileupload');
+      fd.append('fileToUpload', croppedBlob, 'photo.png');
+      const res = await fetch('https://catbox.moe/user/api.php', { method: 'POST', body: fd });
+      const text = await res.text();
+      if (text.startsWith('https://')) url = text;
+    } catch (e) { /* try next */ }
+  }
+
+  // Try freeimage.host
+  if (!url) {
+    try {
+      const reader = new FileReader();
+      const base64 = await new Promise(r => { reader.onload = () => r(reader.result.split(',')[1]); reader.readAsDataURL(croppedBlob); });
+      const fd = new FormData();
+      fd.append('source', base64);
+      fd.append('type', 'base64');
+      fd.append('action', 'upload');
+      fd.append('format', 'json');
+      const res = await fetch('https://freeimage.host/api/1/upload?key=6d207e02198a847aa98d0a2a901485a5', { method: 'POST', body: fd });
+      const data = await res.json();
+      if (data.image && data.image.url) url = data.image.url;
+    } catch (e) { /* all failed */ }
+  }
+
+  if (url) {
+    $('shortUrlOutput').value = url;
+    $('shortUrlBox').classList.remove('hidden');
+    setStatus('statusResult', 'success', 'URLを生成しました! コピーしてお使いください。');
+  } else {
+    setStatus('statusResult', 'error', 'アップロードに失敗しました。「画像をコピー」または「ダウンロード」をお使いください。');
+  }
+
+  btn.disabled = false;
+  btn.textContent = '短いURLを生成';
+});
+
+// Copy short URL
+$('btnCopyShort').addEventListener('click', async () => {
+  const url = $('shortUrlOutput').value;
+  try { await navigator.clipboard.writeText(url); } catch { $('shortUrlOutput').select(); document.execCommand('copy'); }
+  showToast('URLをコピーしました!');
+});
+
+// Copy image to clipboard
+$('btnCopyImg').addEventListener('click', async () => {
+  if (!croppedBlob) return;
+  try {
+    await navigator.clipboard.write([new ClipboardItem({ 'image/png': croppedBlob })]);
+    showToast('画像をコピーしました!');
+  } catch { showToast('コピーに失敗しました。ダウンロードをお使いください。'); }
+});
+
+// Download
+$('btnDownload').addEventListener('click', () => {
+  const a = document.createElement('a');
+  a.href = $('resultImg').src;
+  a.download = `顔写真_${Date.now()}.png`; a.click();
+});
+
+// Navigation
+$('btnRetry').addEventListener('click', () => {
+  $('uploadCard').classList.remove('hidden'); $('editCard').classList.add('hidden'); fileInput.value = '';
+});
+$('btnBackToEdit').addEventListener('click', () => {
+  $('resultCard').classList.add('hidden'); $('editCard').classList.remove('hidden'); selBox.style.display = 'none';
+});
+$('btnReset').addEventListener('click', () => {
+  $('resultCard').classList.add('hidden'); $('editCard').classList.add('hidden');
+  $('uploadCard').classList.remove('hidden'); originalImage = null; croppedBlob = null;
+  fileInput.value = ''; selBox.style.display = 'none';
+});
+
+function setStatus(id, type, msg) {
+  const el = $(id); el.className = 'status' + (type ? ' ' + type : ''); el.textContent = msg;
+}
+</script>
+</body>
+</html>
