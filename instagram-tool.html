@@ -755,8 +755,7 @@ ${priceText}
 スタディGOアプリから簡単予約・チェックイン！
 全国の提携スペースが1つのアプリで利用可能です。
 
-詳しい店舗情報はこちらから！
-${url}
+詳細はプロフィール欄のリンクからチェックしてね！
 
 ${hashtags}
 ${areaTag}
@@ -843,8 +842,8 @@ function drawStoreImage(canvas, store, theme, size) {
   const hasPhoto = !!photoImg;
   const area = getArea(store);
 
-  // === 上半分: 店舗写真エリア (48%) ===
-  const photoH = Math.round(h * 0.48);
+  // === 写真エリア (67%) ===
+  const photoH = Math.round(h * 0.67);
 
   if (hasPhoto) {
     const imgRatio = photoImg.width / photoImg.height;
@@ -859,11 +858,11 @@ function drawStoreImage(canvas, store, theme, size) {
     }
     ctx.drawImage(photoImg, sx, sy, sw, sh, 0, 0, w, photoH);
 
-    const fadeGrad = ctx.createLinearGradient(0, photoH - h * 0.08, 0, photoH);
+    const fadeGrad = ctx.createLinearGradient(0, photoH - h * 0.06, 0, photoH);
     fadeGrad.addColorStop(0, 'rgba(0,0,0,0)');
-    fadeGrad.addColorStop(1, isWhite ? 'rgba(255,255,255,0.6)' : hexToRgba(t.bg, 0.6));
+    fadeGrad.addColorStop(1, isWhite ? 'rgba(255,255,255,0.5)' : hexToRgba(t.bg, 0.5));
     ctx.fillStyle = fadeGrad;
-    ctx.fillRect(0, photoH - h * 0.08, w, h * 0.08);
+    ctx.fillRect(0, photoH - h * 0.06, w, h * 0.06);
   } else {
     const grad = ctx.createLinearGradient(0, 0, w, photoH);
     grad.addColorStop(0, isWhite ? '#e8e8e8' : adjustColor(t.bg, 40));
@@ -871,7 +870,7 @@ function drawStoreImage(canvas, store, theme, size) {
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, w, photoH);
 
-    ctx.fillStyle = isWhite ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)';
+    ctx.fillStyle = isWhite ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
     const iconSize = w * 0.08;
     const cx = w / 2, cy = photoH / 2;
     roundRect(ctx, cx - iconSize, cy - iconSize * 0.7, iconSize * 2, iconSize * 1.4, 8);
@@ -879,60 +878,55 @@ function drawStoreImage(canvas, store, theme, size) {
     ctx.beginPath();
     ctx.arc(cx, cy, iconSize * 0.4, 0, Math.PI * 2);
     ctx.fill();
-
-    ctx.fillStyle = isWhite ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.15)';
+    ctx.fillStyle = isWhite ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)';
     const phSize = Math.round(w * 0.025);
     ctx.font = `${phSize}px 'Hiragino Sans', sans-serif`;
     ctx.textAlign = 'center';
-    ctx.fillText('下の「店舗写真を選択」から写真を追加', cx, cy + iconSize * 1.2);
+    ctx.fillText('写真を選択してください', cx, cy + iconSize * 1.2);
   }
 
-  // 写真上に「勉強場所紹介」ラベル（左上）
-  const labelSize = Math.round(w * 0.028);
+  // 「勉強場所紹介」ラベル（左上・大きめ）
+  const labelSize = Math.round(w * 0.038);
   const labelText = '勉強場所紹介';
   ctx.font = `bold ${labelSize}px 'Hiragino Sans', 'Noto Sans JP', sans-serif`;
-  const lblW = ctx.measureText(labelText).width + w * 0.04;
+  const lblW = ctx.measureText(labelText).width + w * 0.05;
   const lblH = labelSize * 2;
   const lblX = w * 0.04;
   const lblY = w * 0.04;
-  roundRect(ctx, lblX, lblY, lblW, lblH, 6);
+  roundRect(ctx, lblX, lblY, lblW, lblH, 8);
   ctx.fillStyle = 'rgba(74,140,63,0.9)';
   ctx.fill();
   ctx.fillStyle = '#fff';
   ctx.textAlign = 'left';
-  ctx.fillText(labelText, lblX + w * 0.02, lblY + lblH * 0.68);
+  ctx.fillText(labelText, lblX + w * 0.025, lblY + lblH * 0.68);
 
-  // エリアタグ（左上ラベルの右隣）
+  // エリアタグ（ラベルの下）
   if (area) {
-    const areaTagSize = Math.round(w * 0.022);
+    const areaTagSize = Math.round(w * 0.032);
     const areaTagText = '\u{1F4CD} ' + area;
     ctx.font = `bold ${areaTagSize}px 'Hiragino Sans', 'Noto Sans JP', sans-serif`;
-    const atW = ctx.measureText(areaTagText).width + w * 0.03;
+    const atW = ctx.measureText(areaTagText).width + w * 0.04;
     const atH = areaTagSize * 2;
-    const atX = lblX + lblW + w * 0.02;
-    const atY = lblY + (lblH - atH) / 2;
+    const atX = lblX;
+    const atY = lblY + lblH + w * 0.02;
     roundRect(ctx, atX, atY, atW, atH, atH / 2);
-    ctx.fillStyle = 'rgba(0,0,0,0.45)';
+    ctx.fillStyle = 'rgba(0,0,0,0.5)';
     ctx.fill();
     ctx.fillStyle = '#fff';
     ctx.textAlign = 'left';
-    ctx.fillText(areaTagText, atX + w * 0.015, atY + atH * 0.7);
+    ctx.fillText(areaTagText, atX + w * 0.02, atY + atH * 0.68);
   }
 
-  // 写真上にロゴ（右上）
+  // ロゴ（右上・1.5倍・白縁なし）
   if (logoLoaded) {
-    const lh = Math.round(h * 0.105);
+    const lh = Math.round(h * 0.15);
     const lw = Math.round(lh * (LOGO_IMG.naturalWidth / LOGO_IMG.naturalHeight));
-    const lx = w - lw - w * 0.04;
+    const lx = w - lw - w * 0.03;
     const ly = w * 0.03;
-    const pad = Math.round(lw * 0.1);
-    roundRect(ctx, lx - pad, ly - pad, lw + pad * 2, lh + pad * 2, 6);
-    ctx.fillStyle = 'rgba(255,255,255,0.88)';
-    ctx.fill();
     ctx.drawImage(LOGO_IMG, lx, ly, lw, lh);
   }
 
-  // === 下半分: 情報エリア (52%) ===
+  // === 情報エリア (33%) - 店舗名 + アクセスのみ、中央寄せ ===
   const infoY = photoH;
   const infoH = h - photoH;
 
@@ -942,104 +936,34 @@ function drawStoreImage(canvas, store, theme, size) {
   ctx.fillStyle = infoGrad;
   ctx.fillRect(0, infoY, w, infoH);
 
-  // 装飾パターン
-  ctx.strokeStyle = isWhite ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.04)';
-  ctx.lineWidth = 1;
-  for (let i = -infoH; i < w + infoH; i += 30) {
-    ctx.beginPath(); ctx.moveTo(i, infoY); ctx.lineTo(i + infoH, h); ctx.stroke();
-  }
-
-  // 店舗名（1行に収まるようフォントサイズ自動調整）
+  // 店舗名（中央寄せ、1行に収まるよう自動調整）
   const maxNameWidth = w * 0.88;
-  let nameSize = Math.round(w * 0.05);
+  let nameSize = Math.round(w * 0.048);
   ctx.font = `bold ${nameSize}px 'Hiragino Sans', 'Noto Sans JP', sans-serif`;
   while (ctx.measureText(store.name).width > maxNameWidth && nameSize > Math.round(w * 0.025)) {
     nameSize--;
     ctx.font = `bold ${nameSize}px 'Hiragino Sans', 'Noto Sans JP', sans-serif`;
   }
   ctx.fillStyle = t.text;
-  ctx.textAlign = 'left';
-  let nameY = infoY + h * 0.06;
-  ctx.fillText(store.name, w * 0.06, nameY);
-  nameY += nameSize * 1.25;
+  ctx.textAlign = 'center';
+  ctx.fillText(store.name, w / 2, infoY + infoH * 0.38);
 
-  // 区切り線
-  ctx.fillStyle = t.accent;
-  ctx.fillRect(w * 0.06, nameY + h * 0.01, w * 0.15, 2);
-
-  // アクセス情報
-  const accSize = Math.round(w * 0.027);
+  // アクセス情報（中央寄せ）
+  const accSize = Math.round(w * 0.026);
   ctx.font = `${accSize}px 'Hiragino Sans', 'Noto Sans JP', sans-serif`;
   ctx.fillStyle = isWhite ? '#666' : t.sub;
-  const accLines = wrapText(ctx, store.access, w * 0.82);
-  let accY = nameY + h * 0.055;
-  accLines.slice(0, 2).forEach((line, i) => {
-    ctx.fillText((i === 0 ? '\u{1F689} ' : '    ') + line, w * 0.06, accY);
-    accY += accSize * 1.5;
-  });
+  const accText = store.access.length > 50 ? store.access.substring(0, 50) + '...' : store.access;
+  ctx.fillText('\u{1F689} ' + accText, w / 2, infoY + infoH * 0.68);
 
-  // カスタムテキスト（アクセスと料金ボックスの間）
+  // カスタムテキスト（アクセスの下）
   const customText = customTexts[store.id] || '';
   if (customText) {
-    const ctSize = Math.round(w * 0.028);
+    const ctSize = Math.round(w * 0.026);
     ctx.font = `bold ${ctSize}px 'Hiragino Sans', 'Noto Sans JP', sans-serif`;
     ctx.fillStyle = t.accent;
-    ctx.textAlign = 'left';
-    const ctY = accY + h * 0.03;
-    ctx.fillText(customText, w * 0.06, ctY);
+    ctx.textAlign = 'center';
+    ctx.fillText(customText, w / 2, infoY + infoH * 0.9);
   }
-
-  // 料金ボックス
-  const boxY = h - h * 0.18;
-  const boxH = h * 0.12;
-  roundRect(ctx, w * 0.06, boxY, w * 0.88, boxH, 10);
-  ctx.fillStyle = isWhite ? 'rgba(74,140,63,0.06)' : 'rgba(255,255,255,0.08)';
-  ctx.fill();
-  ctx.strokeStyle = isWhite ? 'rgba(74,140,63,0.2)' : 'rgba(255,255,255,0.15)';
-  ctx.lineWidth = 1;
-  ctx.stroke();
-
-  const priceSize = Math.round(w * 0.032);
-  const priceLabelSize = Math.round(w * 0.022);
-  ctx.textAlign = 'center';
-
-  if (store.drop && store.month) {
-    ctx.fillStyle = isWhite ? '#666' : t.sub;
-    ctx.font = `${priceLabelSize}px 'Hiragino Sans', sans-serif`;
-    ctx.fillText('ドロップイン', w * 0.3, boxY + boxH * 0.38);
-    ctx.fillStyle = t.accent;
-    ctx.font = `bold ${priceSize}px 'Hiragino Sans', sans-serif`;
-    ctx.fillText(store.drop, w * 0.3, boxY + boxH * 0.72);
-    ctx.strokeStyle = isWhite ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.15)';
-    ctx.beginPath(); ctx.moveTo(w * 0.5, boxY + boxH * 0.15); ctx.lineTo(w * 0.5, boxY + boxH * 0.85); ctx.stroke();
-    ctx.fillStyle = isWhite ? '#666' : t.sub;
-    ctx.font = `${priceLabelSize}px 'Hiragino Sans', sans-serif`;
-    ctx.fillText('月額プラン', w * 0.7, boxY + boxH * 0.38);
-    ctx.fillStyle = t.accent;
-    ctx.font = `bold ${priceSize}px 'Hiragino Sans', sans-serif`;
-    ctx.fillText(store.month, w * 0.7, boxY + boxH * 0.72);
-  } else if (store.drop) {
-    ctx.fillStyle = isWhite ? '#666' : t.sub;
-    ctx.font = `${priceLabelSize}px 'Hiragino Sans', sans-serif`;
-    ctx.fillText('ドロップイン', w * 0.5, boxY + boxH * 0.38);
-    ctx.fillStyle = t.accent;
-    ctx.font = `bold ${priceSize}px 'Hiragino Sans', sans-serif`;
-    ctx.fillText(store.drop, w * 0.5, boxY + boxH * 0.72);
-  } else if (store.month) {
-    ctx.fillStyle = isWhite ? '#666' : t.sub;
-    ctx.font = `${priceLabelSize}px 'Hiragino Sans', sans-serif`;
-    ctx.fillText('月額プラン', w * 0.5, boxY + boxH * 0.38);
-    ctx.fillStyle = t.accent;
-    ctx.font = `bold ${priceSize}px 'Hiragino Sans', sans-serif`;
-    ctx.fillText(store.month, w * 0.5, boxY + boxH * 0.72);
-  }
-
-  // 下部: URL
-  const footSize = Math.round(w * 0.02);
-  ctx.font = `${footSize}px 'Segoe UI', sans-serif`;
-  ctx.fillStyle = isWhite ? 'rgba(0,0,0,0.25)' : 'rgba(255,255,255,0.35)';
-  ctx.textAlign = 'center';
-  ctx.fillText(`https://studygo.jp/store?shopId=${store.id}`, w / 2, h * 0.97);
 }
 
 function hexToRgba(hex, alpha) {
@@ -1101,18 +1025,14 @@ function drawSquareWithLogo(ctx, img, sq) {
   const ox = Math.round((sq - iw) / 2);
   const oy = Math.round((sq - ih) / 2);
   ctx.drawImage(img, ox, oy, iw, ih);
-  // ロゴ右上（元画像サイズを超えないよう制限）
+  // ロゴ右上（白縁なし、元画像サイズを超えないよう制限）
   if (logoLoaded) {
-    let logoW = Math.round(sq * 0.15);
+    let logoW = Math.round(sq * 0.18);
     if (logoW > LOGO_IMG.naturalWidth) logoW = LOGO_IMG.naturalWidth;
     const logoH = Math.round(logoW * (LOGO_IMG.naturalHeight / LOGO_IMG.naturalWidth));
     const margin = Math.round(sq * 0.03);
     const lx = sq - logoW - margin;
     const ly = margin;
-    const pad = Math.round(logoW * 0.08);
-    ctx.fillStyle = 'rgba(255,255,255,0.85)';
-    roundRect(ctx, lx - pad, ly - pad, logoW + pad * 2, logoH + pad * 2, Math.round(pad * 0.8));
-    ctx.fill();
     ctx.drawImage(LOGO_IMG, lx, ly, logoW, logoH);
   }
 }
@@ -1588,7 +1508,7 @@ ${shortArea}エリアでスタディGOが使えるおすすめスポットをま
       text += '\n';
     });
     text += `スタディGOアプリから簡単予約・チェックイン！
-詳しい店舗情報はこちらから！
+詳細はプロフィール欄のリンクからチェックしてね！
 
 ${hashtags}
 #${shortArea} #${shortArea}勉強 #${shortArea}自習室`;
