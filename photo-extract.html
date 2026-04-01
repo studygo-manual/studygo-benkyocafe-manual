@@ -92,19 +92,18 @@ body { font-family: 'Segoe UI', 'Hiragino Sans', sans-serif; background: #f0f2f5
 
 .hidden { display: none !important; }
 
-.api-setup {
+.gas-setup {
   background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
   padding: 14px 16px; margin-top: 12px; text-align: left; font-size: 13px; color: #475569;
 }
-.api-setup summary { cursor: pointer; color: #2563eb; font-weight: 500; }
-.api-setup ol { padding-left: 20px; margin: 8px 0; line-height: 1.8; }
-.api-setup .key-row {
+.gas-setup summary { cursor: pointer; color: #2563eb; font-weight: 500; }
+.gas-setup .key-row {
   display: flex; gap: 8px; align-items: center; margin-top: 8px;
 }
-.api-setup input {
+.gas-setup input {
   flex: 1; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px;
 }
-.api-setup .saved { color: #16a34a; font-size: 12px; margin-top: 4px; }
+.gas-setup .saved { color: #16a34a; font-size: 12px; margin-top: 4px; }
 
 .instructions {
   background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px;
@@ -181,18 +180,14 @@ body { font-family: 'Segoe UI', 'Hiragino Sans', sans-serif; background: #f0f2f5
       </div>
       <div id="statusResult" class="status"></div>
 
-      <details class="api-setup" id="apiSetup">
-        <summary>初回のみ: APIキーの設定（無料・30秒）</summary>
-        <ol>
-          <li><a href="https://api.imgbb.com/" target="_blank">https://api.imgbb.com/</a> を開く</li>
-          <li>「Get API key」をクリック → メールで登録（無料）</li>
-          <li>表示されたAPIキーを下に貼り付けて「保存」</li>
-        </ol>
+      <details class="gas-setup" id="gasSetup">
+        <summary>初回のみ: GAS URLの設定</summary>
+        <p style="margin-top:8px;">GASのデプロイURLを貼り付けて「保存」を押してください。</p>
         <div class="key-row">
-          <input type="text" id="apiKeyInput" placeholder="APIキーを貼り付け">
-          <button class="btn btn-primary" id="btnSaveKey" style="padding:8px 14px;">保存</button>
+          <input type="text" id="gasUrlInput" placeholder="https://script.google.com/macros/s/xxxxx/exec">
+          <button class="btn btn-primary" id="btnSaveGasUrl" style="padding:8px 14px;">保存</button>
         </div>
-        <div class="saved" id="keyStatus"></div>
+        <div class="saved" id="gasUrlStatus"></div>
       </details>
 
       <div class="btn-row" style="justify-content:center; margin-top:16px;">
@@ -329,28 +324,28 @@ function cropAndShow(x, y, w, h) {
   setStatus('statusResult', 'info', `${canvas.width}×${canvas.height}px`);
 }
 
-// API key management
-const API_KEY_STORAGE = 'imgbb_api_key';
-const savedKey = localStorage.getItem(API_KEY_STORAGE);
-if (savedKey) {
-  $('apiKeyInput').value = savedKey;
-  $('keyStatus').textContent = '設定済み';
+// GAS URL management
+const GAS_URL_STORAGE = 'photo_gas_url';
+const savedGasUrl = localStorage.getItem(GAS_URL_STORAGE);
+if (savedGasUrl) {
+  $('gasUrlInput').value = savedGasUrl;
+  $('gasUrlStatus').textContent = '設定済み';
 }
 
-$('btnSaveKey').addEventListener('click', () => {
-  const key = $('apiKeyInput').value.trim();
-  if (!key) { alert('APIキーを入力してください'); return; }
-  localStorage.setItem(API_KEY_STORAGE, key);
-  $('keyStatus').textContent = '保存しました!';
+$('btnSaveGasUrl').addEventListener('click', () => {
+  const url = $('gasUrlInput').value.trim();
+  if (!url) { alert('URLを入力してください'); return; }
+  localStorage.setItem(GAS_URL_STORAGE, url);
+  $('gasUrlStatus').textContent = '保存しました!';
 });
 
-// Upload to imgbb
+// Upload to Google Drive via GAS
 $('btnUpload').addEventListener('click', async () => {
   if (!croppedBlob) return;
-  const apiKey = $('apiKeyInput').value.trim() || localStorage.getItem(API_KEY_STORAGE);
-  if (!apiKey) {
-    setStatus('statusResult', 'error', 'APIキーが未設定です。下の「初回のみ: APIキーの設定」を開いて設定してください。');
-    $('apiSetup').open = true;
+  const gasUrl = $('gasUrlInput').value.trim() || localStorage.getItem(GAS_URL_STORAGE);
+  if (!gasUrl) {
+    setStatus('statusResult', 'error', 'GAS URLが未設定です。下の設定を開いてデプロイURLを入力してください。');
+    $('gasSetup').open = true;
     return;
   }
 
@@ -358,22 +353,28 @@ $('btnUpload').addEventListener('click', async () => {
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span>アップロード中...';
   $('shortUrlBox').classList.add('hidden');
-  setStatus('statusResult', 'info', 'アップロード中...');
+  setStatus('statusResult', 'info', 'Google Driveにアップロード中...');
 
   try {
     const reader = new FileReader();
     const base64 = await new Promise(r => { reader.onload = () => r(reader.result.split(',')[1]); reader.readAsDataURL(croppedBlob); });
-    const fd = new FormData();
-    fd.append('image', base64);
-    const res = await fetch('https://api.imgbb.com/1/upload?key=' + apiKey, { method: 'POST', body: fd });
+
+    const res = await fetch(gasUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({
+        image: base64,
+        fileName: 'photo_' + Date.now() + '.png'
+      })
+    });
+
     const data = await res.json();
-    if (data.success && data.data && data.data.url) {
-      $('shortUrlOutput').value = data.data.url;
+    if (data.success && data.url) {
+      $('shortUrlOutput').value = data.url;
       $('shortUrlBox').classList.remove('hidden');
       setStatus('statusResult', 'success', 'URLを生成しました! コピーしてお使いください。');
     } else {
-      const msg = data.error ? data.error.message : '不明なエラー';
-      setStatus('statusResult', 'error', 'アップロード失敗: ' + msg);
+      setStatus('statusResult', 'error', 'アップロード失敗: ' + (data.error || '不明なエラー'));
     }
   } catch (e) {
     setStatus('statusResult', 'error', 'エラー: ' + e.message);
