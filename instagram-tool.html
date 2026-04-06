@@ -1041,7 +1041,7 @@ function drawSquareWithLogo(ctx, img, sq) {
       logoH = Math.round(logoW / logoAspect);
     }
     const lx = Math.round((sq - logoW) / 2);
-    const ly = Math.round(headerH - logoH - sq * 0.01);
+    const ly = Math.round((headerH - logoH) / 2);
     ctx.drawImage(LOGO_IMG2, lx, ly, logoW, logoH);
   }
 
