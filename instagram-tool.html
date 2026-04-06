@@ -1027,15 +1027,15 @@ function drawSquareWithLogo(ctx, img, sq) {
   ctx.fillStyle = '#ffffff';
   ctx.fillRect(0, 0, sq, sq);
 
-  // 上部白余白エリア（全体の10%）にロゴを配置
-  const headerH = Math.round(sq * 0.10);
+  // 上部白余白エリア（全体の14%）にロゴを配置
+  const headerH = Math.round(sq * 0.14);
   if (logo2Loaded) {
     const logoMaxH = Math.round(headerH * 0.7);
     const logoAspect = LOGO_IMG2.naturalWidth / LOGO_IMG2.naturalHeight;
     let logoH = logoMaxH;
     let logoW = Math.round(logoH * logoAspect);
     // 幅が広すぎる場合は幅基準で調整
-    const logoMaxW = Math.round(sq * 0.4);
+    const logoMaxW = Math.round(sq * 0.8);
     if (logoW > logoMaxW) {
       logoW = logoMaxW;
       logoH = Math.round(logoW / logoAspect);
