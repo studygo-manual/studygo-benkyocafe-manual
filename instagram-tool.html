@@ -815,13 +815,21 @@ function updateCustomText(id) {
   drawStoreImage(canvas, store, theme, 340);
 }
 
-// ロゴ画像の読み込み
+// ロゴ画像の読み込み（1枚目用：アイコン）
 const LOGO_IMG = new Image();
 LOGO_IMG.crossOrigin = 'anonymous';
 let logoLoaded = false;
 LOGO_IMG.onload = () => { logoLoaded = true; renderStores(); };
 LOGO_IMG.onerror = () => { console.warn('ロゴ画像が読み込めませんでした'); logoLoaded = false; renderStores(); };
 LOGO_IMG.src = 'studygo-icon.png';
+
+// ロゴ画像の読み込み（2・3枚目用：横長ロゴ）
+const LOGO_IMG2 = new Image();
+LOGO_IMG2.crossOrigin = 'anonymous';
+let logo2Loaded = false;
+LOGO_IMG2.onload = () => { logo2Loaded = true; renderStores(); };
+LOGO_IMG2.onerror = () => { console.warn('横長ロゴ画像が読み込めませんでした'); logo2Loaded = false; renderStores(); };
+LOGO_IMG2.src = 'ogp_logo.png';
 
 // 店舗写真データ（生成画像用）
 const storePhotos = {}; // { storeId: Image }
@@ -1011,30 +1019,41 @@ function wrapText(ctx, text, maxWidth) {
 }
 
 // Draw photo with logo overlay (for store photo / seat photo)
-// 正方形キャンバスに画像を中央配置してロゴを右上に描画
+// 上部白余白にロゴ、その下に写真を配置
 function drawSquareWithLogo(ctx, img, sq) {
   ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = 'high';
   // 白背景で正方形
   ctx.fillStyle = '#ffffff';
   ctx.fillRect(0, 0, sq, sq);
-  // 画像を中央にフィット
-  const scale = Math.min(sq / img.width, sq / img.height);
+
+  // 上部白余白エリア（全体の10%）にロゴを配置
+  const headerH = Math.round(sq * 0.10);
+  if (logo2Loaded) {
+    const logoMaxH = Math.round(headerH * 0.7);
+    const logoAspect = LOGO_IMG2.naturalWidth / LOGO_IMG2.naturalHeight;
+    let logoH = logoMaxH;
+    let logoW = Math.round(logoH * logoAspect);
+    // 幅が広すぎる場合は幅基準で調整
+    const logoMaxW = Math.round(sq * 0.4);
+    if (logoW > logoMaxW) {
+      logoW = logoMaxW;
+      logoH = Math.round(logoW / logoAspect);
+    }
+    const lx = Math.round((sq - logoW) / 2);
+    const ly = Math.round((headerH - logoH) / 2);
+    ctx.drawImage(LOGO_IMG2, lx, ly, logoW, logoH);
+  }
+
+  // 写真エリア（白余白の下）
+  const photoY = headerH;
+  const photoH = sq - headerH;
+  const scale = Math.min(sq / img.width, photoH / img.height);
   const iw = Math.round(img.width * scale);
   const ih = Math.round(img.height * scale);
   const ox = Math.round((sq - iw) / 2);
-  const oy = Math.round((sq - ih) / 2);
+  const oy = photoY + Math.round((photoH - ih) / 2);
   ctx.drawImage(img, ox, oy, iw, ih);
-  // ロゴ右上（白縁なし、元画像サイズを超えないよう制限）
-  if (logoLoaded) {
-    let logoW = Math.round(sq * 0.18);
-    if (logoW > LOGO_IMG.naturalWidth) logoW = LOGO_IMG.naturalWidth;
-    const logoH = Math.round(logoW * (LOGO_IMG.naturalHeight / LOGO_IMG.naturalWidth));
-    const margin = Math.round(sq * 0.03);
-    const lx = sq - logoW - margin;
-    const ly = margin;
-    ctx.drawImage(LOGO_IMG, lx, ly, logoW, logoH);
-  }
 }
 
 function drawPhotoWithLogoOverlay(canvas, img, size) {
@@ -1180,7 +1199,7 @@ function renderStores() {
                  <button class="btn btn-edit" onclick="clearStorePhotoUpload(${store.id})">クリア</button>
                </div>`
             : `<div class="photo-upload-zone" onclick="this.querySelector('input').click()">
-                 店舗写真をクリックして選択<br>ロゴが右上に合成されます
+                 店舗写真をクリックして選択<br>※スペースの写真を使用<br>（備品・ドリンクサーバー等は不要）
                  <input type="file" accept="image/*" style="display:none" onchange="handleStorePhotoUpload(${store.id},this)">
                </div>`
           }
@@ -1194,7 +1213,7 @@ function renderStores() {
                  <button class="btn btn-edit" onclick="clearSeatPhotoUpload(${store.id})">クリア</button>
                </div>`
             : `<div class="photo-upload-zone" onclick="this.querySelector('input').click()">
-                 座席写真をクリックして選択<br>ロゴが右上に合成されます
+                 座席写真をクリックして選択<br>※スペースの写真を使用<br>（備品・ドリンクサーバー等は不要）
                  <input type="file" accept="image/*" style="display:none" onchange="handleSeatPhotoUpload(${store.id},this)">
                </div>`
           }
