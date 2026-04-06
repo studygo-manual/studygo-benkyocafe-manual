@@ -1045,15 +1045,20 @@ function drawSquareWithLogo(ctx, img, sq) {
     ctx.drawImage(LOGO_IMG2, lx, ly, logoW, logoH);
   }
 
-  // 写真エリア（白余白の下）
+  // 写真エリア（白余白のすぐ下から、上寄せで配置）
   const photoY = headerH;
   const photoH = sq - headerH;
-  const scale = Math.min(sq / img.width, photoH / img.height);
+  const scale = Math.max(sq / img.width, photoH / img.height);
   const iw = Math.round(img.width * scale);
   const ih = Math.round(img.height * scale);
   const ox = Math.round((sq - iw) / 2);
-  const oy = photoY + Math.round((photoH - ih) / 2);
+  const oy = photoY;
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(0, photoY, sq, photoH);
+  ctx.clip();
   ctx.drawImage(img, ox, oy, iw, ih);
+  ctx.restore();
 }
 
 function drawPhotoWithLogoOverlay(canvas, img, size) {
