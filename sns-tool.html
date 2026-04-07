@@ -2203,6 +2203,27 @@ function renderXToday() {
   renderXTodayCards();
 }
 
+// 選択日までにシリーズが何回登場するか数え、正しい投稿番号を算出
+function calcPostIndexForDate(seriesName, targetDate) {
+  var prog = getSeriesProgress(seriesName);
+  var posts = getXPosts(seriesName);
+  if (posts.length === 0) return 0;
+
+  // 翌日(xWeekDates[0])から選択日までの間で、同じシリーズが何回出るか数える
+  var offset = 0;
+  for (var i = 0; i < xWeekDates.length; i++) {
+    var wd = xWeekDates[i];
+    if (dateToKey(wd) >= dateToKey(targetDate)) break;
+    var wi = getWeekAndDayFor(wd);
+    var rot = X_ROTATION[wi.week] && X_ROTATION[wi.week][wi.day];
+    if (!rot) continue;
+    for (var s = 0; s < X_TIME_SLOTS.length; s++) {
+      if (rot[X_TIME_SLOTS[s]] === seriesName) { offset++; break; }
+    }
+  }
+  return (prog.next + offset) % posts.length;
+}
+
 function renderXTodayCards() {
   var d = xSelectedDate;
   var info = getWeekAndDayFor(d);
@@ -2230,8 +2251,7 @@ function renderXTodayCards() {
     var seriesName = rotation[slot];
     if (!seriesName) return;
     var posts = getXPosts(seriesName);
-    var prog = getSeriesProgress(seriesName);
-    var nextIdx = prog.next;
+    var nextIdx = calcPostIndexForDate(seriesName, d);
     var postText = posts[nextIdx] || '(コンテンツなし)';
     var isChecked = checks[slot] || false;
     var cardClass = isChecked ? 'x-card posted' : 'x-card';
@@ -2270,8 +2290,8 @@ function copyAllXPosts() {
     var seriesName = rotation[slot];
     if (!seriesName) return;
     var posts = getXPosts(seriesName);
-    var prog = getSeriesProgress(seriesName);
-    var postText = posts[prog.next] || '(コンテンツなし)';
+    var nextIdx = calcPostIndexForDate(seriesName, d);
+    var postText = posts[nextIdx] || '(コンテンツなし)';
     lines.push('【' + X_TIME_LABELS[slot] + '】' + seriesName);
     lines.push(postText);
     lines.push('');
@@ -2307,10 +2327,16 @@ function markXPosted(slot, seriesName) {
   if (!xDailyChecks[dateKey]) xDailyChecks[dateKey] = {};
   xDailyChecks[dateKey][slot] = true;
 
+  // 選択日に対応する投稿インデックスを記録
+  var postIdx = calcPostIndexForDate(seriesName, xSelectedDate);
   var prog = getSeriesProgress(seriesName);
+  prog.posted[String(postIdx)] = dateKey;
+
+  // nextを最も進んだ位置に更新（全予約済日の先まで進める）
+  var maxIdx = 0;
+  for (var key in prog.posted) { maxIdx = Math.max(maxIdx, parseInt(key)); }
   var posts = getXPosts(seriesName);
-  prog.posted[String(prog.next)] = dateKey;
-  prog.next = (prog.next + 1) % Math.max(posts.length, 1);
+  prog.next = (maxIdx + 1) % Math.max(posts.length, 1);
 
   saveXProgress();
   renderXDateButtons();
