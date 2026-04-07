@@ -483,12 +483,16 @@ body { padding-top: 140px; }
 <!-- X Tab: スケジュール -->
 <div id="xtab-schedule" class="tab-content">
   <div class="container">
-    <h2 style="font-size:20px;color:#333;margin-bottom:16px;">2週間ローテーション</h2>
+    <h2 style="font-size:20px;color:#333;margin-bottom:12px;">2週間ローテーション</h2>
     <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
       <button class="btn btn-copy" onclick="showScheduleWeek(1)" id="schedWeek1Btn" style="background:#1d9bf0;">WEEK 1</button>
       <button class="btn btn-edit" onclick="showScheduleWeek(2)" id="schedWeek2Btn">WEEK 2</button>
     </div>
     <div style="overflow-x:auto;" id="xScheduleTable"></div>
+
+    <h2 style="font-size:20px;color:#333;margin:24px 0 12px;">予約投稿</h2>
+    <div id="xSchedDateButtons" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;"></div>
+    <div id="xSchedCards"></div>
   </div>
 </div>
 
@@ -2268,7 +2272,8 @@ function renderXTodayCards() {
     if (!isChecked) {
       html += '<button class="btn btn-green" onclick="markXPosted(\'' + slot + '\',\'' + escapeAttr(seriesName) + '\')">予約済 ✓</button>';
     } else {
-      html += '<button class="btn" style="background:#e8e8e8;color:#888;cursor:default;">予約済 ✓</button>';
+      html += '<button class="btn" style="background:#e8e8e8;color:#666;">予約済 ✓</button>';
+      html += '<button class="btn btn-edit" onclick="unmarkXPosted(\'' + slot + '\',\'' + escapeAttr(seriesName) + '\')">取消</button>';
     }
     html += '</div>';
     html += '</div>';
@@ -2343,9 +2348,38 @@ function markXPosted(slot, seriesName) {
   renderXTodayCards();
 }
 
+function unmarkXPosted(slot, seriesName) {
+  seriesName = seriesName.replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>');
+  var dateKey = dateToKey(xSelectedDate);
+  if (xDailyChecks[dateKey]) {
+    delete xDailyChecks[dateKey][slot];
+    if (Object.keys(xDailyChecks[dateKey]).length === 0) delete xDailyChecks[dateKey];
+  }
+
+  var postIdx = calcPostIndexForDate(seriesName, xSelectedDate);
+  var prog = getSeriesProgress(seriesName);
+  delete prog.posted[String(postIdx)];
+
+  // nextを再計算
+  var keys = Object.keys(prog.posted).map(Number);
+  if (keys.length > 0) {
+    var maxIdx = Math.max.apply(null, keys);
+    var posts = getXPosts(seriesName);
+    prog.next = (maxIdx + 1) % Math.max(posts.length, 1);
+  } else {
+    prog.next = 0;
+  }
+
+  saveXProgress();
+  renderXDateButtons();
+  renderXTodayCards();
+}
+
 // ============================================================
 // X投稿管理 - スケジュール
 // ============================================================
+var xSchedSelectedDate = null;
+
 function renderXSchedule(weekNum) {
   currentScheduleWeek = weekNum || 1;
   var rotation = X_ROTATION[currentScheduleWeek];
@@ -2381,6 +2415,130 @@ function renderXSchedule(weekNum) {
   document.getElementById('schedWeek1Btn').style.background = currentScheduleWeek === 1 ? '#1d9bf0' : '';
   document.getElementById('schedWeek2Btn').className = currentScheduleWeek === 2 ? 'btn btn-copy' : 'btn btn-edit';
   document.getElementById('schedWeek2Btn').style.background = currentScheduleWeek === 2 ? '#1d9bf0' : '';
+
+  // 予約投稿セクション
+  renderSchedDateButtons();
+  renderSchedCards();
+}
+
+function renderSchedDateButtons() {
+  buildWeekDates();
+  if (!xSchedSelectedDate) xSchedSelectedDate = xWeekDates[0];
+  var html = '';
+  xWeekDates.forEach(function(d, i) {
+    var dow = d.getDay();
+    var isActive = dateToKey(d) === dateToKey(xSchedSelectedDate);
+    var cls = 'x-date-btn';
+    if (isActive) cls += ' active';
+    if (dow === 6) cls += ' is-sat';
+    if (dow === 0) cls += ' is-sun';
+    var dateKey = dateToKey(d);
+    var checks = xDailyChecks[dateKey] || {};
+    var allDone = X_TIME_SLOTS.every(function(s) { return checks[s]; });
+    html += '<button class="' + cls + '" onclick="selectSchedDate(' + i + ')">';
+    html += '<span class="date-day">' + X_DAY_NAMES[dow] + '</span>';
+    html += '<span class="date-num">' + (d.getMonth()+1) + '/' + d.getDate() + '</span>';
+    if (allDone) html += '<span style="font-size:10px;display:block;">✓</span>';
+    html += '</button>';
+  });
+  document.getElementById('xSchedDateButtons').innerHTML = html;
+}
+
+function selectSchedDate(idx) {
+  xSchedSelectedDate = xWeekDates[idx];
+  renderSchedDateButtons();
+  renderSchedCards();
+}
+
+function renderSchedCards() {
+  var d = xSchedSelectedDate;
+  if (!d) return;
+  var info = getWeekAndDayFor(d);
+  var rotation = X_ROTATION[info.week] && X_ROTATION[info.week][info.day];
+  if (!rotation) {
+    document.getElementById('xSchedCards').innerHTML = '<p style="color:#888;">ローテーション未定義</p>';
+    return;
+  }
+
+  var dateKey = dateToKey(d);
+  var checks = xDailyChecks[dateKey] || {};
+  var dateStr = (d.getMonth()+1) + '/' + d.getDate() + ' (' + X_DAY_NAMES[info.day] + ')';
+  var html = '<h3 style="font-size:16px;color:#333;margin-bottom:12px;">' + dateStr + ' の投稿内容</h3>';
+
+  X_TIME_SLOTS.forEach(function(slot) {
+    var seriesName = rotation[slot];
+    if (!seriesName) return;
+    var posts = getXPosts(seriesName);
+    var nextIdx = calcPostIndexForDate(seriesName, d);
+    var postText = posts[nextIdx] || '(コンテンツなし)';
+    var isChecked = checks[slot] || false;
+    var cardClass = isChecked ? 'x-card posted' : 'x-card';
+    var postNum = posts.length > 0 ? (nextIdx + 1) + '/' + posts.length : '-';
+
+    html += '<div class="' + cardClass + '">';
+    html += '<div class="x-card-header">';
+    html += '<span class="x-card-time">' + X_TIME_LABELS[slot] + '</span>';
+    html += '<span class="x-card-series">' + seriesName + ' #' + postNum + '</span>';
+    html += '</div>';
+    html += '<div class="x-post-text">' + escapeHtml(postText) + '</div>';
+    html += '<div class="x-btn-row">';
+    html += '<button class="btn btn-copy" style="background:#1d9bf0;" onclick="copyXText(this)" data-text="' + escapeAttr(postText) + '">コピー</button>';
+    if (!isChecked) {
+      html += '<button class="btn btn-green" onclick="markSchedPosted(\'' + slot + '\',\'' + escapeAttr(seriesName) + '\')">予約済 ✓</button>';
+    } else {
+      html += '<button class="btn" style="background:#e8e8e8;color:#666;">予約済 ✓</button>';
+      html += '<button class="btn btn-edit" onclick="unmarkSchedPosted(\'' + slot + '\',\'' + escapeAttr(seriesName) + '\')">取消</button>';
+    }
+    html += '</div></div>';
+  });
+
+  document.getElementById('xSchedCards').innerHTML = html;
+}
+
+function markSchedPosted(slot, seriesName) {
+  seriesName = seriesName.replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>');
+  var dateKey = dateToKey(xSchedSelectedDate);
+  if (!xDailyChecks[dateKey]) xDailyChecks[dateKey] = {};
+  xDailyChecks[dateKey][slot] = true;
+
+  var postIdx = calcPostIndexForDate(seriesName, xSchedSelectedDate);
+  var prog = getSeriesProgress(seriesName);
+  prog.posted[String(postIdx)] = dateKey;
+
+  var maxIdx = 0;
+  for (var key in prog.posted) { maxIdx = Math.max(maxIdx, parseInt(key)); }
+  var posts = getXPosts(seriesName);
+  prog.next = (maxIdx + 1) % Math.max(posts.length, 1);
+
+  saveXProgress();
+  renderSchedDateButtons();
+  renderSchedCards();
+}
+
+function unmarkSchedPosted(slot, seriesName) {
+  seriesName = seriesName.replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>');
+  var dateKey = dateToKey(xSchedSelectedDate);
+  if (xDailyChecks[dateKey]) {
+    delete xDailyChecks[dateKey][slot];
+    if (Object.keys(xDailyChecks[dateKey]).length === 0) delete xDailyChecks[dateKey];
+  }
+
+  var postIdx = calcPostIndexForDate(seriesName, xSchedSelectedDate);
+  var prog = getSeriesProgress(seriesName);
+  delete prog.posted[String(postIdx)];
+
+  var keys = Object.keys(prog.posted).map(Number);
+  if (keys.length > 0) {
+    var maxIdx = Math.max.apply(null, keys);
+    var posts = getXPosts(seriesName);
+    prog.next = (maxIdx + 1) % Math.max(posts.length, 1);
+  } else {
+    prog.next = 0;
+  }
+
+  saveXProgress();
+  renderSchedDateButtons();
+  renderSchedCards();
 }
 
 function showScheduleWeek(w) {
@@ -2582,8 +2740,43 @@ function resetXProgress() {
 // ============================================================
 // X投稿管理 - 初期化
 // ============================================================
+// 3/16〜4/9の投稿済みデータを一括設定（初回のみ）
+function seedPostedData() {
+  if (localStorage.getItem('studygo_x_seeded')) return;
+
+  var start = new Date('2026-03-16');
+  var end = new Date('2026-04-09');
+  var d = new Date(start);
+
+  while (d <= end) {
+    var dateKey = dateToKey(d);
+    var info = getWeekAndDayFor(d);
+    var rotation = X_ROTATION[info.week] && X_ROTATION[info.week][info.day];
+    if (rotation) {
+      if (!xDailyChecks[dateKey]) xDailyChecks[dateKey] = {};
+      X_TIME_SLOTS.forEach(function(slot) {
+        var seriesName = rotation[slot];
+        if (!seriesName) return;
+        xDailyChecks[dateKey][slot] = true;
+
+        var prog = getSeriesProgress(seriesName);
+        var posts = getXPosts(seriesName);
+        if (posts.length > 0) {
+          prog.posted[String(prog.next)] = dateKey;
+          prog.next = (prog.next + 1) % posts.length;
+        }
+      });
+    }
+    d.setDate(d.getDate() + 1);
+  }
+
+  saveXProgress();
+  localStorage.setItem('studygo_x_seeded', '1');
+}
+
 function initX() {
   loadXProgress();
+  seedPostedData();
   renderXToday();
   renderXSchedule(1);
   renderXSeriesList();
