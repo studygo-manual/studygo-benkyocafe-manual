@@ -109,10 +109,26 @@ body { padding-top: 156px; }
 .x-progress-bar { background: linear-gradient(90deg, #1d9bf0, #0d8bd9); height: 100%; border-radius: 6px; transition: width 0.3s; }
 .x-progress-info { display: flex; justify-content: space-between; margin-top: 6px; font-size: 12px; color: #666; }
 
+/* X Date buttons */
+.x-date-btn {
+  padding: 8px 14px; border: 2px solid #ddd; border-radius: 8px; background: #fff;
+  cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.2s;
+  text-align: center; min-width: 80px;
+}
+.x-date-btn:hover { border-color: #1d9bf0; background: #f0f7ff; }
+.x-date-btn.active { border-color: #1d9bf0; background: #1d9bf0; color: #fff; }
+.x-date-btn .date-day { font-size: 11px; opacity: 0.7; display: block; }
+.x-date-btn .date-num { font-size: 16px; display: block; line-height: 1.3; }
+.x-date-btn.is-sat { color: #1565c0; }
+.x-date-btn.is-sun { color: #c62828; }
+.x-date-btn.is-sat.active, .x-date-btn.is-sun.active { color: #fff; }
+
 @media (max-width: 768px) {
   .x-content-layout { flex-direction: column; }
   .x-series-list { width: 100%; display: flex; flex-wrap: wrap; gap: 4px; }
   .x-series-item { flex: 0 0 auto; margin-bottom: 0; }
+  .x-date-btn { min-width: 60px; padding: 6px 8px; }
+  .x-date-btn .date-num { font-size: 14px; }
 }
 
 .tab-content { display: none; }
@@ -440,17 +456,21 @@ body { padding-top: 156px; }
 <div id="platform-x" class="platform-content">
 
 <div class="x-tabs" id="x-tabs">
-  <button class="x-tab active" onclick="switchXTab('today')">今日の投稿</button>
+  <button class="x-tab active" onclick="switchXTab('today')">予約投稿</button>
   <button class="x-tab" onclick="switchXTab('schedule')">スケジュール</button>
   <button class="x-tab" onclick="switchXTab('content')">コンテンツ一覧</button>
   <button class="x-tab" onclick="switchXTab('progress')">進捗管理</button>
 </div>
 
-<!-- X Tab: 今日の投稿 -->
+<!-- X Tab: 投稿予約 -->
 <div id="xtab-today" class="tab-content active">
   <div class="container">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
-      <h2 id="xTodayTitle" style="font-size:20px;color:#333;"></h2>
+    <div style="margin-bottom:16px;">
+      <h2 style="font-size:20px;color:#333;margin-bottom:12px;">予約投稿（翌日〜1週間分）</h2>
+      <div id="xDateButtons" style="display:flex;gap:6px;flex-wrap:wrap;"></div>
+    </div>
+    <div id="xSelectedDateInfo" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+      <h3 id="xTodayTitle" style="font-size:18px;color:#333;"></h3>
       <span id="xTodayWeek" style="font-size:13px;background:#e3f2fd;color:#1565c0;padding:4px 12px;border-radius:12px;font-weight:600;"></span>
     </div>
     <div id="xTodayCards"></div>
@@ -2109,27 +2129,83 @@ function getTodayKey() {
   return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
 }
 
-function getWeekAndDay() {
-  var today = new Date();
-  today.setHours(0,0,0,0);
+function getWeekAndDayFor(date) {
+  var d = new Date(date);
+  d.setHours(0,0,0,0);
   var start = new Date(X_START_DATE);
   start.setHours(0,0,0,0);
-  var diff = Math.floor((today - start) / 86400000);
+  var diff = Math.floor((d - start) / 86400000);
   if (diff < 0) diff = 0;
   var weekNum = (Math.floor(diff / 7) % 2) + 1;
-  var dayOfWeek = today.getDay();
+  var dayOfWeek = d.getDay();
   return { week: weekNum, day: dayOfWeek, diff: diff };
 }
 
-// ============================================================
-// X投稿管理 - 今日の投稿
-// ============================================================
-function renderXToday() {
-  var info = getWeekAndDay();
-  var today = new Date();
-  var todayStr = (today.getMonth()+1) + '/' + today.getDate() + ' (' + X_DAY_NAMES[info.day] + ')';
+function getWeekAndDay() {
+  return getWeekAndDayFor(new Date());
+}
 
-  document.getElementById('xTodayTitle').textContent = todayStr + ' の投稿スケジュール';
+function dateToKey(d) {
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+// ============================================================
+// X投稿管理 - 予約投稿（1週間分）
+// ============================================================
+var xSelectedDate = null;
+var xWeekDates = [];
+
+function buildWeekDates() {
+  xWeekDates = [];
+  var today = new Date();
+  today.setHours(0,0,0,0);
+  for (var i = 1; i <= 7; i++) {
+    var d = new Date(today);
+    d.setDate(d.getDate() + i);
+    xWeekDates.push(d);
+  }
+  if (!xSelectedDate) xSelectedDate = xWeekDates[0];
+}
+
+function renderXDateButtons() {
+  var html = '';
+  xWeekDates.forEach(function(d, i) {
+    var dow = d.getDay();
+    var isActive = dateToKey(d) === dateToKey(xSelectedDate);
+    var cls = 'x-date-btn';
+    if (isActive) cls += ' active';
+    if (dow === 6) cls += ' is-sat';
+    if (dow === 0) cls += ' is-sun';
+    var dateKey = dateToKey(d);
+    var checks = xDailyChecks[dateKey] || {};
+    var allDone = X_TIME_SLOTS.every(function(s) { return checks[s]; });
+    html += '<button class="' + cls + '" onclick="selectXDate(' + i + ')">';
+    html += '<span class="date-day">' + X_DAY_NAMES[dow] + '</span>';
+    html += '<span class="date-num">' + (d.getMonth()+1) + '/' + d.getDate() + '</span>';
+    if (allDone) html += '<span style="font-size:10px;display:block;">✓</span>';
+    html += '</button>';
+  });
+  document.getElementById('xDateButtons').innerHTML = html;
+}
+
+function selectXDate(idx) {
+  xSelectedDate = xWeekDates[idx];
+  renderXDateButtons();
+  renderXTodayCards();
+}
+
+function renderXToday() {
+  buildWeekDates();
+  renderXDateButtons();
+  renderXTodayCards();
+}
+
+function renderXTodayCards() {
+  var d = xSelectedDate;
+  var info = getWeekAndDayFor(d);
+  var dateStr = (d.getMonth()+1) + '/' + d.getDate() + ' (' + X_DAY_NAMES[info.day] + ')';
+
+  document.getElementById('xTodayTitle').textContent = dateStr + ' の投稿内容';
   document.getElementById('xTodayWeek').textContent = 'WEEK ' + info.week;
 
   var rotation = X_ROTATION[info.week] && X_ROTATION[info.week][info.day];
@@ -2138,9 +2214,14 @@ function renderXToday() {
     return;
   }
 
-  var todayKey = getTodayKey();
-  var checks = xDailyChecks[todayKey] || {};
+  var dateKey = dateToKey(d);
+  var checks = xDailyChecks[dateKey] || {};
   var html = '';
+
+  // 全コピーボタン
+  html += '<div style="margin-bottom:12px;">';
+  html += '<button class="btn btn-copy" style="background:#1d9bf0;font-size:14px;padding:10px 20px;" onclick="copyAllXPosts()">全6枠をまとめてコピー</button>';
+  html += '</div>';
 
   X_TIME_SLOTS.forEach(function(slot) {
     var seriesName = rotation[slot];
@@ -2162,15 +2243,45 @@ function renderXToday() {
     html += '<div class="x-btn-row">';
     html += '<button class="btn btn-copy" style="background:#1d9bf0;" onclick="copyXText(this)" data-text="' + escapeAttr(postText) + '">コピー</button>';
     if (!isChecked) {
-      html += '<button class="btn btn-green" onclick="markXPosted(\'' + slot + '\',\'' + escapeAttr(seriesName) + '\')">投稿済 ✓</button>';
+      html += '<button class="btn btn-green" onclick="markXPosted(\'' + slot + '\',\'' + escapeAttr(seriesName) + '\')">予約済 ✓</button>';
     } else {
-      html += '<button class="btn" style="background:#e8e8e8;color:#888;cursor:default;">投稿済 ✓</button>';
+      html += '<button class="btn" style="background:#e8e8e8;color:#888;cursor:default;">予約済 ✓</button>';
     }
     html += '</div>';
     html += '</div>';
   });
 
   document.getElementById('xTodayCards').innerHTML = html;
+}
+
+function copyAllXPosts() {
+  var d = xSelectedDate;
+  var info = getWeekAndDayFor(d);
+  var rotation = X_ROTATION[info.week] && X_ROTATION[info.week][info.day];
+  if (!rotation) return;
+
+  var dateStr = (d.getMonth()+1) + '/' + d.getDate() + ' (' + X_DAY_NAMES[info.day] + ')';
+  var lines = ['--- ' + dateStr + ' ---', ''];
+
+  X_TIME_SLOTS.forEach(function(slot) {
+    var seriesName = rotation[slot];
+    if (!seriesName) return;
+    var posts = getXPosts(seriesName);
+    var prog = getSeriesProgress(seriesName);
+    var postText = posts[prog.next] || '(コンテンツなし)';
+    lines.push('【' + X_TIME_LABELS[slot] + '】' + seriesName);
+    lines.push(postText);
+    lines.push('');
+  });
+
+  navigator.clipboard.writeText(lines.join('\n')).then(function() {
+    var btn = document.querySelector('#xtab-today .btn-copy');
+    if (btn) {
+      btn.textContent = 'コピー済!';
+      btn.style.background = '#2e7d32';
+      setTimeout(function() { btn.textContent = '全6枠をまとめてコピー'; btn.style.background = '#1d9bf0'; }, 1500);
+    }
+  });
 }
 
 function escapeAttr(s) {
@@ -2189,17 +2300,18 @@ function copyXText(btn) {
 
 function markXPosted(slot, seriesName) {
   seriesName = seriesName.replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>');
-  var todayKey = getTodayKey();
-  if (!xDailyChecks[todayKey]) xDailyChecks[todayKey] = {};
-  xDailyChecks[todayKey][slot] = true;
+  var dateKey = dateToKey(xSelectedDate);
+  if (!xDailyChecks[dateKey]) xDailyChecks[dateKey] = {};
+  xDailyChecks[dateKey][slot] = true;
 
   var prog = getSeriesProgress(seriesName);
   var posts = getXPosts(seriesName);
-  prog.posted[String(prog.next)] = todayKey;
+  prog.posted[String(prog.next)] = dateKey;
   prog.next = (prog.next + 1) % Math.max(posts.length, 1);
 
   saveXProgress();
-  renderXToday();
+  renderXDateButtons();
+  renderXTodayCards();
 }
 
 // ============================================================
