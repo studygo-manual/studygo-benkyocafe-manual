@@ -2248,7 +2248,7 @@ function renderXTodayCards() {
 
   // 全コピーボタン
   html += '<div style="margin-bottom:12px;">';
-  html += '<button class="btn btn-copy" style="background:#1d9bf0;font-size:14px;padding:10px 20px;" onclick="copyAllXPosts()">全6枠をまとめてコピー</button>';
+  html += '<button class="btn btn-copy" style="background:#1d9bf0;font-size:14px;padding:10px 20px;" onclick="copyAllXPosts()">未予約分をまとめてコピー</button>';
   html += '</div>';
 
   X_TIME_SLOTS.forEach(function(slot) {
@@ -2268,10 +2268,11 @@ function renderXTodayCards() {
     html += '</div>';
     html += '<div class="x-post-text">' + escapeHtml(postText) + '</div>';
     html += '<div class="x-btn-row">';
-    html += '<button class="btn btn-copy" style="background:#1d9bf0;" onclick="copyXText(this)" data-text="' + escapeAttr(postText) + '">コピー</button>';
     if (!isChecked) {
+      html += '<button class="btn btn-copy" style="background:#1d9bf0;" onclick="copyXText(this)" data-text="' + escapeAttr(postText) + '">コピー</button>';
       html += '<button class="btn btn-green" onclick="markXPosted(\'' + slot + '\',\'' + escapeAttr(seriesName) + '\')">予約済 ✓</button>';
     } else {
+      html += '<button class="btn" style="background:#ccc;color:#999;cursor:default;">コピー済</button>';
       html += '<button class="btn" style="background:#e8e8e8;color:#666;">予約済 ✓</button>';
       html += '<button class="btn btn-edit" onclick="unmarkXPosted(\'' + slot + '\',\'' + escapeAttr(seriesName) + '\')">取消</button>';
     }
@@ -2288,26 +2289,33 @@ function copyAllXPosts() {
   var rotation = X_ROTATION[info.week] && X_ROTATION[info.week][info.day];
   if (!rotation) return;
 
+  var dateKey = dateToKey(d);
+  var checks = xDailyChecks[dateKey] || {};
   var dateStr = (d.getMonth()+1) + '/' + d.getDate() + ' (' + X_DAY_NAMES[info.day] + ')';
   var lines = ['--- ' + dateStr + ' ---', ''];
+  var count = 0;
 
   X_TIME_SLOTS.forEach(function(slot) {
     var seriesName = rotation[slot];
     if (!seriesName) return;
+    if (checks[slot]) return; // 予約済みはスキップ
     var posts = getXPosts(seriesName);
     var nextIdx = calcPostIndexForDate(seriesName, d);
     var postText = posts[nextIdx] || '(コンテンツなし)';
     lines.push('【' + X_TIME_LABELS[slot] + '】' + seriesName);
     lines.push(postText);
     lines.push('');
+    count++;
   });
+
+  if (count === 0) return;
 
   navigator.clipboard.writeText(lines.join('\n')).then(function() {
     var btn = document.querySelector('#xtab-today .btn-copy');
     if (btn) {
       btn.textContent = 'コピー済!';
       btn.style.background = '#2e7d32';
-      setTimeout(function() { btn.textContent = '全6枠をまとめてコピー'; btn.style.background = '#1d9bf0'; }, 1500);
+      setTimeout(function() { btn.textContent = '未予約分をまとめてコピー'; btn.style.background = '#1d9bf0'; }, 1500);
     }
   });
 }
@@ -2330,18 +2338,15 @@ function markXPosted(slot, seriesName) {
   seriesName = seriesName.replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>');
   var dateKey = dateToKey(xSelectedDate);
   if (!xDailyChecks[dateKey]) xDailyChecks[dateKey] = {};
-  xDailyChecks[dateKey][slot] = true;
 
-  // 選択日に対応する投稿インデックスを記録
+  // 選択日に対応する投稿インデックスを記録（prog.nextは変更しない）
   var postIdx = calcPostIndexForDate(seriesName, xSelectedDate);
+  xDailyChecks[dateKey][slot] = true;
+  xDailyChecks[dateKey][slot + '_idx'] = postIdx;
+  xDailyChecks[dateKey][slot + '_series'] = seriesName;
+
   var prog = getSeriesProgress(seriesName);
   prog.posted[String(postIdx)] = dateKey;
-
-  // nextを最も進んだ位置に更新（全予約済日の先まで進める）
-  var maxIdx = 0;
-  for (var key in prog.posted) { maxIdx = Math.max(maxIdx, parseInt(key)); }
-  var posts = getXPosts(seriesName);
-  prog.next = (maxIdx + 1) % Math.max(posts.length, 1);
 
   saveXProgress();
   renderXDateButtons();
@@ -2351,24 +2356,25 @@ function markXPosted(slot, seriesName) {
 function unmarkXPosted(slot, seriesName) {
   seriesName = seriesName.replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>');
   var dateKey = dateToKey(xSelectedDate);
+
+  // 保存済みのpostIdxを使用（再計算ではなく正確な値を取得）
+  var postIdx;
+  if (xDailyChecks[dateKey] && xDailyChecks[dateKey][slot + '_idx'] !== undefined) {
+    postIdx = xDailyChecks[dateKey][slot + '_idx'];
+  } else {
+    postIdx = calcPostIndexForDate(seriesName, xSelectedDate);
+  }
+
   if (xDailyChecks[dateKey]) {
     delete xDailyChecks[dateKey][slot];
-    if (Object.keys(xDailyChecks[dateKey]).length === 0) delete xDailyChecks[dateKey];
+    delete xDailyChecks[dateKey][slot + '_idx'];
+    delete xDailyChecks[dateKey][slot + '_series'];
+    var remaining = Object.keys(xDailyChecks[dateKey]).filter(function(k) { return !k.includes('_'); });
+    if (remaining.length === 0) delete xDailyChecks[dateKey];
   }
 
-  var postIdx = calcPostIndexForDate(seriesName, xSelectedDate);
   var prog = getSeriesProgress(seriesName);
   delete prog.posted[String(postIdx)];
-
-  // nextを再計算
-  var keys = Object.keys(prog.posted).map(Number);
-  if (keys.length > 0) {
-    var maxIdx = Math.max.apply(null, keys);
-    var posts = getXPosts(seriesName);
-    prog.next = (maxIdx + 1) % Math.max(posts.length, 1);
-  } else {
-    prog.next = 0;
-  }
 
   saveXProgress();
   renderXDateButtons();
@@ -2482,10 +2488,11 @@ function renderSchedCards() {
     html += '</div>';
     html += '<div class="x-post-text">' + escapeHtml(postText) + '</div>';
     html += '<div class="x-btn-row">';
-    html += '<button class="btn btn-copy" style="background:#1d9bf0;" onclick="copyXText(this)" data-text="' + escapeAttr(postText) + '">コピー</button>';
     if (!isChecked) {
+      html += '<button class="btn btn-copy" style="background:#1d9bf0;" onclick="copyXText(this)" data-text="' + escapeAttr(postText) + '">コピー</button>';
       html += '<button class="btn btn-green" onclick="markSchedPosted(\'' + slot + '\',\'' + escapeAttr(seriesName) + '\')">予約済 ✓</button>';
     } else {
+      html += '<button class="btn" style="background:#ccc;color:#999;cursor:default;">コピー済</button>';
       html += '<button class="btn" style="background:#e8e8e8;color:#666;">予約済 ✓</button>';
       html += '<button class="btn btn-edit" onclick="unmarkSchedPosted(\'' + slot + '\',\'' + escapeAttr(seriesName) + '\')">取消</button>';
     }
@@ -2499,16 +2506,14 @@ function markSchedPosted(slot, seriesName) {
   seriesName = seriesName.replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>');
   var dateKey = dateToKey(xSchedSelectedDate);
   if (!xDailyChecks[dateKey]) xDailyChecks[dateKey] = {};
-  xDailyChecks[dateKey][slot] = true;
 
   var postIdx = calcPostIndexForDate(seriesName, xSchedSelectedDate);
+  xDailyChecks[dateKey][slot] = true;
+  xDailyChecks[dateKey][slot + '_idx'] = postIdx;
+  xDailyChecks[dateKey][slot + '_series'] = seriesName;
+
   var prog = getSeriesProgress(seriesName);
   prog.posted[String(postIdx)] = dateKey;
-
-  var maxIdx = 0;
-  for (var key in prog.posted) { maxIdx = Math.max(maxIdx, parseInt(key)); }
-  var posts = getXPosts(seriesName);
-  prog.next = (maxIdx + 1) % Math.max(posts.length, 1);
 
   saveXProgress();
   renderSchedDateButtons();
@@ -2518,23 +2523,24 @@ function markSchedPosted(slot, seriesName) {
 function unmarkSchedPosted(slot, seriesName) {
   seriesName = seriesName.replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>');
   var dateKey = dateToKey(xSchedSelectedDate);
+
+  var postIdx;
+  if (xDailyChecks[dateKey] && xDailyChecks[dateKey][slot + '_idx'] !== undefined) {
+    postIdx = xDailyChecks[dateKey][slot + '_idx'];
+  } else {
+    postIdx = calcPostIndexForDate(seriesName, xSchedSelectedDate);
+  }
+
   if (xDailyChecks[dateKey]) {
     delete xDailyChecks[dateKey][slot];
-    if (Object.keys(xDailyChecks[dateKey]).length === 0) delete xDailyChecks[dateKey];
+    delete xDailyChecks[dateKey][slot + '_idx'];
+    delete xDailyChecks[dateKey][slot + '_series'];
+    var remaining = Object.keys(xDailyChecks[dateKey]).filter(function(k) { return !k.includes('_'); });
+    if (remaining.length === 0) delete xDailyChecks[dateKey];
   }
 
-  var postIdx = calcPostIndexForDate(seriesName, xSchedSelectedDate);
   var prog = getSeriesProgress(seriesName);
   delete prog.posted[String(postIdx)];
-
-  var keys = Object.keys(prog.posted).map(Number);
-  if (keys.length > 0) {
-    var maxIdx = Math.max.apply(null, keys);
-    var posts = getXPosts(seriesName);
-    prog.next = (maxIdx + 1) % Math.max(posts.length, 1);
-  } else {
-    prog.next = 0;
-  }
 
   saveXProgress();
   renderSchedDateButtons();
@@ -2774,8 +2780,41 @@ function seedPostedData() {
   localStorage.setItem('studygo_x_seeded', '1');
 }
 
+function advanceProgressForPastDates() {
+  var today = new Date();
+  today.setHours(0,0,0,0);
+  var todayKey = dateToKey(today);
+  var changed = false;
+
+  for (var dateKey in xDailyChecks) {
+    if (dateKey >= todayKey) continue;
+    var checks = xDailyChecks[dateKey];
+    for (var key in checks) {
+      if (key.indexOf('_') !== -1) continue;
+      var idxKey = key + '_idx';
+      var seriesKey = key + '_series';
+      var postIdx = checks[idxKey];
+      var sName = checks[seriesKey];
+      if (postIdx !== undefined && sName) {
+        var prog = getSeriesProgress(sName);
+        var posts = getXPosts(sName);
+        var candidate = (postIdx + 1) % Math.max(posts.length, 1);
+        if (postIdx >= prog.next || (prog.next > postIdx && candidate < prog.next)) {
+          prog.next = candidate;
+        }
+        delete prog.posted[String(postIdx)];
+      }
+    }
+    delete xDailyChecks[dateKey];
+    changed = true;
+  }
+
+  if (changed) saveXProgress();
+}
+
 function initX() {
   loadXProgress();
+  advanceProgressForPastDates();
   seedPostedData();
   renderXToday();
   renderXSchedule(1);
