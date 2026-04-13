@@ -568,7 +568,8 @@ body { font-family: 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif; bac
     <h3>X DM営業（コワーキング・自習室向け）</h3>
     <div style="font-size:13px;color:#666;margin-bottom:16px;line-height:1.8;">
       <p><b>ターゲット:</b> 勉強できるコワーキングスペース・自習室・有料自習室の公式Xアカウント</p>
-      <p><b>使い方:</b> 下のテンプレートをコピーしてDM送信 → 架電リストに記録</p>
+      <p><b>使い方:</b> ①カテゴリ選択 → ②店舗名入力 → ③「テンプレートをコピー」ボタンで架電リストに自動追加されます</p>
+      <p style="color:#c00;"><b>※</b> 店舗名・カテゴリは手動編集不可。コピーボタン経由で記録されます</p>
     </div>
 
     <!-- DM文章テンプレート -->
@@ -602,7 +603,6 @@ body { font-family: 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif; bac
 
     <div class="dm-stats" id="xDmStats"></div>
     <div class="btn-row" style="margin-bottom:12px;">
-      <button class="btn btn-green" onclick="addXDmRow()">+ 新規追加</button>
       <button class="btn btn-copy" onclick="exportXDmCsv()">CSV エクスポート</button>
       <button class="btn btn-dl" onclick="saveXDmBackup()">バックアップ保存</button>
       <label class="btn btn-edit" style="cursor:pointer;">バックアップ復元<input type="file" accept=".json" style="display:none" onchange="loadXDmBackup(this)"></label>
@@ -2408,13 +2408,40 @@ function copyIgDmTemplate() {
 }
 
 function copyXDmTemplate() {
+  const storeName = document.getElementById('xDmStoreName').value.trim();
+  if (!storeName) {
+    alert('店舗名を入力してください');
+    return;
+  }
   const text = document.getElementById('xDmTemplateText').value;
+  const btn = event.target;
   navigator.clipboard.writeText(text).then(() => {
-    const btn = event.target;
-    const orig = btn.textContent;
-    btn.textContent = 'コピー済!';
+    // 架電リストに自動追加
+    const categoryMap = { coworking: 'コワーキング', jishu: '自習室' };
+    xDmData.push({
+      searchWord: '',
+      accountId: '',
+      storeName: storeName,
+      category: categoryMap[currentXDmCategory] || 'コワーキング',
+      storeUrl: '',
+      sentDate: new Date().toISOString().split('T')[0],
+      status: '送信済',
+      memo: ''
+    });
+    saveXDmData();
+    renderXDmTable();
+
+    btn.textContent = 'コピー済み ✓';
     btn.style.background = '#2e7d32';
-    setTimeout(() => { btn.textContent = orig; btn.style.background = '#1d9bf0'; }, 1500);
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.textContent = 'テンプレートをコピー';
+      btn.style.background = '#1d9bf0';
+      btn.disabled = false;
+      // 店舗名をクリア
+      document.getElementById('xDmStoreName').value = '';
+      updateXDmTemplatePreview();
+    }, 2000);
   });
 }
 
@@ -2505,15 +2532,12 @@ function renderXDmTable() {
       <td><input type="text" value="${escapeHtml(row.searchWord || '')}" onchange="updateXDmField(${idx},'searchWord',this.value)" placeholder="コワーキング 新宿"></td>
       <td><input type="text" value="${escapeHtml(row.accountId || '')}" onchange="updateXDmField(${idx},'accountId',this.value)" placeholder="@account_id"></td>
       <td>
-        <input type="text" value="${escapeHtml(row.storeName || '')}" onchange="updateXDmField(${idx},'storeName',this.value)" placeholder="店舗名">
+        <div style="padding:6px 8px;background:#f5f5f5;border:1px solid #e0e0e0;border-radius:4px;font-size:12px;color:#333;">${escapeHtml(row.storeName || '(未入力)')}</div>
         <div id="xdm-warn-${idx}" style="color:#c00;font-size:11px;margin-top:3px;${checkVisitedMatch(row.storeName)?'':'display:none;'}">${checkVisitedMatch(row.storeName)?'⚠️ 営業済み類似: '+escapeHtml(checkVisitedMatch(row.storeName)):''}</div>
       </td>
-      <td><select onchange="updateXDmField(${idx},'category',this.value)">
-        <option value="コワーキング" ${row.category==='コワーキング'?'selected':''}>コワーキング</option>
-        <option value="自習室" ${row.category==='自習室'?'selected':''}>自習室</option>
-        <option value="勉強カフェ" ${row.category==='勉強カフェ'?'selected':''}>勉強カフェ</option>
-        <option value="その他" ${row.category==='その他'?'selected':''}>その他</option>
-      </select></td>
+      <td>
+        <div style="padding:6px 8px;background:#f5f5f5;border:1px solid #e0e0e0;border-radius:4px;font-size:12px;color:#333;text-align:center;">${escapeHtml(row.category || '-')}</div>
+      </td>
       <td><input type="text" value="${escapeHtml(row.storeUrl || '')}" onchange="updateXDmField(${idx},'storeUrl',this.value)" placeholder="https://..."></td>
       <td><input type="date" value="${row.sentDate || ''}" onchange="updateXDmField(${idx},'sentDate',this.value)"></td>
       <td><select onchange="updateXDmField(${idx},'status',this.value)">
