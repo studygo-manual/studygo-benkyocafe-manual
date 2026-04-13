@@ -1085,6 +1085,24 @@ let currentTheme = 'forest';
 // 投稿日管理（localStorage）
 let postDates = {};
 try { const saved = localStorage.getItem('studygo_post_dates'); if (saved) postDates = JSON.parse(saved); } catch(e) {}
+
+// 4/7〜4/11 平日投稿シード（旧ツールからの引継ぎ、一度だけ実行）
+(function seedInstaPostDates() {
+  if (localStorage.getItem('studygo_insta_seeded_20260407') === '1') return;
+  var seed = {
+    32: '2026-04-07', // Funshare 浅草橋・秋葉原
+    34: '2026-04-08', // Cafe Kolm
+    35: '2026-04-09', // Tatami Works
+    36: '2026-04-10', // 自習室at home
+    37: '2026-04-11'  // 勉強できるカフェ ガクト
+  };
+  for (var k in seed) {
+    if (!postDates[k]) postDates[k] = seed[k];
+  }
+  localStorage.setItem('studygo_post_dates', JSON.stringify(postDates));
+  localStorage.setItem('studygo_insta_seeded_20260407', '1');
+})();
+
 function setPostDate(id, date) {
   if (date) { postDates[id] = date; } else { delete postDates[id]; }
   localStorage.setItem('studygo_post_dates', JSON.stringify(postDates));
