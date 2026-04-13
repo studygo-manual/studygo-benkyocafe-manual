@@ -1994,6 +1994,24 @@ function downloadAreaSummary() {
   link.click();
 }
 
+var VISITED_STORES = ["0→1高知Booster", "100feet", "2拠点掲載予定", "8knot", "A-LOUNGE", "ALOT \"Asagiri Local office Telework\"", "AMCCビジネスラウンジ｜コワーキングスペース", "AMIGO HOUSE", "AREA358", "ATOMica北九州", "Akishima SPACE 昭島", "Alliance Social Share Office Beppu", "AndWorker", "Associeレンタルスペース", "Attic cafe", "AxEL", "Azumino Coworking", "BASE POINT", "BAUM HAUS WORK", "BE-CON六甲本店", "BIWAKO PICNIC BASE", "BIZサポートよこて", "BLINK 六本木", "BLUE COMPASS YOKOHAMA", "BUSO AGORA", "CO-WORKING BASE千里浜", "CO-WORKING SALON　四季のいろ", "CO-WORKING SPACE C＆C ひがしね", "CODE BASE NAGOYA", "COMMUNE BASE マチノワ", "COTERRACE七間町", "COVO", "COWORKING SPACE SYNERGY", "CREATE OWN LIFE", "CREATIVE CAFE SALVIA", "CREEKS NAGANO", "Cafe Lotus", "Cafe Salon Kiranasu", "CafeKolm", "Cafe×Dining　With a Will", "Café あひるの小路", "Chabakka Tea Parks", "Co-Lab-Garage", "Co-working&Community Space K.I.T", "CoWorks24うねの駅前店", "CoWorks24佐世保店", "CodeCampKIDSみなとみらい教室内", "Colony#3下北沢", "Coworking Salon plusC", "Coworking Space UWAJIMA QUEST", "Coworking/ Sharing space bb", "CoworkingSpaceFlat", "Co×Co Works佐野新都市", "Co育て×Coワーキング 結 -You-", "DESIGNITE R.F.YAMAKAWA", "DIAGONAL RUN FUKUOKA", "DOTEMA", "EN-biz", "EXPRESSION - CREATIVE BASEMENT", "EZOHUB　TOKYO", "FEAT.space", "FEEEP", "FLUP HOUSE", "FURUSATTO", "Fullhouse", "Funshare 浅草橋・秋葉原", "GAKUYA", "GARAGE WASEDA", "GRAND HOSTEL LDK 札幌", "GRAND HOSTEL LDK大通公園（旧　コワーキングスペース THE SAPPORO ANNEX）", "GYMLABO", "Glamping＆Port結　WARKERS PORT", "HAPON新宿", "HARI（鳥取 ）", "HARU　個室レンタルスペース", "HOKKAIDO xStation01", "HONMACHI STAND", "HOOD天神", "HSビル・コワーキングスペース", "HamaPort", "Heart Space", "ICT個別指導クロキジュク", "INSPILAKE", "IZUMI-SO", "Idea Sync", "JUSO Coworking", "JikanKissa本駒込", "KASHI-WORK", "KIKCAFE", "KOITTO", "KOKOPLUS", "LIFE GARDEN", "LIFORK", "LIGHT UP LOBBY", "LOF WORKSPACE", "LiFEREEWORK", "MCオフィス池袋", "MID POINT", "MIRAIYABookmarkLounge（９店舗）", "MIRAI　BASE（北海道）", "MONO-Lab.", "MOV Creative Lounge", "MTACレンタルスペース", "MYST", "Match-hako 龍ケ崎", "Miss Honey & Tea", "Mukava Ranta", "My Studia野方１号", "NAYUTA BLD（ナユタビル）", "NIYADO /", "Neo work-Gifu", "O-terrace", "O.GARDEN", "OFFICE with U", "OITA MIDTOWN", "ONOMICHI SHARE", "OPTO", "OTEMAE space", "PAX Coworking Gotanda", "Pono books & time", "Port.inc（ポートインク）", "QUEENSWAYワーキングスペース", "Qucurcus", "ROOM3030", "ROUGH LABO TECH扇町", "Rampart", "Room8", "S PLACE（エス・プレイス）", "SAIJO BASE（愛媛県）", "SAN・シェアオフィス日生", "SHARELOUNGETSUTAYABOOKSTORE川崎駅前店", "SHARELOUNGETSUTAYABOOKSTORE茅ヶ崎店", "SOLOTASU", "SPACE XENO", "SPACE on the Station（福岡）", "STUDY CAMP", "SUIKO WORK CAMP", "SURF CITY MIYAZAKI +Workplace", "SaCuLa明大前コワーキングスペース", "SaCuLa芦花公園", "Sapporo Nest（北海道）", "Section9", "Share Office 結う", "Share Space MAeDE", "Sincerely yours 久留米", "Sketch Lab（富山県）", "SoloTime", "Spectrum Space", "Study＆Working Room「SABO」", "TAKAHATA Co-WORKING", "TENT幕張", "TENT成瀬", "THEBRANCH", "TIMESKY", "TOGITOGI(岡山県)", "TOKICAFE", "TOMI＋", "TakasunaBASE（茅ヶ崎）", "Tatami Works", "TeaTreeStudio", "The DECK", "TheParkRexTENNOZ[theDOCK]", "ToBelmo", "Toast", "U-make Workspace", "UPDRAFT", "Ueno Your", "VASALLY HILLS", "VD八丁堀", "VD銀座5", "VD銀座6", "VIVA CAGUCCI", "WAW 大宮", "WCOFFEE", "WORK!YAKUIN(ワーク！ヤクイン)", "WORK茶房PEOPLE(岩手)", "WORX富士", "Work PLACE COCOLO", "Work and Play SOSHIGAYA", "WorkStyle Lab Inno", "Working cafe halo", "Workmedi新宿", "Y-valley Coworking Space", "YAMATO BASE", "ZORKS沖縄", "and EATS 矢野口", "assemble長岡", "banco", "bokashi Base", "cafe 明日も発酵ごはん nippon", "cafe&Bar eight", "chillwork　CoWORKING", "ciel Green Lounge", "co-Desk", "co-ba EBISU", "co-ba KORIYAMA", "co-ba nakanoshima", "co-ba takamatsu", "co-ba, IKEBUKURO", "comolu", "coto Omura Arcade", "creative sports lab", "e-BUSINESS CENTER", "fabbit広島駅前", "fabbit狛江", "gate.", "hajimari-no-mado", "https://kazafune.fun/", "i office 津田沼店 等", "ioriにしちば", "kagoconne coffee & tea", "kenohi（目黒区）", "knowledge and idea なれあい", "kocolo", "microsoft base kanazawa", "minato コワーキングスペース（長崎県）", "office FORREST", "okey", "pivot川西", "plug078", "quantum cross point", "relark 那覇", "relark大宮", "resoffice.湘南藤沢", "resoffice.藤沢駅前＆湘南藤沢", "s-Live しずおか韮山校", "shared office yard", "sumika Learning Studio", "theSASTI", "the　KAIDAN　fujisawa", "work izu", "work.GO", "workshop studio canvas", "yokohamahop", "いいオフィス AreaDrive", "いいオフィス京都四条通", "いつでも自習室", "いわて若者カフェ(岩手県)", "うるま市浜比嘉島地域交流拠点施設HAMACHU", "おおたfab", "お気軽会議室金沢安江町101・103号室（石川県）", "くらまち", "さまざま働き処　坦庵", "つどいの森　かほっくる+", "としょかんのうら", "ひかりまち交差店", "まちかど農園POSTo", "まちなかオフィス", "まちのリビングルーム「さくのす」", "まち活拠点まちラボ・ワークスペース", "まるまるひがしにほん 大宮", "みちくさ", "みどりの村", "める・びる", "ものづくりラボ　dew spot", "やなピア", "アイデスク新宿", "アイヴィル", "アシストシステム", "アスリート自習室", "アトリエバンビ", "アルコワーキング", "アントレサロン", "イーミックス", "イーミックス(e-mix)秋葉原店", "エニシア高松コワーキングスペース", "エヌコロン", "エム・ビデオプロダクション", "オクターヴハウス", "オトナリラボ", "オフィスAMOREA", "コダテル", "コトリ コワーキング＆ホステル 高松", "コミュニティスペース Any-エニィ-", "コミュニティスペース N-port", "コミュニティスペースGALYEA前橋", "コミュニティスペースきよりや", "コモールカフェ別府", "コワーキング EGG", "コワーキング Lo･CoCo", "コワーキングCoCoプレイス", "コワーキングスペース Ar", "コワーキングスペース BE-EN(ビーエン)", "コワーキングスペース ITAMI｜伊丹(兵庫県)", "コワーキングスペース TETTE MAIBARA", "コワーキングスペース100work", "コワーキングスペースBreath", "コワーキングスペースC-BASE", "コワーキングスペースCambioworkninomiya", "コワーキングスペースMy health 24h", "コワーキングスペースNuts", "コワーキングスペースSANNOHE", "コワーキングスペースSOLFIL", "コワーキングスペースSUGUNI", "コワーキングスペースUffice", "コワーキングスペースUmidass", "コワーキングスペースakeruto", "コワーキングスペースarica", "コワーキングスペースkanadebako", "コワーキングスペースかわべのいえ", "コワーキングスペースさくら", "コワーキングスペースもりおか(岩手)", "コワーキングスペースカケルハコ日暮里店", "コワーキングスペースコワリヤマ(福島)", "コワーキングスペースツナグ", "コワーキングスペースディライト", "コワーキングスペースリコード久米川栄町店", "コワーキングスペース八王子8Beat", "コワーキングスペース新潟弁天", "コワーキングスペース錦糸町", "コワーキングスペースＭＩＲＡＩ", "コワーキングスポット赤坂", "コワーキング＆シェアオフィス フレクシー伊丹", "コワーキング＆シェアオフィスCOMMUNE", "コワーキング＆自習室てんくんスペース", "コンフォート水道橋 / リロワークス", "サカエマチHOLIC", "シェア オフィス＆コワーキング 貸会議室 co-wa-ke（北海道）", "シェアオフィス ストーリー", "シェアオフィスBee", "シェアオフィスLieffice（リーフィス）", "シェアオフィスMIRAI", "シェアオフィス甲州", "シェアショールームWow/ニュー新橋コワーキング", "シェアブル一宮 WORK LOUNGE", "シズオカシェアオフィス", "ジユウノハコ", "スタディクラブ", "スタディステーション新宿･代々木自習室", "スタディプレイス", "スタディースペース", "スタートアップステーション ジョージ山形", "スペラボ御成門店", "スポーツクラブNAS学園前", "セルフカフェ", "タイム珈琲店 歌舞伎町店", "ツクル・ワーク新宿センタービル店", "テレワーク＆喫茶 パステル", "トゥーノーイシデショウ　ハタラキバ", "ナカジマハイツ", "ナレッジソサエティ九段下", "ノマド伏見", "ノースエイム自習室（北海道）", "パセラのコワーク", "パセラのコワーク東神田店", "ヒトリキカク", "ビジネススペース・湘南", "ビジネス＆コミュニティ横浜駅前オフィス", "ピアノサロンメロディ", "フウド", "フェムベース池上", "フリンジーカフェ", "フリーウィルスタジオ", "フロンティア倶楽部早稲田会館", "ブーゲンラウンジひなた", "プライベートオフィスTo-kaichi（広島）", "プロコワ", "ベース大曽根", "ホテル日本橋サイボー自習室", "ホワイエアルマ", "マイクロソフトイノベーションセンター佐賀", "マナビバ+", "マフィス北参道", "マフィス横濱白楽", "マーキュリークラブ", "マークシェア天神赤坂", "ミッドスケープ", "ミライノベース", "モットバ！FUTAMATA RIVER LIBRARY", "ユカリノSPACE小豆島", "ユナイデットシェア大分", "ヨカラボ天神", "リゾートオフィスエンゼル越後湯沢だんろの家", "リタCOFFEE", "リブポート浜松町", "リヴィング・ラボとくしま", "ルフランオフィス", "レガーレカフェ栄", "レゾナンスバーチャルオフィス渋谷駅前店", "レフ熊本ベッセルホテルズ", "レンタルオフィス CO.LA.BO", "レンタルスペース AS-SPACE", "レンタルスペース Ⅾ→START四日市店(三重県)", "レンタル自習室「サクセス・ロード茅場町」", "レンタル自習室長居", "ロバート下北沢", "ワイムビジネスプラザ", "ワンサードライフ", "ワーキングスペース1knot", "ワークシネマパラダイス（東京都）", "ワークブースSakura", "ワークラボもりぐらし（長野県）", "ヴェルミminami", "・HAKADORU渋谷宮益坂店", "・INBOUNDLEAGUE新宿", "三島クロケット", "三股町まち・ひと・しごと・情報交流センター「あつまい」", "世界で150店舗", "両国スタジオ", "中山間地域交流拠点施設たねのや", "中川村お試しシェアオフィス", "中百舌鳥店", "五反田コワーキングスペースpao パオ", "五反田レンタルスペース&Living", "亘理町コワーキングスペース", "仕事と学び複合施設「イコウェルすみた」", "代々木進学ゼミナール自習室 拝島校", "会員制自習室Rise神戸", "個別指導塾ビオスタディ", "個室レンタルスペースFlex 神田", "八ヶ岳コモンズ", "八東ふる里　森のワークスペース", "利根町生涯学習センター内コワーキングスペース（茨城）", "勉強できるカフェガクト", "勉強カフェ 博多プレース", "勉強カフェ 日本橋茅場町スタジオ", "勉強カフェアライアンス宮崎", "勉強カフェ大阪上本町ANNEX", "勉強カフェ大阪府内6店舗", "勉強カフェ渋谷スタジオ", "勉強カフェ高松スタジオ", "勉強スペース", "北海道八雲 by ぺコレラ学舎（北海道）", "南伊勢ワークスペース", "南魚沼市事業創発拠点 MUSUBI-BA", "古民家あいせき", "吉祥寺スタジオ", "名古屋グローバルゲートスタジオ", "品川、浜松町、横浜等、掲載申込時に分割", "四ツ谷ビジネスラウンジ", "四万十町コワーキングスペース", "土佐山夢産地パーク交流館「かわせみ」", "壱岐アイランドハブ", "夢まちLabo", "大和高田 by アカデミックスクウェア", "大崎ブックカフェ", "大橋井尻コワーキングスペース+レイジーナアキ", "天成塾浄水校", "奈良サテライトオフィス35", "女性のためのコワーキングスペースリラコワ", "女性専用コワーキングスペース「fuoco」", "学習室Seldy", "宮城南小路 by Mow Mow", "富士吉田市まるごとサテライトオフィス（山梨県）", "富山自習学習室", "小千谷 by 秀和建設", "小春や珈琲", "小田原ラボ（ODAWARALABO）", "山田町まちなか交流センター", "岩手町フューチャーセンター", "市民交流スペース あちてらすぽっと", "幡ヶ谷コワーキングスペース カクレガ", "広島大学きてみんさいラボ", "廉や（かどや）", "建築LOUNGE", "御堂筋難波自習室", "志布志市移住・交流支援センター「Esplanade」", "文喫 六本木", "新大阪コワーキングスペース Crossing", "新宿スタジオ", "新宿ベースポイントスタジオ", "新宿早稲田ビジネスサロン", "日本橋茅場町自習室One", "木場かしむら個別学習教室", "木更津市金田地域交流センター", "未来づくり拠点MOG", "本田様", "本町チャレンジBASE", "柏マルイスタジオ", "横浜自習室アイルstudy&workstudio", "横浜自習室アーウィン", "横浜関内スタジオ", "池袋スタジオ", "池袋大塚ビジネスサロン", "浅草橋ビジネスサロン", "海陽コワーキングスペース", "溝の口スタジオ", "瀬戸内スペース", "焼津PORTERS", "熊谷オフィス(埼玉)", "燕三条Gスクエア（新潟県）", "生駒市テレワーク＆インキュベーションセンター「イコマド", "産業会館コワーキングスペース", "田無コワーキングスペースOK西東京", "町田マルイスタジオ", "白浜町第2ITビジネスオフィス", "白金高輪ビジネスサロン", "神宿る古民家コワーキングスペース＆カフェ", "神田水道橋ビジネスサロン", "神領駅前自習室-ゴーズ", "福井コワーキングスペース TALT　（福井）", "福井県産業情報センター　コワーキングスペース", "福島市クリエイティブビジネスサロン", "福崎町観光交流センター", "窯茶業", "素心吟舎", "肘折いでゆ館コワーキングスペース（山形県）", "自習室 三秀", "自習室VERIA", "自習室athome", "自習室オールラウンド", "自習室トライ三宮店", "自習室フィット24", "自習室開業予定", "自習生活 名古屋伏見店", "芝浦 by ヨコソーレインボータワー", "虎ノ門スタジオ", "街の自習室", "街角自習室", "西和賀町まちなか交流館", "観光物産交流施設きやったもんせ南さつま（鹿児島）", "謎解きカフェ繭玉", "越乃バレー", "越廼サテライトオフィス", "逆転コーチング", "道志村サテライトオフィス", "那賀町林業ビジネスセンター（徳島県）", "郡山 by ぷらっと", "金沢のシェアオフィス・コワーキングスペース", "金沢未来のまち創造館", "防府市創業・交流センター", "阿武町暮らし支援センター shiBano", "隼Lab", "雫石町まちおこしセンターしずく×CAN", "静かな個室型自習室", "静岡市コクリ", "飯山市起業支援センター「あすちゃれ」", "高円寺デポ", "鬼北町コワーキングスペースwarmth（愛媛県）", "鷰 en cafe", "龍門渕てらす", "＆tenna（アンテナ）"];
+
+// ============================================================
+// 営業済み店舗との部分一致チェック
+// ============================================================
+function checkVisitedMatch(storeName) {
+  if (!storeName || storeName.trim().length < 2) return null;
+  var s = storeName.trim();
+  for (var i = 0; i < VISITED_STORES.length; i++) {
+    var v = VISITED_STORES[i];
+    if (!v || v.length < 2) continue;
+    if (s.indexOf(v) !== -1 || v.indexOf(s) !== -1) {
+      return v;
+    }
+  }
+  return null;
+}
+
 // ============================================================
 // DM Management Tab
 // ============================================================
@@ -2036,6 +2054,15 @@ function updateDmField(idx, field, value) {
   dmData[idx][field] = value;
   saveDmData();
   renderDmStats();
+  if (field === 'storeName') {
+    var match = checkVisitedMatch(value);
+    var warnEl = document.getElementById('dm-warn-' + idx);
+    if (warnEl) {
+      warnEl.innerHTML = match ? '⚠️ 営業済み類似: ' + escapeHtml(match) : '';
+      warnEl.style.display = match ? 'block' : 'none';
+    }
+    if (match) alert('⚠️ 営業済みリストに類似店舗があります:\n「' + match + '」');
+  }
 }
 
 function renderDmStats() {
@@ -2074,7 +2101,10 @@ function renderDmTable() {
       <td style="text-align:center;color:#888;">${idx + 1}</td>
       <td><input type="text" value="${escapeHtml(row.searchWord || '')}" onchange="updateDmField(${idx},'searchWord',this.value)" placeholder="#勉強カフェ 新宿"></td>
       <td><input type="text" value="${escapeHtml(row.accountId)}" onchange="updateDmField(${idx},'accountId',this.value)" placeholder="@account_id"></td>
-      <td><input type="text" value="${escapeHtml(row.storeName)}" onchange="updateDmField(${idx},'storeName',this.value)" placeholder="店舗名"></td>
+      <td>
+        <input type="text" value="${escapeHtml(row.storeName)}" onchange="updateDmField(${idx},'storeName',this.value)" placeholder="店舗名">
+        <div id="dm-warn-${idx}" style="color:#c00;font-size:11px;margin-top:3px;${checkVisitedMatch(row.storeName)?'':'display:none;'}">${checkVisitedMatch(row.storeName)?'⚠️ 営業済み類似: '+escapeHtml(checkVisitedMatch(row.storeName)):''}</div>
+      </td>
       <td><select onchange="updateDmField(${idx},'category',this.value)">
         <option value="カフェ" ${row.category==='カフェ'?'selected':''}>カフェ</option>
         <option value="ブックカフェ" ${row.category==='ブックカフェ'?'selected':''}>ブックカフェ</option>
@@ -2420,6 +2450,15 @@ function updateXDmField(idx, field, value) {
   xDmData[idx][field] = value;
   saveXDmData();
   renderXDmStats();
+  if (field === 'storeName') {
+    var match = checkVisitedMatch(value);
+    var warnEl = document.getElementById('xdm-warn-' + idx);
+    if (warnEl) {
+      warnEl.innerHTML = match ? '⚠️ 営業済み類似: ' + escapeHtml(match) : '';
+      warnEl.style.display = match ? 'block' : 'none';
+    }
+    if (match) alert('⚠️ 営業済みリストに類似店舗があります:\n「' + match + '」');
+  }
 }
 
 function renderXDmStats() {
@@ -2455,7 +2494,10 @@ function renderXDmTable() {
       <td style="text-align:center;color:#888;">${idx + 1}</td>
       <td><input type="text" value="${escapeHtml(row.searchWord || '')}" onchange="updateXDmField(${idx},'searchWord',this.value)" placeholder="コワーキング 新宿"></td>
       <td><input type="text" value="${escapeHtml(row.accountId || '')}" onchange="updateXDmField(${idx},'accountId',this.value)" placeholder="@account_id"></td>
-      <td><input type="text" value="${escapeHtml(row.storeName || '')}" onchange="updateXDmField(${idx},'storeName',this.value)" placeholder="店舗名"></td>
+      <td>
+        <input type="text" value="${escapeHtml(row.storeName || '')}" onchange="updateXDmField(${idx},'storeName',this.value)" placeholder="店舗名">
+        <div id="xdm-warn-${idx}" style="color:#c00;font-size:11px;margin-top:3px;${checkVisitedMatch(row.storeName)?'':'display:none;'}">${checkVisitedMatch(row.storeName)?'⚠️ 営業済み類似: '+escapeHtml(checkVisitedMatch(row.storeName)):''}</div>
+      </td>
       <td><select onchange="updateXDmField(${idx},'category',this.value)">
         <option value="コワーキング" ${row.category==='コワーキング'?'selected':''}>コワーキング</option>
         <option value="自習室" ${row.category==='自習室'?'selected':''}>自習室</option>
