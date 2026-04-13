@@ -297,13 +297,25 @@ body.platform-x-active { background: #1a1a1a; }
 <div id="platform-ig" class="platform-content active">
 
 <div class="main-tabs" id="ig-tabs">
-  <button class="main-tab active" onclick="switchMainTab('stores')">店舗投稿</button>
+  <button class="main-tab active" onclick="switchMainTab('today')">📅 今日の投稿</button>
+  <button class="main-tab" onclick="switchMainTab('stores')">店舗一覧</button>
   <button class="main-tab" style="display:none;" onclick="switchMainTab('area')">エリアまとめ</button>
   <button class="main-tab" style="display:none;" onclick="switchMainTab('dm')">DM管理</button>
 </div>
 
+<!-- ========== TAB: 今日の投稿 ========== -->
+<div id="tab-today" class="tab-content active">
+  <div class="container">
+    <div style="background:linear-gradient(135deg,#e91e63,#f06292);color:#fff;padding:20px 24px;border-radius:12px;margin-bottom:20px;box-shadow:0 4px 16px rgba(233,30,99,0.3);">
+      <h2 id="todayTitle" style="font-size:22px;margin-bottom:4px;">📅 今日の投稿</h2>
+      <p id="todaySubtitle" style="font-size:13px;opacity:0.9;">1日5投稿（平日）</p>
+    </div>
+    <div id="todayPostList"></div>
+  </div>
+</div>
+
 <!-- ========== TAB: 店舗投稿 ========== -->
-<div id="tab-stores" class="tab-content active">
+<div id="tab-stores" class="tab-content">
 
 <div class="toolbar">
   <input type="text" id="searchBox" placeholder="店舗名・エリアで検索..." oninput="filterStores()">
@@ -1156,6 +1168,108 @@ function setPostDate(id, date) {
   if (date) { postDates[id] = date; } else { delete postDates[id]; }
   localStorage.setItem('studygo_post_dates', JSON.stringify(postDates));
   renderStores();
+  if (typeof renderTodayPosts === 'function') renderTodayPosts();
+}
+
+// 投稿プラン（4/14〜、平日1日5店舗、STORES順）
+// 4/7〜4/11の5店舗(ID:32,34,35,36,37)は既にシード済み
+const INSTA_POST_PLAN = {
+  '2026-04-07': [32], '2026-04-08': [34], '2026-04-09': [35], '2026-04-10': [36], '2026-04-11': [37],
+  '2026-04-14': [2,3,5,6,7], '2026-04-15': [10,12,13,14,15],
+  '2026-04-16': [17,18,19,20,21], '2026-04-17': [22,23,25,26,28],
+  '2026-04-20': [29,38,39,40,41], '2026-04-21': [42,43,44,45,46],
+  '2026-04-22': [47,48,49,50,51], '2026-04-23': [52,53,54,55,56],
+  '2026-04-24': [57,58,59,60,63], '2026-04-27': [64,65,66,67,68],
+  '2026-04-28': [69,70,71,72,73], '2026-04-30': [74,75,76,77,78],
+  '2026-05-01': [79,80,81,82,83]
+};
+
+function getTodayDateKey() {
+  var d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+function renderTodayPosts() {
+  var container = document.getElementById('todayPostList');
+  if (!container) return;
+  var todayKey = getTodayDateKey();
+  var today = new Date();
+  var dow = ['日','月','火','水','木','金','土'][today.getDay()];
+  var titleEl = document.getElementById('todayTitle');
+  if (titleEl) titleEl.textContent = '📅 ' + (today.getMonth()+1) + '/' + today.getDate() + '(' + dow + ') の投稿';
+
+  var plannedIds = INSTA_POST_PLAN[todayKey];
+  if (!plannedIds || plannedIds.length === 0) {
+    container.innerHTML = '<div style="background:#fff;padding:40px;border-radius:12px;text-align:center;color:#888;">本日(' + todayKey + ')の投稿予定はありません。<br><br>平日ではない、または投稿プラン範囲外の日付です。</div>';
+    return;
+  }
+
+  var postedCount = plannedIds.filter(function(id) { return postDates[id]; }).length;
+  var html = '<div style="background:#fff;padding:14px 18px;border-radius:10px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">';
+  html += '<div style="font-size:14px;color:#333;">本日の進捗: <b style="color:#e91e63;font-size:18px;">' + postedCount + '</b> / ' + plannedIds.length + '</div>';
+  html += '<button class="btn btn-copy" style="background:#e91e63;" onclick="markAllTodayPosted()">全て投稿済にする</button>';
+  html += '</div>';
+
+  plannedIds.forEach(function(id, idx) {
+    var store = STORES.find(function(s) { return s.id === id; });
+    if (!store) return;
+    var isPosted = !!postDates[id];
+    html += '<div style="background:#fff;border-radius:12px;padding:16px 18px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06);display:flex;gap:16px;align-items:center;flex-wrap:wrap;' + (isPosted ? 'border-left:4px solid #4caf50;' : 'border-left:4px solid #e91e63;') + '">';
+    html += '<div style="flex:1;min-width:200px;">';
+    html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">';
+    html += '<span style="background:#e91e63;color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:12px;">' + (idx+1) + '/' + plannedIds.length + '</span>';
+    if (isPosted) html += '<span style="background:#4caf50;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px;">✓ 投稿済</span>';
+    html += '</div>';
+    html += '<div style="font-size:16px;font-weight:700;color:#333;margin-bottom:4px;">' + escapeHtml(store.name) + '</div>';
+    html += '<div style="font-size:12px;color:#666;">📍 ' + escapeHtml(store.access) + '</div>';
+    if (store.drop || store.month) {
+      html += '<div style="font-size:12px;color:#666;margin-top:3px;">💰 ドロップイン: ' + escapeHtml(store.drop || '-') + ' / 月額: ' + escapeHtml(store.month || '-') + '</div>';
+    }
+    html += '</div>';
+    html += '<div style="display:flex;gap:6px;flex-wrap:wrap;">';
+    if (!isPosted) {
+      html += '<button class="btn btn-green" onclick="markTodayPostedById(' + id + ')">投稿済にする</button>';
+    } else {
+      html += '<button class="btn btn-edit" onclick="unmarkTodayPostedById(' + id + ')">取消</button>';
+    }
+    html += '<button class="btn btn-copy" style="background:#e91e63;" onclick="scrollToStoreCard(' + id + ')">編集画面へ</button>';
+    html += '</div>';
+    html += '</div>';
+  });
+  container.innerHTML = html;
+}
+
+function markTodayPostedById(id) {
+  postDates[id] = getTodayDateKey();
+  localStorage.setItem('studygo_post_dates', JSON.stringify(postDates));
+  renderTodayPosts();
+  renderStores();
+}
+function unmarkTodayPostedById(id) {
+  delete postDates[id];
+  localStorage.setItem('studygo_post_dates', JSON.stringify(postDates));
+  renderTodayPosts();
+  renderStores();
+}
+function markAllTodayPosted() {
+  if (!confirm('本日の全店舗を投稿済にしますか？')) return;
+  var todayKey = getTodayDateKey();
+  var ids = INSTA_POST_PLAN[todayKey] || [];
+  ids.forEach(function(id) { postDates[id] = todayKey; });
+  localStorage.setItem('studygo_post_dates', JSON.stringify(postDates));
+  renderTodayPosts();
+  renderStores();
+}
+function scrollToStoreCard(id) {
+  switchMainTab('stores');
+  setTimeout(function() {
+    var card = document.querySelector('.store-card[data-id="' + id + '"]');
+    if (card) {
+      card.scrollIntoView({behavior:'smooth', block:'center'});
+      card.style.outline = '3px solid #e91e63';
+      setTimeout(function(){ card.style.outline = ''; }, 2000);
+    }
+  }, 200);
 }
 
 // カスタムテキスト（店舗ごと）
@@ -1783,7 +1897,8 @@ function switchMainTab(tab) {
   document.querySelectorAll('#ig-tabs .main-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('#platform-ig > .tab-content').forEach(t => t.classList.remove('active'));
   document.querySelector(`#ig-tabs .main-tab[onclick*="${tab}"]`).classList.add('active');
-  document.getElementById(`tab-${tab === 'stores' ? 'stores' : tab === 'area' ? 'area' : 'dm'}`).classList.add('active');
+  document.getElementById('tab-' + tab).classList.add('active');
+  if (tab === 'today') renderTodayPosts();
 }
 
 // ============================================================
@@ -3624,6 +3739,7 @@ renderXDmTable();
 loadIgDmTemplate();
 loadXDmTemplate();
 renderStores();
+renderTodayPosts();
 
 // プラットフォーム復帰
 var savedPlatform = localStorage.getItem('studygo_sns_platform');
