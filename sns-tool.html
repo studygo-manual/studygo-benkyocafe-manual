@@ -554,7 +554,7 @@ body { font-family: 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif; bac
   <div class="container">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
       <h2 style="font-size:20px;color:#333;">投稿進捗</h2>
-      <div style="display:flex;gap:8px;">
+      <div style="display:none;gap:8px;">
         <button class="btn btn-edit" onclick="exportXProgress()">バックアップ</button>
         <label class="btn btn-edit" style="cursor:pointer;">復元<input type="file" accept=".json" onchange="importXProgress(this)" style="display:none;"></label>
         <button class="btn" style="background:#e53935;color:#fff;" onclick="resetXProgress()">リセット</button>
