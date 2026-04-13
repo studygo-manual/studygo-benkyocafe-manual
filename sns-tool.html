@@ -578,7 +578,60 @@ body.platform-x-active { background: #1a1a1a; }
       <p><b>ターゲット:</b> 勉強できるコワーキングスペース・自習室・有料自習室の公式Xアカウント</p>
       <p><b>使い方:</b> ①カテゴリ選択 → ②店舗名入力 → ③「テンプレートをコピー」ボタンで架電リストに自動追加されます</p>
       <p style="color:#c00;"><b>※</b> 店舗名・カテゴリは手動編集不可。コピーボタン経由で記録されます</p>
+      <div style="margin-top:10px;">
+        <button onclick="openXSearchGuide()" style="background:linear-gradient(135deg,#1d9bf0,#1565c0);color:#fff;border:none;border-radius:8px;padding:10px 18px;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 2px 6px rgba(29,155,240,0.3);">🔍 検索方法について</button>
+      </div>
     </div>
+
+<!-- X検索ガイドモーダル -->
+<div id="xSearchGuideModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:9999;align-items:center;justify-content:center;padding:20px;" onclick="if(event.target===this)closeXSearchGuide()">
+  <div style="background:#fff;border-radius:12px;max-width:720px;width:100%;max-height:85vh;overflow-y:auto;padding:24px;position:relative;box-shadow:0 8px 32px rgba(0,0,0,0.3);">
+    <button onclick="closeXSearchGuide()" style="position:absolute;top:12px;right:12px;background:#f5f5f5;border:none;border-radius:50%;width:36px;height:36px;font-size:18px;cursor:pointer;">✕</button>
+    <h2 style="color:#1565c0;font-size:22px;margin-bottom:4px;">🔍 X新規開拓 検索方法ガイド</h2>
+    <p style="color:#888;font-size:12px;margin-bottom:20px;">コワーキング・自習室の公式Xアカウントを探すための検索ワード集</p>
+
+    <h3 style="color:#1565c0;font-size:15px;margin:16px 0 8px;border-left:4px solid #1d9bf0;padding-left:10px;">① 施設タイプ直撃</h3>
+    <div style="background:#f0f7ff;padding:10px;border-radius:6px;font-size:12px;font-family:monospace;line-height:1.8;">コワーキングスペース / 有料自習室 / 自習室 月額 / ドロップイン 勉強 / レンタルデスク / 個室ワークスペース / 時間貸し 自習室 / ブース 自習</div>
+
+    <h3 style="color:#1565c0;font-size:15px;margin:16px 0 8px;border-left:4px solid #1d9bf0;padding-left:10px;">② 地域×施設（主要エリア）</h3>
+    <div style="background:#f0f7ff;padding:10px;border-radius:6px;font-size:12px;font-family:monospace;line-height:1.8;">コワーキング 新宿 / コワーキング 渋谷 / コワーキング 池袋 / コワーキング 横浜 / コワーキング 大阪<br>自習室 新宿 / 自習室 池袋 / 自習室 吉祥寺 / 自習室 町田 / 自習室 大宮 / 自習室 名古屋 / 自習室 福岡</div>
+
+    <h3 style="color:#1565c0;font-size:15px;margin:16px 0 8px;border-left:4px solid #1d9bf0;padding-left:10px;">③ 新規開業狙い（狙い目）</h3>
+    <div style="background:#fff3e0;padding:10px;border-radius:6px;font-size:12px;font-family:monospace;line-height:1.8;border-left:3px solid #e65100;">コワーキング オープン / 自習室 新規オープン / 自習室 プレオープン / コワーキング 開業 / 新しく オープン 自習 / ○月オープン 自習室</div>
+
+    <h3 style="color:#1565c0;font-size:15px;margin:16px 0 8px;border-left:4px solid #1d9bf0;padding-left:10px;">④ ハッシュタグ</h3>
+    <div style="background:#f0f7ff;padding:10px;border-radius:6px;font-size:12px;font-family:monospace;line-height:1.8;">#コワーキングスペース / #有料自習室 / #自習室 / #コワーキング / #シェアオフィス / #ワークスペース / #勉強スペース / #リスキリング / #朝活スペース</div>
+
+    <h3 style="color:#1565c0;font-size:15px;margin:16px 0 8px;border-left:4px solid #1d9bf0;padding-left:10px;">⑤ 利用者発信から逆引き（裏技）</h3>
+    <div style="background:#f0f7ff;padding:10px;border-radius:6px;font-size:12px;font-family:monospace;line-height:1.8;">自習室 おすすめ / 勉強場所 探してる / コワーキング 契約した / 自習室 入会 / 勉強垢 自習室 / 社会人 自習室</div>
+    <p style="font-size:11px;color:#888;margin-top:4px;">→ 利用者の投稿に出てきた店舗名を検索して公式アカウントを特定</p>
+
+    <h3 style="color:#1565c0;font-size:15px;margin:16px 0 8px;border-left:4px solid #1d9bf0;padding-left:10px;">⑥ 競合サービス名（既に集客意識あり）</h3>
+    <div style="background:#f0f7ff;padding:10px;border-radius:6px;font-size:12px;font-family:monospace;line-height:1.8;">いいオフィス / BIZcomfort / WeWork / 勉強カフェ / オトナリ / RemoteworkBOX</div>
+    <p style="font-size:11px;color:#888;margin-top:4px;">→ 集客への意識が高い店舗 = スタディGOも刺さりやすい</p>
+
+    <h3 style="color:#1565c0;font-size:15px;margin:16px 0 8px;border-left:4px solid #1d9bf0;padding-left:10px;">⑦ プロフィール検索</h3>
+    <div style="background:#f0f7ff;padding:10px;border-radius:6px;font-size:12px;font-family:monospace;line-height:1.8;">自習室 運営 / コワーキング 運営 / オーナー 自習室 / 店長 自習室</div>
+
+    <h3 style="color:#c62828;font-size:15px;margin:20px 0 8px;border-left:4px solid #e53935;padding-left:10px;">📊 狙い目の選定基準</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:6px;">
+      <tr style="background:#f5f5f5;"><th style="border:1px solid #ddd;padding:6px;">指標</th><th style="border:1px solid #ddd;padding:6px;color:#2e7d32;">✅ 良い</th><th style="border:1px solid #ddd;padding:6px;color:#c00;">❌ 避ける</th></tr>
+      <tr><td style="border:1px solid #ddd;padding:6px;"><b>フォロワー</b></td><td style="border:1px solid #ddd;padding:6px;">100〜3,000</td><td style="border:1px solid #ddd;padding:6px;">大手チェーン</td></tr>
+      <tr><td style="border:1px solid #ddd;padding:6px;"><b>最終投稿</b></td><td style="border:1px solid #ddd;padding:6px;">1ヶ月以内</td><td style="border:1px solid #ddd;padding:6px;">半年以上放置</td></tr>
+      <tr><td style="border:1px solid #ddd;padding:6px;"><b>投稿内容</b></td><td style="border:1px solid #ddd;padding:6px;">日常発信あり</td><td style="border:1px solid #ddd;padding:6px;">公式告知のみ</td></tr>
+      <tr><td style="border:1px solid #ddd;padding:6px;"><b>プロフィール</b></td><td style="border:1px solid #ddd;padding:6px;">担当者感・個人店</td><td style="border:1px solid #ddd;padding:6px;">Bot・無人系のみ</td></tr>
+    </table>
+
+    <h3 style="color:#2e7d32;font-size:15px;margin:20px 0 8px;border-left:4px solid #2e7d32;padding-left:10px;">💡 効率的な進め方</h3>
+    <ol style="font-size:13px;line-height:1.8;padding-left:20px;color:#333;">
+      <li>①＋②を組み合わせて10駅×3施設タイプ = 30パターン検索</li>
+      <li>検索結果の「アカウント」タブに切り替えて一覧取得</li>
+      <li>フォロワー100〜3000のアクティブ店舗を優先</li>
+      <li>店舗名を入力すると<b>営業済み警告</b>が出るので重複回避</li>
+      <li>カジュアル文面のテンプレートでDM送信</li>
+    </ol>
+  </div>
+</div>
 
     <!-- DM文章テンプレート -->
     <div style="background:#f0f7ff;border:1px solid #bbdefb;border-radius:8px;padding:16px;margin-bottom:16px;">
@@ -2338,6 +2391,13 @@ function getIgDmTemplates() {
     if (saved) return JSON.parse(saved);
   } catch(e) {}
   return [...IG_DM_TEMPLATES_DEFAULT];
+}
+
+function openXSearchGuide() {
+  document.getElementById('xSearchGuideModal').style.display = 'flex';
+}
+function closeXSearchGuide() {
+  document.getElementById('xSearchGuideModal').style.display = 'none';
 }
 
 function switchXDmCategory(cat) {
