@@ -266,9 +266,11 @@ body { font-family: 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif; bac
   background: #fff; border-radius: 12px; padding: 20px; margin-bottom: 20px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
-.dm-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 12px; }
-.dm-table th, .dm-table td { border: 1px solid #ddd; padding: 8px 10px; text-align: left; }
-.dm-table th { background: #f5f5f5; font-weight: 600; white-space: nowrap; }
+.dm-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13px; margin-top: 12px; }
+.dm-table th, .dm-table td { border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; padding: 8px 10px; text-align: left; }
+.dm-table th:first-child, .dm-table td:first-child { border-left: 1px solid #ddd; }
+.dm-table thead th { background: #f5f5f5; font-weight: 600; white-space: nowrap; position: sticky; top: 0; z-index: 10; border-top: 1px solid #ddd; box-shadow: 0 1px 0 #ddd; }
+.dm-table-wrap { max-height: 65vh; overflow: auto; border: 1px solid #ddd; border-radius: 6px; }
 .dm-table td input, .dm-table td select { width: 100%; border: 1px solid #e0e0e0; border-radius: 4px; padding: 4px 6px; font-size: 12px; }
 .dm-table td select { background: #fff; }
 .dm-table tr:hover { background: #f9f9f9; }
@@ -453,7 +455,7 @@ body { font-family: 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif; bac
       <button class="btn btn-dl" onclick="saveDmBackup()">バックアップ保存</button>
       <label class="btn btn-edit" style="cursor:pointer;">バックアップ復元<input type="file" accept=".json" style="display:none" onchange="loadDmBackup(this)"></label>
     </div>
-    <div style="overflow-x:auto;">
+    <div class="dm-table-wrap" style="overflow-x:auto;">
       <table class="dm-table">
         <thead>
           <tr>
@@ -607,7 +609,7 @@ body { font-family: 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif; bac
       <button class="btn btn-dl" onclick="saveXDmBackup()">バックアップ保存</button>
       <label class="btn btn-edit" style="cursor:pointer;">バックアップ復元<input type="file" accept=".json" style="display:none" onchange="loadXDmBackup(this)"></label>
     </div>
-    <div style="overflow-x:auto;">
+    <div class="dm-table-wrap" style="overflow-x:auto;">
       <table class="dm-table">
         <thead>
           <tr>
