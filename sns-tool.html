@@ -451,9 +451,8 @@ body { font-family: 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif; bac
     <div class="dm-stats" id="dmStats"></div>
     <div class="btn-row" style="margin-bottom:12px;">
       <button class="btn btn-green" onclick="addDmRow()">+ 新規追加</button>
-      <button class="btn btn-copy" onclick="exportDmCsv()">CSV エクスポート</button>
-      <button class="btn btn-dl" onclick="saveDmBackup()">バックアップ保存</button>
-      <label class="btn btn-edit" style="cursor:pointer;">バックアップ復元<input type="file" accept=".json" style="display:none" onchange="loadDmBackup(this)"></label>
+      <button class="btn btn-copy" onclick="exportDmAll()">エクスポート(CSV+JSON)</button>
+      <label class="btn btn-edit" style="cursor:pointer;">復元<input type="file" accept=".json" style="display:none" onchange="loadDmBackup(this)"></label>
     </div>
     <div class="dm-table-wrap" style="overflow-x:auto;">
       <table class="dm-table">
@@ -605,9 +604,8 @@ body { font-family: 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif; bac
 
     <div class="dm-stats" id="xDmStats"></div>
     <div class="btn-row" style="margin-bottom:12px;">
-      <button class="btn btn-copy" onclick="exportXDmCsv()">CSV エクスポート</button>
-      <button class="btn btn-dl" onclick="saveXDmBackup()">バックアップ保存</button>
-      <label class="btn btn-edit" style="cursor:pointer;">バックアップ復元<input type="file" accept=".json" style="display:none" onchange="loadXDmBackup(this)"></label>
+      <button class="btn btn-copy" onclick="exportXDmAll()">エクスポート(CSV+JSON)</button>
+      <label class="btn btn-edit" style="cursor:pointer;">復元<input type="file" accept=".json" style="display:none" onchange="loadXDmBackup(this)"></label>
     </div>
     <div class="dm-table-wrap" style="overflow-x:auto;">
       <table class="dm-table">
@@ -2163,6 +2161,12 @@ function saveDmBackup() {
   link.click();
 }
 
+function exportDmAll() {
+  if (dmData.length === 0) { alert('データがありません'); return; }
+  exportDmCsv();
+  setTimeout(saveDmBackup, 300);
+}
+
 function loadDmBackup(input) {
   const file = input.files[0];
   if (!file) return;
@@ -2586,6 +2590,12 @@ function saveXDmBackup() {
   link.download = `X_DM管理_バックアップ_${new Date().toISOString().split('T')[0]}.json`;
   link.href = URL.createObjectURL(blob);
   link.click();
+}
+
+function exportXDmAll() {
+  if (xDmData.length === 0) { alert('データがありません'); return; }
+  exportXDmCsv();
+  setTimeout(saveXDmBackup, 300);
 }
 
 function loadXDmBackup(input) {
