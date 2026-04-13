@@ -653,13 +653,8 @@ body.platform-x-active { background: #1a1a1a; }
       </div>
     </div>
 
-    <!-- 検索ワード例 -->
-    <div style="background:#fff3e0;border:1px solid #ffe0b2;border-radius:8px;padding:14px;margin-bottom:16px;">
-      <h4 style="font-size:14px;color:#e65100;margin-bottom:8px;">🔍 検索ワード例（Xで検索してアカウント探し）</h4>
-      <div style="font-size:12px;color:#555;line-height:1.9;">
-        「コワーキングスペース [地域名]」「自習室 [地域名]」「有料自習室」「勉強スペース」「コワーキング 東京」「自習室 新宿」「勉強垢」「受験生 自習」<br>
-        <b>狙い目</b>: フォロワー100〜3000の中小規模アカウント、投稿継続中のアカウント
-      </div>
+    <div style="margin-bottom:16px;text-align:center;">
+      <button onclick="openXSearchGuide()" style="background:linear-gradient(135deg,#1d9bf0,#1565c0);color:#fff;border:none;border-radius:8px;padding:12px 24px;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 2px 6px rgba(29,155,240,0.3);">🔍 検索方法について</button>
     </div>
 
     <div class="dm-stats" id="xDmStats"></div>
@@ -1121,18 +1116,18 @@ ${areaTag}
 // 画像生成テーマ
 // ============================================================
 const THEMES = {
-  forest:     { bg: '#1b5e20', accent: '#6abf69', text: '#fff', sub: '#c8e6c9' },
+  forest:     { bg: '#1b5e20', accent: '#66bb6a', text: '#fff', sub: '#c8e6c9' },
   deepgreen:  { bg: '#2e7d32', accent: '#81c784', text: '#fff', sub: '#c8e6c9' },
-  pine:       { bg: '#33691e', accent: '#8bc34a', text: '#fff', sub: '#dcedc8' },
-  emerald:    { bg: '#00695c', accent: '#4db6ac', text: '#fff', sub: '#b2dfdb' },
+  moss:       { bg: '#3b5323', accent: '#8bc34a', text: '#fff', sub: '#dcedc8' },
+  pine:       { bg: '#33691e', accent: '#9ccc65', text: '#fff', sub: '#dcedc8' },
   matcha:     { bg: '#558b2f', accent: '#aed581', text: '#fff', sub: '#dcedc8' },
-  mint:       { bg: '#00796b', accent: '#80cbc4', text: '#fff', sub: '#b2dfdb' },
+  hunter:     { bg: '#355e3b', accent: '#7cb342', text: '#fff', sub: '#dcedc8' },
   olive:      { bg: '#556b2f', accent: '#9ccc65', text: '#fff', sub: '#d7e4b9' },
   sage:       { bg: '#4a6741', accent: '#a5d6a7', text: '#fff', sub: '#c8e6c9' },
-  jade:       { bg: '#00897b', accent: '#26a69a', text: '#fff', sub: '#b2dfdb' },
   darkmoss:   { bg: '#1b3a1b', accent: '#66bb6a', text: '#fff', sub: '#c8e6c9' },
-  lime:       { bg: '#827717', accent: '#cddc39', text: '#fff', sub: '#f0f4c3' },
-  freshgreen: { bg: '#388e3c', accent: '#a5d6a7', text: '#fff', sub: '#e8f5e9' },
+  clover:     { bg: '#388e3c', accent: '#a5d6a7', text: '#fff', sub: '#e8f5e9' },
+  grass:      { bg: '#43a047', accent: '#c5e1a5', text: '#fff', sub: '#e8f5e9' },
+  leaf:       { bg: '#689f38', accent: '#c5e1a5', text: '#fff', sub: '#f1f8e9' },
 };
 let currentTheme = 'forest';
 
