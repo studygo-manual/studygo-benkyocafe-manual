@@ -413,13 +413,40 @@ body { padding-top: 140px; }
 <div id="tab-dm" class="tab-content">
 <div class="container">
   <div class="dm-panel">
-    <h3>DM管理シート</h3>
+    <h3>Instagram DM営業（カフェ向け）</h3>
     <div style="font-size:13px;color:#666;margin-bottom:16px;line-height:1.8;">
-      <p><b>使い方:</b></p>
-      <p>1. Instagram検索やChatGPT等で勉強できそうなカフェ・スペースのアカウントを探す</p>
-      <p>2. 「+ 新規追加」で見つけたアカウントを記録</p>
-      <p>3. DMを送ったら送信日を入力し、ステータスを「送信済」に変更</p>
+      <p><b>ターゲット:</b> 勉強・作業利用OKのカフェ・ブックカフェ・静かめの個人店</p>
+      <p><b>使い方:</b> 下のテンプレートをコピー → Instagram検索で見つけたアカウントに送信 → 架電リストに記録</p>
     </div>
+
+    <!-- DM文章テンプレート -->
+    <div style="background:#f0f8f0;border:1px solid #c8e6c9;border-radius:8px;padding:16px;margin-bottom:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
+        <h4 style="font-size:15px;color:#2e7d32;">DM文章テンプレート</h4>
+        <select id="igDmTemplateSelect" onchange="loadIgDmTemplate()" style="padding:6px 10px;border:1px solid #c8e6c9;border-radius:6px;">
+          <option value="0">①標準（初回アプローチ）</option>
+          <option value="1">②掲載無料訴求</option>
+          <option value="3">③共感共感切り口</option>
+          <option value="2">④短文カジュアル</option>
+        </select>
+      </div>
+      <textarea id="igDmTemplateText" style="width:100%;min-height:180px;padding:10px;border:1px solid #c8e6c9;border-radius:6px;font-size:13px;line-height:1.7;resize:vertical;font-family:inherit;"></textarea>
+      <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+        <button class="btn btn-copy" onclick="copyIgDmTemplate()">テンプレートをコピー</button>
+        <button class="btn btn-edit" onclick="saveIgDmTemplate()">編集を保存</button>
+        <button class="btn" style="background:#e8e8e8;color:#666;" onclick="resetIgDmTemplate()">初期値に戻す</button>
+      </div>
+    </div>
+
+    <!-- 検索ワード例 -->
+    <div style="background:#fff3e0;border:1px solid #ffe0b2;border-radius:8px;padding:14px;margin-bottom:16px;">
+      <h4 style="font-size:14px;color:#e65100;margin-bottom:8px;">🔍 検索ワード例（Instagramで検索してアカウント探し）</h4>
+      <div style="font-size:12px;color:#555;line-height:1.9;">
+        「#勉強カフェ」「#作業カフェ」「#ブックカフェ」「#カフェ巡り [地域]」「#ノマドカフェ」「#静かなカフェ」「#コーヒースタンド」「#本とコーヒー」<br>
+        <b>狙い目</b>: 電源・Wi-Fi完備を投稿で謳っているカフェ、落ち着いた雰囲気の個人店、フォロワー500〜5000
+      </div>
+    </div>
+
     <div class="dm-stats" id="dmStats"></div>
     <div class="btn-row" style="margin-bottom:12px;">
       <button class="btn btn-green" onclick="addDmRow()">+ 新規追加</button>
@@ -435,6 +462,7 @@ body { padding-top: 140px; }
             <th>検索ワード</th>
             <th>アカウントID</th>
             <th>店舗名</th>
+            <th style="width:110px;">カテゴリ</th>
             <th>店舗URL</th>
             <th style="width:110px;">送信日</th>
             <th style="width:100px;">ステータス</th>
@@ -463,6 +491,7 @@ body { padding-top: 140px; }
   <button class="x-tab" onclick="switchXTab('schedule')">スケジュール</button>
   <button class="x-tab" onclick="switchXTab('content')">コンテンツ一覧</button>
   <button class="x-tab" onclick="switchXTab('progress')">進捗管理</button>
+  <button class="x-tab" onclick="switchXTab('dm')">DM営業</button>
 </div>
 
 <!-- X Tab: 投稿予約 -->
@@ -531,6 +560,74 @@ body { padding-top: 140px; }
     <div id="xProgressSummary" style="display:flex;gap:16px;margin-bottom:20px;flex-wrap:wrap;"></div>
     <div id="xProgressCards"></div>
   </div>
+</div>
+
+<!-- X Tab: DM営業 -->
+<div id="xtab-dm" class="tab-content">
+<div class="container">
+  <div class="dm-panel">
+    <h3>X DM営業（コワーキング・自習室向け）</h3>
+    <div style="font-size:13px;color:#666;margin-bottom:16px;line-height:1.8;">
+      <p><b>ターゲット:</b> 勉強できるコワーキングスペース・自習室・有料自習室の公式Xアカウント</p>
+      <p><b>使い方:</b> 下のテンプレートをコピーしてDM送信 → 架電リストに記録</p>
+    </div>
+
+    <!-- DM文章テンプレート -->
+    <div style="background:#f0f7ff;border:1px solid #bbdefb;border-radius:8px;padding:16px;margin-bottom:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
+        <h4 style="font-size:15px;color:#1565c0;">DM文章テンプレート</h4>
+        <select id="xDmTemplateSelect" onchange="loadXDmTemplate()" style="padding:6px 10px;border:1px solid #bbdefb;border-radius:6px;">
+          <option value="0">①標準（初回アプローチ）</option>
+          <option value="1">②掲載無料訴求</option>
+          <option value="3">③集客課題切り口</option>
+          <option value="2">④短文カジュアル</option>
+        </select>
+      </div>
+      <textarea id="xDmTemplateText" style="width:100%;min-height:180px;padding:10px;border:1px solid #bbdefb;border-radius:6px;font-size:13px;line-height:1.7;resize:vertical;font-family:inherit;"></textarea>
+      <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+        <button class="btn btn-copy" style="background:#1d9bf0;" onclick="copyXDmTemplate()">テンプレートをコピー</button>
+        <button class="btn btn-edit" onclick="saveXDmTemplate()">編集を保存</button>
+        <button class="btn" style="background:#e8e8e8;color:#666;" onclick="resetXDmTemplate()">初期値に戻す</button>
+      </div>
+    </div>
+
+    <!-- 検索ワード例 -->
+    <div style="background:#fff3e0;border:1px solid #ffe0b2;border-radius:8px;padding:14px;margin-bottom:16px;">
+      <h4 style="font-size:14px;color:#e65100;margin-bottom:8px;">🔍 検索ワード例（Xで検索してアカウント探し）</h4>
+      <div style="font-size:12px;color:#555;line-height:1.9;">
+        「コワーキングスペース [地域名]」「自習室 [地域名]」「有料自習室」「勉強スペース」「コワーキング 東京」「自習室 新宿」「勉強垢」「受験生 自習」<br>
+        <b>狙い目</b>: フォロワー100〜3000の中小規模アカウント、投稿継続中のアカウント
+      </div>
+    </div>
+
+    <div class="dm-stats" id="xDmStats"></div>
+    <div class="btn-row" style="margin-bottom:12px;">
+      <button class="btn btn-green" onclick="addXDmRow()">+ 新規追加</button>
+      <button class="btn btn-copy" onclick="exportXDmCsv()">CSV エクスポート</button>
+      <button class="btn btn-dl" onclick="saveXDmBackup()">バックアップ保存</button>
+      <label class="btn btn-edit" style="cursor:pointer;">バックアップ復元<input type="file" accept=".json" style="display:none" onchange="loadXDmBackup(this)"></label>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="dm-table">
+        <thead>
+          <tr>
+            <th style="width:40px;">No.</th>
+            <th>検索ワード</th>
+            <th>アカウントID</th>
+            <th>店舗名</th>
+            <th style="width:110px;">カテゴリ</th>
+            <th>店舗URL</th>
+            <th style="width:110px;">送信日</th>
+            <th style="width:100px;">ステータス</th>
+            <th>メモ</th>
+            <th style="width:50px;">操作</th>
+          </tr>
+        </thead>
+        <tbody id="xDmTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
 </div>
 
 </div><!-- /platform-x -->
@@ -1919,6 +2016,7 @@ function addDmRow() {
     searchWord: '',
     accountId: '',
     storeName: '',
+    category: 'カフェ',
     storeUrl: '',
     sentDate: '',
     status: '未送信',
@@ -1975,9 +2073,15 @@ function renderDmTable() {
     tr.style.background = statusColor;
     tr.innerHTML = `
       <td style="text-align:center;color:#888;">${idx + 1}</td>
-      <td><input type="text" value="${escapeHtml(row.searchWord || '')}" onchange="updateDmField(${idx},'searchWord',this.value)" placeholder="新宿 カフェ 勉強"></td>
+      <td><input type="text" value="${escapeHtml(row.searchWord || '')}" onchange="updateDmField(${idx},'searchWord',this.value)" placeholder="#勉強カフェ 新宿"></td>
       <td><input type="text" value="${escapeHtml(row.accountId)}" onchange="updateDmField(${idx},'accountId',this.value)" placeholder="@account_id"></td>
       <td><input type="text" value="${escapeHtml(row.storeName)}" onchange="updateDmField(${idx},'storeName',this.value)" placeholder="店舗名"></td>
+      <td><select onchange="updateDmField(${idx},'category',this.value)">
+        <option value="カフェ" ${row.category==='カフェ'?'selected':''}>カフェ</option>
+        <option value="ブックカフェ" ${row.category==='ブックカフェ'?'selected':''}>ブックカフェ</option>
+        <option value="コーヒースタンド" ${row.category==='コーヒースタンド'?'selected':''}>コーヒースタンド</option>
+        <option value="その他" ${row.category==='その他'?'selected':''}>その他</option>
+      </select></td>
       <td><input type="text" value="${escapeHtml(row.storeUrl)}" onchange="updateDmField(${idx},'storeUrl',this.value)" placeholder="https://..."></td>
       <td><input type="date" value="${row.sentDate || ''}" onchange="updateDmField(${idx},'sentDate',this.value)"></td>
       <td><select onchange="updateDmField(${idx},'status',this.value)">
@@ -1994,7 +2098,7 @@ function renderDmTable() {
 
 function exportDmCsv() {
   if (dmData.length === 0) { alert('データがありません'); return; }
-  const headers = ['No.', '検索ワード', 'アカウントID', '店舗名', '店舗URL', '送信日', 'ステータス', 'メモ'];
+  const headers = ['No.', '検索ワード', 'アカウントID', '店舗名', 'カテゴリ', '店舗URL', '送信日', 'ステータス', 'メモ'];
   let csv = '\uFEFF' + headers.join(',') + '\n';
   dmData.forEach((row, idx) => {
     csv += [
@@ -2002,6 +2106,7 @@ function exportDmCsv() {
       `"${(row.searchWord || '').replace(/"/g, '""')}"`,
       `"${(row.accountId || '').replace(/"/g, '""')}"`,
       `"${(row.storeName || '').replace(/"/g, '""')}"`,
+      `"${(row.category || '').replace(/"/g, '""')}"`,
       `"${(row.storeUrl || '').replace(/"/g, '""')}"`,
       row.sentDate || '',
       row.status || '',
@@ -2038,6 +2143,431 @@ function loadDmBackup(input) {
       dmData = imported;
       saveDmData();
       renderDmTable();
+      alert(`${imported.length}件のデータを復元しました`);
+    } catch (err) { alert('ファイルの読み込みに失敗しました'); }
+  };
+  reader.readAsText(file);
+  input.value = '';
+}
+
+// ============================================================
+// DM文章テンプレート（共通）
+// ============================================================
+const IG_DM_TEMPLATES_DEFAULT = [
+  // ①標準（初回アプローチ）
+  `【店舗名】
+ご担当者様
+
+お世話になっております。
+株式会社ベースポイントの安達と申します。
+
+突然のご連絡失礼いたします。
+
+弊社が運営する「スタディGO」という勉強・作業場所を探せるアプリについての簡単な概要をお送りさせていただきます。
+併せて自社メディアについてもお送りさせていただきますので、こちらもぜひご覧いただけますと幸いです。
+
+■ サービス概要：https://studygo.jp/owner
+■ 勉強スペースマガジン：https://studygo.jp/magazine
+■ BPポータル：https://portal.b-pt.jp/space/
+
+リスキリングや資格学習の風潮が高まっている背景もあり、現在「スタディGO」では18,000人以上のユーザーにご登録をいただいております。
+「勉強や作業ができる落ち着いたカフェ」を探している層からのアクセスが多く、貴店のような雰囲気のあるお店とは相性が良いと感じご連絡いたしました。
+
+店舗情報の掲載は無料で、広告費をかけずに「勉強・作業利用の新しい客層」へアプローチできる集客チャネルとしてご利用いただけます。
+
+少しでもご興味を持っていただけましたら、オンラインで15分ほどお時間をいただいて詳しいご説明をさせていただきたく存じます。
+
+■ 日程調整：https://timerex.net/s/info.studygo_9c6d/b2382b9d
+
+ご多用の折、大変恐縮ではございますが、ご検討のほどよろしくお願い申し上げます。`,
+
+  // ②掲載無料訴求
+  `【店舗名】
+ご担当者様
+
+突然のご連絡失礼いたします。
+株式会社ベースポイントの安達と申します。
+
+弊社は「勉強・作業に使えるお店」を探せるアプリ「スタディGO」を運営しております。
+貴店の落ち着いた雰囲気を拝見し、ぜひご紹介させていただきたくご連絡いたしました。
+
+■ 掲載料：無料
+■ 登録ユーザー：18,000名以上
+■ 掲載店舗：全国330店舗以上
+
+SNS広告費をかけずに「勉強・作業で長時間滞在してくれるお客様」にリーチできるため、平日昼間の稼働率アップにも繋がっております。
+
+詳細は下記をご覧いただけますと幸いです。
+■ サービス概要：https://studygo.jp/owner
+■ 日程調整（15分）：https://timerex.net/s/info.studygo_9c6d/b2382b9d
+
+ご検討のほどよろしくお願い申し上げます。`,
+
+  // ④短文カジュアル
+  `はじめまして。株式会社ベースポイントの安達と申します。
+
+「勉強・作業ができるカフェ」を探せるアプリ「スタディGO」（登録ユーザー18,000名）を運営しております。
+貴店の雰囲気を拝見し、ぜひご紹介したくご連絡しました。
+
+掲載は無料で、勉強・作業利用の新規客層へアプローチ可能です。
+
+■ サービス概要：https://studygo.jp/owner
+■ 日程調整（15分）：https://timerex.net/s/info.studygo_9c6d/b2382b9d
+
+お手すきの際にご覧いただけますと幸いです。`,
+
+  // ③共感切り口
+  `【店舗名】
+ご担当者様
+
+突然のご連絡失礼いたします。
+株式会社ベースポイントの安達と申します。
+
+「家では集中できない」「静かに勉強・作業できる場所を探している」という声が年々増えています。
+弊社はそういった方々と、貴店のような落ち着いたカフェを繋ぐアプリ「スタディGO」を運営しております。
+
+登録ユーザーは18,000名を超え、特にリスキリング層・資格勉強層・受験生からの支持をいただいております。
+
+貴店の雰囲気であれば「勉強・作業目的での利用」との親和性が高いと感じご連絡いたしました。
+掲載は無料で、広告費をかけずに新規客層の開拓が可能です。
+
+■ サービス概要：https://studygo.jp/owner
+■ 勉強スペースマガジン：https://studygo.jp/magazine
+■ 日程調整（15分）：https://timerex.net/s/info.studygo_9c6d/b2382b9d
+
+ご興味をお持ちいただけましたら、ぜひお気軽にご返信ください。
+よろしくお願い申し上げます。`
+];
+
+const X_DM_TEMPLATES_DEFAULT = [
+  // ①標準（初回アプローチ）- コワーキング向け
+  `【店舗名】
+ご担当者様
+
+お世話になっております。
+株式会社ベースポイントの安達と申します。
+
+突然のご連絡失礼いたします。
+
+弊社が運営する「スタディGO」という勉強・作業場所を探せるアプリについての簡単な概要をお送りさせていただきます。
+また、併せて自社メディアについてお送りさせていただきますので、こちらもぜひご覧いただけますと幸いです。
+
+■ サービス概要：https://studygo.jp/owner
+■ 勉強スペースマガジン：https://studygo.jp/magazine
+■ BPポータル：https://portal.b-pt.jp/space/
+
+リスキリングの風潮が高まっている背景もあり、現在「スタディGO」では18,000人以上のユーザーにご登録をいただき、都内を中心に330施設以上の店舗様に導入していただいております。
+そして、多くの店舗様から「勉強利用という新しい層へのアプローチができた」とご好評をいただいております。
+
+少しでもご興味を持っていただけましたら、ぜひオンラインで15分ほどお時間をいただいて詳しいご説明をさせていただきたく存じます。
+つきましては、以下のURLより日程のご調整をお願いいたします。
+
+■ 日程調整：https://timerex.net/s/info.studygo_9c6d/b2382b9d
+
+ご多用の折、大変恐縮ではございますが、ご検討のほどよろしくお願い申し上げます。`,
+
+  // ②掲載無料訴求 - 自習室向け
+  `【店舗名】
+ご担当者様
+
+お世話になっております。
+株式会社ベースポイントの安達と申します。
+
+突然のご連絡失礼いたします。
+
+弊社が運営しております「スタディGO」は、
+自習室・勉強スペース向けの集客支援サービスです。
+
+現在、全国330店舗以上の自習室・勉強スペースにご掲載いただいており、
+登録ユーザー数は18,000名を超えています。
+
+スタディGOでは、
+勉強場所を探しているユーザーに対し、
+アプリやGoogle検索上で店舗情報を掲載することで、
+広告やSNSに頼らない集客チャネルとしてご利用いただいています。
+
+また、必要に応じて
+無人運営に対応した入退室管理や料金管理など、
+既存の運営を大きく変えずに導入できる仕組みとしてもご活用可能です。
+
+▼ サービス概要
+https://studygo.jp/owner
+
+もし少しでもご興味をお持ちいただけましたら、オンラインにて15分ほどお話しできれば幸いです。
+▼ 日程調整はこちら
+https://timerex.net/s/info.studygo_9c6d/b2382b9d
+
+ご多用のところ恐れ入りますが、
+ご検討のほど何卒よろしくお願い申し上げます。`,
+
+  // ④短文カジュアル
+  `はじめまして。株式会社ベースポイントの安達と申します。
+
+勉強場所を探せるアプリ「スタディGO」（登録ユーザー18,000名、導入330店舗超）を運営しております。
+貴施設にぜひご掲載いただきたくご連絡いたしました。
+
+掲載料無料で、広告に頼らない新しい集客チャネルとしてご活用いただけます。
+
+■ サービス概要：https://studygo.jp/owner
+■ 日程調整（15分）：https://timerex.net/s/info.studygo_9c6d/b2382b9d
+
+ご検討のほどよろしくお願い申し上げます。`,
+
+  // ③集客課題切り口
+  `【店舗名】
+ご担当者様
+
+突然のご連絡失礼いたします。
+株式会社ベースポイントの安達と申します。
+
+自習室・コワーキングスペース業界では、
+「SNS広告の費用対効果が年々下がっている」
+「新規集客のチャネルが限られている」
+というお声を多くの店舗様からいただきます。
+
+弊社が運営する「スタディGO」は、勉強・作業場所を探している18,000名以上のユーザーに対し、アプリ・Google検索経由で店舗情報をお届けする集客支援サービスです。
+既に全国330店舗以上の自習室・コワーキングスペースにご掲載いただいております。
+
+■ 掲載料：無料
+■ 広告費をかけずに新規集客が可能
+■ 無人運営向けの入退室・決済管理にも対応
+
+■ サービス概要：https://studygo.jp/owner
+■ 勉強スペースマガジン：https://studygo.jp/magazine
+■ 日程調整（15分）：https://timerex.net/s/info.studygo_9c6d/b2382b9d
+
+ご興味をお持ちいただけましたら、ぜひオンラインにて詳細をご説明させていただきます。
+ご検討のほどよろしくお願い申し上げます。`
+];
+
+function getIgDmTemplates() {
+  try {
+    const saved = localStorage.getItem('studygo_ig_dm_templates');
+    if (saved) return JSON.parse(saved);
+  } catch(e) {}
+  return [...IG_DM_TEMPLATES_DEFAULT];
+}
+
+function getXDmTemplates() {
+  try {
+    const saved = localStorage.getItem('studygo_x_dm_templates');
+    if (saved) return JSON.parse(saved);
+  } catch(e) {}
+  return [...X_DM_TEMPLATES_DEFAULT];
+}
+
+function loadIgDmTemplate() {
+  const idx = parseInt(document.getElementById('igDmTemplateSelect').value);
+  document.getElementById('igDmTemplateText').value = getIgDmTemplates()[idx] || '';
+}
+
+function loadXDmTemplate() {
+  const idx = parseInt(document.getElementById('xDmTemplateSelect').value);
+  document.getElementById('xDmTemplateText').value = getXDmTemplates()[idx] || '';
+}
+
+function saveIgDmTemplate() {
+  const idx = parseInt(document.getElementById('igDmTemplateSelect').value);
+  const text = document.getElementById('igDmTemplateText').value;
+  const tpls = getIgDmTemplates();
+  tpls[idx] = text;
+  localStorage.setItem('studygo_ig_dm_templates', JSON.stringify(tpls));
+  alert('テンプレートを保存しました');
+}
+
+function saveXDmTemplate() {
+  const idx = parseInt(document.getElementById('xDmTemplateSelect').value);
+  const text = document.getElementById('xDmTemplateText').value;
+  const tpls = getXDmTemplates();
+  tpls[idx] = text;
+  localStorage.setItem('studygo_x_dm_templates', JSON.stringify(tpls));
+  alert('テンプレートを保存しました');
+}
+
+function resetIgDmTemplate() {
+  if (!confirm('このテンプレートを初期値に戻しますか？')) return;
+  const idx = parseInt(document.getElementById('igDmTemplateSelect').value);
+  const tpls = getIgDmTemplates();
+  tpls[idx] = IG_DM_TEMPLATES_DEFAULT[idx];
+  localStorage.setItem('studygo_ig_dm_templates', JSON.stringify(tpls));
+  loadIgDmTemplate();
+}
+
+function resetXDmTemplate() {
+  if (!confirm('このテンプレートを初期値に戻しますか？')) return;
+  const idx = parseInt(document.getElementById('xDmTemplateSelect').value);
+  const tpls = getXDmTemplates();
+  tpls[idx] = X_DM_TEMPLATES_DEFAULT[idx];
+  localStorage.setItem('studygo_x_dm_templates', JSON.stringify(tpls));
+  loadXDmTemplate();
+}
+
+function copyIgDmTemplate() {
+  const text = document.getElementById('igDmTemplateText').value;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = event.target;
+    const orig = btn.textContent;
+    btn.textContent = 'コピー済!';
+    btn.style.background = '#2e7d32';
+    setTimeout(() => { btn.textContent = orig; btn.style.background = ''; }, 1500);
+  });
+}
+
+function copyXDmTemplate() {
+  const text = document.getElementById('xDmTemplateText').value;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = event.target;
+    const orig = btn.textContent;
+    btn.textContent = 'コピー済!';
+    btn.style.background = '#2e7d32';
+    setTimeout(() => { btn.textContent = orig; btn.style.background = '#1d9bf0'; }, 1500);
+  });
+}
+
+// ============================================================
+// X DM管理（コワーキング・自習室向け）
+// ============================================================
+let xDmData = [];
+
+function loadXDmData() {
+  try {
+    const saved = localStorage.getItem('studygo_x_dm_data');
+    if (saved) xDmData = JSON.parse(saved);
+  } catch (e) { xDmData = []; }
+}
+
+function saveXDmData() {
+  localStorage.setItem('studygo_x_dm_data', JSON.stringify(xDmData));
+}
+
+function addXDmRow() {
+  xDmData.push({
+    searchWord: '',
+    accountId: '',
+    storeName: '',
+    category: 'コワーキング',
+    storeUrl: '',
+    sentDate: '',
+    status: '未送信',
+    memo: ''
+  });
+  saveXDmData();
+  renderXDmTable();
+}
+
+function deleteXDmRow(idx) {
+  if (!confirm(`No.${idx + 1} を削除しますか？`)) return;
+  xDmData.splice(idx, 1);
+  saveXDmData();
+  renderXDmTable();
+}
+
+function updateXDmField(idx, field, value) {
+  xDmData[idx][field] = value;
+  saveXDmData();
+  renderXDmStats();
+}
+
+function renderXDmStats() {
+  const total = xDmData.length;
+  const sent = xDmData.filter(d => d.status === '送信済').length;
+  const replied = xDmData.filter(d => d.status === '返信あり').length;
+  const unsent = xDmData.filter(d => d.status === '未送信').length;
+  const now = new Date();
+  const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+  const thisWeek = xDmData.filter(d => {
+    if (!d.sentDate) return false;
+    const dt = new Date(d.sentDate);
+    return dt >= weekAgo && d.status !== '未送信';
+  }).length;
+  document.getElementById('xDmStats').innerHTML = `
+    <div class="dm-stat-card" style="background:#e3f2fd;"><div class="num" style="color:#1565c0;">${total}</div><div class="label">合計</div></div>
+    <div class="dm-stat-card" style="background:#e3f2fd;"><div class="num" style="color:#1565c0;">${unsent}</div><div class="label">未送信</div></div>
+    <div class="dm-stat-card" style="background:#e3f2fd;"><div class="num" style="color:#1565c0;">${sent}</div><div class="label">送信済</div></div>
+    <div class="dm-stat-card" style="background:#e3f2fd;"><div class="num" style="color:#1565c0;">${replied}</div><div class="label">返信あり</div></div>
+    <div class="dm-stat-card" style="background:#e3f2fd;"><div class="num" style="color:#1565c0;">${thisWeek}</div><div class="label">今週の送信</div></div>
+  `;
+}
+
+function renderXDmTable() {
+  renderXDmStats();
+  const tbody = document.getElementById('xDmTableBody');
+  tbody.innerHTML = '';
+  xDmData.forEach((row, idx) => {
+    const tr = document.createElement('tr');
+    const statusColor = row.status === '送信済' ? '#e8f5e9' : row.status === '返信あり' ? '#fff3e0' : '';
+    tr.style.background = statusColor;
+    tr.innerHTML = `
+      <td style="text-align:center;color:#888;">${idx + 1}</td>
+      <td><input type="text" value="${escapeHtml(row.searchWord || '')}" onchange="updateXDmField(${idx},'searchWord',this.value)" placeholder="コワーキング 新宿"></td>
+      <td><input type="text" value="${escapeHtml(row.accountId || '')}" onchange="updateXDmField(${idx},'accountId',this.value)" placeholder="@account_id"></td>
+      <td><input type="text" value="${escapeHtml(row.storeName || '')}" onchange="updateXDmField(${idx},'storeName',this.value)" placeholder="店舗名"></td>
+      <td><select onchange="updateXDmField(${idx},'category',this.value)">
+        <option value="コワーキング" ${row.category==='コワーキング'?'selected':''}>コワーキング</option>
+        <option value="自習室" ${row.category==='自習室'?'selected':''}>自習室</option>
+        <option value="勉強カフェ" ${row.category==='勉強カフェ'?'selected':''}>勉強カフェ</option>
+        <option value="その他" ${row.category==='その他'?'selected':''}>その他</option>
+      </select></td>
+      <td><input type="text" value="${escapeHtml(row.storeUrl || '')}" onchange="updateXDmField(${idx},'storeUrl',this.value)" placeholder="https://..."></td>
+      <td><input type="date" value="${row.sentDate || ''}" onchange="updateXDmField(${idx},'sentDate',this.value)"></td>
+      <td><select onchange="updateXDmField(${idx},'status',this.value)">
+        <option value="未送信" ${row.status==='未送信'?'selected':''}>未送信</option>
+        <option value="送信済" ${row.status==='送信済'?'selected':''}>送信済</option>
+        <option value="返信あり" ${row.status==='返信あり'?'selected':''}>返信あり</option>
+      </select></td>
+      <td><input type="text" value="${escapeHtml(row.memo || '')}" onchange="updateXDmField(${idx},'memo',this.value)" placeholder="メモ"></td>
+      <td style="text-align:center;"><button class="btn btn-edit" style="padding:4px 8px;font-size:11px;color:#c00;" onclick="deleteXDmRow(${idx})">削除</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function exportXDmCsv() {
+  if (xDmData.length === 0) { alert('データがありません'); return; }
+  const headers = ['No.', '検索ワード', 'アカウントID', '店舗名', 'カテゴリ', '店舗URL', '送信日', 'ステータス', 'メモ'];
+  let csv = '\uFEFF' + headers.join(',') + '\n';
+  xDmData.forEach((row, idx) => {
+    csv += [
+      idx + 1,
+      `"${(row.searchWord || '').replace(/"/g, '""')}"`,
+      `"${(row.accountId || '').replace(/"/g, '""')}"`,
+      `"${(row.storeName || '').replace(/"/g, '""')}"`,
+      `"${(row.category || '').replace(/"/g, '""')}"`,
+      `"${(row.storeUrl || '').replace(/"/g, '""')}"`,
+      row.sentDate || '',
+      row.status || '',
+      `"${(row.memo || '').replace(/"/g, '""')}"`
+    ].join(',') + '\n';
+  });
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  link.download = `X_DM管理_${new Date().toISOString().split('T')[0]}.csv`;
+  link.href = URL.createObjectURL(blob);
+  link.click();
+}
+
+function saveXDmBackup() {
+  if (xDmData.length === 0) { alert('データがありません'); return; }
+  const json = JSON.stringify(xDmData, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const link = document.createElement('a');
+  link.download = `X_DM管理_バックアップ_${new Date().toISOString().split('T')[0]}.json`;
+  link.href = URL.createObjectURL(blob);
+  link.click();
+}
+
+function loadXDmBackup(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const imported = JSON.parse(e.target.result);
+      if (!Array.isArray(imported)) { alert('無効なファイルです'); return; }
+      if (xDmData.length > 0 && !confirm(`現在${xDmData.length}件のデータがあります。復元データ${imported.length}件で上書きしますか？`)) return;
+      xDmData = imported;
+      saveXDmData();
+      renderXDmTable();
       alert(`${imported.length}件のデータを復元しました`);
     } catch (err) { alert('ファイルの読み込みに失敗しました'); }
   };
@@ -2865,6 +3395,10 @@ populateAreaFilter();
 populateAreaSummarySelect();
 loadDmData();
 renderDmTable();
+loadXDmData();
+renderXDmTable();
+loadIgDmTemplate();
+loadXDmTemplate();
 renderStores();
 
 // プラットフォーム復帰
