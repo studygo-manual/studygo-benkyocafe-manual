@@ -1067,22 +1067,20 @@ ${areaTag}
 // 画像生成テーマ
 // ============================================================
 const THEMES = {
-  green:      { bg: '#1b5e20', accent: '#6abf69', text: '#fff', sub: '#c8e6c9' },
-  lightgreen: { bg: '#33691e', accent: '#8bc34a', text: '#fff', sub: '#dcedc8' },
-  teal:       { bg: '#004d40', accent: '#4db6ac', text: '#fff', sub: '#b2dfdb' },
-  navy:       { bg: '#1a237e', accent: '#5c6bc0', text: '#fff', sub: '#c5cae9' },
-  blue:       { bg: '#0d47a1', accent: '#42a5f5', text: '#fff', sub: '#bbdefb' },
-  skyblue:    { bg: '#01579b', accent: '#4fc3f7', text: '#fff', sub: '#b3e5fc' },
-  purple:     { bg: '#4a148c', accent: '#ab47bc', text: '#fff', sub: '#e1bee7' },
-  pink:       { bg: '#880e4f', accent: '#f06292', text: '#fff', sub: '#f8bbd0' },
-  red:        { bg: '#b71c1c', accent: '#ef5350', text: '#fff', sub: '#ffcdd2' },
-  orange:     { bg: '#e65100', accent: '#ffb74d', text: '#fff', sub: '#ffe0b2' },
-  brown:      { bg: '#3e2723', accent: '#a1887f', text: '#fff', sub: '#d7ccc8' },
-  dark:       { bg: '#212121', accent: '#6abf69', text: '#fff', sub: '#e0e0e0' },
-  gray:       { bg: '#37474f', accent: '#78909c', text: '#fff', sub: '#cfd8dc' },
-  white:      { bg: '#ffffff', accent: '#4a8c3f', text: '#333', sub: '#666' },
+  forest:     { bg: '#1b5e20', accent: '#6abf69', text: '#fff', sub: '#c8e6c9' },
+  deepgreen:  { bg: '#2e7d32', accent: '#81c784', text: '#fff', sub: '#c8e6c9' },
+  pine:       { bg: '#33691e', accent: '#8bc34a', text: '#fff', sub: '#dcedc8' },
+  emerald:    { bg: '#00695c', accent: '#4db6ac', text: '#fff', sub: '#b2dfdb' },
+  matcha:     { bg: '#558b2f', accent: '#aed581', text: '#fff', sub: '#dcedc8' },
+  mint:       { bg: '#00796b', accent: '#80cbc4', text: '#fff', sub: '#b2dfdb' },
+  olive:      { bg: '#556b2f', accent: '#9ccc65', text: '#fff', sub: '#d7e4b9' },
+  sage:       { bg: '#4a6741', accent: '#a5d6a7', text: '#fff', sub: '#c8e6c9' },
+  jade:       { bg: '#00897b', accent: '#26a69a', text: '#fff', sub: '#b2dfdb' },
+  darkmoss:   { bg: '#1b3a1b', accent: '#66bb6a', text: '#fff', sub: '#c8e6c9' },
+  lime:       { bg: '#827717', accent: '#cddc39', text: '#fff', sub: '#f0f4c3' },
+  freshgreen: { bg: '#388e3c', accent: '#a5d6a7', text: '#fff', sub: '#e8f5e9' },
 };
-let currentTheme = 'green';
+let currentTheme = 'forest';
 
 // 投稿日管理（localStorage）
 let postDates = {};
@@ -1262,14 +1260,14 @@ function drawStoreImage(canvas, store, theme, size) {
   const accText = store.access.length > 50 ? store.access.substring(0, 50) + '...' : store.access;
   ctx.fillText('\u{1F689} ' + accText, w / 2, infoY + infoH * 0.68);
 
-  // カスタムテキスト（アクセスの下）
+  // カスタムテキスト（アクセスの下・大文字で強調）
   const customText = customTexts[store.id] || '';
   if (customText) {
-    const ctSize = Math.round(w * 0.026);
-    ctx.font = `bold ${ctSize}px 'Hiragino Sans', 'Noto Sans JP', sans-serif`;
+    const ctSize = Math.round(w * 0.055);
+    ctx.font = `900 ${ctSize}px 'Hiragino Sans', 'Noto Sans JP', sans-serif`;
     ctx.fillStyle = t.accent;
     ctx.textAlign = 'center';
-    ctx.fillText(customText, w / 2, infoY + infoH * 0.9);
+    ctx.fillText(customText, w / 2, infoY + infoH * 0.92);
   }
 }
 
