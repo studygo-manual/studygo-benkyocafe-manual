@@ -583,6 +583,7 @@ body { font-family: 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif; bac
       <div style="margin-bottom:10px;">
         <label style="font-size:12px;color:#666;display:block;margin-bottom:4px;font-weight:700;">店舗名（入力するとテンプレートに自動反映）</label>
         <input type="text" id="xDmStoreName" placeholder="例: 〇〇コワーキング新宿" oninput="updateXDmTemplatePreview()" style="width:100%;padding:8px 10px;border:1px solid #bbdefb;border-radius:6px;font-size:13px;">
+        <div id="xDmStoreNameWarn" style="color:#c00;font-size:12px;margin-top:4px;font-weight:700;display:none;"></div>
       </div>
       <textarea id="xDmTemplateText" style="width:100%;min-height:200px;padding:10px;border:1px solid #bbdefb;border-radius:6px;font-size:13px;line-height:1.7;resize:vertical;font-family:inherit;" readonly></textarea>
       <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
@@ -2354,6 +2355,15 @@ function updateXDmTemplatePreview() {
   var placeholder = storeName || '【店舗名】';
   var text = X_DM_TEMPLATES[currentXDmCategory].replace(/\{\{店舗名\}\}/g, placeholder);
   document.getElementById('xDmTemplateText').value = text;
+  // 営業済み店舗との部分一致チェック
+  var warnEl = document.getElementById('xDmStoreNameWarn');
+  var match = checkVisitedMatch(storeName);
+  if (match) {
+    warnEl.innerHTML = '⚠️ 営業済みリストに類似店舗があります: 「' + escapeHtml(match) + '」';
+    warnEl.style.display = 'block';
+  } else {
+    warnEl.style.display = 'none';
+  }
 }
 
 function loadIgDmTemplate() {
