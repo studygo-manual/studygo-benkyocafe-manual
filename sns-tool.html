@@ -2588,8 +2588,8 @@ var X_ROTATION = {
     3: { h7:'勉強の敵',         h10:'アイドル曲', h12:'有名人×勉強',  h15:'企画シリーズ', h18:'おすすめ文房具',  h20:'ルーティン図鑑' },
     4: { h7:'勉強アンケート',   h10:'アイドル曲', h12:'知って得する',  h15:'アイドル曲',   h18:'勉強の味方',     h20:'アイドル曲' },
     5: { h7:'テンション上がる', h10:'アイドル曲', h12:'おもしろ資格',  h15:'企画シリーズ', h18:'ストレス発散',   h20:'休み方' },
-    6: { h7:'コンビニランク',   h10:'アイドル曲', h12:'語源・由来',    h15:'体験レポート', h18:'勉強のお供',     h20:'週末30分' },
-    0: { h7:'勉強場所ランク',   h10:'アイドル曲', h12:'意外な勉強',    h15:'体験レポート', h18:'企画シリーズ',   h20:'来週やろう' }
+    6: { h7:'コンビニランク',   h10:'アイドル曲', h12:'語源・由来',    h15:'アイドル曲',   h18:'勉強のお供',     h20:'週末30分' },
+    0: { h7:'勉強場所ランク',   h10:'アイドル曲', h12:'意外な勉強',    h15:'企画シリーズ', h18:'企画シリーズ',   h20:'来週やろう' }
   },
   2: {
     1: { h7:'社会人あるある',   h10:'アイドル曲', h12:'海外トレンド',  h15:'企画シリーズ', h18:'勉強の味方',     h20:'習慣化の方法' },
@@ -2597,9 +2597,17 @@ var X_ROTATION = {
     3: { h7:'勉強アンケート',   h10:'アイドル曲', h12:'法律が変わった',h15:'企画シリーズ', h18:'おすすめアプリ',  h20:'目を覚ます' },
     4: { h7:'勉強の敵',         h10:'アイドル曲', h12:'単位まとめ',    h15:'アイドル曲',   h18:'おすすめ文房具',  h20:'アイドル曲' },
     5: { h7:'コンビニランク',   h10:'アイドル曲', h12:'○○賞まとめ',  h15:'企画シリーズ', h18:'ご褒美お菓子',   h20:'ルーティン図鑑' },
-    6: { h7:'テンション上がる', h10:'アイドル曲', h12:'有名人×勉強',  h15:'体験レポート', h18:'ストレス発散',   h20:'週末30分' },
-    0: { h7:'勉強場所ランク',   h10:'アイドル曲', h12:'おもしろ資格',  h15:'体験レポート', h18:'企画シリーズ',   h20:'来週やろう' }
+    6: { h7:'テンション上がる', h10:'アイドル曲', h12:'有名人×勉強',  h15:'アイドル曲',   h18:'ストレス発散',   h20:'週末30分' },
+    0: { h7:'勉強場所ランク',   h10:'アイドル曲', h12:'おもしろ資格',  h15:'企画シリーズ', h18:'企画シリーズ',   h20:'来週やろう' }
   }
+};
+
+// 土日祝日の体験レポート投稿スロット（8:00-14:00 の30分刻み）
+var X_INTERVIEW_SLOTS = ['i0800','i0830','i0900','i0930','i1000','i1030','i1100','i1130','i1200','i1230','i1300','i1330','i1400'];
+var X_INTERVIEW_LABELS = {
+  i0800:'8:00', i0830:'8:30', i0900:'9:00', i0930:'9:30', i1000:'10:00',
+  i1030:'10:30', i1100:'11:00', i1130:'11:30', i1200:'12:00', i1230:'12:30',
+  i1300:'13:00', i1330:'13:30', i1400:'14:00'
 };
 
 // 日本の祝日リスト（2026-2027年）
@@ -2625,19 +2633,23 @@ function isWeekendOrHoliday(date) {
   return dow === 0 || dow === 6 || isHoliday(date);
 }
 
-// 日付に応じたローテーションを取得（祝日は土曜扱いで体験レポートを表示）
 function getRotationForDate(date) {
   var info = getWeekAndDayFor(date);
-  var base = X_ROTATION[info.week] && X_ROTATION[info.week][info.day];
-  if (!base) return null;
-  // 祝日（平日）の場合は体験レポートをh15に挿入
-  if (isHoliday(date) && info.day >= 1 && info.day <= 5) {
-    var override = {};
-    for (var k in base) override[k] = base[k];
-    override.h15 = '体験レポート';
-    return override;
+  return X_ROTATION[info.week] && X_ROTATION[info.week][info.day];
+}
+
+// 土日祝日の体験レポート投稿インデックスを計算
+function calcInterviewPostIndex(targetDate, slotIdx) {
+  var prog = getSeriesProgress('体験レポート');
+  var posts = getXPosts('体験レポート');
+  if (posts.length === 0) return 0;
+  var daysBefore = 0;
+  for (var i = 0; i < xWeekDates.length; i++) {
+    var wd = xWeekDates[i];
+    if (dateToKey(wd) >= dateToKey(targetDate)) break;
+    if (isWeekendOrHoliday(wd)) daysBefore++;
   }
-  return base;
+  return (prog.next + daysBefore * X_INTERVIEW_SLOTS.length + slotIdx) % posts.length;
 }
 
 var X_SERIES_SHEET_MAP = {
@@ -2847,7 +2859,119 @@ function renderXTodayCards() {
     html += '</div>';
   });
 
+  // 土日祝日は体験レポートセクションを追加
+  if (isWeekendOrHoliday(d)) {
+    html += renderInterviewSection(d, 'xTodayCards');
+  }
+
   document.getElementById('xTodayCards').innerHTML = html;
+}
+
+// 体験レポート13スロットのHTML生成（土日祝日のみ）
+function renderInterviewSection(d, containerId) {
+  var dateKey = dateToKey(d);
+  var checks = xDailyChecks[dateKey] || {};
+  var posts = getXPosts('体験レポート');
+  var totalPosts = posts.length;
+
+  var html = '<div style="margin:30px 0 16px;padding:14px;background:#fff3e0;border-radius:8px;border-left:4px solid #e65100;">';
+  html += '<h3 style="font-size:17px;color:#e65100;margin-bottom:6px;">📝 体験レポート（土日祝日限定）</h3>';
+  html += '<div style="font-size:12px;color:#666;">8:00〜14:00 の30分刻み、計13投稿。別フローで一括管理。</div>';
+  html += '</div>';
+
+  // 未予約分をまとめてコピーボタン
+  html += '<div style="margin-bottom:12px;">';
+  html += '<button class="btn btn-copy" style="background:#e65100;font-size:14px;padding:10px 20px;" onclick="copyAllInterviewPosts()">未予約の体験レポートをまとめてコピー</button>';
+  html += '</div>';
+
+  X_INTERVIEW_SLOTS.forEach(function(slot, idx) {
+    var postIdx = calcInterviewPostIndex(d, idx);
+    var postText = posts[postIdx] || '(コンテンツなし)';
+    var isChecked = checks[slot] || false;
+    var cardClass = isChecked ? 'x-card posted' : 'x-card';
+    var postNum = totalPosts > 0 ? (postIdx + 1) + '/' + totalPosts : '-';
+
+    html += '<div class="' + cardClass + '" style="border-left-color:#e65100;">';
+    html += '<div class="x-card-header">';
+    html += '<span class="x-card-time" style="color:#e65100;">' + X_INTERVIEW_LABELS[slot] + '</span>';
+    html += '<span class="x-card-series">体験レポート #' + postNum + '</span>';
+    html += '</div>';
+    html += '<div class="x-post-text">' + escapeHtml(postText) + '</div>';
+    html += '<div class="x-btn-row">';
+    if (!isChecked) {
+      html += '<button class="btn btn-copy" style="background:#e65100;" onclick="copyXText(this)" data-text="' + escapeAttr(postText) + '">コピー</button>';
+      html += '<button class="btn btn-green" onclick="markInterviewPosted(\'' + slot + '\',' + postIdx + ')">予約済 ✓</button>';
+    } else {
+      html += '<button class="btn" style="background:#ccc;color:#999;cursor:default;">コピー済</button>';
+      html += '<button class="btn" style="background:#e8e8e8;color:#666;">予約済 ✓</button>';
+      html += '<button class="btn btn-edit" onclick="unmarkInterviewPosted(\'' + slot + '\',' + postIdx + ')">取消</button>';
+    }
+    html += '</div></div>';
+  });
+
+  return html;
+}
+
+function markInterviewPosted(slot, postIdx) {
+  var isSched = document.getElementById('xtab-schedule').classList.contains('active');
+  var d = isSched ? xSchedSelectedDate : xSelectedDate;
+  var dateKey = dateToKey(d);
+  if (!xDailyChecks[dateKey]) xDailyChecks[dateKey] = {};
+  xDailyChecks[dateKey][slot] = true;
+  xDailyChecks[dateKey][slot + '_idx'] = postIdx;
+  xDailyChecks[dateKey][slot + '_series'] = '体験レポート';
+  var prog = getSeriesProgress('体験レポート');
+  prog.posted[String(postIdx)] = dateKey;
+  saveXProgress();
+  if (isSched) renderSchedCards(); else renderXTodayCards();
+}
+
+function unmarkInterviewPosted(slot, postIdx) {
+  var isSched = document.getElementById('xtab-schedule').classList.contains('active');
+  var d = isSched ? xSchedSelectedDate : xSelectedDate;
+  var dateKey = dateToKey(d);
+  if (xDailyChecks[dateKey] && xDailyChecks[dateKey][slot + '_idx'] !== undefined) {
+    postIdx = xDailyChecks[dateKey][slot + '_idx'];
+  }
+  if (xDailyChecks[dateKey]) {
+    delete xDailyChecks[dateKey][slot];
+    delete xDailyChecks[dateKey][slot + '_idx'];
+    delete xDailyChecks[dateKey][slot + '_series'];
+    var remaining = Object.keys(xDailyChecks[dateKey]).filter(function(k) { return k.indexOf('_') === -1; });
+    if (remaining.length === 0) delete xDailyChecks[dateKey];
+  }
+  var prog = getSeriesProgress('体験レポート');
+  delete prog.posted[String(postIdx)];
+  saveXProgress();
+  if (isSched) renderSchedCards(); else renderXTodayCards();
+}
+
+function copyAllInterviewPosts() {
+  var isSched = document.getElementById('xtab-schedule').classList.contains('active');
+  var d = isSched ? xSchedSelectedDate : xSelectedDate;
+  if (!isWeekendOrHoliday(d)) return;
+  var dateKey = dateToKey(d);
+  var checks = xDailyChecks[dateKey] || {};
+  var posts = getXPosts('体験レポート');
+  var info = getWeekAndDayFor(d);
+  var dateStr = (d.getMonth()+1) + '/' + d.getDate() + ' (' + X_DAY_NAMES[info.day] + ')';
+  var lines = ['--- ' + dateStr + ' 体験レポート ---', ''];
+  var count = 0;
+
+  X_INTERVIEW_SLOTS.forEach(function(slot, idx) {
+    if (checks[slot]) return;
+    var postIdx = calcInterviewPostIndex(d, idx);
+    var postText = posts[postIdx] || '(コンテンツなし)';
+    lines.push('【' + X_INTERVIEW_LABELS[slot] + '】体験レポート');
+    lines.push(postText);
+    lines.push('');
+    count++;
+  });
+
+  if (count === 0) return;
+  navigator.clipboard.writeText(lines.join('\n')).then(function() {
+    alert(count + '件の体験レポートをコピーしました');
+  });
 }
 
 function copyAllXPosts() {
@@ -3065,6 +3189,10 @@ function renderSchedCards() {
     }
     html += '</div></div>';
   });
+
+  if (isWeekendOrHoliday(d)) {
+    html += renderInterviewSection(d, 'xSchedCards');
+  }
 
   document.getElementById('xSchedCards').innerHTML = html;
 }
