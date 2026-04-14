@@ -3786,6 +3786,8 @@ loadIgDmTemplate();
 loadXDmTemplate();
 renderStores();
 renderTodayPosts();
+// 初期状態では今日の投稿タブがアクティブなのでstoreListを移動
+switchMainTab('today');
 
 // プラットフォーム復帰
 var savedPlatform = localStorage.getItem('studygo_sns_platform');
