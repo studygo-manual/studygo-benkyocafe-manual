@@ -309,6 +309,7 @@ body.platform-x-active { background: #1a1a1a; }
     <div style="background:linear-gradient(135deg,#e91e63,#f06292);color:#fff;padding:20px 24px;border-radius:12px;margin-bottom:20px;box-shadow:0 4px 16px rgba(233,30,99,0.3);">
       <h2 id="todayTitle" style="font-size:22px;margin-bottom:4px;">📅 今日の投稿</h2>
       <p id="todaySubtitle" style="font-size:13px;opacity:0.9;">1日5投稿（平日）</p>
+      <div id="todayProgress" style="margin-top:10px;font-size:14px;"></div>
     </div>
     <div id="todayPostList"></div>
   </div>
@@ -1233,53 +1234,23 @@ function getTodayDateKey() {
 }
 
 function renderTodayPosts() {
-  var container = document.getElementById('todayPostList');
-  if (!container) return;
-  var todayKey = getTodayDateKey();
   var today = new Date();
   var dow = ['日','月','火','水','木','金','土'][today.getDay()];
+  var todayKey = getTodayDateKey();
   var titleEl = document.getElementById('todayTitle');
   if (titleEl) titleEl.textContent = '📅 ' + (today.getMonth()+1) + '/' + today.getDate() + '(' + dow + ') の投稿';
 
-  var plannedIds = INSTA_POST_PLAN[todayKey];
-  if (!plannedIds || plannedIds.length === 0) {
-    container.innerHTML = '<div style="background:#fff;padding:40px;border-radius:12px;text-align:center;color:#888;">本日(' + todayKey + ')の投稿予定はありません。<br><br>平日ではない、または投稿プラン範囲外の日付です。</div>';
+  var plannedIds = INSTA_POST_PLAN[todayKey] || [];
+  var progEl = document.getElementById('todayProgress');
+  if (!progEl) return;
+
+  if (plannedIds.length === 0) {
+    progEl.innerHTML = '本日の投稿予定はありません（平日ではない、またはプラン範囲外）';
     return;
   }
-
   var postedCount = plannedIds.filter(function(id) { return postDates[id]; }).length;
-  var html = '<div style="background:#fff;padding:14px 18px;border-radius:10px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">';
-  html += '<div style="font-size:14px;color:#333;">本日の進捗: <b style="color:#e91e63;font-size:18px;">' + postedCount + '</b> / ' + plannedIds.length + '</div>';
-  html += '<button class="btn btn-copy" style="background:#e91e63;" onclick="markAllTodayPosted()">全て投稿済にする</button>';
-  html += '</div>';
-
-  plannedIds.forEach(function(id, idx) {
-    var store = STORES.find(function(s) { return s.id === id; });
-    if (!store) return;
-    var isPosted = !!postDates[id];
-    html += '<div style="background:#fff;border-radius:12px;padding:16px 18px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06);display:flex;gap:16px;align-items:center;flex-wrap:wrap;' + (isPosted ? 'border-left:4px solid #4caf50;' : 'border-left:4px solid #e91e63;') + '">';
-    html += '<div style="flex:1;min-width:200px;">';
-    html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">';
-    html += '<span style="background:#e91e63;color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:12px;">' + (idx+1) + '/' + plannedIds.length + '</span>';
-    if (isPosted) html += '<span style="background:#4caf50;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px;">✓ 投稿済</span>';
-    html += '</div>';
-    html += '<div style="font-size:16px;font-weight:700;color:#333;margin-bottom:4px;">' + escapeHtml(store.name) + '</div>';
-    html += '<div style="font-size:12px;color:#666;">📍 ' + escapeHtml(store.access) + '</div>';
-    if (store.drop || store.month) {
-      html += '<div style="font-size:12px;color:#666;margin-top:3px;">💰 ドロップイン: ' + escapeHtml(store.drop || '-') + ' / 月額: ' + escapeHtml(store.month || '-') + '</div>';
-    }
-    html += '</div>';
-    html += '<div style="display:flex;gap:6px;flex-wrap:wrap;">';
-    if (!isPosted) {
-      html += '<button class="btn btn-green" onclick="markTodayPostedById(' + id + ')">投稿済にする</button>';
-    } else {
-      html += '<button class="btn btn-edit" onclick="unmarkTodayPostedById(' + id + ')">取消</button>';
-    }
-    html += '<button class="btn btn-copy" style="background:#e91e63;" onclick="scrollToStoreCard(' + id + ')">編集画面へ</button>';
-    html += '</div>';
-    html += '</div>';
-  });
-  container.innerHTML = html;
+  progEl.innerHTML = '進捗: <b style="font-size:20px;">' + postedCount + '</b> / ' + plannedIds.length + ' 投稿済 ' +
+    '<button class="btn" style="background:#fff;color:#e91e63;padding:4px 12px;font-size:12px;margin-left:10px;font-weight:700;" onclick="markAllTodayPosted()">全て投稿済にする</button>';
 }
 
 function markTodayPostedById(id) {
@@ -1618,9 +1589,20 @@ function populateAreaFilter() {
 // ============================================================
 // UI - Store rendering
 // ============================================================
+var instaViewMode = 'today'; // 'today' or 'all'
+
 function renderStores() {
   const list = document.getElementById('storeList');
   list.innerHTML = '';
+
+  // 今日モード: 今日の予定店舗のみ表示
+  if (instaViewMode === 'today') {
+    const todayKey = getTodayDateKey();
+    const plannedIds = INSTA_POST_PLAN[todayKey] || [];
+    let filtered = plannedIds.map(id => STORES.find(s => s.id === id)).filter(Boolean);
+    renderStoreCards(filtered, list);
+    return;
+  }
 
   const search = document.getElementById('searchBox').value.toLowerCase();
   const catFilter = document.getElementById('categoryFilter').value;
@@ -1648,9 +1630,13 @@ function renderStores() {
   });
 
   const postedCount = STORES.filter(s => postDates[s.id]).length;
+  const countEl = document.getElementById('storeCount');
+  if (countEl) countEl.textContent = `${filtered.length}件表示 / 全${STORES.length}件（投稿済: ${postedCount}件）`;
 
-  document.getElementById('storeCount').textContent = `${filtered.length}件表示 / 全${STORES.length}件（投稿済: ${postedCount}件）`;
+  renderStoreCards(filtered, list);
+}
 
+function renderStoreCards(filtered, list) {
   filtered.forEach(store => {
     const card = document.createElement('div');
     card.className = 'store-card';
@@ -1941,7 +1927,24 @@ function switchMainTab(tab) {
   document.querySelectorAll('#platform-ig > .tab-content').forEach(t => t.classList.remove('active'));
   document.querySelector(`#ig-tabs .main-tab[onclick*="${tab}"]`).classList.add('active');
   document.getElementById('tab-' + tab).classList.add('active');
-  if (tab === 'today') renderTodayPosts();
+
+  var storeList = document.getElementById('storeList');
+  if (tab === 'today') {
+    instaViewMode = 'today';
+    var todayContainer = document.getElementById('todayPostList');
+    if (storeList && todayContainer && storeList.parentElement !== todayContainer) {
+      todayContainer.appendChild(storeList);
+    }
+    renderTodayPosts();
+    renderStores();
+  } else if (tab === 'stores') {
+    instaViewMode = 'all';
+    var storesContainer = document.querySelector('#tab-stores .container');
+    if (storeList && storesContainer && storeList.parentElement !== storesContainer) {
+      storesContainer.appendChild(storeList);
+    }
+    renderStores();
+  }
 }
 
 // ============================================================
