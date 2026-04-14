@@ -1455,14 +1455,14 @@ function drawStoreImage(canvas, store, theme, size) {
   const accText = store.access.length > 50 ? store.access.substring(0, 50) + '...' : store.access;
   ctx.fillText('\u{1F689} ' + accText, w / 2, infoY + infoH * 0.68);
 
-  // カスタムテキスト（アクセスの下・大文字で強調）
+  // カスタムテキスト（アクセスの下・小さめで控えめに）
   const customText = customTexts[store.id] || '';
   if (customText) {
-    const ctSize = Math.round(w * 0.055);
-    ctx.font = `900 ${ctSize}px 'Hiragino Sans', 'Noto Sans JP', sans-serif`;
+    const ctSize = Math.round(w * 0.035);
+    ctx.font = `bold ${ctSize}px 'Hiragino Sans', 'Noto Sans JP', sans-serif`;
     ctx.fillStyle = t.accent;
     ctx.textAlign = 'center';
-    ctx.fillText(customText, w / 2, infoY + infoH * 0.92);
+    ctx.fillText(customText, w / 2, infoY + infoH * 0.9);
   }
 }
 
