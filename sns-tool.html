@@ -2727,16 +2727,16 @@ function drawXImage(canvas, state) {
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, W, H);
 
-  // 背景透かしロゴ（右側エリアの中央上寄り・下のスタディGOテキストと被らないように）
+  // 背景透かしロゴ（正方形・右側エリア中央）
   if (X_WATERMARK_LOADED) {
     ctx.save();
     ctx.globalAlpha = 0.12;
     var rightAreaStart = 620;
     var rightAreaW = W - rightAreaStart - 40;
-    var lw = 420;
+    var lw = 360;
     var lh = X_WATERMARK_IMG.height * (lw / X_WATERMARK_IMG.width);
     var lx = rightAreaStart + (rightAreaW - lw) / 2;
-    var ly = (H - lh) / 2 - 30; // 上に少しずらす
+    var ly = (H - lh) / 2 - 20;
     ctx.drawImage(X_WATERMARK_IMG, lx, ly, lw, lh);
     ctx.restore();
   }
@@ -3375,11 +3375,11 @@ var X_IMAGE_TEMPLATES = {
   '試験日カレンダー':{ bg1:'#b71c1c', bg2:'#d32f2f', accent:'#fff59d', icon:'📆', tag:'試験日', photos:['カレンダー', '受験票風', '時計と教科書', '試験会場', 'シャープペン'] }
 };
 
-// 透かし用ロゴ画像（高解像度）
+// 透かし用ロゴ画像（正方形）
 var X_WATERMARK_IMG = new Image();
 var X_WATERMARK_LOADED = false;
 X_WATERMARK_IMG.onload = function() { X_WATERMARK_LOADED = true; if (typeof drawXImagePreview === 'function') drawXImagePreview(); };
-X_WATERMARK_IMG.src = 'ogp_logo.png';
+X_WATERMARK_IMG.src = 'studygo-icon.png';
 
 var X_TIME_SLOTS = ['h7','h10','h12','h15','h18','h20'];
 var X_TIME_LABELS = { h7:'7:00', h10:'10:00', h12:'12:00', h15:'15:00', h18:'18:00', h20:'20:00' };
