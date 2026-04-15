@@ -60,6 +60,44 @@ body.platform-x-active { background: #1a1a1a; }
 .x-tab:hover { background: #f0f7ff; color: #1d9bf0; }
 .x-tab.active { color: #1d9bf0; border-bottom-color: #1d9bf0; background: #f0f7ff; }
 
+/* X Image Generator Modal */
+.x-img-modal {
+  display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.85); z-index: 9999; padding: 20px; overflow-y: auto;
+}
+.x-img-modal.open { display: flex; align-items: flex-start; justify-content: center; }
+.x-img-modal-inner {
+  background: #fff; border-radius: 12px; max-width: 1280px; width: 100%;
+  padding: 24px; position: relative; box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+.x-img-canvas-wrap {
+  background: #f0f0f0; border-radius: 8px; padding: 12px; text-align: center;
+  margin-bottom: 16px;
+}
+.x-img-canvas-wrap canvas {
+  max-width: 100%; height: auto; border-radius: 4px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+.x-img-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.x-img-controls > div { background: #f9f9f9; padding: 14px; border-radius: 8px; }
+.x-img-controls label { font-size: 12px; color: #666; font-weight: 700; display: block; margin-bottom: 6px; }
+.x-img-controls input[type=text], .x-img-controls textarea {
+  width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 6px;
+  font-size: 13px; font-family: inherit;
+}
+.x-img-controls textarea { min-height: 70px; resize: vertical; }
+.x-img-photo-zone {
+  border: 2px dashed #1d9bf0; border-radius: 8px; padding: 30px; text-align: center;
+  cursor: pointer; background: #f0f7ff; transition: all 0.2s;
+}
+.x-img-photo-zone:hover { background: #e3f2fd; }
+.x-img-photo-zone.has-photo { padding: 10px; border-style: solid; }
+.x-img-close {
+  position: absolute; top: 12px; right: 12px; background: #f5f5f5; border: none;
+  border-radius: 50%; width: 38px; height: 38px; font-size: 20px; cursor: pointer;
+}
+.x-img-actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+
 /* X specific styles */
 .x-card {
   background: #fff; border-radius: 12px; margin-bottom: 16px; padding: 20px;
@@ -699,6 +737,40 @@ body.platform-x-active { background: #1a1a1a; }
 </div>
 
 </div><!-- /platform-x -->
+
+<!-- X 画像作成モーダル -->
+<div id="xImgModal" class="x-img-modal" onclick="if(event.target===this)closeXImageGenerator()">
+  <div class="x-img-modal-inner">
+    <button class="x-img-close" onclick="closeXImageGenerator()">✕</button>
+    <h2 style="font-size:20px;color:#1d9bf0;margin-bottom:14px;">🎨 X投稿画像作成</h2>
+    <div class="x-img-canvas-wrap">
+      <canvas id="xImgCanvas" width="1200" height="675"></canvas>
+    </div>
+    <div class="x-img-controls">
+      <div>
+        <label>📷 画像をアップロード</label>
+        <div id="xImgPhotoZone" class="x-img-photo-zone" onclick="document.getElementById('xImgPhotoInput').click()">
+          <div style="font-size:32px;margin-bottom:6px;">🖼️</div>
+          <div style="font-size:13px;color:#1565c0;font-weight:700;">クリックして画像を選択</div>
+          <div style="font-size:11px;color:#888;margin-top:4px;">またはここにドラッグ&ドロップ</div>
+        </div>
+        <input type="file" id="xImgPhotoInput" accept="image/*" style="display:none" onchange="handleXImagePhoto(this)">
+      </div>
+      <div>
+        <label>📝 タイトル（自動入力済・編集可）</label>
+        <input type="text" id="xImgTitle" oninput="updateXImagePreview()" maxlength="40">
+        <label style="margin-top:10px;">✏️ 本文（自動入力済・編集可）</label>
+        <textarea id="xImgBody" oninput="updateXImagePreview()" maxlength="200"></textarea>
+        <label style="margin-top:10px;">🏷 シリーズバッジ</label>
+        <input type="text" id="xImgSeries" oninput="updateXImagePreview()" maxlength="20">
+      </div>
+    </div>
+    <div class="x-img-actions">
+      <button class="btn btn-copy" style="background:#1d9bf0;font-size:15px;padding:12px 24px;" onclick="downloadXImage()">📥 画像をダウンロード(1200×675)</button>
+      <button class="btn btn-edit" onclick="closeXImageGenerator()">閉じる</button>
+    </div>
+  </div>
+</div>
 
 <script>
 // ============================================================
@@ -2549,6 +2621,273 @@ function getIgDmTemplates() {
   return [...IG_DM_TEMPLATES_DEFAULT];
 }
 
+// ============================================================
+// X 投稿画像作成
+// ============================================================
+var xImgState = { photo: null, series: '', time: '', title: '', body: '' };
+
+function openXImageGenerator(slot, seriesName, postText, dateKey) {
+  seriesName = seriesName.replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>');
+  postText = (postText || '').replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>');
+  // タイトルと本文を分離（最初の行をタイトル、残りを本文）
+  var lines = postText.split('\n').filter(function(l){return l.trim();});
+  var title = lines[0] || seriesName;
+  var body = lines.slice(1).join('\n');
+  // URL/ハッシュタグを本文から除去
+  body = body.replace(/https?:\/\/\S+/g, '').replace(/#\S+/g, '').trim();
+
+  xImgState = {
+    photo: null,
+    series: seriesName,
+    time: X_TIME_LABELS[slot] || '',
+    title: title,
+    body: body,
+    dateKey: dateKey
+  };
+  document.getElementById('xImgTitle').value = title;
+  document.getElementById('xImgBody').value = body;
+  document.getElementById('xImgSeries').value = (X_IMAGE_TEMPLATES[seriesName] || {}).tag || seriesName;
+  // フォトゾーンをリセット
+  var zone = document.getElementById('xImgPhotoZone');
+  zone.classList.remove('has-photo');
+  zone.innerHTML = '<div style="font-size:32px;margin-bottom:6px;">🖼️</div>' +
+    '<div style="font-size:13px;color:#1565c0;font-weight:700;">クリックして画像を選択</div>' +
+    '<div style="font-size:11px;color:#888;margin-top:4px;">またはここにドラッグ&ドロップ</div>';
+
+  document.getElementById('xImgModal').classList.add('open');
+  drawXImagePreview();
+}
+
+function closeXImageGenerator() {
+  document.getElementById('xImgModal').classList.remove('open');
+}
+
+function handleXImagePhoto(input) {
+  var file = input.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var img = new Image();
+    img.onload = function() {
+      xImgState.photo = img;
+      var zone = document.getElementById('xImgPhotoZone');
+      zone.classList.add('has-photo');
+      zone.innerHTML = '<div style="font-size:13px;color:#2e7d32;font-weight:700;">✓ 画像セット済み</div>' +
+        '<div style="font-size:11px;color:#888;margin-top:4px;">クリックで変更</div>';
+      drawXImagePreview();
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function updateXImagePreview() {
+  xImgState.title = document.getElementById('xImgTitle').value;
+  xImgState.body = document.getElementById('xImgBody').value;
+  var customSeries = document.getElementById('xImgSeries').value;
+  if (customSeries) xImgState.tagOverride = customSeries;
+  drawXImagePreview();
+}
+
+function drawXImagePreview() {
+  var canvas = document.getElementById('xImgCanvas');
+  drawXImage(canvas, xImgState);
+}
+
+function drawXImage(canvas, state) {
+  var ctx = canvas.getContext('2d');
+  var W = canvas.width, H = canvas.height;
+  var theme = X_IMAGE_TEMPLATES[state.series] || X_IMAGE_TEMPLATES['企画シリーズ'];
+
+  // 背景グラデーション
+  var grad = ctx.createLinearGradient(0, 0, W, H);
+  grad.addColorStop(0, theme.bg1);
+  grad.addColorStop(1, theme.bg2);
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  // 装飾ドット
+  ctx.fillStyle = 'rgba(255,255,255,0.06)';
+  for (var i = 0; i < 30; i++) {
+    var x = (i * 137) % W;
+    var y = (i * 97 + 50) % H;
+    ctx.beginPath();
+    ctx.arc(x, y, 3 + (i % 5), 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // 左半分: 写真エリア
+  var photoX = 40, photoY = 40, photoW = 540, photoH = H - 80;
+  // 影
+  ctx.fillStyle = 'rgba(0,0,0,0.3)';
+  roundRect(ctx, photoX + 6, photoY + 6, photoW, photoH, 16);
+  ctx.fill();
+  // 写真フレーム
+  ctx.fillStyle = '#fff';
+  roundRect(ctx, photoX, photoY, photoW, photoH, 16);
+  ctx.fill();
+
+  if (state.photo) {
+    ctx.save();
+    roundRect(ctx, photoX + 8, photoY + 8, photoW - 16, photoH - 16, 12);
+    ctx.clip();
+    // cover crop
+    var img = state.photo;
+    var ratio = Math.max((photoW - 16) / img.width, (photoH - 16) / img.height);
+    var dw = img.width * ratio;
+    var dh = img.height * ratio;
+    var dx = photoX + 8 + ((photoW - 16) - dw) / 2;
+    var dy = photoY + 8 + ((photoH - 16) - dh) / 2;
+    ctx.drawImage(img, dx, dy, dw, dh);
+    ctx.restore();
+  } else {
+    // プレースホルダー
+    ctx.fillStyle = '#f0f0f0';
+    roundRect(ctx, photoX + 8, photoY + 8, photoW - 16, photoH - 16, 12);
+    ctx.fill();
+    ctx.fillStyle = '#bbb';
+    ctx.font = '60px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('📷', photoX + photoW / 2, photoY + photoH / 2 - 20);
+    ctx.font = 'bold 18px "Hiragino Sans", "Noto Sans JP", sans-serif';
+    ctx.fillText('画像をアップロード', photoX + photoW / 2, photoY + photoH / 2 + 30);
+  }
+
+  // 右半分: テキストエリア
+  var textX = 620, textW = W - textX - 40;
+
+  // シリーズバッジ（右上）
+  ctx.fillStyle = theme.accent;
+  var tagText = state.tagOverride || theme.tag;
+  ctx.font = 'bold 22px "Hiragino Sans", "Noto Sans JP", sans-serif';
+  var tagW = ctx.measureText(tagText).width + 40;
+  roundRect(ctx, textX, 50, tagW, 44, 22);
+  ctx.fill();
+  ctx.fillStyle = theme.bg1;
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(theme.icon + ' ' + tagText, textX + 20, 72);
+
+  // 時刻バッジ（右上の右）
+  if (state.time) {
+    ctx.fillStyle = 'rgba(255,255,255,0.95)';
+    var timeBadgeX = W - 130;
+    roundRect(ctx, timeBadgeX, 50, 90, 44, 22);
+    ctx.fill();
+    ctx.fillStyle = theme.bg1;
+    ctx.font = 'bold 22px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('⏰ ' + state.time, timeBadgeX + 45, 72);
+  }
+
+  // タイトル
+  ctx.fillStyle = '#fff';
+  ctx.textAlign = 'left';
+  ctx.font = 'bold 36px "Hiragino Sans", "Noto Sans JP", sans-serif';
+  wrapText(ctx, state.title || '', textX, 150, textW, 44, 3);
+
+  // 本文
+  ctx.fillStyle = 'rgba(255,255,255,0.9)';
+  ctx.font = '20px "Hiragino Sans", "Noto Sans JP", sans-serif';
+  var bodyY = 290;
+  wrapText(ctx, state.body || '', textX, bodyY, textW, 30, 8);
+
+  // 下部装飾ライン
+  ctx.fillStyle = theme.accent;
+  ctx.fillRect(textX, H - 80, textW, 3);
+
+  // ロゴエリア（下部）
+  ctx.fillStyle = '#fff';
+  ctx.font = 'bold 24px sans-serif';
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('スタディGO', textX, H - 45);
+  ctx.fillStyle = 'rgba(255,255,255,0.7)';
+  ctx.font = '14px sans-serif';
+  ctx.fillText('@studygo_official', textX, H - 22);
+
+  // 右下: アイコン大
+  ctx.fillStyle = 'rgba(255,255,255,0.15)';
+  ctx.font = '120px sans-serif';
+  ctx.textAlign = 'right';
+  ctx.textBaseline = 'bottom';
+  ctx.fillText(theme.icon, W - 30, H - 20);
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+function wrapText(ctx, text, x, y, maxWidth, lineHeight, maxLines) {
+  if (!text) return;
+  var lines = [];
+  var paragraphs = text.split('\n');
+  for (var p = 0; p < paragraphs.length; p++) {
+    var chars = paragraphs[p].split('');
+    var line = '';
+    for (var i = 0; i < chars.length; i++) {
+      var test = line + chars[i];
+      if (ctx.measureText(test).width > maxWidth && line) {
+        lines.push(line);
+        line = chars[i];
+      } else {
+        line = test;
+      }
+    }
+    if (line) lines.push(line);
+  }
+  var n = Math.min(lines.length, maxLines || lines.length);
+  for (var j = 0; j < n; j++) {
+    var l = lines[j];
+    if (j === n - 1 && lines.length > n) l = l.slice(0, -1) + '…';
+    ctx.fillText(l, x, y + j * lineHeight);
+  }
+}
+
+function downloadXImage() {
+  var canvas = document.getElementById('xImgCanvas');
+  canvas.toBlob(function(blob) {
+    var link = document.createElement('a');
+    var fname = 'X投稿_' + (xImgState.series || 'image') + '_' + (xImgState.dateKey || new Date().toISOString().slice(0,10)) + '.png';
+    link.download = fname;
+    link.href = URL.createObjectURL(blob);
+    link.click();
+  });
+}
+
+// ドラッグ&ドロップ対応
+document.addEventListener('DOMContentLoaded', function() {
+  var zone = document.getElementById('xImgPhotoZone');
+  if (!zone) return;
+  ['dragenter','dragover'].forEach(function(ev) {
+    zone.addEventListener(ev, function(e) { e.preventDefault(); zone.style.background = '#bbdefb'; });
+  });
+  ['dragleave','drop'].forEach(function(ev) {
+    zone.addEventListener(ev, function(e) { e.preventDefault(); zone.style.background = ''; });
+  });
+  zone.addEventListener('drop', function(e) {
+    var file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) {
+      var input = document.getElementById('xImgPhotoInput');
+      var dt = new DataTransfer();
+      dt.items.add(file);
+      input.files = dt.files;
+      handleXImagePhoto(input);
+    }
+  });
+});
+
 function openXSearchGuide() {
   document.getElementById('xSearchGuideModal').style.display = 'flex';
 }
@@ -2924,6 +3263,44 @@ var X_SERIES_SHEET_MAP = {
   '店舗紹介':'店舗紹介','試験日カレンダー':'試験日カレンダー','体験レポート':'体験レポート'
 };
 
+// シリーズ別画像テーマ（背景色・アクセント・アイコン）
+var X_IMAGE_TEMPLATES = {
+  '勉強あるある':    { bg1:'#ff6b35', bg2:'#f7931e', accent:'#fff176', icon:'☕', tag:'勉強あるある' },
+  '社会人あるある':  { bg1:'#1a237e', bg2:'#3949ab', accent:'#82b1ff', icon:'💼', tag:'社会人あるある' },
+  '勉強の敵':        { bg1:'#b71c1c', bg2:'#e53935', accent:'#ffcdd2', icon:'⚠️', tag:'勉強の敵' },
+  '勉強アンケート':  { bg1:'#006064', bg2:'#00838f', accent:'#80deea', icon:'📊', tag:'アンケート' },
+  'テンション上がる':{ bg1:'#c2185b', bg2:'#e91e63', accent:'#f8bbd0', icon:'🔥', tag:'テンション' },
+  'コンビニランク':  { bg1:'#ef6c00', bg2:'#ffa726', accent:'#fff9c4', icon:'🏪', tag:'コンビニ' },
+  '勉強場所ランク':  { bg1:'#1b5e20', bg2:'#388e3c', accent:'#c8e6c9', icon:'🏆', tag:'勉強場所' },
+  'アイドル曲':      { bg1:'#4a148c', bg2:'#7b1fa2', accent:'#ce93d8', icon:'🎵', tag:'アイドル曲' },
+  '名言×勉強':       { bg1:'#212121', bg2:'#424242', accent:'#ffd54f', icon:'💬', tag:'名言' },
+  '海外トレンド':    { bg1:'#0277bd', bg2:'#039be5', accent:'#81d4fa', icon:'🌏', tag:'海外' },
+  '有名人×勉強':     { bg1:'#bf360c', bg2:'#d84315', accent:'#ffab91', icon:'⭐', tag:'有名人' },
+  '知って得する':    { bg1:'#00695c', bg2:'#00897b', accent:'#b2dfdb', icon:'💡', tag:'豆知識' },
+  'おもしろ資格':    { bg1:'#827717', bg2:'#9e9d24', accent:'#dce775', icon:'🎓', tag:'資格' },
+  '語源・由来':      { bg1:'#3e2723', bg2:'#5d4037', accent:'#d7ccc8', icon:'📚', tag:'語源' },
+  '意外な勉強':      { bg1:'#1565c0', bg2:'#1e88e5', accent:'#90caf9', icon:'🔍', tag:'意外な勉強' },
+  '法律が変わった':  { bg1:'#283593', bg2:'#3949ab', accent:'#9fa8da', icon:'⚖️', tag:'法改正' },
+  '単位まとめ':      { bg1:'#37474f', bg2:'#546e7a', accent:'#b0bec5', icon:'📐', tag:'単位' },
+  '○○賞まとめ':    { bg1:'#f57f17', bg2:'#fbc02d', accent:'#fff9c4', icon:'🏅', tag:'賞' },
+  '企画シリーズ':    { bg1:'#6a1b9a', bg2:'#8e24aa', accent:'#e1bee7', icon:'🎯', tag:'企画' },
+  'おすすめアプリ':  { bg1:'#01579b', bg2:'#0288d1', accent:'#b3e5fc', icon:'📱', tag:'アプリ' },
+  'おすすめ文房具':  { bg1:'#33691e', bg2:'#558b2f', accent:'#dcedc8', icon:'✏️', tag:'文房具' },
+  '勉強の味方':      { bg1:'#004d40', bg2:'#00695c', accent:'#80cbc4', icon:'🤝', tag:'勉強の味方' },
+  '勉強のお供':      { bg1:'#5d4037', bg2:'#795548', accent:'#d7ccc8', icon:'🍫', tag:'お供' },
+  'ストレス発散':    { bg1:'#ad1457', bg2:'#d81b60', accent:'#f48fb1', icon:'🧘', tag:'ストレス発散' },
+  'ご褒美お菓子':    { bg1:'#e65100', bg2:'#f57c00', accent:'#ffe0b2', icon:'🍰', tag:'お菓子' },
+  '習慣化の方法':    { bg1:'#2e7d32', bg2:'#43a047', accent:'#a5d6a7', icon:'🔁', tag:'習慣化' },
+  'ルーティン図鑑':  { bg1:'#0d47a1', bg2:'#1976d2', accent:'#90caf9', icon:'📋', tag:'ルーティン' },
+  '休み方':          { bg1:'#1a237e', bg2:'#283593', accent:'#9fa8da', icon:'😴', tag:'休み方' },
+  '目を覚ます':      { bg1:'#e65100', bg2:'#f57c00', accent:'#ffcc80', icon:'☀️', tag:'目覚まし' },
+  '週末30分':        { bg1:'#558b2f', bg2:'#689f38', accent:'#c5e1a5', icon:'⏱️', tag:'週末30分' },
+  '来週やろう':      { bg1:'#455a64', bg2:'#607d8b', accent:'#cfd8dc', icon:'📅', tag:'来週' },
+  '体験レポート':    { bg1:'#ef6c00', bg2:'#f57c00', accent:'#ffe0b2', icon:'📝', tag:'体験レポート' },
+  '店舗紹介':        { bg1:'#1b5e20', bg2:'#2e7d32', accent:'#a5d6a7', icon:'🏢', tag:'店舗紹介' },
+  '試験日カレンダー':{ bg1:'#b71c1c', bg2:'#c62828', accent:'#ffcdd2', icon:'📆', tag:'試験日' }
+};
+
 var X_TIME_SLOTS = ['h7','h10','h12','h15','h18','h20'];
 var X_TIME_LABELS = { h7:'7:00', h10:'10:00', h12:'12:00', h15:'15:00', h18:'18:00', h20:'20:00' };
 var X_DAY_NAMES = ['日','月','火','水','木','金','土'];
@@ -3114,9 +3491,11 @@ function renderXTodayCards() {
     html += '<div class="x-btn-row">';
     if (!isChecked) {
       html += '<button class="btn btn-copy" style="background:#1d9bf0;" onclick="copyXText(this)" data-text="' + escapeAttr(postText) + '">コピー</button>';
+      html += '<button class="btn" style="background:#9c27b0;color:#fff;" onclick="openXImageGenerator(\'' + slot + '\',\'' + escapeAttr(seriesName) + '\',\'' + escapeAttr(postText) + '\',\'' + dateKey + '\')">🎨 画像作成</button>';
       html += '<button class="btn btn-green" onclick="markXPosted(\'' + slot + '\',\'' + escapeAttr(seriesName) + '\')">予約済 ✓</button>';
     } else {
       html += '<button class="btn" style="background:#ccc;color:#999;cursor:default;">コピー済</button>';
+      html += '<button class="btn" style="background:#9c27b0;color:#fff;" onclick="openXImageGenerator(\'' + slot + '\',\'' + escapeAttr(seriesName) + '\',\'' + escapeAttr(postText) + '\',\'' + dateKey + '\')">🎨 画像作成</button>';
       html += '<button class="btn" style="background:#e8e8e8;color:#666;">予約済 ✓</button>';
       html += '<button class="btn btn-edit" onclick="unmarkXPosted(\'' + slot + '\',\'' + escapeAttr(seriesName) + '\')">取消</button>';
     }
