@@ -2716,13 +2716,17 @@ function drawXImage(canvas, state) {
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, W, H);
 
-  // 背景透かしロゴ（中央大きく）
+  // 背景透かしロゴ（右側エリアのみ・写真と被らないように）
   if (X_WATERMARK_LOADED) {
     ctx.save();
-    ctx.globalAlpha = 0.08;
-    var lw = 600;
+    ctx.globalAlpha = 0.10;
+    var rightAreaStart = 600;
+    var rightAreaW = W - rightAreaStart;
+    var lw = 480;
     var lh = X_WATERMARK_IMG.height * (lw / X_WATERMARK_IMG.width);
-    ctx.drawImage(X_WATERMARK_IMG, (W - lw) / 2, (H - lh) / 2, lw, lh);
+    var lx = rightAreaStart + (rightAreaW - lw) / 2;
+    var ly = (H - lh) / 2;
+    ctx.drawImage(X_WATERMARK_IMG, lx, ly, lw, lh);
     ctx.restore();
   }
 
