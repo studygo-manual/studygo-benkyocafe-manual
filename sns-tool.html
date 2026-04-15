@@ -2841,18 +2841,26 @@ function drawXImage(canvas, state) {
     ctx.fillText(timeText, timeBadgeX + badgePadX, badgeY + badgeH / 2);
   }
 
-  // ===== タイトル =====
+  // ===== タイトル（1行で収める：必要なら自動縮小） =====
   ctx.fillStyle = '#fff';
   ctx.textAlign = 'left';
   ctx.textBaseline = 'top';
-  ctx.font = 'bold 46px "Hiragino Sans", "Noto Sans JP", sans-serif';
+  var titleText = state.title || '';
+  var titleSize = 46;
+  var minTitleSize = 22;
+  ctx.font = 'bold ' + titleSize + 'px "Hiragino Sans", "Noto Sans JP", sans-serif';
+  while (ctx.measureText(titleText).width > textW && titleSize > minTitleSize) {
+    titleSize -= 1;
+    ctx.font = 'bold ' + titleSize + 'px "Hiragino Sans", "Noto Sans JP", sans-serif';
+  }
   ctx.shadowColor = 'rgba(0,0,0,0.6)';
   ctx.shadowBlur = 5;
   ctx.shadowOffsetY = 2;
-  wrapText(ctx, state.title || '', textX, badgeY + badgeH + 25, textW, 56, 3);
+  ctx.fillText(titleText, textX, badgeY + badgeH + 25);
   ctx.shadowColor = 'transparent';
   ctx.shadowBlur = 0;
   ctx.shadowOffsetY = 0;
+  var titleBottomY = badgeY + badgeH + 25 + titleSize;
 
   // ===== 本文 =====
   ctx.fillStyle = 'rgba(255,255,255,0.97)';
@@ -2860,7 +2868,7 @@ function drawXImage(canvas, state) {
   ctx.shadowColor = 'rgba(0,0,0,0.5)';
   ctx.shadowBlur = 4;
   ctx.shadowOffsetY = 1;
-  wrapText(ctx, state.body || '', textX, badgeY + badgeH + 25 + 56 * 3 + 20, textW, 38, 7);
+  wrapText(ctx, state.body || '', textX, titleBottomY + 30, textW, 38, 8);
   ctx.shadowColor = 'transparent';
   ctx.shadowBlur = 0;
   ctx.shadowOffsetY = 0;
