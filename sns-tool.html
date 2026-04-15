@@ -2626,9 +2626,19 @@ function getIgDmTemplates() {
 // ============================================================
 var xImgState = { photo: null, series: '', time: '', title: '', body: '' };
 
+function decodeHtmlAttr(s) {
+  return (s || '').replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>');
+}
+
+function openXImageGeneratorFromBtn(btn) {
+  var slot = btn.getAttribute('data-slot');
+  var seriesName = decodeHtmlAttr(btn.getAttribute('data-series'));
+  var postText = decodeHtmlAttr(btn.getAttribute('data-text'));
+  var dateKey = btn.getAttribute('data-date');
+  openXImageGenerator(slot, seriesName, postText, dateKey);
+}
+
 function openXImageGenerator(slot, seriesName, postText, dateKey) {
-  seriesName = seriesName.replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>');
-  postText = (postText || '').replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>');
   // タイトルと本文を分離（最初の行をタイトル、残りを本文）
   var lines = postText.split('\n').filter(function(l){return l.trim();});
   var title = lines[0] || seriesName;
@@ -3489,13 +3499,14 @@ function renderXTodayCards() {
     html += '</div>';
     html += '<div class="x-post-text">' + escapeHtml(postText) + '</div>';
     html += '<div class="x-btn-row">';
+    var imgBtnAttrs = 'data-slot="' + slot + '" data-series="' + escapeAttr(seriesName) + '" data-text="' + escapeAttr(postText) + '" data-date="' + dateKey + '"';
     if (!isChecked) {
       html += '<button class="btn btn-copy" style="background:#1d9bf0;" onclick="copyXText(this)" data-text="' + escapeAttr(postText) + '">コピー</button>';
-      html += '<button class="btn" style="background:#9c27b0;color:#fff;" onclick="openXImageGenerator(\'' + slot + '\',\'' + escapeAttr(seriesName) + '\',\'' + escapeAttr(postText) + '\',\'' + dateKey + '\')">🎨 画像作成</button>';
+      html += '<button class="btn" style="background:#9c27b0;color:#fff;" ' + imgBtnAttrs + ' onclick="openXImageGeneratorFromBtn(this)">🎨 画像作成</button>';
       html += '<button class="btn btn-green" onclick="markXPosted(\'' + slot + '\',\'' + escapeAttr(seriesName) + '\')">予約済 ✓</button>';
     } else {
       html += '<button class="btn" style="background:#ccc;color:#999;cursor:default;">コピー済</button>';
-      html += '<button class="btn" style="background:#9c27b0;color:#fff;" onclick="openXImageGenerator(\'' + slot + '\',\'' + escapeAttr(seriesName) + '\',\'' + escapeAttr(postText) + '\',\'' + dateKey + '\')">🎨 画像作成</button>';
+      html += '<button class="btn" style="background:#9c27b0;color:#fff;" ' + imgBtnAttrs + ' onclick="openXImageGeneratorFromBtn(this)">🎨 画像作成</button>';
       html += '<button class="btn" style="background:#e8e8e8;color:#666;">予約済 ✓</button>';
       html += '<button class="btn btn-edit" onclick="unmarkXPosted(\'' + slot + '\',\'' + escapeAttr(seriesName) + '\')">取消</button>';
     }
