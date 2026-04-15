@@ -755,6 +755,7 @@ body.platform-x-active { background: #1a1a1a; }
           <div style="font-size:11px;color:#888;margin-top:4px;">またはここにドラッグ&ドロップ</div>
         </div>
         <input type="file" id="xImgPhotoInput" accept="image/*" style="display:none" onchange="handleXImagePhoto(this)">
+        <div id="xImgPhotoCandidates" style="margin-top:12px;padding:10px;background:#fff8e1;border-left:3px solid #fbc02d;border-radius:4px;font-size:12px;color:#555;line-height:1.8;"></div>
       </div>
       <div>
         <label>📝 タイトル（自動入力済・編集可）</label>
@@ -2657,6 +2658,16 @@ function openXImageGenerator(slot, seriesName, postText, dateKey) {
   document.getElementById('xImgTitle').value = title;
   document.getElementById('xImgBody').value = body;
   document.getElementById('xImgSeries').value = (X_IMAGE_TEMPLATES[seriesName] || {}).tag || seriesName;
+  // 写真候補
+  var theme = X_IMAGE_TEMPLATES[seriesName] || {};
+  var photoCands = theme.photos || [];
+  var candHtml = '<b style="color:#e65100;">📷 写真の候補：</b><br>';
+  if (photoCands.length > 0) {
+    candHtml += photoCands.map(function(p){return '候補：' + p;}).join('<br>');
+  } else {
+    candHtml += '候補：なし';
+  }
+  document.getElementById('xImgPhotoCandidates').innerHTML = candHtml;
   // フォトゾーンをリセット
   var zone = document.getElementById('xImgPhotoZone');
   zone.classList.remove('has-photo');
@@ -2716,16 +2727,16 @@ function drawXImage(canvas, state) {
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, W, H);
 
-  // 背景透かしロゴ（右側エリアのみ・写真と被らないように）
+  // 背景透かしロゴ（右側エリアの中央上寄り・下のスタディGOテキストと被らないように）
   if (X_WATERMARK_LOADED) {
     ctx.save();
-    ctx.globalAlpha = 0.10;
-    var rightAreaStart = 600;
-    var rightAreaW = W - rightAreaStart;
-    var lw = 480;
+    ctx.globalAlpha = 0.12;
+    var rightAreaStart = 620;
+    var rightAreaW = W - rightAreaStart - 40;
+    var lw = 420;
     var lh = X_WATERMARK_IMG.height * (lw / X_WATERMARK_IMG.width);
     var lx = rightAreaStart + (rightAreaW - lw) / 2;
-    var ly = (H - lh) / 2;
+    var ly = (H - lh) / 2 - 30; // 上に少しずらす
     ctx.drawImage(X_WATERMARK_IMG, lx, ly, lw, lh);
     ctx.restore();
   }
@@ -2834,23 +2845,22 @@ function drawXImage(canvas, state) {
   ctx.fillStyle = '#fff';
   ctx.textAlign = 'left';
   ctx.textBaseline = 'top';
-  ctx.font = 'bold 38px "Hiragino Sans", "Noto Sans JP", sans-serif';
-  // 影効果で読みやすく
-  ctx.shadowColor = 'rgba(0,0,0,0.5)';
-  ctx.shadowBlur = 4;
+  ctx.font = 'bold 46px "Hiragino Sans", "Noto Sans JP", sans-serif';
+  ctx.shadowColor = 'rgba(0,0,0,0.6)';
+  ctx.shadowBlur = 5;
   ctx.shadowOffsetY = 2;
-  wrapText(ctx, state.title || '', textX, badgeY + badgeH + 25, textW, 48, 3);
+  wrapText(ctx, state.title || '', textX, badgeY + badgeH + 25, textW, 56, 3);
   ctx.shadowColor = 'transparent';
   ctx.shadowBlur = 0;
   ctx.shadowOffsetY = 0;
 
   // ===== 本文 =====
-  ctx.fillStyle = 'rgba(255,255,255,0.95)';
-  ctx.font = '21px "Hiragino Sans", "Noto Sans JP", sans-serif';
-  ctx.shadowColor = 'rgba(0,0,0,0.4)';
-  ctx.shadowBlur = 3;
+  ctx.fillStyle = 'rgba(255,255,255,0.97)';
+  ctx.font = 'bold 26px "Hiragino Sans", "Noto Sans JP", sans-serif';
+  ctx.shadowColor = 'rgba(0,0,0,0.5)';
+  ctx.shadowBlur = 4;
   ctx.shadowOffsetY = 1;
-  wrapText(ctx, state.body || '', textX, badgeY + badgeH + 25 + 48 * 3 + 20, textW, 32, 7);
+  wrapText(ctx, state.body || '', textX, badgeY + badgeH + 25 + 56 * 3 + 20, textW, 38, 7);
   ctx.shadowColor = 'transparent';
   ctx.shadowBlur = 0;
   ctx.shadowOffsetY = 0;
@@ -2859,22 +2869,15 @@ function drawXImage(canvas, state) {
   ctx.fillStyle = theme.accent;
   ctx.fillRect(textX, H - 85, textW, 4);
 
-  // ロゴエリア（下部）
+  // ロゴエリア（下部・右下絵文字なし）
   ctx.fillStyle = '#fff';
-  ctx.font = 'bold 26px sans-serif';
+  ctx.font = 'bold 28px sans-serif';
   ctx.textAlign = 'left';
   ctx.textBaseline = 'middle';
   ctx.fillText('スタディGO', textX, H - 48);
-  ctx.fillStyle = 'rgba(255,255,255,0.75)';
-  ctx.font = '15px sans-serif';
-  ctx.fillText('@studygo_official', textX, H - 22);
-
-  // 右下: アイコン大
-  ctx.fillStyle = 'rgba(255,255,255,0.18)';
-  ctx.font = '130px sans-serif';
-  ctx.textAlign = 'right';
-  ctx.textBaseline = 'bottom';
-  ctx.fillText(theme.icon, W - 30, H - 20);
+  ctx.fillStyle = 'rgba(255,255,255,0.85)';
+  ctx.font = '17px sans-serif';
+  ctx.fillText('@studygo_bp', textX, H - 22);
 }
 
 function roundRect(ctx, x, y, w, h, r) {
@@ -3326,48 +3329,49 @@ var X_SERIES_SHEET_MAP = {
 };
 
 // シリーズ別画像テーマ（読みやすい配色：濃い背景＋鮮やか/淡いアクセント）
+// photos: 写真候補（撮影テーマ案）
 var X_IMAGE_TEMPLATES = {
-  '勉強あるある':    { bg1:'#d84315', bg2:'#ff7043', accent:'#fff59d', icon:'☕', tag:'勉強あるある' },
-  '社会人あるある':  { bg1:'#0d47a1', bg2:'#1976d2', accent:'#bbdefb', icon:'💼', tag:'社会人あるある' },
-  '勉強の敵':        { bg1:'#7f0000', bg2:'#c62828', accent:'#ffe0b2', icon:'⚠️', tag:'勉強の敵' },
-  '勉強アンケート':  { bg1:'#004d40', bg2:'#00695c', accent:'#b2ebf2', icon:'📊', tag:'アンケート' },
-  'テンション上がる':{ bg1:'#880e4f', bg2:'#c2185b', accent:'#ffe082', icon:'🔥', tag:'テンション' },
-  'コンビニランク':  { bg1:'#bf360c', bg2:'#e64a19', accent:'#fff59d', icon:'🏪', tag:'コンビニ' },
-  '勉強場所ランク':  { bg1:'#1b5e20', bg2:'#388e3c', accent:'#fff59d', icon:'🏆', tag:'勉強場所' },
-  'アイドル曲':      { bg1:'#311b92', bg2:'#5e35b1', accent:'#e1bee7', icon:'🎵', tag:'アイドル曲' },
-  '名言×勉強':       { bg1:'#1c1c1c', bg2:'#3a3a3a', accent:'#ffd54f', icon:'💬', tag:'名言' },
-  '海外トレンド':    { bg1:'#01579b', bg2:'#0288d1', accent:'#fff59d', icon:'🌏', tag:'海外' },
-  '有名人×勉強':     { bg1:'#bf360c', bg2:'#e65100', accent:'#ffd54f', icon:'⭐', tag:'有名人' },
-  '知って得する':    { bg1:'#004d40', bg2:'#00897b', accent:'#fff59d', icon:'💡', tag:'豆知識' },
-  'おもしろ資格':    { bg1:'#33691e', bg2:'#689f38', accent:'#fff59d', icon:'🎓', tag:'資格' },
-  '語源・由来':      { bg1:'#3e2723', bg2:'#6d4c41', accent:'#ffe082', icon:'📚', tag:'語源' },
-  '意外な勉強':      { bg1:'#0d47a1', bg2:'#1565c0', accent:'#b3e5fc', icon:'🔍', tag:'意外な勉強' },
-  '法律が変わった':  { bg1:'#1a237e', bg2:'#283593', accent:'#fff59d', icon:'⚖️', tag:'法改正' },
-  '単位まとめ':      { bg1:'#263238', bg2:'#455a64', accent:'#b0bec5', icon:'📐', tag:'単位' },
-  '○○賞まとめ':    { bg1:'#e65100', bg2:'#fb8c00', accent:'#fff59d', icon:'🏅', tag:'賞' },
-  '企画シリーズ':    { bg1:'#4a148c', bg2:'#7b1fa2', accent:'#fff59d', icon:'🎯', tag:'企画' },
-  'おすすめアプリ':  { bg1:'#01579b', bg2:'#0277bd', accent:'#b3e5fc', icon:'📱', tag:'アプリ' },
-  'おすすめ文房具':  { bg1:'#1b5e20', bg2:'#388e3c', accent:'#fff59d', icon:'✏️', tag:'文房具' },
-  '勉強の味方':      { bg1:'#004d40', bg2:'#00796b', accent:'#b2dfdb', icon:'🤝', tag:'勉強の味方' },
-  '勉強のお供':      { bg1:'#3e2723', bg2:'#6d4c41', accent:'#ffcc80', icon:'🍫', tag:'お供' },
-  'ストレス発散':    { bg1:'#880e4f', bg2:'#ad1457', accent:'#f8bbd0', icon:'🧘', tag:'ストレス発散' },
-  'ご褒美お菓子':    { bg1:'#bf360c', bg2:'#e65100', accent:'#fff59d', icon:'🍰', tag:'お菓子' },
-  '習慣化の方法':    { bg1:'#1b5e20', bg2:'#2e7d32', accent:'#c5e1a5', icon:'🔁', tag:'習慣化' },
-  'ルーティン図鑑':  { bg1:'#0d47a1', bg2:'#1565c0', accent:'#b3e5fc', icon:'📋', tag:'ルーティン' },
-  '休み方':          { bg1:'#1a237e', bg2:'#283593', accent:'#c5cae9', icon:'😴', tag:'休み方' },
-  '目を覚ます':      { bg1:'#e65100', bg2:'#f57c00', accent:'#fff59d', icon:'☀️', tag:'目覚まし' },
-  '週末30分':        { bg1:'#33691e', bg2:'#558b2f', accent:'#dcedc8', icon:'⏱️', tag:'週末30分' },
-  '来週やろう':      { bg1:'#37474f', bg2:'#546e7a', accent:'#cfd8dc', icon:'📅', tag:'来週' },
-  '体験レポート':    { bg1:'#bf360c', bg2:'#e65100', accent:'#fff59d', icon:'📝', tag:'体験レポート' },
-  '店舗紹介':        { bg1:'#1b5e20', bg2:'#2e7d32', accent:'#fff59d', icon:'🏢', tag:'店舗紹介' },
-  '試験日カレンダー':{ bg1:'#b71c1c', bg2:'#d32f2f', accent:'#fff59d', icon:'📆', tag:'試験日' }
+  '勉強あるある':    { bg1:'#d84315', bg2:'#ff7043', accent:'#fff59d', icon:'☕', tag:'勉強あるある', photos:['カフェのテーブル', 'ノートとペン', 'コーヒーカップ', '机に並ぶ参考書', '勉強中の手元'] },
+  '社会人あるある':  { bg1:'#0d47a1', bg2:'#1976d2', accent:'#bbdefb', icon:'💼', tag:'社会人あるある', photos:['ビジネスバッグ', 'スーツ姿', '電車内のサラリーマン', 'PCとコーヒー', '会議室'] },
+  '勉強の敵':        { bg1:'#7f0000', bg2:'#c62828', accent:'#ffe0b2', icon:'⚠️', tag:'勉強の敵', photos:['散らかった机', 'スマホ通知画面', 'ベッドで寝る人', '時計と焦り', 'お菓子の山'] },
+  '勉強アンケート':  { bg1:'#004d40', bg2:'#00695c', accent:'#b2ebf2', icon:'📊', tag:'アンケート', photos:['投票用紙', '選択肢のメモ', 'グラフが載った紙', '人差し指で選ぶ手', '黒板に書かれた問い'] },
+  'テンション上がる':{ bg1:'#880e4f', bg2:'#c2185b', accent:'#ffe082', icon:'🔥', tag:'テンション', photos:['ガッツポーズ', 'カラフルな付箋', '朝日とコーヒー', '新品の文房具', '広げた参考書'] },
+  'コンビニランク':  { bg1:'#bf360c', bg2:'#e64a19', accent:'#fff59d', icon:'🏪', tag:'コンビニ', photos:['コンビニの店内', 'おにぎり棚', 'カップ麺', 'スイーツコーナー', 'コーヒーマシン'] },
+  '勉強場所ランク':  { bg1:'#1b5e20', bg2:'#388e3c', accent:'#fff59d', icon:'🏆', tag:'勉強場所', photos:['カフェ店内', '図書館の机', '自習室', '公園のベンチ', '駅のラウンジ'] },
+  'アイドル曲':      { bg1:'#311b92', bg2:'#5e35b1', accent:'#e1bee7', icon:'🎵', tag:'アイドル曲', photos:['イヤホン', 'ヘッドフォンと机', 'スマホで音楽再生', 'CDジャケット風', 'ライブ会場の光'] },
+  '名言×勉強':       { bg1:'#1c1c1c', bg2:'#3a3a3a', accent:'#ffd54f', icon:'💬', tag:'名言', photos:['古い書物', '万年筆と紙', '黒板にチョーク', '哲学的な空', '本棚'] },
+  '海外トレンド':    { bg1:'#01579b', bg2:'#0288d1', accent:'#fff59d', icon:'🌏', tag:'海外', photos:['世界地図', '英字新聞', 'パスポート', '海外のカフェ', '空港の風景'] },
+  '有名人×勉強':     { bg1:'#bf360c', bg2:'#e65100', accent:'#ffd54f', icon:'⭐', tag:'有名人', photos:['スタジアム照明', 'マイクとステージ', '映画館の座席', 'チケット', '輝く星'] },
+  '知って得する':    { bg1:'#004d40', bg2:'#00897b', accent:'#fff59d', icon:'💡', tag:'豆知識', photos:['電球', '虫眼鏡', 'メモと付箋', '辞書', '!マークの黒板'] },
+  'おもしろ資格':    { bg1:'#33691e', bg2:'#689f38', accent:'#fff59d', icon:'🎓', tag:'資格', photos:['卒業証書', '卒業帽', '試験会場', '合格通知風', '資格テキスト'] },
+  '語源・由来':      { bg1:'#3e2723', bg2:'#6d4c41', accent:'#ffe082', icon:'📚', tag:'語源', photos:['古い辞書', '羽根ペンとインク', '巻物', '木製の机', 'ろうそくと本'] },
+  '意外な勉強':      { bg1:'#0d47a1', bg2:'#1565c0', accent:'#b3e5fc', icon:'🔍', tag:'意外な勉強', photos:['虫眼鏡と本', '?マークのカード', '謎の地図', '実験道具', 'パズルピース'] },
+  '法律が変わった':  { bg1:'#1a237e', bg2:'#283593', accent:'#fff59d', icon:'⚖️', tag:'法改正', photos:['天秤', '裁判所の建物', '法律書', '木槌(ガベル)', '六法全書'] },
+  '単位まとめ':      { bg1:'#263238', bg2:'#455a64', accent:'#b0bec5', icon:'📐', tag:'単位', photos:['定規とコンパス', '計算式の黒板', '数学書', '電卓と紙', '三角定規'] },
+  '○○賞まとめ':    { bg1:'#e65100', bg2:'#fb8c00', accent:'#fff59d', icon:'🏅', tag:'賞', photos:['トロフィー', 'メダル', '表彰状', '花束', '王冠'] },
+  '企画シリーズ':    { bg1:'#4a148c', bg2:'#7b1fa2', accent:'#fff59d', icon:'🎯', tag:'企画', photos:['ダーツの的', '企画書', 'ホワイトボード', 'カラフルな付箋', 'アイデア電球'] },
+  'おすすめアプリ':  { bg1:'#01579b', bg2:'#0277bd', accent:'#b3e5fc', icon:'📱', tag:'アプリ', photos:['スマホ画面', 'タブレット', 'PC画面', 'アプリアイコン風', '充電中のスマホ'] },
+  'おすすめ文房具':  { bg1:'#1b5e20', bg2:'#388e3c', accent:'#fff59d', icon:'✏️', tag:'文房具', photos:['ペンケース', '色鉛筆', '蛍光ペン', 'ノート集合', '消しゴム'] },
+  '勉強の味方':      { bg1:'#004d40', bg2:'#00796b', accent:'#b2dfdb', icon:'🤝', tag:'勉強の味方', photos:['コーヒーとノート', '机と植物', 'ヘッドフォン', 'マグカップ', '蛍光ペン'] },
+  '勉強のお供':      { bg1:'#3e2723', bg2:'#6d4c41', accent:'#ffcc80', icon:'🍫', tag:'お供', photos:['チョコレート', 'コーヒー', 'お茶', 'クッキー', 'エナジードリンク'] },
+  'ストレス発散':    { bg1:'#880e4f', bg2:'#ad1457', accent:'#f8bbd0', icon:'🧘', tag:'ストレス発散', photos:['ヨガポーズ', '入浴', '深呼吸する人', '空と雲', '森の中'] },
+  'ご褒美お菓子':    { bg1:'#bf360c', bg2:'#e65100', accent:'#fff59d', icon:'🍰', tag:'お菓子', photos:['ケーキ', 'チョコレート', 'マカロン', 'パンケーキ', 'プリン'] },
+  '習慣化の方法':    { bg1:'#1b5e20', bg2:'#2e7d32', accent:'#c5e1a5', icon:'🔁', tag:'習慣化', photos:['カレンダー', 'チェックリスト', '時計と手帳', '習慣記録ノート', '朝のルーティン'] },
+  'ルーティン図鑑':  { bg1:'#0d47a1', bg2:'#1565c0', accent:'#b3e5fc', icon:'📋', tag:'ルーティン', photos:['手帳', 'スケジュール表', '目覚まし時計', '朝の机', 'TODO リスト'] },
+  '休み方':          { bg1:'#1a237e', bg2:'#283593', accent:'#c5cae9', icon:'😴', tag:'休み方', photos:['ベッドと枕', '昼寝中の人', '湯気の立つお茶', '夕焼け', 'ハンモック'] },
+  '目を覚ます':      { bg1:'#e65100', bg2:'#f57c00', accent:'#fff59d', icon:'☀️', tag:'目覚まし', photos:['朝日', '目覚まし時計', '朝のコーヒー', '窓を開ける', 'ストレッチ'] },
+  '週末30分':        { bg1:'#33691e', bg2:'#558b2f', accent:'#dcedc8', icon:'⏱️', tag:'週末30分', photos:['砂時計', '腕時計', '机に並ぶ本', '朝の窓辺', '小さなノート'] },
+  '来週やろう':      { bg1:'#37474f', bg2:'#546e7a', accent:'#cfd8dc', icon:'📅', tag:'来週', photos:['カレンダーの日付', '手帳に予定', '時計', '空を見上げる人', 'メモ帳'] },
+  '体験レポート':    { bg1:'#bf360c', bg2:'#e65100', accent:'#fff59d', icon:'📝', tag:'体験レポート', photos:['店内写真', '机と椅子', 'カフェの一角', '学習スペース', '入口の看板'] },
+  '店舗紹介':        { bg1:'#1b5e20', bg2:'#2e7d32', accent:'#fff59d', icon:'🏢', tag:'店舗紹介', photos:['店舗外観', '店内全景', 'デスク席', 'ラウンジ', '受付カウンター'] },
+  '試験日カレンダー':{ bg1:'#b71c1c', bg2:'#d32f2f', accent:'#fff59d', icon:'📆', tag:'試験日', photos:['カレンダー', '受験票風', '時計と教科書', '試験会場', 'シャープペン'] }
 };
 
-// 透かし用ロゴ画像
+// 透かし用ロゴ画像（高解像度）
 var X_WATERMARK_IMG = new Image();
 var X_WATERMARK_LOADED = false;
 X_WATERMARK_IMG.onload = function() { X_WATERMARK_LOADED = true; if (typeof drawXImagePreview === 'function') drawXImagePreview(); };
-X_WATERMARK_IMG.src = 'studygo-watermark.png';
+X_WATERMARK_IMG.src = 'ogp_logo.png';
 
 var X_TIME_SLOTS = ['h7','h10','h12','h15','h18','h20'];
 var X_TIME_LABELS = { h7:'7:00', h10:'10:00', h12:'12:00', h15:'15:00', h18:'18:00', h20:'20:00' };
