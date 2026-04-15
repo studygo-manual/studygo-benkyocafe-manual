@@ -3044,21 +3044,29 @@ function renderXToday() {
   renderXTodayCards();
 }
 
-// 選択日までにシリーズが何回登場するか数え、正しい投稿番号を算出
-function calcPostIndexForDate(seriesName, targetDate) {
+// 選択日とスロットまでにシリーズが何回登場するか数え、正しい投稿番号を算出
+function calcPostIndexForDate(seriesName, targetDate, targetSlot) {
   var prog = getSeriesProgress(seriesName);
   var posts = getXPosts(seriesName);
   if (posts.length === 0) return 0;
 
-  // 翌日(xWeekDates[0])から選択日までの間で、同じシリーズが何回出るか数える
+  var targetKey = dateToKey(targetDate);
   var offset = 0;
   for (var i = 0; i < xWeekDates.length; i++) {
     var wd = xWeekDates[i];
-    if (dateToKey(wd) >= dateToKey(targetDate)) break;
+    var wdKey = dateToKey(wd);
+    if (wdKey > targetKey) break;
     var rot = getRotationForDate(wd);
     if (!rot) continue;
     for (var s = 0; s < X_TIME_SLOTS.length; s++) {
-      if (rot[X_TIME_SLOTS[s]] === seriesName) { offset++; break; }
+      var slot = X_TIME_SLOTS[s];
+      // 目的のスロットに到達したら、その時点のオフセットを返す
+      if (wdKey === targetKey && targetSlot && slot === targetSlot) {
+        return (prog.next + offset) % posts.length;
+      }
+      if (rot[slot] === seriesName) {
+        offset++;
+      }
     }
   }
   return (prog.next + offset) % posts.length;
@@ -3091,7 +3099,7 @@ function renderXTodayCards() {
     var seriesName = rotation[slot];
     if (!seriesName) return;
     var posts = getXPosts(seriesName);
-    var nextIdx = calcPostIndexForDate(seriesName, d);
+    var nextIdx = calcPostIndexForDate(seriesName, d, slot);
     var postText = posts[nextIdx] || '(コンテンツなし)';
     var isChecked = checks[slot] || false;
     var cardClass = isChecked ? 'x-card posted' : 'x-card';
@@ -3248,7 +3256,7 @@ function copyAllXPosts() {
     if (!seriesName) return;
     if (checks[slot]) return; // 予約済みはスキップ
     var posts = getXPosts(seriesName);
-    var nextIdx = calcPostIndexForDate(seriesName, d);
+    var nextIdx = calcPostIndexForDate(seriesName, d, slot);
     var postText = posts[nextIdx] || '(コンテンツなし)';
     lines.push('【' + X_TIME_LABELS[slot] + '】' + seriesName);
     lines.push(postText);
@@ -3288,7 +3296,7 @@ function markXPosted(slot, seriesName) {
   if (!xDailyChecks[dateKey]) xDailyChecks[dateKey] = {};
 
   // 選択日に対応する投稿インデックスを記録（prog.nextは変更しない）
-  var postIdx = calcPostIndexForDate(seriesName, xSelectedDate);
+  var postIdx = calcPostIndexForDate(seriesName, xSelectedDate, slot);
   xDailyChecks[dateKey][slot] = true;
   xDailyChecks[dateKey][slot + '_idx'] = postIdx;
   xDailyChecks[dateKey][slot + '_series'] = seriesName;
@@ -3423,7 +3431,7 @@ function renderSchedCards() {
     var seriesName = rotation[slot];
     if (!seriesName) return;
     var posts = getXPosts(seriesName);
-    var nextIdx = calcPostIndexForDate(seriesName, d);
+    var nextIdx = calcPostIndexForDate(seriesName, d, slot);
     var postText = posts[nextIdx] || '(コンテンツなし)';
     var isChecked = checks[slot] || false;
     var cardClass = isChecked ? 'x-card posted' : 'x-card';
@@ -3459,7 +3467,7 @@ function markSchedPosted(slot, seriesName) {
   var dateKey = dateToKey(xSchedSelectedDate);
   if (!xDailyChecks[dateKey]) xDailyChecks[dateKey] = {};
 
-  var postIdx = calcPostIndexForDate(seriesName, xSchedSelectedDate);
+  var postIdx = calcPostIndexForDate(seriesName, xSchedSelectedDate, slot);
   xDailyChecks[dateKey][slot] = true;
   xDailyChecks[dateKey][slot + '_idx'] = postIdx;
   xDailyChecks[dateKey][slot + '_series'] = seriesName;
