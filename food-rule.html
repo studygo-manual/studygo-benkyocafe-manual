@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>勉強カフェ 館内飲食ルール【仮案 v3】</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    background: #f4f6f8;
+    color: #222;
+    line-height: 1.7;
+    padding: 20px;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+  header {
+    background: linear-gradient(135deg, #2c5f8d, #4a90c2);
+    color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+  }
+  h1 { font-size: 26px; margin-bottom: 8px; }
+  .version { font-size: 13px; opacity: 0.9; }
+  .badge {
+    display: inline-block;
+    background: #ffc107;
+    color: #222;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 8px;
+  }
+  .section {
+    background: #fff;
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  .section h2 {
+    font-size: 20px;
+    color: #2c5f8d;
+    border-bottom: 3px solid #2c5f8d;
+    padding-bottom: 10px;
+    margin-bottom: 18px;
+  }
+
+  /* お客様向けルール表示 */
+  .customer-rule {
+    background: linear-gradient(135deg, #fff, #f9fbfd);
+    border: 3px solid #2c5f8d;
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 24px;
+  }
+  .customer-rule h2 {
+    text-align: center;
+    font-size: 22px;
+    color: #2c5f8d;
+    border: none;
+    margin-bottom: 20px;
+  }
+  .lead {
+    text-align: center;
+    font-size: 15px;
+    color: #555;
+    margin-bottom: 24px;
+    padding: 0 20px;
+  }
+
+  .principle-card {
+    background: #e3f2fd;
+    border-left: 6px solid #2196f3;
+    padding: 18px 24px;
+    margin-bottom: 14px;
+    border-radius: 8px;
+  }
+  .principle-number {
+    display: inline-block;
+    background: #2196f3;
+    color: #fff;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 32px;
+    font-weight: 800;
+    margin-right: 10px;
+  }
+  .principle-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1565c0;
+    display: inline;
+  }
+  .principle-desc {
+    font-size: 14px;
+    color: #555;
+    margin-top: 8px;
+    padding-left: 42px;
+  }
+
+  .example-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .example-box {
+    padding: 18px 22px;
+    border-radius: 10px;
+  }
+  .example-ok {
+    background: #e8f5e9;
+    border: 2px solid #4caf50;
+  }
+  .example-ng {
+    background: #ffebee;
+    border: 2px solid #f44336;
+  }
+  .example-box h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  .example-ok h3 { color: #2e7d32; }
+  .example-ng h3 { color: #c62828; }
+  .example-box p {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.8;
+  }
+
+  .final-note {
+    background: #fff3cd;
+    border: 2px solid #ffc107;
+    padding: 18px 24px;
+    border-radius: 10px;
+    margin-top: 20px;
+    text-align: center;
+  }
+  .final-note strong {
+    color: #856404;
+    font-size: 15px;
+  }
+  .final-note p {
+    font-size: 13px;
+    color: #666;
+    margin-top: 6px;
+  }
+
+  /* スタッフ向け補足 */
+  .staff-section {
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border-top: 4px solid #ff9800;
+  }
+  .staff-section h2 {
+    font-size: 18px;
+    color: #e65100;
+    margin-bottom: 14px;
+  }
+  .staff-section h3 {
+    font-size: 15px;
+    color: #444;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    padding-left: 10px;
+    border-left: 3px solid #ff9800;
+  }
+  .staff-section ul { padding-left: 24px; font-size: 14px; }
+  .staff-section li { margin-bottom: 6px; }
+
+  .template-box {
+    background: #f5f5f5;
+    border: 1px solid #ccc;
+    padding: 16px 20px;
+    border-radius: 6px;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+
+  @media (max-width: 600px) {
+    .example-section { grid-template-columns: 1fr; }
+    .section, .customer-rule { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>🍱 勉強カフェ 館内飲食ルール</h1>
+    <div class="version">仮案 v4 / 2026-04-15 / 投票者: ねもと・國松・棟元・みっちー（4名）</div>
+    <div class="badge">3軸方式：匂い × 温度 × 音</div>
+  </header>
+
+  <!-- お客様向けルール（実際に掲示される形） -->
+  <div class="customer-rule">
+    <h2>📖 館内でのお食事について</h2>
+    <p class="lead">
+      勉強カフェは学習に集中いただくための共用空間です。<br>
+      周りのお客様への配慮として、以下にご協力をお願いいたします。
+    </p>
+
+    <div class="principle-card">
+      <span class="principle-number">1</span>
+      <span class="principle-title">🌸 匂い — 香りが広がるお食事はご遠慮ください</span>
+      <div class="principle-desc">開封時に香りが周囲に広がるもの（カレー・エスニック・ニンニク料理・発酵食品 等）</div>
+    </div>
+
+    <div class="principle-card">
+      <span class="principle-number">2</span>
+      <span class="principle-title">🔥 温度 — 温かいお食事はご遠慮ください</span>
+      <div class="principle-desc">湯気が立つもの・温め直したもの・デリバリーの温かい料理など（冷めたお弁当・サンドイッチ等はお召し上がりいただけます）</div>
+    </div>
+
+    <div class="principle-card">
+      <span class="principle-number">3</span>
+      <span class="principle-title">🔊 音 — 周囲への配慮をお願いいたします</span>
+      <div class="principle-desc">お菓子類（館内販売のオフィスグリコ含む）はお召し上がりいただけます。周囲の学習に著しく支障がある場合のみ、スタッフよりお声がけする場合がございます</div>
+    </div>
+
+    <div class="example-section">
+      <div class="example-box example-ok">
+        <h3>✅ お召し上がりいただけるもの（例）</h3>
+        <p>
+          サンドイッチ / おにぎり / パン類<br>
+          お菓子・チョコレート・和菓子<br>
+          ナッツ・ドライフルーツ<br>
+          バナナ・りんご 等の果物<br>
+          冷たいお弁当 / プロテインバー<br>
+          お飲み物全般
+        </p>
+      </div>
+      <div class="example-box example-ng">
+        <h3>❌ ご遠慮いただくもの（例）</h3>
+        <p>
+          カップラーメン・カップ麺類<br>
+          カレー・エスニック料理<br>
+          ニンニク・ニラを使った料理<br>
+          温かいお弁当・デリバリー料理<br>
+          お酒・アルコール類<br>
+          匂いの強い発酵食品
+        </p>
+      </div>
+    </div>
+
+    <div class="final-note">
+      <strong>🙏 上記に該当しないお食事については、スタッフがご案内いたします</strong>
+      <p>ご不明な点はお気軽にスタッフまでお声がけください</p>
+    </div>
+  </div>
+
+  <!-- スタッフ向け補足 -->
+  <div class="staff-section">
+    <h2>🔧 スタッフ向け 運用の考え方</h2>
+
+    <h3>基本スタンス</h3>
+    <ul>
+      <li><strong>細かい品目リストは作らない</strong>（会員から穴を突かれるため）</li>
+      <li>「基準」として3原則を示し、<strong>最終判断は現場</strong>に委ねる</li>
+      <li>厳密な線引きより「周りのお客様への配慮」という観点で案内する</li>
+    </ul>
+
+    <h3>判断の目安（3軸で判断）</h3>
+    <ul>
+      <li>🌸 <strong>匂い</strong>：開封時に周囲に匂いが広がる → NG / 匂いが広がらない → OK</li>
+      <li>🔥 <strong>温度</strong>：温かい・湯気が立つ・温め直し → NG / 冷めている → OK</li>
+      <li>🔊 <strong>音</strong>：原則OK（オフィスグリコでも販売しているため）。極端な場合のみ個別に配慮をお願いする</li>
+    </ul>
+    <p style="font-size: 13px; color: #666; margin-top: 10px;">
+      ※ 3軸のうち<strong>匂いと温度のどちらかに該当するとNG</strong>。音は原則許容で例外対応。
+    </p>
+
+    <h3>よくある質問への回答</h3>
+    <ul>
+      <li><strong>Uber Eats等のデリバリー</strong> → 温かい料理が多いため原則NG。冷たいサンドイッチ等は個別判断</li>
+      <li><strong>弁当の温め直し</strong> → 店内に電子レンジは無し。温かい状態で持ち込まれたものはNG</li>
+      <li><strong>カップスープ・カップ麺</strong> → 温かい＋液体ゴミ処理の負担でNG</li>
+      <li><strong>ポテチ・せんべい</strong> → 原則OK（館内のオフィスグリコでも販売しているため）。著しく支障がある場合のみ個別対応</li>
+      <li><strong>みかん</strong> → 基本OKだが匂いが気になる場合は個別案内</li>
+    </ul>
+
+    <h3>お客様への案内文例</h3>
+    <div class="template-box">
+      恐れ入ります、共用スペースのため匂いの強いお食事はご遠慮いただいております。<br>
+      パン類・おにぎり・お菓子などはお召し上がりいただけますので、お召し上がりの際はよろしくお願いいたします。
+    </div>
+
+    <h3>エスカレーション</h3>
+    <ul>
+      <li>お客様から「なぜこれがダメなのか」と問われた場合 → 「周りのお客様からお声をいただくため」と説明</li>
+      <li>判断に迷う場合 → 無理にその場で結論せず、一度MGに確認する</li>
+      <li>トラブルに発展しそうな場合 → 個室ラウンジへのご案内も選択肢</li>
+    </ul>
+  </div>
+
+  <!-- MG陣の議論経緯 -->
+  <div class="section">
+    <h2>📝 議論の経緯（MG陣記録）</h2>
+    <p style="font-size: 14px; margin-bottom: 10px;">
+      当初は細かい品目リスト（OK 12品目 / NG 12品目 / グレー 10品目）で4名投票を実施しましたが、
+      以下の理由から<strong>基準方式に変更</strong>しました。
+    </p>
+    <ul style="padding-left: 24px; font-size: 14px;">
+      <li>細かくすると会員から「リストにない◯◯はどうなんだ」と穴を突かれる</li>
+      <li>4名の意見が割れた項目が多く、全ての品目を決め切るのが困難</li>
+      <li>現場判断の余地を残した方が柔軟に運用できる</li>
+    </ul>
+
+    <h3 style="margin-top: 16px; font-size: 15px; color: #2c5f8d;">投票で得られた重要な視点</h3>
+    <ul style="padding-left: 24px; font-size: 14px;">
+      <li><strong>温度軸</strong>（ねもと・みっちー）：冷めたものは基本匂わない。温め直しは厳禁</li>
+      <li><strong>音問題</strong>（みっちー）：せんべい・ポテチは匂いより咀嚼音</li>
+      <li><strong>デリバリー対応</strong>（棟元）：Uber Eats等の質問が必ず出る</li>
+      <li><strong>液体ゴミ問題</strong>（ねもと）：カップスープのゴミ処理が現場負担</li>
+    </ul>
+  </div>
+
+  <div class="section" style="background: #fff3cd;">
+    <h2>📋 次のアクション</h2>
+    <ol style="padding-left: 24px;">
+      <li>MG陣でこの v3 案を承認</li>
+      <li>お客様向け掲示用デザインの最終調整</li>
+      <li><code>manual/index.html</code>（勉強カフェ→スタジオルール）に反映</li>
+      <li>館内掲示物の印刷・設置</li>
+    </ol>
+  </div>
+</div>
+</body>
+</html>
