@@ -3501,32 +3501,37 @@ function renderXToday() {
   renderXTodayCards();
 }
 
-// 選択日とスロットまでにシリーズが何回登場するか数え、正しい投稿番号を算出
+// X_START_DATEから対象日+スロットまでにシリーズが何回登場するか数え、投稿番号を算出
+// 予約済みに関係なく日付ベースで自動進行
 function calcPostIndexForDate(seriesName, targetDate, targetSlot) {
-  var prog = getSeriesProgress(seriesName);
   var posts = getXPosts(seriesName);
   if (posts.length === 0) return 0;
 
   var targetKey = dateToKey(targetDate);
+  var epoch = new Date(X_START_DATE);
+  epoch.setHours(0,0,0,0);
+  var d = new Date(targetDate);
+  d.setHours(0,0,0,0);
+
   var offset = 0;
-  for (var i = 0; i < xWeekDates.length; i++) {
-    var wd = xWeekDates[i];
-    var wdKey = dateToKey(wd);
-    if (wdKey > targetKey) break;
-    var rot = getRotationForDate(wd);
-    if (!rot) continue;
-    for (var s = 0; s < X_TIME_SLOTS.length; s++) {
-      var slot = X_TIME_SLOTS[s];
-      // 目的のスロットに到達したら、その時点のオフセットを返す
-      if (wdKey === targetKey && targetSlot && slot === targetSlot) {
-        return (prog.next + offset) % posts.length;
-      }
-      if (rot[slot] === seriesName) {
-        offset++;
+  var cur = new Date(epoch);
+  while (cur <= d) {
+    var curKey = dateToKey(cur);
+    var rot = getRotationForDate(cur);
+    if (rot) {
+      for (var s = 0; s < X_TIME_SLOTS.length; s++) {
+        var slot = X_TIME_SLOTS[s];
+        if (curKey === targetKey && targetSlot && slot === targetSlot) {
+          return offset % posts.length;
+        }
+        if (rot[slot] === seriesName) {
+          offset++;
+        }
       }
     }
+    cur.setDate(cur.getDate() + 1);
   }
-  return (prog.next + offset) % posts.length;
+  return offset % posts.length;
 }
 
 function renderXTodayCards() {
