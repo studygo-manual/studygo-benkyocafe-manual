@@ -147,16 +147,27 @@ body { padding-top: 125px; }
 }
 .schedule-panel h3 { margin-bottom: 12px; font-size: 16px; }
 .schedule-grid {
-  display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px;
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;
 }
 .schedule-day {
   background: #fafafa; border: 1px solid #e0e0e0; border-radius: 8px;
-  padding: 10px; min-height: 80px;
+  padding: 10px; min-height: 90px; cursor: pointer;
+  transition: all 0.15s; text-align: left;
+}
+.schedule-day:hover {
+  background: #f0f8f0; border-color: #4a8c3f; transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 .schedule-day.today {
   background: #f0f8f0; border-color: #4a8c3f; border-width: 2px;
 }
-.schedule-day.past { opacity: 0.75; }
+.schedule-day.selected {
+  background: #2e7d32; border-color: #2e7d32;
+}
+.schedule-day.selected .schedule-date { color: #fff; }
+.schedule-day.selected .schedule-store { background: rgba(255,255,255,0.9); }
+.schedule-day.selected .schedule-empty { color: #e0e0e0; }
+.schedule-day.past { opacity: 0.85; }
 .schedule-date { font-size: 12px; font-weight: 700; color: #666; margin-bottom: 6px; }
 .schedule-day.today .schedule-date { color: #2e7d32; }
 .schedule-stores { font-size: 11px; line-height: 1.5; }
@@ -253,8 +264,19 @@ body { padding-top: 125px; }
 
 <div class="container">
   <div class="schedule-panel">
-    <h3>投稿スケジュール（今日 ±3営業日・平日のみ）</h3>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+      <h3 style="margin:0;">今週の投稿スケジュール（月〜金）</h3>
+      <div style="display:flex;gap:6px;">
+        <button class="btn btn-edit" onclick="changeWeek(-1)" style="padding:4px 10px;font-size:12px;">前週</button>
+        <button class="btn btn-edit" onclick="changeWeek(0)" style="padding:4px 10px;font-size:12px;">今週</button>
+        <button class="btn btn-edit" onclick="changeWeek(1)" style="padding:4px 10px;font-size:12px;">来週</button>
+      </div>
+    </div>
     <div id="scheduleGrid" class="schedule-grid"></div>
+    <div id="selectedDateInfo" style="display:none;margin-top:12px;padding:10px 14px;background:#f0f8f0;border-radius:8px;font-size:13px;">
+      <span id="selectedDateLabel"></span>
+      <button class="btn btn-edit" onclick="clearDateFilter()" style="margin-left:10px;padding:3px 10px;font-size:11px;">選択解除</button>
+    </div>
   </div>
 
   <div class="settings-panel">
@@ -837,6 +859,47 @@ function toDateStr(date) {
   return `${y}-${m}-${d}`;
 }
 
+// 週オフセット管理（0=今週、-1=先週、1=来週）
+let weekOffset = 0;
+// 選択中の日付フィルタ（YYYY-MM-DD or null）
+let selectedDateFilter = null;
+
+function changeWeek(offset) {
+  weekOffset = offset;
+  selectedDateFilter = null;
+  renderSchedule();
+  renderStores();
+  updateSelectedDateInfo();
+}
+
+function selectDate(dateStr) {
+  selectedDateFilter = (selectedDateFilter === dateStr) ? null : dateStr;
+  renderSchedule();
+  renderStores();
+  updateSelectedDateInfo();
+}
+
+function clearDateFilter() {
+  selectedDateFilter = null;
+  renderSchedule();
+  renderStores();
+  updateSelectedDateInfo();
+}
+
+function updateSelectedDateInfo() {
+  const info = document.getElementById('selectedDateInfo');
+  const label = document.getElementById('selectedDateLabel');
+  if (!info || !label) return;
+  if (selectedDateFilter) {
+    const [y,m,d] = selectedDateFilter.split('-');
+    const count = Object.values(postDates).filter(v => v === selectedDateFilter).length;
+    label.innerHTML = `<b>${parseInt(m)}/${parseInt(d)}の投稿</b> を表示中（${count}件）`;
+    info.style.display = 'block';
+  } else {
+    info.style.display = 'none';
+  }
+}
+
 function renderSchedule() {
   const grid = document.getElementById('scheduleGrid');
   if (!grid) return;
@@ -846,26 +909,19 @@ function renderSchedule() {
   const todayStr = toDateStr(today);
   const dayNames = ['日','月','火','水','木','金','土'];
 
-  // 過去3営業日
-  const past = [];
-  let d = new Date(today);
-  while (past.length < 3) {
-    d.setDate(d.getDate() - 1);
-    if (d.getDay() !== 0 && d.getDay() !== 6) past.unshift(new Date(d));
-  }
+  // 指定週の月曜日を取得（weekOffset=0なら今週の月曜）
+  const monday = new Date(today);
+  const dow = today.getDay();
+  const diffToMonday = (dow === 0) ? -6 : (1 - dow);
+  monday.setDate(today.getDate() + diffToMonday + weekOffset * 7);
 
-  // 今日（平日のみ）
-  const dates = [...past];
-  if (today.getDay() !== 0 && today.getDay() !== 6) dates.push(new Date(today));
-
-  // 未来3営業日
-  d = new Date(today);
-  const future = [];
-  while (future.length < 3) {
-    d.setDate(d.getDate() + 1);
-    if (d.getDay() !== 0 && d.getDay() !== 6) future.push(new Date(d));
+  // 月〜金（5日分）
+  const dates = [];
+  for (let i = 0; i < 5; i++) {
+    const d = new Date(monday);
+    d.setDate(monday.getDate() + i);
+    dates.push(d);
   }
-  dates.push(...future);
 
   // 日付ごとに店舗をグループ化
   const byDate = {};
@@ -879,13 +935,15 @@ function renderSchedule() {
     const ds = toDateStr(dt);
     const isToday = (ds === todayStr);
     const isPast = (dt < today);
+    const isSelected = (ds === selectedDateFilter);
     const stores = byDate[ds] || [];
     const dn = dayNames[dt.getDay()];
     const cls = ['schedule-day'];
-    if (isToday) cls.push('today');
+    if (isSelected) cls.push('selected');
+    else if (isToday) cls.push('today');
     else if (isPast) cls.push('past');
     return `
-      <div class="${cls.join(' ')}">
+      <div class="${cls.join(' ')}" onclick="selectDate('${ds}')">
         <div class="schedule-date">${dt.getMonth()+1}/${dt.getDate()}(${dn})${isToday ? ' 今日' : ''}</div>
         <div class="schedule-stores">
           ${stores.length === 0
@@ -1226,6 +1284,7 @@ function renderStores() {
     if (areaFilterVal && getArea(s) !== areaFilterVal) return false;
     if (postStatusFilter === '未投稿' && postDates[s.id]) return false;
     if (postStatusFilter === '投稿済' && !postDates[s.id]) return false;
+    if (selectedDateFilter && postDates[s.id] !== selectedDateFilter) return false;
     return true;
   });
 
