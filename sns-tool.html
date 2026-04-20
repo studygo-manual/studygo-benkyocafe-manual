@@ -696,6 +696,30 @@ body.platform-x-active { background: #1a1a1a; }
       </div>
     </div>
 
+    <!-- 差し込み要素（マンネリ化防止） -->
+    <div style="background:#ecfdf5;border:2px dashed #10b981;border-radius:10px;padding:14px 18px;margin-bottom:16px;">
+      <h3 style="color:#065f46;font-size:14px;margin:0 0 8px;">🍃 差し込み要素（マンネリ化防止）</h3>
+      <p style="font-size:11px;color:#047857;margin:0 0 10px;">テンプレの [季語]/[試験]/[天気] に置換されます。毎日更新推奨。</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+        <div>
+          <label style="font-size:11px;color:#065f46;font-weight:700;display:block;">🌸 季語・季節</label>
+          <input type="text" id="xQrSeason" placeholder="例: 桜の季節" oninput="saveXQrVars()" style="width:100%;margin-top:3px;padding:6px 8px;border:1px solid #10b981;border-radius:5px;font-size:12px;">
+        </div>
+        <div>
+          <label style="font-size:11px;color:#065f46;font-weight:700;display:block;">📝 直近の試験</label>
+          <input type="text" id="xQrExam" placeholder="例: 宅建、英検、TOEIC" oninput="saveXQrVars()" style="width:100%;margin-top:3px;padding:6px 8px;border:1px solid #10b981;border-radius:5px;font-size:12px;">
+        </div>
+        <div>
+          <label style="font-size:11px;color:#065f46;font-weight:700;display:block;">☀️ 今日の天気</label>
+          <input type="text" id="xQrWeather" placeholder="例: 雨、猛暑" oninput="saveXQrVars()" style="width:100%;margin-top:3px;padding:6px 8px;border:1px solid #10b981;border-radius:5px;font-size:12px;">
+        </div>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:#065f46;">
+        💡 <b>活用ヒント:</b> 直近の資格試験日は <a href="https://shikaku-king.com/calendar/" target="_blank" rel="noopener" style="color:#059669;">資格の大原カレンダー</a> ／
+        <a href="https://jiten.com/index.php?g=10" target="_blank" rel="noopener" style="color:#059669;">試験日一覧</a> を参照。天気は <a href="https://tenki.jp/" target="_blank" rel="noopener" style="color:#059669;">tenki.jp</a>。
+      </div>
+    </div>
+
     <!-- 店舗フォローカウンター -->
     <div style="background:#ecfdf5;border-left:4px solid #10b981;border-radius:8px;padding:14px 18px;margin-bottom:20px;">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
@@ -765,9 +789,37 @@ body.platform-x-active { background: #1a1a1a; }
       </div>
     </div>
 
-    <!-- テンプレA-E -->
-    <h3 style="font-size:18px;color:#333;margin:20px 0 12px;">📝 引用リプ テンプレート（A〜E ローテ推奨）</h3>
+    <!-- テンプレ -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin:20px 0 12px;flex-wrap:wrap;gap:10px;">
+      <h3 style="font-size:18px;color:#333;margin:0;">📝 引用リプ テンプレート（ローテ推奨）</h3>
+      <button onclick="openXQrCustomModal(null)" style="background:#10b981;color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;">➕ カスタムテンプレ追加</button>
+    </div>
+    <p style="font-size:12px;color:#666;margin-bottom:10px;">
+      プレースホルダ: <code style="background:#f0f7ff;padding:2px 6px;border-radius:3px;">[季語]</code>
+      <code style="background:#f0f7ff;padding:2px 6px;border-radius:3px;">[試験]</code>
+      <code style="background:#f0f7ff;padding:2px 6px;border-radius:3px;">[天気]</code>
+      <code style="background:#f0f7ff;padding:2px 6px;border-radius:3px;">[iOS]</code>
+      <code style="background:#f0f7ff;padding:2px 6px;border-radius:3px;">[Android]</code>
+    </p>
     <div id="xQrTemplates"></div>
+
+    <!-- カスタムテンプレ 編集モーダル -->
+    <div id="xQrCustomModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:9999;align-items:center;justify-content:center;padding:20px;" onclick="if(event.target===this)closeXQrCustomModal()">
+      <div style="background:#fff;border-radius:12px;max-width:620px;width:100%;padding:24px;">
+        <h3 id="xQrCustomTitle" style="margin:0 0 14px;color:#1565c0;">カスタムテンプレ追加</h3>
+        <label style="font-size:12px;color:#666;font-weight:700;">テンプレ名</label>
+        <input type="text" id="xQrCustomName" placeholder="例: F: 季節特化型" style="width:100%;margin:4px 0 12px;padding:8px 10px;border:1px solid #ccc;border-radius:6px;font-size:13px;">
+        <label style="font-size:12px;color:#666;font-weight:700;">本文（[季語] [試験] [天気] [iOS] [Android] を埋め込み可）</label>
+        <textarea id="xQrCustomText" rows="8" style="width:100%;margin:4px 0 12px;padding:10px;border:1px solid #ccc;border-radius:6px;font-size:13px;line-height:1.7;font-family:inherit;resize:vertical;" placeholder="[季語]の時期、勉強場所探しは大変ですよね...&#10;&#10;/ 勉強場所を探すなら、スタディGO \&#10;&#10;iOS：[iOS]　Android：[Android]"></textarea>
+        <div style="display:flex;justify-content:space-between;gap:8px;">
+          <button id="xQrCustomDelete" onclick="deleteXQrCustom()" style="background:#fee2e2;color:#991b1b;border:1px solid #ef4444;border-radius:6px;padding:8px 16px;font-size:13px;cursor:pointer;font-weight:700;display:none;">削除</button>
+          <div style="display:flex;gap:8px;margin-left:auto;">
+            <button onclick="closeXQrCustomModal()" style="background:#e5e7eb;color:#333;border:none;border-radius:6px;padding:8px 16px;font-size:13px;cursor:pointer;">キャンセル</button>
+            <button onclick="saveXQrCustom()" style="background:#10b981;color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:13px;cursor:pointer;font-weight:700;">保存</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- NG・注意事項 -->
     <div style="background:#fee2e2;border:2px solid #ef4444;border-radius:12px;padding:16px 20px;margin-top:20px;">
@@ -2492,7 +2544,7 @@ var X_QR_KEYWORDS = [
   { word: 'テスト期間 勉強場所', aim: '学生層' }
 ];
 
-var X_QR_TEMPLATES = [
+var X_QR_TEMPLATES_DEFAULT = [
   {
     id: 'A', name: 'A: 共感+提案型（図書館・カフェ満席など）', color: '#10b981',
     text: '図書館が満席だと困ってしまいますよね……😢\n家以外で集中できる場所をお探しでしたら、\nぜひ『スタディGO』をご活用ください！\n\n/ 勉強場所を探すなら、スタディGO \\\n\niOS：[iOS]　Android：[Android]\n\n学習がスムーズに進むよう応援しております！✨'
@@ -2512,8 +2564,39 @@ var X_QR_TEMPLATES = [
   {
     id: 'E', name: 'E: 学生・テスト期間型', color: '#ec4899',
     text: 'テスト期間、勉強場所探し大変ですよね📚\n『スタディGO』ならドロップインで使える\n自習スペースがまとまって見つかるので、\nカフェ難民になる前にぜひ！\n\n/ 勉強場所を探すなら、スタディGO \\\n\niOS：[iOS]　Android：[Android]\n\nテスト頑張ってくださいね！応援しています✨'
+  },
+  {
+    id: 'F', name: 'F: 季節型（[季語] 活用）', color: '#059669',
+    text: '[季語]の時期、勉強場所探し大変ですよね🌿\n『スタディGO』なら近くのドロップイン可能な\n勉強スペースがすぐ見つかりますよ！\n\n/ 勉強場所を探すなら、スタディGO \\\n\niOS：[iOS]　Android：[Android]\n\n素敵な学びの時間になりますように✨'
+  },
+  {
+    id: 'G', name: 'G: 試験直前型（[試験] 活用）', color: '#dc2626',
+    text: '[試験]直前、追い込みの時期ですね📝\n勉強場所に困ったら『スタディGO』で\n今すぐ使える自習スペースをチェックしてみてください！\n\n/ 勉強場所を探すなら、スタディGO \\\n\niOS：[iOS]　Android：[Android]\n\n[試験]合格を応援しております！✨'
+  },
+  {
+    id: 'H', name: 'H: 天気型（[天気] 活用）', color: '#0891b2',
+    text: '今日は[天気]で、家だと集中できないときもありますよね☁️\n『スタディGO』で近くの勉強スペースを\nサクッと探してみてはいかがでしょう？\n\n/ 勉強場所を探すなら、スタディGO \\\n\niOS：[iOS]　Android：[Android]\n\n快適に勉強できますように✨'
   }
 ];
+
+function loadXQrCustomTemplates() {
+  try {
+    var raw = localStorage.getItem('studygo_xqr_custom_tpl');
+    return raw ? JSON.parse(raw) : [];
+  } catch(e) { return []; }
+}
+
+function saveXQrCustomTemplates(list) {
+  localStorage.setItem('studygo_xqr_custom_tpl', JSON.stringify(list));
+}
+
+function getXQrTemplates() {
+  var customs = loadXQrCustomTemplates();
+  return X_QR_TEMPLATES_DEFAULT.concat(customs);
+}
+
+// 互換性のため
+Object.defineProperty(window, 'X_QR_TEMPLATES', { get: function() { return getXQrTemplates(); } });
 
 function getXQrTodayKey() {
   return 'studygo_xqr_' + getTodayDateKey();
@@ -2550,7 +2633,86 @@ function getXQrAndroidLink() {
 function replaceXQrLinks(text) {
   return text
     .replace(/\[iOS\]/g, getXQrIosLink())
-    .replace(/\[Android\]/g, getXQrAndroidLink());
+    .replace(/\[Android\]/g, getXQrAndroidLink())
+    .replace(/\[季語\]/g, localStorage.getItem('studygo_xqr_season') || '[季語]')
+    .replace(/\[試験\]/g, localStorage.getItem('studygo_xqr_exam') || '[試験]')
+    .replace(/\[天気\]/g, localStorage.getItem('studygo_xqr_weather') || '[天気]');
+}
+
+function saveXQrVars() {
+  var s = document.getElementById('xQrSeason').value;
+  var e = document.getElementById('xQrExam').value;
+  var w = document.getElementById('xQrWeather').value;
+  localStorage.setItem('studygo_xqr_season', s);
+  localStorage.setItem('studygo_xqr_exam', e);
+  localStorage.setItem('studygo_xqr_weather', w);
+  renderXQuoteReplyTemplates();
+}
+
+// カスタムテンプレ管理
+var editingCustomId = null;
+
+function openXQrCustomModal(id) {
+  editingCustomId = id;
+  var nameInput = document.getElementById('xQrCustomName');
+  var textArea = document.getElementById('xQrCustomText');
+  var titleEl = document.getElementById('xQrCustomTitle');
+  var delBtn = document.getElementById('xQrCustomDelete');
+  if (id) {
+    var customs = loadXQrCustomTemplates();
+    var t = customs.find(function(x){ return x.id === id; });
+    if (t) {
+      nameInput.value = t.name || '';
+      textArea.value = t.text || '';
+      titleEl.textContent = 'カスタムテンプレ編集';
+      delBtn.style.display = 'inline-block';
+    }
+  } else {
+    nameInput.value = '';
+    textArea.value = '';
+    titleEl.textContent = 'カスタムテンプレ追加';
+    delBtn.style.display = 'none';
+  }
+  document.getElementById('xQrCustomModal').style.display = 'flex';
+}
+
+function closeXQrCustomModal() {
+  document.getElementById('xQrCustomModal').style.display = 'none';
+  editingCustomId = null;
+}
+
+function saveXQrCustom() {
+  var name = document.getElementById('xQrCustomName').value.trim();
+  var text = document.getElementById('xQrCustomText').value.trim();
+  if (!name || !text) { alert('テンプレ名と本文を入力してください'); return; }
+  var customs = loadXQrCustomTemplates();
+  if (editingCustomId) {
+    var idx = customs.findIndex(function(x){ return x.id === editingCustomId; });
+    if (idx >= 0) {
+      customs[idx].name = name;
+      customs[idx].text = text;
+    }
+  } else {
+    customs.push({
+      id: 'custom_' + Date.now(),
+      name: name,
+      text: text,
+      color: '#6366f1',
+      custom: true
+    });
+  }
+  saveXQrCustomTemplates(customs);
+  closeXQrCustomModal();
+  renderXQuoteReplyTemplates();
+}
+
+function deleteXQrCustom() {
+  if (!editingCustomId) return;
+  if (!confirm('このテンプレを削除しますか？')) return;
+  var customs = loadXQrCustomTemplates().filter(function(x){ return x.id !== editingCustomId; });
+  saveXQrCustomTemplates(customs);
+  closeXQrCustomModal();
+  renderXQuoteReplyTemplates();
 }
 
 function incrementXQrCount() {
@@ -2593,12 +2755,16 @@ function renderXQrKeywords() {
 function renderXQuoteReplyTemplates() {
   var container = document.getElementById('xQrTemplates');
   if (!container) return;
-  container.innerHTML = X_QR_TEMPLATES.map(function(t) {
+  container.innerHTML = getXQrTemplates().map(function(t) {
     var displayText = replaceXQrLinks(t.text);
+    var editBtn = t.custom
+      ? '<button onclick="openXQrCustomModal(\'' + t.id + '\')" class="btn btn-edit" style="padding:6px 10px;font-size:12px;">✏️ 編集</button>'
+      : '';
     return '<div style="background:#fff;border-left:4px solid ' + t.color + ';border-radius:8px;padding:14px 18px;margin-bottom:12px;box-shadow:0 2px 6px rgba(0,0,0,0.06);">' +
       '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:8px;">' +
-        '<b style="color:' + t.color + ';font-size:14px;">' + t.name + '</b>' +
+        '<b style="color:' + t.color + ';font-size:14px;">' + t.name + (t.custom ? ' <span style="background:' + t.color + ';color:#fff;font-size:10px;padding:2px 6px;border-radius:8px;margin-left:4px;">カスタム</span>' : '') + '</b>' +
         '<div style="display:flex;gap:6px;">' +
+          editBtn +
           '<button onclick="copyXQrTemplate(\'' + t.id + '\', this)" class="btn btn-copy" style="background:' + t.color + ';padding:6px 14px;font-size:12px;">📋 コピー＆カウント</button>' +
         '</div>' +
       '</div>' +
@@ -2608,7 +2774,7 @@ function renderXQuoteReplyTemplates() {
 }
 
 function copyXQrTemplate(id, btn) {
-  var t = X_QR_TEMPLATES.find(function(x) { return x.id === id; });
+  var t = getXQrTemplates().find(function(x) { return x.id === id; });
   if (!t) return;
   var text = replaceXQrLinks(t.text);
   navigator.clipboard.writeText(text).then(function() {
@@ -2630,6 +2796,12 @@ function renderXQuoteReply() {
   var androidInput = document.getElementById('xQrAndroidUrl');
   if (iosInput) iosInput.value = localStorage.getItem('studygo_xqr_ios') || '';
   if (androidInput) androidInput.value = localStorage.getItem('studygo_xqr_android') || '';
+  var sEl = document.getElementById('xQrSeason');
+  var eEl = document.getElementById('xQrExam');
+  var wEl = document.getElementById('xQrWeather');
+  if (sEl) sEl.value = localStorage.getItem('studygo_xqr_season') || '';
+  if (eEl) eEl.value = localStorage.getItem('studygo_xqr_exam') || '';
+  if (wEl) wEl.value = localStorage.getItem('studygo_xqr_weather') || '';
   renderXQrKeywords();
   renderXQuoteReplyTemplates();
   renderXQrCounter();
