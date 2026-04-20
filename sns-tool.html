@@ -501,12 +501,12 @@ body.platform-x-active { background: #1a1a1a; }
         </div>
         <div style="background:#fff;border-radius:8px;padding:12px;text-align:center;">
           <div style="font-size:11px;color:#666;">コメント</div>
-          <div style="font-size:20px;font-weight:900;color:#e91e63;">10〜20</div>
-          <div style="font-size:10px;color:#999;">短文は業者判定</div>
+          <div style="font-size:20px;font-weight:900;color:#dc2626;">現状禁止</div>
+          <div style="font-size:10px;color:#999;">方針確定まで控える</div>
         </div>
         <div style="background:#fff;border-radius:8px;padding:12px;text-align:center;">
           <div style="font-size:11px;color:#666;">DM</div>
-          <div style="font-size:20px;font-weight:900;color:#dc2626;">禁止</div>
+          <div style="font-size:20px;font-weight:900;color:#dc2626;">現状禁止</div>
           <div style="font-size:10px;color:#999;">スパム認定大</div>
         </div>
       </div>
@@ -515,7 +515,7 @@ body.platform-x-active { background: #1a1a1a; }
     <!-- 本日の進捗カウンター -->
     <div style="background:#fdf2f8;border-left:4px solid #e91e63;border-radius:8px;padding:16px 20px;margin-bottom:20px;">
       <h3 style="color:#9d174d;font-size:15px;margin:0 0 10px;">📊 本日の実施数</h3>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
         <div style="background:#fff;border-radius:8px;padding:12px;text-align:center;">
           <div style="font-size:11px;color:#666;">いいね（勉強関連）</div>
           <div style="margin:4px 0;"><span id="igLikeCount" style="font-size:24px;font-weight:900;color:#e91e63;">0</span><span style="font-size:13px;color:#999;"> / 10人</span></div>
@@ -528,13 +528,6 @@ body.platform-x-active { background: #1a1a1a; }
           <div style="margin:4px 0;"><span id="igFollowCount" style="font-size:24px;font-weight:900;color:#e91e63;">0</span><span style="font-size:13px;color:#999;"> / 5人</span></div>
           <div style="display:flex;gap:4px;justify-content:center;flex-wrap:wrap;">
             <button onclick="incrementIgCount('follow',1)" style="background:#e91e63;color:#fff;border:none;border-radius:4px;padding:4px 10px;font-size:11px;cursor:pointer;font-weight:700;">+1</button>
-          </div>
-        </div>
-        <div style="background:#fff;border-radius:8px;padding:12px;text-align:center;">
-          <div style="font-size:11px;color:#666;">コメント</div>
-          <div style="margin:4px 0;"><span id="igCommentCount" style="font-size:24px;font-weight:900;color:#e91e63;">0</span><span style="font-size:13px;color:#999;"> / 20</span></div>
-          <div style="display:flex;gap:4px;justify-content:center;flex-wrap:wrap;">
-            <button onclick="incrementIgCount('comment',1)" style="background:#e91e63;color:#fff;border:none;border-radius:4px;padding:4px 10px;font-size:11px;cursor:pointer;font-weight:700;">+1</button>
           </div>
         </div>
       </div>
@@ -550,12 +543,16 @@ body.platform-x-active { background: #1a1a1a; }
       <div id="igHashtags" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
     </div>
 
-    <!-- コメントテンプレート -->
-    <h3 style="font-size:18px;color:#333;margin:20px 0 12px;">💬 コメントテンプレート（骨格のみ・必ず投稿内容に触れる1行を加える）</h3>
-    <div class="warn" style="background:#fef3c7;border-left:4px solid #f59e0b;padding:12px 16px;border-radius:4px;margin-bottom:16px;font-size:13px;color:#92400e;">
-      ⚠️ <b>テンプレ丸コピは業者判定の主要因</b>。「〇〇」部分は必ず投稿内容に触れる文言に差し替えること。
+    <!-- コメント・DM 現状禁止 -->
+    <div style="background:#fee2e2;border:2px solid #ef4444;border-radius:10px;padding:16px 20px;margin-top:20px;margin-bottom:16px;">
+      <h3 style="color:#991b1b;font-size:16px;margin:0 0 8px;">🚫 コメント・DM は現状禁止</h3>
+      <p style="font-size:13px;color:#7f1d1d;margin:0;line-height:1.7;">
+        Instagram でのコメント・DM 送信は<b>現状禁止</b>としています。<br>
+        実施は「いいね」と「フォロー」のみに絞り、プロフィール(bio)のDLリンクへ誘導する運用です。<br>
+        <span style="font-size:12px;color:#991b1b;">※方針変更時はこのマニュアルで通知</span>
+      </p>
     </div>
-    <div id="igCommentTemplates"></div>
+    <div id="igCommentTemplates" style="display:none;"></div>
 
     <!-- 導線設計 -->
     <div style="background:#dbeafe;border-left:4px solid #3b82f6;padding:14px 18px;border-radius:8px;margin-top:20px;">
@@ -5034,8 +5031,8 @@ function switchManualTab(tab) {
           <tr style="background:#e91e63;color:#fff;"><th style="border:1px solid #cbd5e1;padding:8px;text-align:left;">アクション</th><th style="border:1px solid #cbd5e1;padding:8px;">上限</th><th style="border:1px solid #cbd5e1;padding:8px;">理由</th></tr>
           <tr><td style="border:1px solid #cbd5e1;padding:8px;">いいね（勉強関連投稿）</td><td style="border:1px solid #cbd5e1;padding:8px;"><b>10人/日</b></td><td style="border:1px solid #cbd5e1;padding:8px;">勉強垢・受験生の最新投稿中心</td></tr>
           <tr style="background:#f8fafc;"><td style="border:1px solid #cbd5e1;padding:8px;">フォロー（ユーザー対象）</td><td style="border:1px solid #cbd5e1;padding:8px;"><b>5人/日</b></td><td style="border:1px solid #cbd5e1;padding:8px;">勉強垢・受験生などのユーザー</td></tr>
-          <tr><td style="border:1px solid #cbd5e1;padding:8px;">コメント</td><td style="border:1px solid #cbd5e1;padding:8px;"><b>10〜20</b></td><td style="border:1px solid #cbd5e1;padding:8px;">短文（3文字等）は業者判定</td></tr>
-          <tr style="background:#f8fafc;"><td style="border:1px solid #cbd5e1;padding:8px;">DM送信</td><td style="border:1px solid #cbd5e1;padding:8px;color:#dc2626;"><b>禁止</b></td><td style="border:1px solid #cbd5e1;padding:8px;">スパム認定リスク高</td></tr>
+          <tr><td style="border:1px solid #cbd5e1;padding:8px;">コメント</td><td style="border:1px solid #cbd5e1;padding:8px;color:#dc2626;"><b>現状禁止</b></td><td style="border:1px solid #cbd5e1;padding:8px;">方針確定まで実施しない</td></tr>
+          <tr style="background:#f8fafc;"><td style="border:1px solid #cbd5e1;padding:8px;">DM送信</td><td style="border:1px solid #cbd5e1;padding:8px;color:#dc2626;"><b>現状禁止</b></td><td style="border:1px solid #cbd5e1;padding:8px;">スパム認定リスク高</td></tr>
         </table>
 
         <h3 style="color:#1e40af;border-bottom:2px solid #3b82f6;padding-bottom:6px;margin-top:24px;">💡 導線設計</h3>
