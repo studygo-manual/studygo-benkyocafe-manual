@@ -4834,6 +4834,250 @@ var savedPlatform = localStorage.getItem('studygo_sns_platform');
 if (savedPlatform === 'x') {
   switchPlatform('x');
 }
+
+// ============================================================
+// マニュアルポップアップ
+// ============================================================
+function openSnsManual(tab) {
+  document.getElementById('snsManualModal').style.display = 'flex';
+  if (tab) switchManualTab(tab);
+  document.body.style.overflow = 'hidden';
+}
+function closeSnsManual() {
+  document.getElementById('snsManualModal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+function switchManualTab(tab) {
+  document.querySelectorAll('.manual-tab').forEach(function(el){ el.classList.remove('active'); });
+  document.querySelectorAll('.manual-section').forEach(function(el){ el.style.display = 'none'; });
+  document.querySelector('.manual-tab[data-tab="'+tab+'"]').classList.add('active');
+  document.getElementById('manual-sec-'+tab).style.display = 'block';
+  var body = document.getElementById('snsManualBody');
+  if (body) body.scrollTop = 0;
+}
 </script>
+
+<!-- ?フローティングボタン -->
+<button onclick="openSnsManual('overview')" title="SNS運用マニュアル" style="position:fixed;bottom:24px;right:24px;z-index:9998;width:56px;height:56px;border-radius:50%;border:none;background:linear-gradient(135deg,#3b82f6,#1e40af);color:#fff;font-size:28px;font-weight:900;cursor:pointer;box-shadow:0 4px 16px rgba(30,64,175,0.4);transition:transform 0.15s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">？</button>
+
+<!-- マニュアルモーダル -->
+<div id="snsManualModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.65);z-index:9999;align-items:center;justify-content:center;padding:20px;" onclick="if(event.target===this)closeSnsManual()">
+  <div style="background:#fff;border-radius:14px;max-width:900px;width:100%;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 12px 48px rgba(0,0,0,0.4);overflow:hidden;">
+    <!-- ヘッダー -->
+    <div style="background:linear-gradient(135deg,#3b82f6,#1e40af);color:#fff;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;">
+      <div>
+        <h2 style="margin:0;font-size:20px;">📘 SNS運用マニュアル</h2>
+        <p style="margin:2px 0 0;font-size:12px;opacity:0.9;">X(Twitter) / Instagram 共通ルール・テンプレ・NG集</p>
+      </div>
+      <button onclick="closeSnsManual()" style="background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);color:#fff;border-radius:50%;width:36px;height:36px;font-size:18px;cursor:pointer;font-weight:700;">✕</button>
+    </div>
+
+    <!-- タブ -->
+    <div style="background:#f1f5f9;border-bottom:2px solid #e2e8f0;display:flex;flex-shrink:0;overflow-x:auto;">
+      <button class="manual-tab active" data-tab="overview" onclick="switchManualTab('overview')" style="flex:1;min-width:110px;padding:12px 10px;font-size:13px;font-weight:700;background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;color:#64748b;">概要・KPI</button>
+      <button class="manual-tab" data-tab="x" onclick="switchManualTab('x')" style="flex:1;min-width:110px;padding:12px 10px;font-size:13px;font-weight:700;background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;color:#64748b;">X 引用リプ</button>
+      <button class="manual-tab" data-tab="ig" onclick="switchManualTab('ig')" style="flex:1;min-width:110px;padding:12px 10px;font-size:13px;font-weight:700;background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;color:#64748b;">IG いいね</button>
+      <button class="manual-tab" data-tab="ng" onclick="switchManualTab('ng')" style="flex:1;min-width:110px;padding:12px 10px;font-size:13px;font-weight:700;background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;color:#64748b;">🚫 共通NG集</button>
+      <button class="manual-tab" data-tab="report" onclick="switchManualTab('report')" style="flex:1;min-width:110px;padding:12px 10px;font-size:13px;font-weight:700;background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;color:#64748b;">実施記録</button>
+    </div>
+
+    <!-- 本文 -->
+    <div id="snsManualBody" style="flex:1;overflow-y:auto;padding:24px 28px;font-size:14px;line-height:1.8;color:#2c3e50;">
+
+      <!-- 概要・KPI -->
+      <div id="manual-sec-overview" class="manual-section">
+        <h3 style="color:#1e40af;border-bottom:2px solid #3b82f6;padding-bottom:6px;">🎯 運用目的</h3>
+        <ul>
+          <li>「勉強場所を探している」ユーザーへの<b>自然な接触</b>で認知獲得</li>
+          <li>アプリDL誘導（X=リンククリック / IG=プロフィール訪問）</li>
+          <li>スタディGOの<b>好意的なイメージ</b>構築（押し売りにしない）</li>
+        </ul>
+
+        <h3 style="color:#1e40af;border-bottom:2px solid #3b82f6;padding-bottom:6px;margin-top:24px;">🕓 作業スケジュール（平日 16:00-16:30）</h3>
+        <div style="background:#dbeafe;border-left:4px solid #3b82f6;padding:12px 16px;border-radius:6px;font-size:13px;">
+          <b>実施時間の根拠:</b> ユーザーデータ分析（DL登録時刻15,204件）より、平日16時台は1日平均107件のDLピーク帯。「今日どこで勉強しよう」と探し始めるユーザー行動時間と合致。
+        </div>
+        <ol style="margin-top:12px;">
+          <li><b>X 巡回・引用RP（15分）</b> → 3-5件</li>
+          <li><b>Instagram いいね・フォロー（10分）</b> → いいね100件・フォロー30件</li>
+          <li><b>Instagram コメント・記録（5分）</b> → コメント5件・実施記録入力</li>
+        </ol>
+
+        <h3 style="color:#1e40af;border-bottom:2px solid #3b82f6;padding-bottom:6px;margin-top:24px;">📊 月次KPI</h3>
+        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+          <tr style="background:#3b82f6;color:#fff;"><th style="border:1px solid #cbd5e1;padding:8px;text-align:left;">指標</th><th style="border:1px solid #cbd5e1;padding:8px;">目標</th><th style="border:1px solid #cbd5e1;padding:8px;">備考</th></tr>
+          <tr><td style="border:1px solid #cbd5e1;padding:8px;">X 引用リプ数</td><td style="border:1px solid #cbd5e1;padding:8px;">60-100件/月</td><td style="border:1px solid #cbd5e1;padding:8px;">1日3-5件 × 20営業日</td></tr>
+          <tr style="background:#f8fafc;"><td style="border:1px solid #cbd5e1;padding:8px;">X リンククリック</td><td style="border:1px solid #cbd5e1;padding:8px;">月次で測定</td><td style="border:1px solid #cbd5e1;padding:8px;">bit.ly等で計測</td></tr>
+          <tr><td style="border:1px solid #cbd5e1;padding:8px;">IG いいね数</td><td style="border:1px solid #cbd5e1;padding:8px;">2,000-3,000件/月</td><td style="border:1px solid #cbd5e1;padding:8px;">1日100-150件 × 20営業日</td></tr>
+          <tr style="background:#f8fafc;"><td style="border:1px solid #cbd5e1;padding:8px;">IG フォロー数</td><td style="border:1px solid #cbd5e1;padding:8px;">600-1,000件/月</td><td style="border:1px solid #cbd5e1;padding:8px;">1日30-50件 × 20営業日</td></tr>
+          <tr><td style="border:1px solid #cbd5e1;padding:8px;">IG フォロワー増</td><td style="border:1px solid #cbd5e1;padding:8px;">+100-200/月</td><td style="border:1px solid #cbd5e1;padding:8px;">フォロバ率15-25%想定</td></tr>
+        </table>
+      </div>
+
+      <!-- X ルール -->
+      <div id="manual-sec-x" class="manual-section" style="display:none;">
+        <h3 style="color:#1e40af;border-bottom:2px solid #3b82f6;padding-bottom:6px;">🎯 ターゲット投稿の探し方</h3>
+        <p>以下のキーワードを<b>最新タブ</b>で検索。<b>過去24時間以内</b>の投稿に絞る。</p>
+        <ul style="font-size:13px;">
+          <li><code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;color:#be185d;">勉強場所 どこ</code> — 場所探し</li>
+          <li><code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;color:#be185d;">勉強できる カフェ</code> — カフェ難民</li>
+          <li><code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;color:#be185d;">自習室 探してる</code> — 顕在ニーズ</li>
+          <li><code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;color:#be185d;">カフェ 混んでる 勉強</code> — 代替先ニーズ</li>
+          <li><code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;color:#be185d;">集中できる場所</code> — 潜在ニーズ</li>
+          <li><code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;color:#be185d;">勉強 どこ行こう</code> — 迷い中</li>
+          <li><code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;color:#be185d;">テスト期間 勉強場所</code> — 学生層</li>
+        </ul>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
+          <div style="background:#d1fae5;border-left:4px solid #10b981;padding:12px 16px;border-radius:6px;">
+            <b style="color:#065f46;">✅ 積極的にリプ</b>
+            <ul style="font-size:12px;margin:6px 0 0;padding-left:20px;color:#064e3b;">
+              <li>フォロワー50-500人</li>
+              <li>投稿から24時間以内</li>
+              <li>相談調の投稿</li>
+              <li>地域が読み取れる</li>
+            </ul>
+          </div>
+          <div style="background:#fee2e2;border-left:4px solid #ef4444;padding:12px 16px;border-radius:6px;">
+            <b style="color:#991b1b;">❌ 避ける投稿</b>
+            <ul style="font-size:12px;margin:6px 0 0;padding-left:20px;color:#7f1d1d;">
+              <li>フォロワー数万人以上</li>
+              <li>既に宣伝リプが多い</li>
+              <li>非公開・鍵垢</li>
+              <li>ネガティブ・愚痴</li>
+              <li>政治・宗教・炎上系</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 style="color:#1e40af;border-bottom:2px solid #3b82f6;padding-bottom:6px;margin-top:24px;">📏 必須ルール</h3>
+        <ul>
+          <li><span style="background:#dc2626;color:#fff;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:bold;">必須</span> 1日 <b style="background:#fef08a;padding:2px 6px;">3〜5件まで</b>（超過は凍結リスク）</li>
+          <li><span style="background:#dc2626;color:#fff;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:bold;">必須</span> 同日内で<b>同じテンプレ連投禁止</b>（A→B→C のようにローテ）</li>
+          <li><span style="background:#dc2626;color:#fff;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:bold;">必須</span> リンクは<b>計測付き短縮URL</b>を使用</li>
+          <li><span style="background:#059669;color:#fff;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:bold;">推奨</span> 投稿内容に1行触れてからテンプレを使う</li>
+          <li><span style="background:#059669;color:#fff;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:bold;">推奨</span> 絵文字は2-3個まで</li>
+        </ul>
+
+        <div style="background:#fef3c7;border-left:4px solid #f59e0b;padding:12px 16px;border-radius:6px;margin-top:16px;">
+          ⚠️ <b>テンプレは骨格のみ。</b>相手の投稿に1行加える・語尾を変える等の手を入れること。スパム検出回避と好感度向上の両面で効果あり。テンプレ本体は管理ツールの「引用リプ運用」タブから。
+        </div>
+      </div>
+
+      <!-- IG ルール -->
+      <div id="manual-sec-ig" class="manual-section" style="display:none;">
+        <h3 style="color:#1e40af;border-bottom:2px solid #3b82f6;padding-bottom:6px;">🔍 ターゲット発見方法</h3>
+        <p>ハッシュタグを毎日巡回。最新投稿（24時間以内）中心にアクション。</p>
+        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+          <tr style="background:#e91e63;color:#fff;"><th style="border:1px solid #cbd5e1;padding:8px;text-align:left;">カテゴリ</th><th style="border:1px solid #cbd5e1;padding:8px;text-align:left;">ハッシュタグ</th></tr>
+          <tr><td style="border:1px solid #cbd5e1;padding:8px;">勉強垢系</td><td style="border:1px solid #cbd5e1;padding:8px;">#勉強垢 #勉強垢さんと繋がりたい #studygram</td></tr>
+          <tr style="background:#f8fafc;"><td style="border:1px solid #cbd5e1;padding:8px;">勉強場所</td><td style="border:1px solid #cbd5e1;padding:8px;">#勉強場所 #カフェ勉強 #自習室</td></tr>
+          <tr><td style="border:1px solid #cbd5e1;padding:8px;">学生層</td><td style="border:1px solid #cbd5e1;padding:8px;">#受験生 #大学生の勉強垢 #資格勉強</td></tr>
+          <tr style="background:#f8fafc;"><td style="border:1px solid #cbd5e1;padding:8px;">ライフスタイル</td><td style="border:1px solid #cbd5e1;padding:8px;">#朝活 #studywithme</td></tr>
+          <tr><td style="border:1px solid #cbd5e1;padding:8px;">地域系</td><td style="border:1px solid #cbd5e1;padding:8px;">#東京カフェ #大阪カフェ #渋谷カフェ 等</td></tr>
+        </table>
+
+        <h3 style="color:#1e40af;border-bottom:2px solid #3b82f6;padding-bottom:6px;margin-top:24px;">🚫 1日あたり上限（厳守）</h3>
+        <div style="background:#fee2e2;border:2px solid #ef4444;padding:14px 18px;border-radius:8px;color:#7f1d1d;font-size:13px;">
+          <b>上限超過は即シャドウバン／アカウント停止</b>
+        </div>
+        <table style="width:100%;border-collapse:collapse;font-size:13px;margin-top:10px;">
+          <tr style="background:#e91e63;color:#fff;"><th style="border:1px solid #cbd5e1;padding:8px;text-align:left;">アクション</th><th style="border:1px solid #cbd5e1;padding:8px;">上限</th><th style="border:1px solid #cbd5e1;padding:8px;">理由</th></tr>
+          <tr><td style="border:1px solid #cbd5e1;padding:8px;">いいね</td><td style="border:1px solid #cbd5e1;padding:8px;"><b>100〜150</b></td><td style="border:1px solid #cbd5e1;padding:8px;">500超でシャドウバン確定</td></tr>
+          <tr style="background:#f8fafc;"><td style="border:1px solid #cbd5e1;padding:8px;">フォロー</td><td style="border:1px solid #cbd5e1;padding:8px;"><b>30〜50</b></td><td style="border:1px solid #cbd5e1;padding:8px;">5件ごとに30秒空ける</td></tr>
+          <tr><td style="border:1px solid #cbd5e1;padding:8px;">コメント</td><td style="border:1px solid #cbd5e1;padding:8px;"><b>10〜20</b></td><td style="border:1px solid #cbd5e1;padding:8px;">短文（3文字等）は業者判定</td></tr>
+          <tr style="background:#f8fafc;"><td style="border:1px solid #cbd5e1;padding:8px;">DM送信</td><td style="border:1px solid #cbd5e1;padding:8px;color:#dc2626;"><b>禁止</b></td><td style="border:1px solid #cbd5e1;padding:8px;">スパム認定リスク高</td></tr>
+        </table>
+
+        <h3 style="color:#1e40af;border-bottom:2px solid #3b82f6;padding-bottom:6px;margin-top:24px;">💡 導線設計</h3>
+        <div style="background:#dbeafe;border-left:4px solid #3b82f6;padding:12px 16px;border-radius:6px;font-size:13px;">
+          コメント欄に直リンクは検出されやすい → <b>プロフィール(bio)にDLリンクを固定</b>し、コメントでは<b>「プロフィールのリンクから飛べます」</b>と誘導する。
+        </div>
+
+        <div style="background:#fef3c7;border-left:4px solid #f59e0b;padding:12px 16px;border-radius:6px;margin-top:16px;">
+          ⚠️ コメントは必ず投稿内容に触れる1行を加えること。テンプレ丸コピは業者判定の主要因。テンプレ本体は管理ツールの「いいね運用」タブから。
+        </div>
+      </div>
+
+      <!-- NG集 -->
+      <div id="manual-sec-ng" class="manual-section" style="display:none;">
+        <h3 style="color:#991b1b;border-bottom:2px solid #ef4444;padding-bottom:6px;">🚫 絶対にやってはいけないこと</h3>
+        <div style="background:#fee2e2;border:2px solid #ef4444;padding:16px 20px;border-radius:8px;color:#7f1d1d;">
+          <ol style="margin:0;padding-left:20px;">
+            <li><b>自動化ツールの使用</b>（BOT・API連携での大量アクション）→ 即アカBAN</li>
+            <li><b>DM送信</b>（X・IG問わず）→ スパム認定のリスク最大</li>
+            <li><b>フォロー→即アンフォロー</b>（フォロワー稼ぎ）→ シャドウバン</li>
+            <li><b>同じテンプレを1日に複数回使用</b> → スパム検出</li>
+            <li><b>10秒ごとのいいね連打</b> → レート制限・警告</li>
+            <li><b>「無料です」「絶対に〇〇」</b>等の誇大表現 → クレーム原因</li>
+            <li><b>政治・宗教・炎上投稿への関与</b> → ブランド毀損</li>
+            <li><b>他社アプリの批判・比較での中傷</b> → 法的リスク</li>
+            <li><b>個人情報・店舗情報を特定する書き込み</b> → トラブル</li>
+            <li><b>複数アカウントでの同一投稿への連続アクション</b> → 業者認定</li>
+          </ol>
+        </div>
+
+        <h3 style="color:#92400e;border-bottom:2px solid #f59e0b;padding-bottom:6px;margin-top:24px;">⚠️ グレーゾーン（判断に迷ったら上長確認）</h3>
+        <div style="background:#fef3c7;border:2px solid #f59e0b;padding:16px 20px;border-radius:8px;color:#78350f;">
+          <ul style="margin:0;padding-left:20px;">
+            <li>ネガティブ投稿に「勉強場所いかがですか？」とリプ → 避ける</li>
+            <li>フォロワー数万人のインフルエンサーへのリプ → 基本避ける</li>
+            <li>投稿から1週間以上経った古い投稿へのアクション → 避ける</li>
+            <li>競合他社のアプリ名が出ている投稿への介入 → 避ける</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 実施記録 -->
+      <div id="manual-sec-report" class="manual-section" style="display:none;">
+        <h3 style="color:#1e40af;border-bottom:2px solid #3b82f6;padding-bottom:6px;">📝 日次記録フォーマット（毎回入力）</h3>
+        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+          <tr style="background:#3b82f6;color:#fff;"><th style="border:1px solid #cbd5e1;padding:8px;text-align:left;">項目</th><th style="border:1px solid #cbd5e1;padding:8px;text-align:left;">記録内容</th></tr>
+          <tr><td style="border:1px solid #cbd5e1;padding:8px;">実施日時</td><td style="border:1px solid #cbd5e1;padding:8px;">YYYY/MM/DD 16:00</td></tr>
+          <tr style="background:#f8fafc;"><td style="border:1px solid #cbd5e1;padding:8px;">X 引用RP数</td><td style="border:1px solid #cbd5e1;padding:8px;">例: 4件（A×1, B×1, C×1, E×1）</td></tr>
+          <tr><td style="border:1px solid #cbd5e1;padding:8px;">X 反応</td><td style="border:1px solid #cbd5e1;padding:8px;">例: いいね合計12、返信2件</td></tr>
+          <tr style="background:#f8fafc;"><td style="border:1px solid #cbd5e1;padding:8px;">IG いいね数</td><td style="border:1px solid #cbd5e1;padding:8px;">例: 120件</td></tr>
+          <tr><td style="border:1px solid #cbd5e1;padding:8px;">IG フォロー数</td><td style="border:1px solid #cbd5e1;padding:8px;">例: 35件</td></tr>
+          <tr style="background:#f8fafc;"><td style="border:1px solid #cbd5e1;padding:8px;">IG コメント数</td><td style="border:1px solid #cbd5e1;padding:8px;">例: 8件</td></tr>
+          <tr><td style="border:1px solid #cbd5e1;padding:8px;">特記事項</td><td style="border:1px solid #cbd5e1;padding:8px;">例: 受験生アカウントからの反応良好</td></tr>
+        </table>
+
+        <h3 style="color:#1e40af;border-bottom:2px solid #3b82f6;padding-bottom:6px;margin-top:24px;">📅 週次レポート（毎週金曜17時までに）</h3>
+        <ol>
+          <li>週の合計アクション数（X/IG別）</li>
+          <li>反応が特に良かった投稿・テンプレ（上位3つ）</li>
+          <li>フォロワー増減（IG）</li>
+          <li>リンククリック数（計測URLから取得）</li>
+          <li>気づき・改善提案</li>
+        </ol>
+
+        <h3 style="color:#1e40af;border-bottom:2px solid #3b82f6;padding-bottom:6px;margin-top:24px;">📊 月次レビュー（月末）</h3>
+        <p>上長と運用データを突き合わせ、以下を確認:</p>
+        <ul>
+          <li>KPI達成状況</li>
+          <li>効果的だったテンプレ・時間帯</li>
+          <li>アカウント健全性（警告・制限の有無）</li>
+          <li>次月のテンプレ追加・修正</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- フッター -->
+    <div style="background:#f8fafc;border-top:1px solid #e2e8f0;padding:10px 20px;font-size:11px;color:#94a3b8;text-align:center;flex-shrink:0;">
+      © スタディGO SNS運用マニュアル v1.0 | 質問・判断に迷った時は必ず上長に確認してください
+    </div>
+  </div>
+</div>
+
+<style>
+  .manual-tab.active { color:#1e40af !important; border-bottom-color:#3b82f6 !important; background:#fff !important; }
+  .manual-tab:hover { background:#e2e8f0; color:#1e40af; }
+  #snsManualBody h3 { font-size:15px; margin-top:20px; }
+  #snsManualBody ul, #snsManualBody ol { padding-left:22px; }
+  #snsManualBody li { margin:4px 0; font-size:13px; }
+  #snsManualBody p { font-size:13px; }
+</style>
+
 </body>
 </html>
