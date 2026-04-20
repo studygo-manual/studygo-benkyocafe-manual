@@ -337,6 +337,7 @@ body.platform-x-active { background: #1a1a1a; }
 <div class="main-tabs" id="ig-tabs">
   <button class="main-tab active" onclick="switchMainTab('today')">📅 今週の投稿</button>
   <button class="main-tab" onclick="switchMainTab('stores')">店舗一覧</button>
+  <button class="main-tab" onclick="switchMainTab('engage')">💕 いいね運用</button>
   <button class="main-tab" style="display:none;" onclick="switchMainTab('area')">エリアまとめ</button>
   <button class="main-tab" style="display:none;" onclick="switchMainTab('dm')">DM管理</button>
 </div>
@@ -468,6 +469,119 @@ body.platform-x-active { background: #1a1a1a; }
     </div>
   </div>
 </div>
+</div>
+
+<!-- ========== TAB: いいね運用 ========== -->
+<div id="tab-engage" class="tab-content">
+  <div class="container">
+    <!-- ヘッダー -->
+    <div style="background:linear-gradient(135deg,#e91e63,#f06292);color:#fff;padding:20px 24px;border-radius:12px;margin-bottom:20px;box-shadow:0 4px 16px rgba(233,30,99,0.3);">
+      <h2 style="font-size:22px;margin:0 0 6px;">💕 Instagram いいね・フォロー・コメント運用</h2>
+      <p style="font-size:13px;opacity:0.9;margin:0 0 10px;">勉強垢・受験生への自然な接触 → プロフィール訪問・フォロー誘導</p>
+      <div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:10px;font-size:13px;">
+        <div><b>🕓 実施時間:</b> 平日 16:00-16:30</div>
+        <div><b>📊 月次目標:</b> いいね2,000-3,000件 / フォロー600-1,000件</div>
+      </div>
+    </div>
+
+    <!-- 1日の上限 -->
+    <div style="background:#fee2e2;border:2px solid #ef4444;border-radius:12px;padding:16px 20px;margin-bottom:20px;">
+      <h3 style="color:#991b1b;font-size:16px;margin:0 0 10px;">🚫 1日あたりの上限（厳守）</h3>
+      <p style="color:#7f1d1d;font-size:12px;margin:0 0 10px;">上限超過は即シャドウバン・アカウント停止</p>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+        <div style="background:#fff;border-radius:8px;padding:12px;text-align:center;">
+          <div style="font-size:11px;color:#666;">いいね</div>
+          <div style="font-size:20px;font-weight:900;color:#e91e63;">100〜150</div>
+          <div style="font-size:10px;color:#999;">500超でBAN</div>
+        </div>
+        <div style="background:#fff;border-radius:8px;padding:12px;text-align:center;">
+          <div style="font-size:11px;color:#666;">フォロー</div>
+          <div style="font-size:20px;font-weight:900;color:#e91e63;">30〜50</div>
+          <div style="font-size:10px;color:#999;">5件ごと30秒空け</div>
+        </div>
+        <div style="background:#fff;border-radius:8px;padding:12px;text-align:center;">
+          <div style="font-size:11px;color:#666;">コメント</div>
+          <div style="font-size:20px;font-weight:900;color:#e91e63;">10〜20</div>
+          <div style="font-size:10px;color:#999;">短文は業者判定</div>
+        </div>
+        <div style="background:#fff;border-radius:8px;padding:12px;text-align:center;">
+          <div style="font-size:11px;color:#666;">DM</div>
+          <div style="font-size:20px;font-weight:900;color:#dc2626;">禁止</div>
+          <div style="font-size:10px;color:#999;">スパム認定大</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 本日の進捗カウンター -->
+    <div style="background:#fdf2f8;border-left:4px solid #e91e63;border-radius:8px;padding:16px 20px;margin-bottom:20px;">
+      <h3 style="color:#9d174d;font-size:15px;margin:0 0 10px;">📊 本日の実施数</h3>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+        <div style="background:#fff;border-radius:8px;padding:12px;text-align:center;">
+          <div style="font-size:11px;color:#666;">いいね</div>
+          <div style="margin:4px 0;"><span id="igLikeCount" style="font-size:24px;font-weight:900;color:#e91e63;">0</span><span style="font-size:13px;color:#999;"> / 150</span></div>
+          <div style="display:flex;gap:4px;justify-content:center;flex-wrap:wrap;">
+            <button onclick="incrementIgCount('like',1)" style="background:#e91e63;color:#fff;border:none;border-radius:4px;padding:4px 10px;font-size:11px;cursor:pointer;font-weight:700;">+1</button>
+            <button onclick="incrementIgCount('like',10)" style="background:#f06292;color:#fff;border:none;border-radius:4px;padding:4px 10px;font-size:11px;cursor:pointer;font-weight:700;">+10</button>
+          </div>
+        </div>
+        <div style="background:#fff;border-radius:8px;padding:12px;text-align:center;">
+          <div style="font-size:11px;color:#666;">フォロー</div>
+          <div style="margin:4px 0;"><span id="igFollowCount" style="font-size:24px;font-weight:900;color:#e91e63;">0</span><span style="font-size:13px;color:#999;"> / 50</span></div>
+          <div style="display:flex;gap:4px;justify-content:center;flex-wrap:wrap;">
+            <button onclick="incrementIgCount('follow',1)" style="background:#e91e63;color:#fff;border:none;border-radius:4px;padding:4px 10px;font-size:11px;cursor:pointer;font-weight:700;">+1</button>
+            <button onclick="incrementIgCount('follow',5)" style="background:#f06292;color:#fff;border:none;border-radius:4px;padding:4px 10px;font-size:11px;cursor:pointer;font-weight:700;">+5</button>
+          </div>
+        </div>
+        <div style="background:#fff;border-radius:8px;padding:12px;text-align:center;">
+          <div style="font-size:11px;color:#666;">コメント</div>
+          <div style="margin:4px 0;"><span id="igCommentCount" style="font-size:24px;font-weight:900;color:#e91e63;">0</span><span style="font-size:13px;color:#999;"> / 20</span></div>
+          <div style="display:flex;gap:4px;justify-content:center;flex-wrap:wrap;">
+            <button onclick="incrementIgCount('comment',1)" style="background:#e91e63;color:#fff;border:none;border-radius:4px;padding:4px 10px;font-size:11px;cursor:pointer;font-weight:700;">+1</button>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:right;margin-top:8px;">
+        <button onclick="resetIgCount()" style="background:#fff;color:#9d174d;border:1px solid #e91e63;border-radius:6px;padding:5px 14px;font-size:12px;cursor:pointer;font-weight:700;">本日分リセット</button>
+      </div>
+    </div>
+
+    <!-- ハッシュタグ -->
+    <div style="background:#fff;border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+      <h3 style="font-size:16px;color:#9d174d;margin:0 0 12px;border-left:4px solid #e91e63;padding-left:10px;">🔍 巡回ハッシュタグ（24時間以内の最新投稿中心）</h3>
+      <p style="font-size:12px;color:#666;margin-bottom:10px;">クリックで Instagram のハッシュタグページを開きます</p>
+      <div id="igHashtags" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+    </div>
+
+    <!-- コメントテンプレート -->
+    <h3 style="font-size:18px;color:#333;margin:20px 0 12px;">💬 コメントテンプレート（骨格のみ・必ず投稿内容に触れる1行を加える）</h3>
+    <div class="warn" style="background:#fef3c7;border-left:4px solid #f59e0b;padding:12px 16px;border-radius:4px;margin-bottom:16px;font-size:13px;color:#92400e;">
+      ⚠️ <b>テンプレ丸コピは業者判定の主要因</b>。「〇〇」部分は必ず投稿内容に触れる文言に差し替えること。
+    </div>
+    <div id="igCommentTemplates"></div>
+
+    <!-- 導線設計 -->
+    <div style="background:#dbeafe;border-left:4px solid #3b82f6;padding:14px 18px;border-radius:8px;margin-top:20px;">
+      <h4 style="color:#1e40af;font-size:14px;margin:0 0 6px;">💡 導線設計</h4>
+      <p style="font-size:12px;color:#1e3a8a;margin:0;line-height:1.7;">
+        コメント欄に直リンクを貼ると検出されやすい。プロフィール(bio)にDLリンクを固定し、コメントでは<br>
+        <b>「プロフィールのリンクから飛べます」</b>と誘導する。
+      </p>
+    </div>
+
+    <!-- NG集 -->
+    <div style="background:#fee2e2;border:2px solid #ef4444;border-radius:12px;padding:16px 20px;margin-top:20px;">
+      <h3 style="color:#991b1b;font-size:16px;margin:0 0 10px;">🚫 絶対禁止</h3>
+      <ul style="font-size:13px;line-height:1.7;padding-left:20px;margin:0;color:#7f1d1d;">
+        <li>自動化ツール・BOT使用 → 即アカBAN</li>
+        <li>DM送信 → スパム認定のリスク最大</li>
+        <li>フォロー→即アンフォロー（フォロワー稼ぎ） → シャドウバン</li>
+        <li>10秒ごとのいいね連打 → レート制限・警告</li>
+        <li>同テンプレを1日複数回使用 → スパム検出</li>
+        <li>ネガティブ投稿への「勉強場所いかがですか？」リプ → 避ける</li>
+        <li>フォロワー数万人のインフルエンサーへのリプ → 基本避ける</li>
+      </ul>
+    </div>
+  </div>
 </div>
 
 <!-- ========== TAB: DM管理 ========== -->
@@ -2183,7 +2297,136 @@ function switchMainTab(tab) {
       storesContainer.appendChild(storeList);
     }
     renderStores();
+  } else if (tab === 'engage') {
+    renderIgEngage();
   }
+}
+
+// ============================================================
+// IG いいね運用タブ
+// ============================================================
+var IG_HASHTAGS = [
+  { tag: '勉強垢', cat: '勉強垢系' },
+  { tag: '勉強垢さんと繋がりたい', cat: '勉強垢系' },
+  { tag: 'studygram', cat: '勉強垢系' },
+  { tag: '勉強場所', cat: '勉強場所' },
+  { tag: 'カフェ勉強', cat: '勉強場所' },
+  { tag: '自習室', cat: '勉強場所' },
+  { tag: '受験生', cat: '学生層' },
+  { tag: '大学生の勉強垢', cat: '学生層' },
+  { tag: '資格勉強', cat: '学生層' },
+  { tag: '朝活', cat: 'ライフスタイル' },
+  { tag: 'studywithme', cat: 'ライフスタイル' },
+  { tag: '東京カフェ', cat: '地域系' },
+  { tag: '大阪カフェ', cat: '地域系' },
+  { tag: '渋谷カフェ', cat: '地域系' }
+];
+
+var IG_COMMENT_TEMPLATES = [
+  { id: 'I', name: 'I: 応援型（勉強垢全般）', color: '#e91e63',
+    text: '勉強お疲れさまです📚 〇〇の内容、勉強になりました！応援してます🌱' },
+  { id: 'II', name: 'II: カフェ共感型（カフェ投稿）', color: '#f59e0b',
+    text: 'このカフェ素敵ですね☕ 〇〇が良さそう！参考にさせていただきます📍' },
+  { id: 'III', name: 'III: ノート共感型（ノート・勉強法投稿）', color: '#8b5cf6',
+    text: 'ノートの書き方がきれいで憧れます✏️ 〇〇の工夫、真似したいです！' },
+  { id: 'IV', name: 'IV: モチベ型（モチベ投稿）', color: '#10b981',
+    text: '頑張ってる姿に刺激もらえました🌱 〇〇、自分も頑張ります！' },
+  { id: 'V', name: 'V: 地域型（地域投稿）', color: '#3b82f6',
+    text: '〇〇エリアで勉強されてるんですね📍 勉強場所多くて羨ましいです！' },
+  { id: 'bio', name: 'プロフィール誘導（反応が良い人向け・控えめに）', color: '#dc2626',
+    text: 'ちなみに、勉強場所探せるアプリプロフィールに載せてます✏️ もしよければ📖' }
+];
+
+function getIgEngageKey() {
+  return 'studygo_ig_engage_' + getTodayDateKey();
+}
+
+function getIgEngageState() {
+  try {
+    var raw = localStorage.getItem(getIgEngageKey());
+    if (raw) return JSON.parse(raw);
+  } catch(e) {}
+  return { like: 0, follow: 0, comment: 0 };
+}
+
+function saveIgEngageState(s) {
+  localStorage.setItem(getIgEngageKey(), JSON.stringify(s));
+}
+
+function incrementIgCount(type, delta) {
+  var s = getIgEngageState();
+  var limits = { like: 150, follow: 50, comment: 20 };
+  var next = (s[type] || 0) + delta;
+  if (next > limits[type]) {
+    if (!confirm('本日の上限（' + limits[type] + '件）を超えます。続行しますか？（シャドウバンリスクあり）')) return;
+  }
+  s[type] = next;
+  saveIgEngageState(s);
+  renderIgEngageCounters();
+}
+
+function resetIgCount() {
+  if (!confirm('本日のカウント（いいね/フォロー/コメント）をリセットしますか？')) return;
+  saveIgEngageState({ like: 0, follow: 0, comment: 0 });
+  renderIgEngageCounters();
+}
+
+function renderIgEngageCounters() {
+  var s = getIgEngageState();
+  var setCount = function(elId, val, warn, danger) {
+    var el = document.getElementById(elId);
+    if (!el) return;
+    el.textContent = val;
+    el.style.color = val >= danger ? '#dc2626' : (val >= warn ? '#d97706' : '#e91e63');
+  };
+  setCount('igLikeCount', s.like || 0, 100, 150);
+  setCount('igFollowCount', s.follow || 0, 30, 50);
+  setCount('igCommentCount', s.comment || 0, 10, 20);
+}
+
+function renderIgHashtags() {
+  var el = document.getElementById('igHashtags');
+  if (!el) return;
+  el.innerHTML = IG_HASHTAGS.map(function(h) {
+    var url = 'https://www.instagram.com/explore/tags/' + encodeURIComponent(h.tag) + '/';
+    return '<a href="' + url + '" target="_blank" rel="noopener" style="background:#fdf2f8;border:1px solid #f9a8d4;color:#9d174d;padding:8px 14px;border-radius:20px;font-size:13px;text-decoration:none;display:inline-block;" onmouseover="this.style.background=\'#e91e63\';this.style.color=\'#fff\';" onmouseout="this.style.background=\'#fdf2f8\';this.style.color=\'#9d174d\';">#' + h.tag + ' <span style="font-size:10px;opacity:0.8;">（' + h.cat + '）</span></a>';
+  }).join('');
+}
+
+function renderIgCommentTemplates() {
+  var el = document.getElementById('igCommentTemplates');
+  if (!el) return;
+  el.innerHTML = IG_COMMENT_TEMPLATES.map(function(t) {
+    return '<div style="background:#fff;border-left:4px solid ' + t.color + ';border-radius:8px;padding:14px 18px;margin-bottom:10px;box-shadow:0 2px 6px rgba(0,0,0,0.06);">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:8px;">' +
+        '<b style="color:' + t.color + ';font-size:14px;">' + t.name + '</b>' +
+        '<button onclick="copyIgCommentTemplate(\'' + t.id + '\', this)" class="btn btn-copy" style="background:' + t.color + ';padding:6px 14px;font-size:12px;">📋 コピー＆コメント+1</button>' +
+      '</div>' +
+      '<pre style="background:#fef3c7;border-radius:4px;padding:10px 14px;font-size:13px;line-height:1.7;white-space:pre-wrap;margin:0;font-family:inherit;color:#2c3e50;">' + t.text + '</pre>' +
+    '</div>';
+  }).join('');
+}
+
+function copyIgCommentTemplate(id, btn) {
+  var t = IG_COMMENT_TEMPLATES.find(function(x) { return x.id === id; });
+  if (!t) return;
+  navigator.clipboard.writeText(t.text).then(function() {
+    var s = getIgEngageState();
+    s.comment = (s.comment || 0) + 1;
+    saveIgEngageState(s);
+    renderIgEngageCounters();
+    if (btn) {
+      var orig = btn.textContent;
+      btn.textContent = '✓ コピー済 (+1)';
+      setTimeout(function() { btn.textContent = orig; }, 1500);
+    }
+  });
+}
+
+function renderIgEngage() {
+  renderIgHashtags();
+  renderIgCommentTemplates();
+  renderIgEngageCounters();
 }
 
 // ============================================================
