@@ -140,6 +140,36 @@ body { padding-top: 125px; }
 .bulk-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 .bulk-actions .btn { font-size: 14px; padding: 10px 20px; }
 
+/* Schedule panel */
+.schedule-panel {
+  background: #fff; border-radius: 12px; padding: 20px; margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.schedule-panel h3 { margin-bottom: 12px; font-size: 16px; }
+.schedule-grid {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px;
+}
+.schedule-day {
+  background: #fafafa; border: 1px solid #e0e0e0; border-radius: 8px;
+  padding: 10px; min-height: 80px;
+}
+.schedule-day.today {
+  background: #f0f8f0; border-color: #4a8c3f; border-width: 2px;
+}
+.schedule-day.past { opacity: 0.75; }
+.schedule-date { font-size: 12px; font-weight: 700; color: #666; margin-bottom: 6px; }
+.schedule-day.today .schedule-date { color: #2e7d32; }
+.schedule-stores { font-size: 11px; line-height: 1.5; }
+.schedule-store {
+  background: #fff; border: 1px solid #e0e0e0; border-radius: 4px;
+  padding: 3px 6px; margin-bottom: 3px; color: #333;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.schedule-empty { color: #bbb; font-size: 11px; }
+@media (max-width: 900px) {
+  .schedule-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
 /* Area summary */
 .area-panel {
   background: #fff; border-radius: 12px; padding: 20px; margin-bottom: 20px;
@@ -222,6 +252,11 @@ body { padding-top: 125px; }
 </div>
 
 <div class="container">
+  <div class="schedule-panel">
+    <h3>投稿スケジュール（今日 ±3営業日・平日のみ）</h3>
+    <div id="scheduleGrid" class="schedule-grid"></div>
+  </div>
+
   <div class="settings-panel">
     <h3>投稿テンプレート設定</h3>
     <div class="settings-row" style="margin-bottom:12px;">
@@ -792,6 +827,74 @@ function setPostDate(id, date) {
   if (date) { postDates[id] = date; } else { delete postDates[id]; }
   localStorage.setItem('studygo_post_dates', JSON.stringify(postDates));
   renderStores();
+  renderSchedule();
+}
+
+function toDateStr(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth()+1).padStart(2,'0');
+  const d = String(date.getDate()).padStart(2,'0');
+  return `${y}-${m}-${d}`;
+}
+
+function renderSchedule() {
+  const grid = document.getElementById('scheduleGrid');
+  if (!grid) return;
+
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const todayStr = toDateStr(today);
+  const dayNames = ['日','月','火','水','木','金','土'];
+
+  // 過去3営業日
+  const past = [];
+  let d = new Date(today);
+  while (past.length < 3) {
+    d.setDate(d.getDate() - 1);
+    if (d.getDay() !== 0 && d.getDay() !== 6) past.unshift(new Date(d));
+  }
+
+  // 今日（平日のみ）
+  const dates = [...past];
+  if (today.getDay() !== 0 && today.getDay() !== 6) dates.push(new Date(today));
+
+  // 未来3営業日
+  d = new Date(today);
+  const future = [];
+  while (future.length < 3) {
+    d.setDate(d.getDate() + 1);
+    if (d.getDay() !== 0 && d.getDay() !== 6) future.push(new Date(d));
+  }
+  dates.push(...future);
+
+  // 日付ごとに店舗をグループ化
+  const byDate = {};
+  Object.entries(postDates).forEach(([sid, date]) => {
+    if (!byDate[date]) byDate[date] = [];
+    const store = STORES.find(s => s.id === parseInt(sid));
+    if (store) byDate[date].push(store);
+  });
+
+  grid.innerHTML = dates.map(dt => {
+    const ds = toDateStr(dt);
+    const isToday = (ds === todayStr);
+    const isPast = (dt < today);
+    const stores = byDate[ds] || [];
+    const dn = dayNames[dt.getDay()];
+    const cls = ['schedule-day'];
+    if (isToday) cls.push('today');
+    else if (isPast) cls.push('past');
+    return `
+      <div class="${cls.join(' ')}">
+        <div class="schedule-date">${dt.getMonth()+1}/${dt.getDate()}(${dn})${isToday ? ' 今日' : ''}</div>
+        <div class="schedule-stores">
+          ${stores.length === 0
+            ? '<span class="schedule-empty">投稿なし</span>'
+            : stores.map(s => `<div class="schedule-store" title="${s.name}">${s.name}</div>`).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
 }
 
 // カスタムテキスト（店舗ごと）
@@ -1818,6 +1921,7 @@ populateAreaSummarySelect();
 loadDmData();
 renderDmTable();
 renderStores();
+renderSchedule();
 </script>
 </body>
 </html>
