@@ -484,20 +484,20 @@ body.platform-x-active { background: #1a1a1a; }
       </div>
     </div>
 
-    <!-- 1日の上限 -->
-    <div style="background:#fee2e2;border:2px solid #ef4444;border-radius:12px;padding:16px 20px;margin-bottom:20px;">
-      <h3 style="color:#991b1b;font-size:16px;margin:0 0 10px;">🚫 1日あたりの上限（厳守）</h3>
-      <p style="color:#7f1d1d;font-size:12px;margin:0 0 10px;">上限超過は即シャドウバン・アカウント停止</p>
+    <!-- 1日の目標 -->
+    <div style="background:#fdf2f8;border:2px solid #e91e63;border-radius:12px;padding:16px 20px;margin-bottom:20px;">
+      <h3 style="color:#9d174d;font-size:16px;margin:0 0 10px;">🎯 1日の目標（ユーザー対象）</h3>
+      <p style="color:#7e1d3d;font-size:12px;margin:0 0 10px;">対象: 勉強垢・受験生・勉強関連投稿のユーザー（店舗ではない）</p>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
         <div style="background:#fff;border-radius:8px;padding:12px;text-align:center;">
-          <div style="font-size:11px;color:#666;">いいね</div>
-          <div style="font-size:20px;font-weight:900;color:#e91e63;">100〜150</div>
-          <div style="font-size:10px;color:#999;">500超でBAN</div>
+          <div style="font-size:11px;color:#666;">いいね（勉強関連投稿）</div>
+          <div style="font-size:28px;font-weight:900;color:#e91e63;">10<span style="font-size:14px;color:#999;">人/日</span></div>
+          <div style="font-size:10px;color:#999;">最新投稿中心</div>
         </div>
         <div style="background:#fff;border-radius:8px;padding:12px;text-align:center;">
-          <div style="font-size:11px;color:#666;">フォロー</div>
-          <div style="font-size:20px;font-weight:900;color:#e91e63;">30〜50</div>
-          <div style="font-size:10px;color:#999;">5件ごと30秒空け</div>
+          <div style="font-size:11px;color:#666;">フォロー（ユーザー）</div>
+          <div style="font-size:28px;font-weight:900;color:#e91e63;">5<span style="font-size:14px;color:#999;">人/日</span></div>
+          <div style="font-size:10px;color:#999;">勉強垢中心</div>
         </div>
         <div style="background:#fff;border-radius:8px;padding:12px;text-align:center;">
           <div style="font-size:11px;color:#666;">コメント</div>
@@ -517,19 +517,17 @@ body.platform-x-active { background: #1a1a1a; }
       <h3 style="color:#9d174d;font-size:15px;margin:0 0 10px;">📊 本日の実施数</h3>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
         <div style="background:#fff;border-radius:8px;padding:12px;text-align:center;">
-          <div style="font-size:11px;color:#666;">いいね</div>
-          <div style="margin:4px 0;"><span id="igLikeCount" style="font-size:24px;font-weight:900;color:#e91e63;">0</span><span style="font-size:13px;color:#999;"> / 150</span></div>
+          <div style="font-size:11px;color:#666;">いいね（勉強関連）</div>
+          <div style="margin:4px 0;"><span id="igLikeCount" style="font-size:24px;font-weight:900;color:#e91e63;">0</span><span style="font-size:13px;color:#999;"> / 10人</span></div>
           <div style="display:flex;gap:4px;justify-content:center;flex-wrap:wrap;">
             <button onclick="incrementIgCount('like',1)" style="background:#e91e63;color:#fff;border:none;border-radius:4px;padding:4px 10px;font-size:11px;cursor:pointer;font-weight:700;">+1</button>
-            <button onclick="incrementIgCount('like',10)" style="background:#f06292;color:#fff;border:none;border-radius:4px;padding:4px 10px;font-size:11px;cursor:pointer;font-weight:700;">+10</button>
           </div>
         </div>
         <div style="background:#fff;border-radius:8px;padding:12px;text-align:center;">
-          <div style="font-size:11px;color:#666;">フォロー</div>
-          <div style="margin:4px 0;"><span id="igFollowCount" style="font-size:24px;font-weight:900;color:#e91e63;">0</span><span style="font-size:13px;color:#999;"> / 50</span></div>
+          <div style="font-size:11px;color:#666;">フォロー（ユーザー）</div>
+          <div style="margin:4px 0;"><span id="igFollowCount" style="font-size:24px;font-weight:900;color:#e91e63;">0</span><span style="font-size:13px;color:#999;"> / 5人</span></div>
           <div style="display:flex;gap:4px;justify-content:center;flex-wrap:wrap;">
             <button onclick="incrementIgCount('follow',1)" style="background:#e91e63;color:#fff;border:none;border-radius:4px;padding:4px 10px;font-size:11px;cursor:pointer;font-weight:700;">+1</button>
-            <button onclick="incrementIgCount('follow',5)" style="background:#f06292;color:#fff;border:none;border-radius:4px;padding:4px 10px;font-size:11px;cursor:pointer;font-weight:700;">+5</button>
           </div>
         </div>
         <div style="background:#fff;border-radius:8px;padding:12px;text-align:center;">
@@ -692,12 +690,26 @@ body.platform-x-active { background: #1a1a1a; }
   <div class="container">
     <!-- KPI & スケジュール -->
     <div style="background:linear-gradient(135deg,#1d9bf0,#1565c0);color:#fff;padding:20px 24px;border-radius:12px;margin-bottom:20px;box-shadow:0 4px 16px rgba(29,155,240,0.3);">
-      <h2 style="font-size:22px;margin:0 0 6px;">🎯 X 引用リプ運用</h2>
-      <p style="font-size:13px;opacity:0.9;margin:0 0 10px;">勉強場所を探しているユーザーへの自然な接触 → アプリDL誘導</p>
+      <h2 style="font-size:22px;margin:0 0 6px;">🎯 X 引用リプ + 店舗フォロー運用</h2>
+      <p style="font-size:13px;opacity:0.9;margin:0 0 10px;">勉強場所を探しているユーザーの投稿を引用リプ＋勉強関連店舗をフォロー</p>
       <div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:10px;font-size:13px;">
         <div><b>🕓 実施時間:</b> 平日 16:00-16:30</div>
-        <div><b>📊 目標:</b> 1日 3-5件（月 60-100件）</div>
-        <div><b>⚠️ 上限:</b> 1日5件（超過は凍結リスク）</div>
+        <div><b>📝 引用リプ:</b> 1日 3-5件</div>
+        <div><b>🏢 店舗フォロー:</b> 1日 5件</div>
+      </div>
+    </div>
+
+    <!-- 店舗フォローカウンター -->
+    <div style="background:#ecfdf5;border-left:4px solid #10b981;border-radius:8px;padding:14px 18px;margin-bottom:20px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+        <div style="font-size:13px;color:#065f46;">
+          <b>🏢 本日の店舗フォロー:</b> <span id="xStoreFollowCount" style="font-size:20px;font-weight:900;color:#10b981;">0</span> / 5 件
+          <span style="font-size:11px;color:#047857;margin-left:8px;">（コワーキング・自習室などの店舗アカウント）</span>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <button onclick="incrementXStoreFollow()" style="background:#10b981;color:#fff;border:none;border-radius:6px;padding:5px 14px;font-size:12px;font-weight:700;cursor:pointer;">+1 フォロー</button>
+          <button onclick="resetXStoreFollow()" style="background:#fff;color:#065f46;border:1px solid #10b981;border-radius:6px;padding:5px 14px;font-size:12px;font-weight:700;cursor:pointer;">リセット</button>
+        </div>
       </div>
     </div>
 
@@ -2315,11 +2327,10 @@ var IG_HASHTAGS = [
   { tag: '受験生', cat: '学生層' },
   { tag: '大学生の勉強垢', cat: '学生層' },
   { tag: '資格勉強', cat: '学生層' },
+  { tag: '社会人勉強', cat: '学生層' },
+  { tag: '勉強記録', cat: '勉強垢系' },
   { tag: '朝活', cat: 'ライフスタイル' },
-  { tag: 'studywithme', cat: 'ライフスタイル' },
-  { tag: '東京カフェ', cat: '地域系' },
-  { tag: '大阪カフェ', cat: '地域系' },
-  { tag: '渋谷カフェ', cat: '地域系' }
+  { tag: 'studywithme', cat: 'ライフスタイル' }
 ];
 
 var IG_COMMENT_TEMPLATES = [
@@ -2355,10 +2366,10 @@ function saveIgEngageState(s) {
 
 function incrementIgCount(type, delta) {
   var s = getIgEngageState();
-  var limits = { like: 150, follow: 50, comment: 20 };
+  var limits = { like: 10, follow: 5, comment: 20 };
   var next = (s[type] || 0) + delta;
   if (next > limits[type]) {
-    if (!confirm('本日の上限（' + limits[type] + '件）を超えます。続行しますか？（シャドウバンリスクあり）')) return;
+    if (!confirm('本日の目安（' + limits[type] + '件）を超えます。続行しますか？')) return;
   }
   s[type] = next;
   saveIgEngageState(s);
@@ -2379,8 +2390,8 @@ function renderIgEngageCounters() {
     el.textContent = val;
     el.style.color = val >= danger ? '#dc2626' : (val >= warn ? '#d97706' : '#e91e63');
   };
-  setCount('igLikeCount', s.like || 0, 100, 150);
-  setCount('igFollowCount', s.follow || 0, 30, 50);
+  setCount('igLikeCount', s.like || 0, 7, 10);
+  setCount('igFollowCount', s.follow || 0, 4, 5);
   setCount('igCommentCount', s.comment || 0, 10, 20);
 }
 
@@ -2625,6 +2636,35 @@ function renderXQuoteReply() {
   renderXQrKeywords();
   renderXQuoteReplyTemplates();
   renderXQrCounter();
+  renderXStoreFollowCounter();
+}
+
+// X 店舗フォロー カウンター
+function getXStoreFollowKey() {
+  return 'studygo_xstorefollow_' + getTodayDateKey();
+}
+function getXStoreFollowCount() {
+  return parseInt(localStorage.getItem(getXStoreFollowKey()) || '0', 10);
+}
+function incrementXStoreFollow() {
+  var c = getXStoreFollowCount();
+  if (c >= 5) {
+    if (!confirm('本日の目安（5件）を超えます。続行しますか？')) return;
+  }
+  localStorage.setItem(getXStoreFollowKey(), String(c + 1));
+  renderXStoreFollowCounter();
+}
+function resetXStoreFollow() {
+  if (!confirm('本日の店舗フォロー数をリセットしますか？')) return;
+  localStorage.removeItem(getXStoreFollowKey());
+  renderXStoreFollowCounter();
+}
+function renderXStoreFollowCounter() {
+  var el = document.getElementById('xStoreFollowCount');
+  if (!el) return;
+  var c = getXStoreFollowCount();
+  el.textContent = c;
+  el.style.color = c >= 5 ? '#dc2626' : (c >= 4 ? '#d97706' : '#10b981');
 }
 
 // ============================================================
@@ -4916,8 +4956,16 @@ function switchManualTab(tab) {
 
       <!-- X ルール -->
       <div id="manual-sec-x" class="manual-section" style="display:none;">
-        <h3 style="color:#1e40af;border-bottom:2px solid #3b82f6;padding-bottom:6px;">🎯 ターゲット投稿の探し方</h3>
-        <p>以下のキーワードを<b>最新タブ</b>で検索。<b>過去24時間以内</b>の投稿に絞る。</p>
+        <div style="background:#f0f7ff;border:2px solid #1d9bf0;border-radius:10px;padding:12px 16px;margin-bottom:16px;">
+          <h4 style="color:#1565c0;margin:0 0 6px;font-size:14px;">📌 Xでの1日の目安</h4>
+          <ul style="margin:0;padding-left:20px;font-size:13px;color:#0c4a6e;">
+            <li><b>引用リプ投稿: 1日 3〜5件</b>（勉強場所を探している人の投稿を引用）</li>
+            <li><b>店舗フォロー: 1日 5件</b>（コワーキング・自習室など勉強できる店舗）</li>
+          </ul>
+        </div>
+
+        <h3 style="color:#1e40af;border-bottom:2px solid #3b82f6;padding-bottom:6px;">🎯 引用リプのターゲット投稿の探し方</h3>
+        <p>以下のキーワードを<b>最新タブ</b>で検索。<b>過去24時間以内</b>の投稿に絞る。<br>「勉強場所を探している人の投稿」を引用リプする。</p>
         <ul style="font-size:13px;">
           <li><code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;color:#be185d;">勉強場所 どこ</code> — 場所探し</li>
           <li><code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;color:#be185d;">勉強できる カフェ</code> — カフェ難民</li>
@@ -4952,7 +5000,8 @@ function switchManualTab(tab) {
 
         <h3 style="color:#1e40af;border-bottom:2px solid #3b82f6;padding-bottom:6px;margin-top:24px;">📏 必須ルール</h3>
         <ul>
-          <li><span style="background:#dc2626;color:#fff;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:bold;">必須</span> 1日 <b style="background:#fef08a;padding:2px 6px;">3〜5件まで</b>（超過は凍結リスク）</li>
+          <li><span style="background:#dc2626;color:#fff;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:bold;">必須</span> 引用リプは1日 <b style="background:#fef08a;padding:2px 6px;">3〜5件まで</b>（超過は凍結リスク）</li>
+          <li><span style="background:#dc2626;color:#fff;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:bold;">必須</span> 店舗フォローは1日 <b style="background:#fef08a;padding:2px 6px;">5件まで</b>（連続で間を空ける）</li>
           <li><span style="background:#dc2626;color:#fff;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:bold;">必須</span> 同日内で<b>同じテンプレ連投禁止</b>（A→B→C のようにローテ）</li>
           <li><span style="background:#dc2626;color:#fff;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:bold;">必須</span> リンクは<b>計測付き短縮URL</b>を使用</li>
           <li><span style="background:#059669;color:#fff;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:bold;">推奨</span> 投稿内容に1行触れてからテンプレを使う</li>
@@ -4983,8 +5032,8 @@ function switchManualTab(tab) {
         </div>
         <table style="width:100%;border-collapse:collapse;font-size:13px;margin-top:10px;">
           <tr style="background:#e91e63;color:#fff;"><th style="border:1px solid #cbd5e1;padding:8px;text-align:left;">アクション</th><th style="border:1px solid #cbd5e1;padding:8px;">上限</th><th style="border:1px solid #cbd5e1;padding:8px;">理由</th></tr>
-          <tr><td style="border:1px solid #cbd5e1;padding:8px;">いいね</td><td style="border:1px solid #cbd5e1;padding:8px;"><b>100〜150</b></td><td style="border:1px solid #cbd5e1;padding:8px;">500超でシャドウバン確定</td></tr>
-          <tr style="background:#f8fafc;"><td style="border:1px solid #cbd5e1;padding:8px;">フォロー</td><td style="border:1px solid #cbd5e1;padding:8px;"><b>30〜50</b></td><td style="border:1px solid #cbd5e1;padding:8px;">5件ごとに30秒空ける</td></tr>
+          <tr><td style="border:1px solid #cbd5e1;padding:8px;">いいね（勉強関連投稿）</td><td style="border:1px solid #cbd5e1;padding:8px;"><b>10人/日</b></td><td style="border:1px solid #cbd5e1;padding:8px;">勉強垢・受験生の最新投稿中心</td></tr>
+          <tr style="background:#f8fafc;"><td style="border:1px solid #cbd5e1;padding:8px;">フォロー（ユーザー対象）</td><td style="border:1px solid #cbd5e1;padding:8px;"><b>5人/日</b></td><td style="border:1px solid #cbd5e1;padding:8px;">勉強垢・受験生などのユーザー</td></tr>
           <tr><td style="border:1px solid #cbd5e1;padding:8px;">コメント</td><td style="border:1px solid #cbd5e1;padding:8px;"><b>10〜20</b></td><td style="border:1px solid #cbd5e1;padding:8px;">短文（3文字等）は業者判定</td></tr>
           <tr style="background:#f8fafc;"><td style="border:1px solid #cbd5e1;padding:8px;">DM送信</td><td style="border:1px solid #cbd5e1;padding:8px;color:#dc2626;"><b>禁止</b></td><td style="border:1px solid #cbd5e1;padding:8px;">スパム認定リスク高</td></tr>
         </table>
