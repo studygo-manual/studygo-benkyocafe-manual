@@ -335,19 +335,27 @@ body.platform-x-active { background: #1a1a1a; }
 <div id="platform-ig" class="platform-content active">
 
 <div class="main-tabs" id="ig-tabs">
-  <button class="main-tab active" onclick="switchMainTab('today')">📅 今日の投稿</button>
+  <button class="main-tab active" onclick="switchMainTab('today')">📅 今週の投稿</button>
   <button class="main-tab" onclick="switchMainTab('stores')">店舗一覧</button>
   <button class="main-tab" style="display:none;" onclick="switchMainTab('area')">エリアまとめ</button>
   <button class="main-tab" style="display:none;" onclick="switchMainTab('dm')">DM管理</button>
 </div>
 
-<!-- ========== TAB: 今日の投稿 ========== -->
+<!-- ========== TAB: 今週の投稿 ========== -->
 <div id="tab-today" class="tab-content active">
   <div class="container">
     <div style="background:linear-gradient(135deg,#e91e63,#f06292);color:#fff;padding:20px 24px;border-radius:12px;margin-bottom:20px;box-shadow:0 4px 16px rgba(233,30,99,0.3);">
-      <h2 id="todayTitle" style="font-size:22px;margin-bottom:4px;">📅 今日の投稿</h2>
-      <p id="todaySubtitle" style="font-size:13px;opacity:0.9;">1日5投稿（平日）</p>
-      <div id="todayProgress" style="margin-top:10px;font-size:14px;"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+        <h2 id="todayTitle" style="font-size:22px;margin:0;">📅 今週の投稿</h2>
+        <div style="display:flex;gap:6px;">
+          <button onclick="changeWeek(-1)" style="background:rgba(255,255,255,0.2);color:#fff;border:1px solid rgba(255,255,255,0.4);border-radius:6px;padding:5px 12px;font-size:12px;cursor:pointer;font-weight:700;">◀ 前週</button>
+          <button onclick="changeWeek(0)" style="background:rgba(255,255,255,0.2);color:#fff;border:1px solid rgba(255,255,255,0.4);border-radius:6px;padding:5px 12px;font-size:12px;cursor:pointer;font-weight:700;">今週</button>
+          <button onclick="changeWeek(1)" style="background:rgba(255,255,255,0.2);color:#fff;border:1px solid rgba(255,255,255,0.4);border-radius:6px;padding:5px 12px;font-size:12px;cursor:pointer;font-weight:700;">来週 ▶</button>
+        </div>
+      </div>
+      <p id="todaySubtitle" style="font-size:13px;opacity:0.9;margin-top:6px;">1日5投稿（平日）・日付ボタンで切替</p>
+      <div id="weekDaySelector" style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:14px;"></div>
+      <div id="todayProgress" style="margin-top:12px;font-size:14px;"></div>
     </div>
     <div id="todayPostList"></div>
   </div>
@@ -1306,19 +1314,90 @@ function getTodayDateKey() {
   return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
 }
 
-function renderTodayPosts() {
-  var today = new Date();
-  var dow = ['日','月','火','水','木','金','土'][today.getDay()];
-  var todayKey = getTodayDateKey();
-  var titleEl = document.getElementById('todayTitle');
-  if (titleEl) titleEl.textContent = '📅 ' + (today.getMonth()+1) + '/' + today.getDate() + '(' + dow + ') の投稿';
+function dateToKey(d) {
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
 
-  var plannedIds = INSTA_POST_PLAN[todayKey] || [];
+// 表示中の週オフセット（0=今週、-1=先週、1=来週）
+var viewWeekOffset = 0;
+// 選択中の日付キー（YYYY-MM-DD）
+var selectedDateKey = getTodayDateKey();
+
+function getWeekMondayDates(offset) {
+  var today = new Date();
+  today.setHours(0,0,0,0);
+  var dow = today.getDay();
+  var diffToMonday = (dow === 0) ? -6 : (1 - dow);
+  var monday = new Date(today);
+  monday.setDate(today.getDate() + diffToMonday + offset * 7);
+  var dates = [];
+  for (var i = 0; i < 5; i++) {
+    var d = new Date(monday);
+    d.setDate(monday.getDate() + i);
+    dates.push(d);
+  }
+  return dates;
+}
+
+function changeWeek(offset) {
+  viewWeekOffset = offset;
+  // 選択日を該当週の月曜に設定（今週は今日優先）
+  var dates = getWeekMondayDates(offset);
+  var todayKey = getTodayDateKey();
+  var todayInWeek = dates.find(function(d) { return dateToKey(d) === todayKey; });
+  selectedDateKey = todayInWeek ? todayKey : dateToKey(dates[0]);
+  renderTodayPosts();
+  renderStores();
+}
+
+function selectPostDate(dateKey) {
+  selectedDateKey = dateKey;
+  renderTodayPosts();
+  renderStores();
+}
+
+function renderWeekDaySelector() {
+  var selector = document.getElementById('weekDaySelector');
+  if (!selector) return;
+  var dates = getWeekMondayDates(viewWeekOffset);
+  var dayNames = ['日','月','火','水','木','金','土'];
+  var todayKey = getTodayDateKey();
+  selector.innerHTML = dates.map(function(d) {
+    var key = dateToKey(d);
+    var isSelected = (key === selectedDateKey);
+    var isToday = (key === todayKey);
+    var plannedIds = INSTA_POST_PLAN[key] || [];
+    var postedCount = plannedIds.filter(function(id) { return postDates[id]; }).length;
+    var total = plannedIds.length;
+    var bg = isSelected ? '#fff' : 'rgba(255,255,255,0.15)';
+    var color = isSelected ? '#e91e63' : '#fff';
+    var border = isToday && !isSelected ? '2px solid #fff' : '1px solid rgba(255,255,255,0.4)';
+    var countText = total > 0 ? postedCount + '/' + total : '-';
+    return '<button onclick="selectPostDate(\'' + key + '\')" style="background:' + bg + ';color:' + color + ';border:' + border + ';border-radius:8px;padding:8px 4px;cursor:pointer;font-weight:700;text-align:center;transition:all 0.15s;">' +
+      '<div style="font-size:11px;opacity:0.85;">' + (d.getMonth()+1) + '/' + d.getDate() + '</div>' +
+      '<div style="font-size:16px;margin:2px 0;">' + dayNames[d.getDay()] + '</div>' +
+      '<div style="font-size:10px;opacity:0.85;">' + countText + '</div>' +
+      (isToday ? '<div style="font-size:9px;opacity:0.85;">今日</div>' : '') +
+    '</button>';
+  }).join('');
+}
+
+function renderTodayPosts() {
+  var selDate = new Date(selectedDateKey + 'T00:00:00');
+  var dow = ['日','月','火','水','木','金','土'][selDate.getDay()];
+  var titleEl = document.getElementById('todayTitle');
+  var todayKey = getTodayDateKey();
+  var isToday = (selectedDateKey === todayKey);
+  if (titleEl) titleEl.textContent = '📅 ' + (selDate.getMonth()+1) + '/' + selDate.getDate() + '(' + dow + ') の投稿' + (isToday ? '（今日）' : '');
+
+  renderWeekDaySelector();
+
+  var plannedIds = INSTA_POST_PLAN[selectedDateKey] || [];
   var progEl = document.getElementById('todayProgress');
   if (!progEl) return;
 
   if (plannedIds.length === 0) {
-    progEl.innerHTML = '本日の投稿予定はありません（平日ではない、またはプラン範囲外）';
+    progEl.innerHTML = 'この日の投稿予定はありません（平日ではない、またはプラン範囲外）';
     return;
   }
   var postedCount = plannedIds.filter(function(id) { return postDates[id]; }).length;
@@ -1327,7 +1406,7 @@ function renderTodayPosts() {
 }
 
 function markTodayPostedById(id) {
-  postDates[id] = getTodayDateKey();
+  postDates[id] = selectedDateKey;
   localStorage.setItem('studygo_post_dates', JSON.stringify(postDates));
   renderTodayPosts();
   renderStores();
@@ -1339,10 +1418,9 @@ function unmarkTodayPostedById(id) {
   renderStores();
 }
 function markAllTodayPosted() {
-  if (!confirm('本日の全店舗を投稿済にしますか？')) return;
-  var todayKey = getTodayDateKey();
-  var ids = INSTA_POST_PLAN[todayKey] || [];
-  ids.forEach(function(id) { postDates[id] = todayKey; });
+  if (!confirm('選択日の全店舗を投稿済にしますか？')) return;
+  var ids = INSTA_POST_PLAN[selectedDateKey] || [];
+  ids.forEach(function(id) { postDates[id] = selectedDateKey; });
   localStorage.setItem('studygo_post_dates', JSON.stringify(postDates));
   renderTodayPosts();
   renderStores();
@@ -1668,10 +1746,9 @@ function renderStores() {
   const list = document.getElementById('storeList');
   list.innerHTML = '';
 
-  // 今日モード: 今日の予定店舗のみ表示
+  // 今週モード: 選択日の予定店舗のみ表示
   if (instaViewMode === 'today') {
-    const todayKey = getTodayDateKey();
-    const plannedIds = INSTA_POST_PLAN[todayKey] || [];
+    const plannedIds = INSTA_POST_PLAN[selectedDateKey] || [];
     let filtered = plannedIds.map(id => STORES.find(s => s.id === id)).filter(Boolean);
     renderStoreCards(filtered, list);
     return;
