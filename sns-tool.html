@@ -551,6 +551,7 @@ body.platform-x-active { background: #1a1a1a; }
 
 <div class="x-tabs" id="x-tabs">
   <button class="x-tab active" onclick="switchXTab('today')">予約投稿</button>
+  <button class="x-tab" onclick="switchXTab('quotereply')">引用リプ運用</button>
   <button class="x-tab" style="display:none;" onclick="switchXTab('schedule')">スケジュール</button>
   <button class="x-tab" style="display:none;" onclick="switchXTab('content')">コンテンツ一覧</button>
   <button class="x-tab" style="display:none;" onclick="switchXTab('progress')">進捗管理</button>
@@ -569,6 +570,89 @@ body.platform-x-active { background: #1a1a1a; }
       <span id="xTodayWeek" style="font-size:13px;background:#e3f2fd;color:#1565c0;padding:4px 12px;border-radius:12px;font-weight:600;"></span>
     </div>
     <div id="xTodayCards"></div>
+  </div>
+</div>
+
+<!-- X Tab: 引用リプ運用 -->
+<div id="xtab-quotereply" class="tab-content">
+  <div class="container">
+    <!-- KPI & スケジュール -->
+    <div style="background:linear-gradient(135deg,#1d9bf0,#1565c0);color:#fff;padding:20px 24px;border-radius:12px;margin-bottom:20px;box-shadow:0 4px 16px rgba(29,155,240,0.3);">
+      <h2 style="font-size:22px;margin:0 0 6px;">🎯 X 引用リプ運用</h2>
+      <p style="font-size:13px;opacity:0.9;margin:0 0 10px;">勉強場所を探しているユーザーへの自然な接触 → アプリDL誘導</p>
+      <div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:10px;font-size:13px;">
+        <div><b>🕓 実施時間:</b> 平日 16:00-16:30</div>
+        <div><b>📊 目標:</b> 1日 3-5件（月 60-100件）</div>
+        <div><b>⚠️ 上限:</b> 1日5件（超過は凍結リスク）</div>
+      </div>
+    </div>
+
+    <!-- 検索キーワード -->
+    <div style="background:#fff;border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+      <h3 style="font-size:16px;color:#1565c0;margin:0 0 12px;border-left:4px solid #1d9bf0;padding-left:10px;">🔍 検索キーワード（最新タブ・24時間以内）</h3>
+      <p style="font-size:12px;color:#666;margin-bottom:10px;">クリックで X の最新タブを開きます</p>
+      <div id="xQrKeywords" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+    </div>
+
+    <!-- 対象選定ルール -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+      <div style="background:#d1fae5;border-left:4px solid #10b981;padding:14px 18px;border-radius:8px;">
+        <h4 style="color:#065f46;font-size:14px;margin:0 0 8px;">✅ 積極的にリプする投稿</h4>
+        <ul style="font-size:12px;line-height:1.7;padding-left:20px;margin:0;color:#064e3b;">
+          <li>フォロワー50-500人程度</li>
+          <li>投稿から24時間以内</li>
+          <li>本気で探している感じ（相談調）</li>
+          <li>地域が読み取れる投稿</li>
+        </ul>
+      </div>
+      <div style="background:#fee2e2;border-left:4px solid #ef4444;padding:14px 18px;border-radius:8px;">
+        <h4 style="color:#991b1b;font-size:14px;margin:0 0 8px;">❌ 避ける投稿</h4>
+        <ul style="font-size:12px;line-height:1.7;padding-left:20px;margin:0;color:#7f1d1d;">
+          <li>フォロワー数万人以上（業者認定される）</li>
+          <li>既に宣伝リプが複数ついている</li>
+          <li>非公開・鍵垢</li>
+          <li>ネガティブ・愚痴投稿</li>
+          <li>政治・宗教・炎上系ユーザー</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 今日のリンク・カウンター -->
+    <div style="background:#fef3c7;border-left:4px solid #f59e0b;padding:14px 18px;border-radius:8px;margin-bottom:20px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+        <div>
+          <b style="color:#92400e;font-size:14px;">📌 計測用短縮URL（テンプレの [リンク] に置換されます）</b>
+          <input type="text" id="xQrLinkUrl" placeholder="例: https://bit.ly/xxxxx" oninput="saveXQrLink()" style="width:100%;margin-top:6px;padding:8px 10px;border:1px solid #f59e0b;border-radius:6px;font-size:13px;">
+        </div>
+      </div>
+      <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+        <div style="font-size:13px;color:#92400e;">
+          <b>本日の引用リプ数:</b> <span id="xQrCountToday" style="font-size:20px;font-weight:900;color:#d97706;">0</span> / 5 件
+          <button onclick="incrementXQrCount()" style="background:#1d9bf0;color:#fff;border:none;border-radius:6px;padding:5px 14px;font-size:12px;font-weight:700;cursor:pointer;margin-left:10px;">+1 カウント</button>
+          <button onclick="resetXQrCount()" style="background:#fff;color:#92400e;border:1px solid #f59e0b;border-radius:6px;padding:5px 14px;font-size:12px;font-weight:700;cursor:pointer;margin-left:4px;">リセット</button>
+        </div>
+        <div style="font-size:12px;color:#92400e;">
+          <b>前回ローテ:</b> <span id="xQrLastPattern">-</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- テンプレA-E -->
+    <h3 style="font-size:18px;color:#333;margin:20px 0 12px;">📝 引用リプ テンプレート（A〜E ローテ推奨）</h3>
+    <div id="xQrTemplates"></div>
+
+    <!-- NG・注意事項 -->
+    <div style="background:#fee2e2;border:2px solid #ef4444;border-radius:12px;padding:16px 20px;margin-top:20px;">
+      <h3 style="color:#991b1b;font-size:16px;margin:0 0 10px;">🚫 絶対禁止</h3>
+      <ul style="font-size:13px;line-height:1.7;padding-left:20px;margin:0;color:#7f1d1d;">
+        <li><b>同日内で同じテンプレ連投禁止</b>（A→B→C のようにローテ）</li>
+        <li><b>テンプレの完全コピペ禁止</b>（相手の投稿に1行触れる・語尾を変える）</li>
+        <li><b>絵文字は2-3個まで</b>（多すぎると業者感）</li>
+        <li>自動化ツール・BOT使用 → 即アカBAN</li>
+        <li>ネガティブ投稿への押し付けリプ → 巻き込まれリスク</li>
+        <li>他社アプリの批判・比較中傷 → 法的リスク</li>
+      </ul>
+    </div>
   </div>
 </div>
 
@@ -2136,6 +2220,153 @@ function switchXTab(tab) {
   document.querySelectorAll('#platform-x > .tab-content').forEach(t => t.classList.remove('active'));
   document.querySelector(`.x-tab[onclick*="${tab}"]`).classList.add('active');
   document.getElementById('xtab-' + tab).classList.add('active');
+  if (tab === 'quotereply') renderXQuoteReply();
+}
+
+// ============================================================
+// X 引用リプ運用タブ
+// ============================================================
+var X_QR_KEYWORDS = [
+  { word: '勉強場所 どこ', aim: '場所探しの投稿' },
+  { word: '勉強できる カフェ', aim: 'カフェ難民' },
+  { word: '自習室 探してる', aim: '顕在ニーズ' },
+  { word: 'カフェ 混んでる 勉強', aim: '代替先ニーズ' },
+  { word: '集中できる場所', aim: '潜在ニーズ' },
+  { word: '勉強 どこ行こう', aim: '迷い中' },
+  { word: 'テスト期間 勉強場所', aim: '学生層' }
+];
+
+var X_QR_TEMPLATES = [
+  {
+    id: 'A', name: 'A: 共感+提案型（万能・推奨）', color: '#10b981',
+    text: 'わかります、勉強できる場所って意外と見つからないですよね🌱\nスタディGOというアプリで、ドロップインできる勉強スペースを\n地図から探せます。よかったら使ってみてください📖\n👉 [リンク]'
+  },
+  {
+    id: 'B', name: 'B: シンプル紹介型', color: '#1d9bf0',
+    text: 'ちょうど勉強場所を探せるアプリ「スタディGO」があります。\nカフェと違って長時間気兼ねなく集中できる店舗が揃ってます☕\n👉 [リンク]'
+  },
+  {
+    id: 'C', name: 'C: 機能訴求型', color: '#8b5cf6',
+    text: 'もしよければ「スタディGO」というアプリどうぞ。\n当日予約なしでフラッと入れる勉強スペースを地図で検索できます。\nWi-Fi・電源完備の店舗多数です💡\n👉 [リンク]'
+  },
+  {
+    id: 'D', name: 'D: 地域特化型（投稿から地域が読み取れる場合）', color: '#f59e0b',
+    text: '〇〇エリアでしたら、スタディGOというアプリに\n近くのドロップイン可能な勉強スペースが載っています📍\n空きがあればそのまま入れますよ〜\n👉 [リンク]'
+  },
+  {
+    id: 'E', name: 'E: 学生・カジュアル型', color: '#ec4899',
+    text: 'スタディGOっていうアプリ、勉強場所探すのに便利です！\nテスト期間とかカフェ難民になりがちですが、\nドロップインで使える自習スペースがまとまって載ってます✏️\n👉 [リンク]'
+  }
+];
+
+function getXQrTodayKey() {
+  return 'studygo_xqr_' + getTodayDateKey();
+}
+
+function getXQrState() {
+  try {
+    var raw = localStorage.getItem(getXQrTodayKey());
+    if (raw) return JSON.parse(raw);
+  } catch(e) {}
+  return { count: 0, lastPattern: '-' };
+}
+
+function saveXQrState(state) {
+  localStorage.setItem(getXQrTodayKey(), JSON.stringify(state));
+}
+
+function saveXQrLink() {
+  var v = document.getElementById('xQrLinkUrl').value;
+  localStorage.setItem('studygo_xqr_link', v);
+  renderXQuoteReplyTemplates();
+}
+
+function getXQrLink() {
+  return localStorage.getItem('studygo_xqr_link') || '[リンク]';
+}
+
+function incrementXQrCount() {
+  var s = getXQrState();
+  if (s.count >= 5) {
+    if (!confirm('本日の上限（5件）を超えます。続行しますか？（凍結リスクあり）')) return;
+  }
+  s.count = (s.count || 0) + 1;
+  saveXQrState(s);
+  renderXQrCounter();
+}
+
+function resetXQrCount() {
+  if (!confirm('本日のカウントをリセットしますか？')) return;
+  saveXQrState({ count: 0, lastPattern: '-' });
+  renderXQrCounter();
+}
+
+function renderXQrCounter() {
+  var s = getXQrState();
+  var countEl = document.getElementById('xQrCountToday');
+  var patEl = document.getElementById('xQrLastPattern');
+  if (countEl) {
+    countEl.textContent = s.count || 0;
+    countEl.style.color = (s.count >= 5) ? '#dc2626' : (s.count >= 3 ? '#d97706' : '#059669');
+  }
+  if (patEl) patEl.textContent = s.lastPattern || '-';
+}
+
+function renderXQrKeywords() {
+  var container = document.getElementById('xQrKeywords');
+  if (!container) return;
+  container.innerHTML = X_QR_KEYWORDS.map(function(k) {
+    var url = 'https://x.com/search?q=' + encodeURIComponent(k.word) + '&src=typed_query&f=live';
+    return '<a href="' + url + '" target="_blank" rel="noopener" style="background:#f0f7ff;border:1px solid #bbdefb;color:#1565c0;padding:8px 14px;border-radius:20px;font-size:13px;text-decoration:none;display:inline-block;transition:all 0.15s;" onmouseover="this.style.background=\'#1d9bf0\';this.style.color=\'#fff\';" onmouseout="this.style.background=\'#f0f7ff\';this.style.color=\'#1565c0\';">' +
+      '🔍 ' + k.word + ' <span style="font-size:10px;opacity:0.8;">（' + k.aim + '）</span></a>';
+  }).join('');
+}
+
+function renderXQuoteReplyTemplates() {
+  var container = document.getElementById('xQrTemplates');
+  if (!container) return;
+  var link = getXQrLink();
+  container.innerHTML = X_QR_TEMPLATES.map(function(t) {
+    var displayText = t.text.replace(/\[リンク\]/g, link);
+    return '<div style="background:#fff;border-left:4px solid ' + t.color + ';border-radius:8px;padding:14px 18px;margin-bottom:12px;box-shadow:0 2px 6px rgba(0,0,0,0.06);">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:8px;">' +
+        '<b style="color:' + t.color + ';font-size:14px;">' + t.name + '</b>' +
+        '<div style="display:flex;gap:6px;">' +
+          '<button onclick="copyXQrTemplate(\'' + t.id + '\', this)" class="btn btn-copy" style="background:' + t.color + ';padding:6px 14px;font-size:12px;">📋 コピー＆カウント</button>' +
+        '</div>' +
+      '</div>' +
+      '<pre style="background:#fef3c7;border-radius:4px;padding:10px 14px;font-size:13px;line-height:1.7;white-space:pre-wrap;margin:0;font-family:inherit;color:#2c3e50;">' + displayText + '</pre>' +
+    '</div>';
+  }).join('');
+}
+
+function copyXQrTemplate(id, btn) {
+  var t = X_QR_TEMPLATES.find(function(x) { return x.id === id; });
+  if (!t) return;
+  var link = getXQrLink();
+  var text = t.text.replace(/\[リンク\]/g, link);
+  navigator.clipboard.writeText(text).then(function() {
+    // カウント&ローテ更新
+    var s = getXQrState();
+    s.count = (s.count || 0) + 1;
+    s.lastPattern = id;
+    saveXQrState(s);
+    renderXQrCounter();
+    if (btn) {
+      var orig = btn.textContent;
+      btn.textContent = '✓ コピー済 (+1)';
+      setTimeout(function() { btn.textContent = orig; }, 1500);
+    }
+  });
+}
+
+function renderXQuoteReply() {
+  // リンクをロード
+  var linkInput = document.getElementById('xQrLinkUrl');
+  if (linkInput) linkInput.value = localStorage.getItem('studygo_xqr_link') || '';
+  renderXQrKeywords();
+  renderXQuoteReplyTemplates();
+  renderXQrCounter();
 }
 
 // ============================================================
