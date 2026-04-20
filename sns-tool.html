@@ -619,10 +619,15 @@ body.platform-x-active { background: #1a1a1a; }
 
     <!-- 今日のリンク・カウンター -->
     <div style="background:#fef3c7;border-left:4px solid #f59e0b;padding:14px 18px;border-radius:8px;margin-bottom:20px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-        <div>
-          <b style="color:#92400e;font-size:14px;">📌 計測用短縮URL（テンプレの [リンク] に置換されます）</b>
-          <input type="text" id="xQrLinkUrl" placeholder="例: https://bit.ly/xxxxx" oninput="saveXQrLink()" style="width:100%;margin-top:6px;padding:8px 10px;border:1px solid #f59e0b;border-radius:6px;font-size:13px;">
+      <b style="color:#92400e;font-size:14px;display:block;margin-bottom:8px;">📌 DLリンク（テンプレの [iOS]／[Android] に置換されます）</b>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:220px;">
+          <label style="font-size:12px;color:#92400e;font-weight:700;">iOS URL</label>
+          <input type="text" id="xQrIosUrl" placeholder="https://x.gd/uBpjE" oninput="saveXQrLink()" style="width:100%;margin-top:4px;padding:8px 10px;border:1px solid #f59e0b;border-radius:6px;font-size:13px;">
+        </div>
+        <div style="flex:1;min-width:220px;">
+          <label style="font-size:12px;color:#92400e;font-weight:700;">Android URL</label>
+          <input type="text" id="xQrAndroidUrl" placeholder="https://x.gd/eCU3F" oninput="saveXQrLink()" style="width:100%;margin-top:4px;padding:8px 10px;border:1px solid #f59e0b;border-radius:6px;font-size:13px;">
         </div>
       </div>
       <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
@@ -2238,24 +2243,24 @@ var X_QR_KEYWORDS = [
 
 var X_QR_TEMPLATES = [
   {
-    id: 'A', name: 'A: 共感+提案型（万能・推奨）', color: '#10b981',
-    text: 'わかります、勉強できる場所って意外と見つからないですよね🌱\nスタディGOというアプリで、ドロップインできる勉強スペースを\n地図から探せます。よかったら使ってみてください📖\n👉 [リンク]'
+    id: 'A', name: 'A: 共感+提案型（図書館・カフェ満席など）', color: '#10b981',
+    text: '図書館が満席だと困ってしまいますよね……😢\n家以外で集中できる場所をお探しでしたら、\nぜひ『スタディGO』をご活用ください！\n\n/ 勉強場所を探すなら、スタディGO \\\n\niOS：[iOS]　Android：[Android]\n\n学習がスムーズに進むよう応援しております！✨'
   },
   {
-    id: 'B', name: 'B: シンプル紹介型', color: '#1d9bf0',
-    text: 'ちょうど勉強場所を探せるアプリ「スタディGO」があります。\nカフェと違って長時間気兼ねなく集中できる店舗が揃ってます☕\n👉 [リンク]'
+    id: 'B', name: 'B: 時間節約型（場所探しに時間がかかった投稿）', color: '#1d9bf0',
+    text: '勉強場所探しに時間がかかってしまうと、\nそれだけで大変ですよね😭\n次から『スタディGO』でサクッと場所を見つけて、\nその時間をぜひ勉強時間にあててください！\n\n/ 勉強場所を探すなら、スタディGO \\\n\niOS：[iOS]　Android：[Android]\n\n次はスムーズに勉強できるよう応援しております！✨'
   },
   {
-    id: 'C', name: 'C: 機能訴求型', color: '#8b5cf6',
-    text: 'もしよければ「スタディGO」というアプリどうぞ。\n当日予約なしでフラッと入れる勉強スペースを地図で検索できます。\nWi-Fi・電源完備の店舗多数です💡\n👉 [リンク]'
+    id: 'C', name: 'C: 即利用可能アピール型', color: '#8b5cf6',
+    text: '今日は勉強場所探しで大変でしたね……😢\nもしまた場所探しに困ったときは、\nぜひ『スタディGO』を頼ってください！\n今すぐ使える勉強場所がすぐに見つかります。\n\n/ 勉強場所を探すなら、スタディGO \\\n\niOS：[iOS]　Android：[Android]\n\n勉強を応援しております！✨'
   },
   {
-    id: 'D', name: 'D: 地域特化型（投稿から地域が読み取れる場合）', color: '#f59e0b',
-    text: '〇〇エリアでしたら、スタディGOというアプリに\n近くのドロップイン可能な勉強スペースが載っています📍\n空きがあればそのまま入れますよ〜\n👉 [リンク]'
+    id: 'D', name: 'D: 地域特化型（エリアが読み取れる場合）', color: '#f59e0b',
+    text: '〇〇エリアで勉強場所お探しでしょうか？📍\n『スタディGO』に近くのドロップイン可能な\n勉強スペースが載っているので、ぜひご覧ください！\n空きがあればそのまま入れますよ〜\n\n/ 勉強場所を探すなら、スタディGO \\\n\niOS：[iOS]　Android：[Android]\n\n良い勉強場所が見つかりますように！✨'
   },
   {
-    id: 'E', name: 'E: 学生・カジュアル型', color: '#ec4899',
-    text: 'スタディGOっていうアプリ、勉強場所探すのに便利です！\nテスト期間とかカフェ難民になりがちですが、\nドロップインで使える自習スペースがまとまって載ってます✏️\n👉 [リンク]'
+    id: 'E', name: 'E: 学生・テスト期間型', color: '#ec4899',
+    text: 'テスト期間、勉強場所探し大変ですよね📚\n『スタディGO』ならドロップインで使える\n自習スペースがまとまって見つかるので、\nカフェ難民になる前にぜひ！\n\n/ 勉強場所を探すなら、スタディGO \\\n\niOS：[iOS]　Android：[Android]\n\nテスト頑張ってくださいね！応援しています✨'
   }
 ];
 
@@ -2276,13 +2281,25 @@ function saveXQrState(state) {
 }
 
 function saveXQrLink() {
-  var v = document.getElementById('xQrLinkUrl').value;
-  localStorage.setItem('studygo_xqr_link', v);
+  var ios = document.getElementById('xQrIosUrl').value;
+  var android = document.getElementById('xQrAndroidUrl').value;
+  localStorage.setItem('studygo_xqr_ios', ios);
+  localStorage.setItem('studygo_xqr_android', android);
   renderXQuoteReplyTemplates();
 }
 
-function getXQrLink() {
-  return localStorage.getItem('studygo_xqr_link') || '[リンク]';
+function getXQrIosLink() {
+  return localStorage.getItem('studygo_xqr_ios') || 'https://x.gd/uBpjE';
+}
+
+function getXQrAndroidLink() {
+  return localStorage.getItem('studygo_xqr_android') || 'https://x.gd/eCU3F';
+}
+
+function replaceXQrLinks(text) {
+  return text
+    .replace(/\[iOS\]/g, getXQrIosLink())
+    .replace(/\[Android\]/g, getXQrAndroidLink());
 }
 
 function incrementXQrCount() {
@@ -2325,9 +2342,8 @@ function renderXQrKeywords() {
 function renderXQuoteReplyTemplates() {
   var container = document.getElementById('xQrTemplates');
   if (!container) return;
-  var link = getXQrLink();
   container.innerHTML = X_QR_TEMPLATES.map(function(t) {
-    var displayText = t.text.replace(/\[リンク\]/g, link);
+    var displayText = replaceXQrLinks(t.text);
     return '<div style="background:#fff;border-left:4px solid ' + t.color + ';border-radius:8px;padding:14px 18px;margin-bottom:12px;box-shadow:0 2px 6px rgba(0,0,0,0.06);">' +
       '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:8px;">' +
         '<b style="color:' + t.color + ';font-size:14px;">' + t.name + '</b>' +
@@ -2343,10 +2359,8 @@ function renderXQuoteReplyTemplates() {
 function copyXQrTemplate(id, btn) {
   var t = X_QR_TEMPLATES.find(function(x) { return x.id === id; });
   if (!t) return;
-  var link = getXQrLink();
-  var text = t.text.replace(/\[リンク\]/g, link);
+  var text = replaceXQrLinks(t.text);
   navigator.clipboard.writeText(text).then(function() {
-    // カウント&ローテ更新
     var s = getXQrState();
     s.count = (s.count || 0) + 1;
     s.lastPattern = id;
@@ -2361,9 +2375,10 @@ function copyXQrTemplate(id, btn) {
 }
 
 function renderXQuoteReply() {
-  // リンクをロード
-  var linkInput = document.getElementById('xQrLinkUrl');
-  if (linkInput) linkInput.value = localStorage.getItem('studygo_xqr_link') || '';
+  var iosInput = document.getElementById('xQrIosUrl');
+  var androidInput = document.getElementById('xQrAndroidUrl');
+  if (iosInput) iosInput.value = localStorage.getItem('studygo_xqr_ios') || '';
+  if (androidInput) androidInput.value = localStorage.getItem('studygo_xqr_android') || '';
   renderXQrKeywords();
   renderXQuoteReplyTemplates();
   renderXQrCounter();
