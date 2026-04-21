@@ -758,10 +758,9 @@ p, li, td, th, span, div, label, button, input, select, textarea { font-size: in
     <!-- 差し込み要素（マンネリ化防止） -->
     <div style="background:#ecfdf5;border:2px dashed #10b981;border-radius:10px;padding:14px 18px;margin-bottom:16px;">
       <h3 style="color:#065f46;font-size:14px;margin:0 0 8px;">🍃 差し込み要素（マンネリ化防止）</h3>
-      <p style="font-size:11px;color:#047857;margin:0 0 10px;">テンプレの [季語]/[試験]/[天気] に置換されます。毎日更新推奨。</p>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
         <div>
-          <label style="font-size:11px;color:#065f46;font-weight:700;display:block;">🌸 季語・季節</label>
+          <label style="font-size:16px;color:#065f46;font-weight:900;display:block;">🌸 季語・季節</label>
           <select id="xQrSeason" onchange="saveXQrVars()" style="width:100%;margin-top:3px;padding:6px 8px;border:1px solid #10b981;border-radius:5px;font-size:12px;background:#fff;">
             <option value="">-- 選択 --</option>
             <optgroup label="春（3〜5月）">
@@ -798,7 +797,7 @@ p, li, td, th, span, div, label, button, input, select, textarea { font-size: in
           </select>
         </div>
         <div>
-          <label style="font-size:11px;color:#065f46;font-weight:700;display:block;">📝 直近の試験</label>
+          <label style="font-size:16px;color:#065f46;font-weight:900;display:block;">📝 直近の試験</label>
           <select id="xQrExam" onchange="saveXQrVars()" style="width:100%;margin-top:3px;padding:6px 8px;border:1px solid #10b981;border-radius:5px;font-size:12px;background:#fff;">
             <option value="">-- 選択 --</option>
             <optgroup label="語学">
@@ -874,7 +873,7 @@ p, li, td, th, span, div, label, button, input, select, textarea { font-size: in
           </select>
         </div>
         <div>
-          <label style="font-size:11px;color:#065f46;font-weight:700;display:block;">☀️ 今日の天気</label>
+          <label style="font-size:16px;color:#065f46;font-weight:900;display:block;">☀️ 今日の天気</label>
           <select id="xQrWeather" onchange="saveXQrVars()" style="width:100%;margin-top:3px;padding:6px 8px;border:1px solid #10b981;border-radius:5px;font-size:12px;background:#fff;">
             <option value="">-- 選択 --</option>
             <optgroup label="晴れ系">
@@ -912,20 +911,6 @@ p, li, td, th, span, div, label, button, input, select, textarea { font-size: in
           </select>
         </div>
       </div>
-      <div style="margin-top:10px;font-size:11px;color:#065f46;line-height:1.8;">
-        💡 <b>活用ヒントサイト</b>（Google検索で最新・公式情報を確認してください）<br>
-        <span style="display:inline-block;margin-top:4px;">🌸 <b>季語・季節:</b>
-          <a href="https://ja.wikipedia.org/wiki/%E5%AD%A3%E8%AA%9E" target="_blank" rel="noopener" style="color:#059669;">季語（Wikipedia）</a> ／
-          <a href="https://www.google.com/search?q=%E5%AD%A3%E8%AA%9E+%E4%BB%8A%E6%9C%88" target="_blank" rel="noopener" style="color:#059669;">今月の季語（Google検索）</a>
-        </span><br>
-        <span style="display:inline-block;margin-top:2px;">📝 <b>直近の試験:</b>
-          <a href="https://www.google.com/search?q=%E8%B3%87%E6%A0%BC%E8%A9%A6%E9%A8%93+2026%E5%B9%B4+%E3%82%AB%E3%83%AC%E3%83%B3%E3%83%80%E3%83%BC" target="_blank" rel="noopener" style="color:#059669;">資格試験カレンダー（Google検索）</a>
-        </span><br>
-        <span style="display:inline-block;margin-top:2px;">☀️ <b>天気:</b>
-          <a href="https://tenki.jp/" target="_blank" rel="noopener" style="color:#059669;">tenki.jp</a> ／
-          <a href="https://www.jma.go.jp/bosai/forecast/" target="_blank" rel="noopener" style="color:#059669;">気象庁 天気予報</a>
-        </span>
-      </div>
     </div>
 
     <!-- 店舗フォローカウンター -->
@@ -949,54 +934,6 @@ p, li, td, th, span, div, label, button, input, select, textarea { font-size: in
       <div id="xQrKeywords" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
     </div>
 
-    <!-- 対象選定ルール -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
-      <div style="background:#d1fae5;border-left:4px solid #10b981;padding:14px 18px;border-radius:8px;">
-        <h4 style="color:#065f46;font-size:14px;margin:0 0 8px;">✅ 積極的にリプする投稿</h4>
-        <ul style="font-size:12px;line-height:1.7;padding-left:20px;margin:0;color:#064e3b;">
-          <li>フォロワー50-500人程度</li>
-          <li>投稿から24時間以内</li>
-          <li>本気で探している感じ（相談調）</li>
-          <li>地域が読み取れる投稿</li>
-        </ul>
-      </div>
-      <div style="background:#fee2e2;border-left:4px solid #ef4444;padding:14px 18px;border-radius:8px;">
-        <h4 style="color:#991b1b;font-size:14px;margin:0 0 8px;">❌ 避ける投稿</h4>
-        <ul style="font-size:12px;line-height:1.7;padding-left:20px;margin:0;color:#7f1d1d;">
-          <li>フォロワー数万人以上（業者認定される）</li>
-          <li>既に宣伝リプが複数ついている</li>
-          <li>非公開・鍵垢</li>
-          <li>ネガティブ・愚痴投稿</li>
-          <li>政治・宗教・炎上系ユーザー</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- 今日のリンク・カウンター -->
-    <div style="background:#fef3c7;border-left:4px solid #f59e0b;padding:14px 18px;border-radius:8px;margin-bottom:20px;">
-      <b style="color:#92400e;font-size:14px;display:block;margin-bottom:8px;">📌 DLリンク（固定・編集不可）</b>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;">
-        <div style="flex:1;min-width:220px;">
-          <label style="font-size:12px;color:#92400e;font-weight:700;">iOS URL</label>
-          <div style="margin-top:4px;padding:8px 10px;background:#fff;border:1px solid #f59e0b;border-radius:6px;font-size:13px;color:#92400e;font-family:monospace;user-select:all;">https://x.gd/uBpjE</div>
-        </div>
-        <div style="flex:1;min-width:220px;">
-          <label style="font-size:12px;color:#92400e;font-weight:700;">Android URL</label>
-          <div style="margin-top:4px;padding:8px 10px;background:#fff;border:1px solid #f59e0b;border-radius:6px;font-size:13px;color:#92400e;font-family:monospace;user-select:all;">https://x.gd/eCU3F</div>
-        </div>
-      </div>
-      <div style="font-size:11px;color:#92400e;margin-top:4px;">テンプレの [iOS]／[Android] に自動で挿入されます</div>
-      <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-        <div style="font-size:13px;color:#92400e;">
-          <b>本日の引用リプ数:</b> <span id="xQrCountToday" style="font-size:20px;font-weight:900;color:#d97706;">0</span> / 5 件
-          <button onclick="incrementXQrCount()" style="background:#1d9bf0;color:#fff;border:none;border-radius:6px;padding:5px 14px;font-size:12px;font-weight:700;cursor:pointer;margin-left:10px;">+1 カウント</button>
-          <button onclick="resetXQrCount()" style="background:#fff;color:#92400e;border:1px solid #f59e0b;border-radius:6px;padding:5px 14px;font-size:12px;font-weight:700;cursor:pointer;margin-left:4px;">リセット</button>
-        </div>
-        <div style="font-size:12px;color:#92400e;">
-          <b>前回ローテ:</b> <span id="xQrLastPattern">-</span>
-        </div>
-      </div>
-    </div>
 
     <!-- テンプレ -->
     <div style="display:flex;justify-content:space-between;align-items:center;margin:20px 0 12px;flex-wrap:wrap;gap:10px;">
@@ -1010,7 +947,7 @@ p, li, td, th, span, div, label, button, input, select, textarea { font-size: in
       <code style="background:#f0f7ff;padding:2px 6px;border-radius:3px;">[iOS]</code>
       <code style="background:#f0f7ff;padding:2px 6px;border-radius:3px;">[Android]</code>
     </p>
-    <div id="xQrTemplates"></div>
+    <div id="xQrTemplates" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;"></div>
 
     <!-- カスタムテンプレ 編集モーダル -->
     <div id="xQrCustomModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:9999;align-items:center;justify-content:center;padding:20px;" onclick="if(event.target===this)closeXQrCustomModal()">
@@ -1033,13 +970,9 @@ p, li, td, th, span, div, label, button, input, select, textarea { font-size: in
     <!-- NG・注意事項 -->
     <div style="background:#fee2e2;border:2px solid #ef4444;border-radius:12px;padding:16px 20px;margin-top:20px;">
       <h3 style="color:#991b1b;font-size:16px;margin:0 0 10px;">🚫 絶対禁止</h3>
-      <ul style="font-size:13px;line-height:1.7;padding-left:20px;margin:0;color:#7f1d1d;">
+      <ul style="font-size:14px;line-height:1.9;padding-left:20px;margin:0;color:#7f1d1d;">
         <li><b>同日内で同じテンプレ連投禁止</b>（A→B→C のようにローテ）</li>
         <li><b>テンプレの完全コピペ禁止</b>（相手の投稿に1行触れる・語尾を変える）</li>
-        <li><b>絵文字は2-3個まで</b>（多すぎると業者感）</li>
-        <li>自動化ツール・BOT使用 → 即アカBAN</li>
-        <li>ネガティブ投稿への押し付けリプ → 巻き込まれリスク</li>
-        <li>他社アプリの批判・比較中傷 → 法的リスク</li>
       </ul>
     </div>
   </div>
