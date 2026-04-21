@@ -547,38 +547,39 @@ p, li, td, th, span, div, label, button, input, select, textarea { font-size: in
   <div class="container">
     <!-- ヘッダー -->
     <div style="background:linear-gradient(135deg,#e91e63,#f06292);color:#fff;padding:20px 24px;border-radius:12px;margin-bottom:20px;box-shadow:0 4px 16px rgba(233,30,99,0.3);">
-      <h2 style="font-size:22px;margin:0 0 6px;">💕 Instagram いいね・フォロー・コメント運用</h2>
-      <p style="font-size:13px;opacity:0.9;margin:0 0 10px;">勉強垢・受験生への自然な接触 → プロフィール訪問・フォロー誘導</p>
+      <h2 style="font-size:22px;margin:0 0 6px;">💕 Instagram いいね・フォロー運用</h2>
       <div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:10px;font-size:13px;">
         <div><b>🕓 実施時間:</b> 平日 16:00-16:30</div>
-        <div><b>📊 月次目標:</b> いいね2,000-3,000件 / フォロー600-1,000件</div>
       </div>
     </div>
 
-    <!-- 1日の目標 -->
-    <div style="background:#fdf2f8;border:2px solid #e91e63;border-radius:12px;padding:16px 20px;margin-bottom:20px;">
-      <h3 style="color:#9d174d;font-size:16px;margin:0 0 10px;">🎯 1日の目標（ユーザー対象）</h3>
-      <p style="color:#7e1d3d;font-size:12px;margin:0 0 10px;">対象: 勉強垢・受験生・勉強関連投稿のユーザー（店舗ではない）</p>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
-        <div style="background:#fff;border-radius:8px;padding:12px;text-align:center;">
-          <div style="font-size:11px;color:#666;">いいね（勉強関連投稿）</div>
-          <div style="font-size:28px;font-weight:900;color:#e91e63;">10<span style="font-size:14px;color:#999;">人/日</span></div>
-          <div style="font-size:10px;color:#999;">最新投稿中心</div>
+    <!-- 1日の目標（1段目: いいね・フォロー） -->
+    <div style="background:#fdf2f8;border:2px solid #e91e63;border-radius:12px;padding:16px 20px;margin-bottom:12px;">
+      <p style="color:#7e1d3d;font-size:12px;margin:0 0 10px;font-weight:700;">対象: 勉強垢・受験生・勉強関連投稿のユーザー（店舗ではない）</p>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
+        <div style="background:#fff;border-radius:8px;padding:14px;text-align:center;">
+          <div style="font-size:12px;color:#666;">いいね（勉強関連投稿）</div>
+          <div style="font-size:30px;font-weight:900;color:#e91e63;">10<span style="font-size:15px;color:#999;">人/日</span></div>
+          <div style="font-size:11px;color:#999;">最新投稿中心</div>
         </div>
-        <div style="background:#fff;border-radius:8px;padding:12px;text-align:center;">
-          <div style="font-size:11px;color:#666;">フォロー（ユーザー）</div>
-          <div style="font-size:28px;font-weight:900;color:#e91e63;">5<span style="font-size:14px;color:#999;">人/日</span></div>
-          <div style="font-size:10px;color:#999;">勉強垢中心</div>
+        <div style="background:#fff;border-radius:8px;padding:14px;text-align:center;">
+          <div style="font-size:12px;color:#666;">フォロー（ユーザー）</div>
+          <div style="font-size:30px;font-weight:900;color:#e91e63;">5<span style="font-size:15px;color:#999;">人/日</span></div>
+          <div style="font-size:11px;color:#999;">勉強垢中心</div>
         </div>
-        <div style="background:#fff;border-radius:8px;padding:12px;text-align:center;">
-          <div style="font-size:11px;color:#666;">コメント</div>
+      </div>
+    </div>
+
+    <!-- 2段目: コメント・DM -->
+    <div style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:12px;padding:12px 16px;margin-bottom:20px;">
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
+        <div style="background:#fff;border-radius:8px;padding:10px;text-align:center;">
+          <div style="font-size:12px;color:#666;">コメント</div>
           <div style="font-size:20px;font-weight:900;color:#dc2626;">現状禁止</div>
-          <div style="font-size:10px;color:#999;">方針確定まで控える</div>
         </div>
-        <div style="background:#fff;border-radius:8px;padding:12px;text-align:center;">
-          <div style="font-size:11px;color:#666;">DM</div>
+        <div style="background:#fff;border-radius:8px;padding:10px;text-align:center;">
+          <div style="font-size:12px;color:#666;">DM</div>
           <div style="font-size:20px;font-weight:900;color:#dc2626;">現状禁止</div>
-          <div style="font-size:10px;color:#999;">スパム認定大</div>
         </div>
       </div>
     </div>
@@ -625,26 +626,12 @@ p, li, td, th, span, div, label, button, input, select, textarea { font-size: in
     </div>
     <div id="igCommentTemplates" style="display:none;"></div>
 
-    <!-- 導線設計 -->
-    <div style="background:#dbeafe;border-left:4px solid #3b82f6;padding:14px 18px;border-radius:8px;margin-top:20px;">
-      <h4 style="color:#1e40af;font-size:14px;margin:0 0 6px;">💡 導線設計</h4>
-      <p style="font-size:12px;color:#1e3a8a;margin:0;line-height:1.7;">
-        コメント欄に直リンクを貼ると検出されやすい。プロフィール(bio)にDLリンクを固定し、コメントでは<br>
-        <b>「プロフィールのリンクから飛べます」</b>と誘導する。
-      </p>
-    </div>
-
     <!-- NG集 -->
     <div style="background:#fee2e2;border:2px solid #ef4444;border-radius:12px;padding:16px 20px;margin-top:20px;">
       <h3 style="color:#991b1b;font-size:16px;margin:0 0 10px;">🚫 絶対禁止</h3>
-      <ul style="font-size:13px;line-height:1.7;padding-left:20px;margin:0;color:#7f1d1d;">
-        <li>自動化ツール・BOT使用 → 即アカBAN</li>
-        <li>DM送信 → スパム認定のリスク最大</li>
-        <li>フォロー→即アンフォロー（フォロワー稼ぎ） → シャドウバン</li>
-        <li>10秒ごとのいいね連打 → レート制限・警告</li>
-        <li>同テンプレを1日複数回使用 → スパム検出</li>
-        <li>ネガティブ投稿への「勉強場所いかがですか？」リプ → 避ける</li>
-        <li>フォロワー数万人のインフルエンサーへのリプ → 基本避ける</li>
+      <ul style="font-size:14px;line-height:1.9;padding-left:20px;margin:0;color:#7f1d1d;">
+        <li>いいねの連打</li>
+        <li>ネガティブ投稿へのリプ</li>
       </ul>
     </div>
   </div>
@@ -1830,54 +1817,60 @@ function setPostDate(id, date) {
 // 投稿プラン（旧ツールURL順、平日1日5店舗）
 // 4/7〜4/11（25店舗）は既にシード済み
 const INSTA_POST_PLAN = {
-  '2026-04-07': [2,3,5,6,7],
-  '2026-04-08': [10,12,13,14,15],
-  '2026-04-09': [17,18,19,20,21],
-  '2026-04-10': [22,23,25,26,28],
-  '2026-04-11': [32,34,35,36,37],
-  '2026-04-14': [29,38,39,40,41],
-  '2026-04-15': [42,43,44,45,46],
-  '2026-04-16': [48,49,50,51,52],
+  '2026-04-07': [2, 3, 5, 6, 7],
+  '2026-04-08': [10, 12, 13, 14, 15],
+  '2026-04-09': [17, 18, 19, 20, 21],
+  '2026-04-10': [22, 23, 25, 26, 28],
+  '2026-04-11': [32, 34, 35, 36, 37],
+  '2026-04-14': [29, 38, 39, 40, 41],
+  '2026-04-15': [42, 43, 44, 45, 46],
+  '2026-04-16': [48, 49, 50, 51, 52],
   '2026-04-17': [],
-  '2026-04-20': [53,54,55,56,57],
-  '2026-04-21': [58,59,60,63,64],
-  '2026-04-22': [65,66,67,68,69],
-  '2026-04-23': [70,71,74,75,77],
-  '2026-04-24': [78,79,83,84,85],
-  '2026-04-27': [86,87,88,89,90],
-  '2026-04-28': [91,92,93,95,96],
-  '2026-04-30': [98,99,100,101,103],
-  '2026-05-01': [104,105,106,107,108],
-  '2026-05-04': [109,110,111,112,113],
-  '2026-05-05': [114,115,116,117,118],
-  '2026-05-06': [119,120,121,122,123],
-  '2026-05-07': [124,125,126,127,128],
-  '2026-05-08': [130,131,132,133,134],
-  '2026-05-11': [135,137,138,139,140],
-  '2026-05-12': [142,143,144,145,146],
-  '2026-05-13': [147,148,150,152,153],
-  '2026-05-14': [154,155,157,159,161],
-  '2026-05-15': [162,163,164,165,166],
-  '2026-05-18': [168,171,172,173,175],
-  '2026-05-19': [177,178,180,181,182],
-  '2026-05-20': [183,184,185,186,188],
-  '2026-05-21': [189,190,191,192,194],
-  '2026-05-22': [195,197,198,199,200],
-  '2026-05-25': [201,204,205,206,211],
-  '2026-05-26': [212,213,224,225,233],
-  '2026-05-27': [238,251,252,255,256],
-  '2026-05-28': [257,258,259,260,261],
-  '2026-05-29': [262,263,264,266,267],
-  '2026-06-01': [269,270,271,272,273],
-  '2026-06-02': [274,275,276,277,280],
-  '2026-06-03': [283,288,289,291,292],
-  '2026-06-04': [293,298,299,301,306],
-  '2026-06-05': [307,308,310,314,315],
-  '2026-06-08': [317,318,319,320,321],
-  '2026-06-09': [322,324,327,329,330],
-  '2026-06-10': [332,334,335,338,339],
-  '2026-06-11': [343,344,345,346,349],
-  '2026-06-12': [350,351,352,354,358]
+  '2026-04-20': [53, 54, 55, 56, 57],
+  '2026-04-21': [47, 58, 59, 60, 63],
+  '2026-04-22': [64, 66, 67, 68, 69],
+  '2026-04-23': [70, 71, 74, 75, 77],
+  '2026-04-24': [78, 79, 83, 84, 85],
+  '2026-04-27': [86, 87, 88, 89, 90],
+  '2026-04-28': [91, 92, 93, 95, 96],
+  '2026-04-29': [98, 99, 100, 101, 103],
+  '2026-04-30': [104, 105, 106, 107, 108],
+  '2026-05-01': [109, 110, 111, 112, 113],
+  '2026-05-04': [114, 115, 116, 117, 118],
+  '2026-05-05': [119, 120, 121, 122, 123],
+  '2026-05-06': [124, 125, 126, 127, 128],
+  '2026-05-07': [130, 131, 132, 133, 134],
+  '2026-05-08': [135, 137, 138, 139, 140],
+  '2026-05-11': [141, 142, 143, 144, 145],
+  '2026-05-12': [146, 147, 148, 150, 152],
+  '2026-05-13': [153, 154, 155, 157, 159],
+  '2026-05-14': [161, 162, 163, 164, 165],
+  '2026-05-15': [166, 168, 170, 171, 172],
+  '2026-05-18': [173, 174, 175, 177, 178],
+  '2026-05-19': [179, 180, 181, 182, 183],
+  '2026-05-20': [184, 185, 186, 188, 189],
+  '2026-05-21': [190, 191, 192, 193, 194],
+  '2026-05-22': [195, 196, 197, 198, 199],
+  '2026-05-25': [200, 201, 204, 205, 206],
+  '2026-05-26': [207, 208, 209, 210, 211],
+  '2026-05-27': [212, 213, 214, 215, 216],
+  '2026-05-28': [217, 218, 219, 220, 221],
+  '2026-05-29': [222, 223, 224, 225, 226],
+  '2026-06-01': [227, 228, 230, 231, 233],
+  '2026-06-02': [234, 235, 237, 238, 239],
+  '2026-06-03': [240, 241, 242, 243, 244],
+  '2026-06-04': [246, 247, 248, 249, 250],
+  '2026-06-05': [251, 252, 253, 254, 255],
+  '2026-06-08': [256, 257, 258, 259, 260],
+  '2026-06-09': [261, 262, 263, 264, 266],
+  '2026-06-10': [267, 268, 269, 270, 271],
+  '2026-06-11': [272, 273, 274, 276, 277],
+  '2026-06-12': [278, 279, 280, 282, 283],
+  '2026-06-15': [284, 285, 288, 289, 290],
+  '2026-06-16': [291, 292, 293, 294, 295],
+  '2026-06-17': [296, 297, 298, 299, 300],
+  '2026-06-18': [301, 302, 304, 305, 306],
+  '2026-06-19': [307, 308, 309, 310],
 };
 
 function getTodayDateKey() {
