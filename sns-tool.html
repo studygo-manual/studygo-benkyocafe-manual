@@ -585,11 +585,12 @@ body.platform-x-active { background: #1a1a1a; }
   <div class="dm-panel">
     <h3>Instagram DM営業（カフェ向け）</h3>
     <div style="border:4px solid #e53935;background:#fff5f5;color:#c62828;padding:16px 20px;border-radius:10px;margin-bottom:20px;text-align:center;font-weight:900;font-size:20px;line-height:1.5;box-shadow:0 2px 8px rgba(229,57,53,0.2);">
-      🎯 1日フォロー＆DMを<span style="font-size:28px;color:#e53935;">最低5件</span>
+      🎯 1日フォローを<span style="font-size:28px;color:#e53935;">5件</span><br>
+      <span style="font-size:13px;color:#7a1818;font-weight:700;">※ DMはフォロー承認されてから送信</span>
     </div>
     <div style="font-size:13px;color:#666;margin-bottom:16px;line-height:1.8;">
       <p><b>ターゲット:</b> 勉強・作業利用OKのカフェ・ブックカフェ・静かめの個人店</p>
-      <p><b>使い方:</b> 下のテンプレートをコピー → Instagram検索で見つけたアカウントに送信 → 架電リストに記録</p>
+      <p><b>使い方:</b> ① Instagram検索でアカウントを見つけてフォロー → ② 相手にフォロー承認されたら下のテンプレートをコピーしてDM送信 → ③ 架電リストに記録</p>
     </div>
 
     <!-- DM文章テンプレート -->
@@ -714,9 +715,19 @@ body.platform-x-active { background: #1a1a1a; }
           <input type="text" id="xQrWeather" placeholder="例: 雨、猛暑" oninput="saveXQrVars()" style="width:100%;margin-top:3px;padding:6px 8px;border:1px solid #10b981;border-radius:5px;font-size:12px;">
         </div>
       </div>
-      <div style="margin-top:10px;font-size:11px;color:#065f46;">
-        💡 <b>活用ヒント:</b> 直近の資格試験日は <a href="https://shikaku-king.com/calendar/" target="_blank" rel="noopener" style="color:#059669;">資格の大原カレンダー</a> ／
-        <a href="https://jiten.com/index.php?g=10" target="_blank" rel="noopener" style="color:#059669;">試験日一覧</a> を参照。天気は <a href="https://tenki.jp/" target="_blank" rel="noopener" style="color:#059669;">tenki.jp</a>。
+      <div style="margin-top:10px;font-size:11px;color:#065f46;line-height:1.8;">
+        💡 <b>活用ヒントサイト</b>（Google検索で最新・公式情報を確認してください）<br>
+        <span style="display:inline-block;margin-top:4px;">🌸 <b>季語・季節:</b>
+          <a href="https://ja.wikipedia.org/wiki/%E5%AD%A3%E8%AA%9E" target="_blank" rel="noopener" style="color:#059669;">季語（Wikipedia）</a> ／
+          <a href="https://www.google.com/search?q=%E5%AD%A3%E8%AA%9E+%E4%BB%8A%E6%9C%88" target="_blank" rel="noopener" style="color:#059669;">今月の季語（Google検索）</a>
+        </span><br>
+        <span style="display:inline-block;margin-top:2px;">📝 <b>直近の試験:</b>
+          <a href="https://www.google.com/search?q=%E8%B3%87%E6%A0%BC%E8%A9%A6%E9%A8%93+2026%E5%B9%B4+%E3%82%AB%E3%83%AC%E3%83%B3%E3%83%80%E3%83%BC" target="_blank" rel="noopener" style="color:#059669;">資格試験カレンダー（Google検索）</a>
+        </span><br>
+        <span style="display:inline-block;margin-top:2px;">☀️ <b>天気:</b>
+          <a href="https://tenki.jp/" target="_blank" rel="noopener" style="color:#059669;">tenki.jp</a> ／
+          <a href="https://www.jma.go.jp/bosai/forecast/" target="_blank" rel="noopener" style="color:#059669;">気象庁 天気予報</a>
+        </span>
       </div>
     </div>
 
@@ -766,17 +777,18 @@ body.platform-x-active { background: #1a1a1a; }
 
     <!-- 今日のリンク・カウンター -->
     <div style="background:#fef3c7;border-left:4px solid #f59e0b;padding:14px 18px;border-radius:8px;margin-bottom:20px;">
-      <b style="color:#92400e;font-size:14px;display:block;margin-bottom:8px;">📌 DLリンク（テンプレの [iOS]／[Android] に置換されます）</b>
+      <b style="color:#92400e;font-size:14px;display:block;margin-bottom:8px;">📌 DLリンク（固定・編集不可）</b>
       <div style="display:flex;gap:10px;flex-wrap:wrap;">
         <div style="flex:1;min-width:220px;">
           <label style="font-size:12px;color:#92400e;font-weight:700;">iOS URL</label>
-          <input type="text" id="xQrIosUrl" placeholder="https://x.gd/uBpjE" oninput="saveXQrLink()" style="width:100%;margin-top:4px;padding:8px 10px;border:1px solid #f59e0b;border-radius:6px;font-size:13px;">
+          <div style="margin-top:4px;padding:8px 10px;background:#fff;border:1px solid #f59e0b;border-radius:6px;font-size:13px;color:#92400e;font-family:monospace;user-select:all;">https://x.gd/uBpjE</div>
         </div>
         <div style="flex:1;min-width:220px;">
           <label style="font-size:12px;color:#92400e;font-weight:700;">Android URL</label>
-          <input type="text" id="xQrAndroidUrl" placeholder="https://x.gd/eCU3F" oninput="saveXQrLink()" style="width:100%;margin-top:4px;padding:8px 10px;border:1px solid #f59e0b;border-radius:6px;font-size:13px;">
+          <div style="margin-top:4px;padding:8px 10px;background:#fff;border:1px solid #f59e0b;border-radius:6px;font-size:13px;color:#92400e;font-family:monospace;user-select:all;">https://x.gd/eCU3F</div>
         </div>
       </div>
+      <div style="font-size:11px;color:#92400e;margin-top:4px;">テンプレの [iOS]／[Android] に自動で挿入されます</div>
       <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
         <div style="font-size:13px;color:#92400e;">
           <b>本日の引用リプ数:</b> <span id="xQrCountToday" style="font-size:20px;font-weight:900;color:#d97706;">0</span> / 5 件
@@ -895,7 +907,8 @@ body.platform-x-active { background: #1a1a1a; }
   <div class="dm-panel">
     <h3>X DM営業（コワーキング・自習室向け）</h3>
     <div style="border:4px solid #e53935;background:#fff5f5;color:#c62828;padding:16px 20px;border-radius:10px;margin-bottom:20px;text-align:center;font-weight:900;font-size:20px;line-height:1.5;box-shadow:0 2px 8px rgba(229,57,53,0.2);">
-      🎯 1日フォロー＆DMを<span style="font-size:28px;color:#e53935;">最低5件</span>
+      🎯 1日フォローを<span style="font-size:28px;color:#e53935;">5件</span><br>
+      <span style="font-size:13px;color:#7a1818;font-weight:700;">※ DMはフォロー承認されてから送信</span>
     </div>
     <div style="font-size:13px;color:#666;margin-bottom:16px;line-height:1.8;">
       <p><b>ターゲット:</b> 勉強できるコワーキングスペース・自習室・有料自習室の公式Xアカウント</p>
