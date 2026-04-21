@@ -2386,7 +2386,8 @@ function renderStoreCards(filtered, list) {
     if (isPosted) card.classList.add('posted');
     if (isEnded) card.classList.add('ended');
 
-    const no = idx + 1;
+    // 店舗一覧タブと同じ全体通し番号（STORES配列での位置）
+    const no = STORES.findIndex(s => s.id === store.id) + 1;
     card.innerHTML = `
       <div class="card-top">
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
