@@ -315,8 +315,72 @@ body.platform-x-active { background: #1a1a1a; }
 .dm-table tr:hover { background: #f9f9f9; }
 .dm-stats { display: flex; gap: 16px; margin-bottom: 12px; flex-wrap: wrap; }
 .dm-stat-card { background: #f0f8f0; border-radius: 8px; padding: 12px 16px; text-align: center; min-width: 120px; }
-.dm-stat-card .num { font-size: 24px; font-weight: 700; color: #2e7d32; }
-.dm-stat-card .label { font-size: 11px; color: #666; }
+.dm-stat-card .num { font-size: 28px; font-weight: 700; color: #2e7d32; }
+.dm-stat-card .label { font-size: 13px; color: #666; }
+
+/* ========== グローバル文字サイズ拡大 ========== */
+body { font-size: 16px; }
+h1 { font-size: 22px; }
+h2 { font-size: 20px; }
+h3 { font-size: 18px; }
+h4 { font-size: 16px; }
+p, li, td, th, span, div, label, button, input, select, textarea { font-size: inherit; }
+
+/* ヘッダー */
+.header h1 { font-size: 20px !important; }
+
+/* プラットフォーム/メインタブ */
+.platform-tab { font-size: 17px !important; }
+.main-tab { font-size: 16px !important; }
+.x-tab { font-size: 16px !important; }
+
+/* ツールバー */
+.toolbar input[type="text"] { font-size: 16px !important; }
+.toolbar select { font-size: 16px !important; }
+.toolbar .count { font-size: 15px !important; }
+
+/* 店舗カード */
+.store-name { font-size: 20px !important; }
+.store-meta { font-size: 14px !important; }
+.card-img-col h4 { font-size: 15px !important; }
+.post-text { font-size: 15px !important; }
+
+/* Xカード */
+.x-card-time { font-size: 22px !important; }
+.x-card-series { font-size: 15px !important; }
+.x-post-text { font-size: 15px !important; }
+.x-series-item { font-size: 15px !important; }
+.x-series-item .count { font-size: 14px !important; }
+.x-post-num { font-size: 14px !important; }
+.x-progress-info { font-size: 14px !important; }
+.x-date-btn { font-size: 15px !important; }
+.x-date-btn .date-day { font-size: 13px !important; }
+.x-date-btn .date-num { font-size: 18px !important; }
+
+/* DM系 */
+.dm-table { font-size: 15px !important; }
+.dm-table td input, .dm-table td select { font-size: 14px !important; }
+.dm-stat-card .num { font-size: 30px !important; }
+.dm-stat-card .label { font-size: 14px !important; }
+
+/* ボタン */
+.btn { font-size: 15px !important; }
+
+/* インライン styleの font-size を一律底上げ（11-14px を 13-16px へ） */
+[style*="font-size:11px"] { font-size: 13px !important; }
+[style*="font-size: 11px"] { font-size: 13px !important; }
+[style*="font-size:12px"] { font-size: 14px !important; }
+[style*="font-size: 12px"] { font-size: 14px !important; }
+[style*="font-size:13px"] { font-size: 15px !important; }
+[style*="font-size: 13px"] { font-size: 15px !important; }
+[style*="font-size:14px"] { font-size: 16px !important; }
+[style*="font-size: 14px"] { font-size: 16px !important; }
+[style*="font-size:15px"] { font-size: 17px !important; }
+[style*="font-size:16px"] { font-size: 18px !important; }
+[style*="font-size:18px"] { font-size: 20px !important; }
+[style*="font-size:20px"] { font-size: 22px !important; }
+[style*="font-size:22px"] { font-size: 24px !important; }
+[style*="font-size:24px"] { font-size: 26px !important; }
 </style>
 </head>
 <body>
@@ -704,7 +768,40 @@ body.platform-x-active { background: #1a1a1a; }
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
         <div>
           <label style="font-size:11px;color:#065f46;font-weight:700;display:block;">🌸 季語・季節</label>
-          <input type="text" id="xQrSeason" placeholder="例: 桜の季節" oninput="saveXQrVars()" style="width:100%;margin-top:3px;padding:6px 8px;border:1px solid #10b981;border-radius:5px;font-size:12px;">
+          <select id="xQrSeason" onchange="saveXQrVars()" style="width:100%;margin-top:3px;padding:6px 8px;border:1px solid #10b981;border-radius:5px;font-size:12px;background:#fff;">
+            <option value="">-- 選択 --</option>
+            <optgroup label="春（3〜5月）">
+              <option value="春先">春先</option>
+              <option value="桜の季節">桜の季節</option>
+              <option value="新緑">新緑</option>
+              <option value="GW">GW（ゴールデンウィーク）</option>
+              <option value="新学期">新学期</option>
+              <option value="新年度">新年度</option>
+            </optgroup>
+            <optgroup label="夏（6〜8月）">
+              <option value="梅雨">梅雨</option>
+              <option value="初夏">初夏</option>
+              <option value="真夏">真夏</option>
+              <option value="猛暑">猛暑</option>
+              <option value="夏休み">夏休み</option>
+              <option value="お盆">お盆</option>
+            </optgroup>
+            <optgroup label="秋（9〜11月）">
+              <option value="初秋">初秋</option>
+              <option value="秋晴れ">秋晴れ</option>
+              <option value="紅葉">紅葉</option>
+              <option value="読書の秋">読書の秋</option>
+              <option value="シルバーウィーク">シルバーウィーク</option>
+            </optgroup>
+            <optgroup label="冬（12〜2月）">
+              <option value="初冬">初冬</option>
+              <option value="年末">年末</option>
+              <option value="年始">年始</option>
+              <option value="厳冬">厳冬</option>
+              <option value="受験シーズン">受験シーズン</option>
+              <option value="三寒四温">三寒四温</option>
+            </optgroup>
+          </select>
         </div>
         <div>
           <label style="font-size:11px;color:#065f46;font-weight:700;display:block;">📝 直近の試験</label>
@@ -712,7 +809,41 @@ body.platform-x-active { background: #1a1a1a; }
         </div>
         <div>
           <label style="font-size:11px;color:#065f46;font-weight:700;display:block;">☀️ 今日の天気</label>
-          <input type="text" id="xQrWeather" placeholder="例: 雨、猛暑" oninput="saveXQrVars()" style="width:100%;margin-top:3px;padding:6px 8px;border:1px solid #10b981;border-radius:5px;font-size:12px;">
+          <select id="xQrWeather" onchange="saveXQrVars()" style="width:100%;margin-top:3px;padding:6px 8px;border:1px solid #10b981;border-radius:5px;font-size:12px;background:#fff;">
+            <option value="">-- 選択 --</option>
+            <optgroup label="晴れ系">
+              <option value="晴れ">☀️ 晴れ</option>
+              <option value="快晴">☀️ 快晴</option>
+              <option value="秋晴れ">☀️ 秋晴れ</option>
+            </optgroup>
+            <optgroup label="曇り系">
+              <option value="曇り">☁️ 曇り</option>
+              <option value="どんより">☁️ どんより</option>
+            </optgroup>
+            <optgroup label="雨系">
+              <option value="雨">🌧 雨</option>
+              <option value="小雨">🌦 小雨</option>
+              <option value="大雨">⛈ 大雨</option>
+              <option value="雷雨">⛈ 雷雨</option>
+              <option value="梅雨空">☔ 梅雨空</option>
+            </optgroup>
+            <optgroup label="雪・寒さ">
+              <option value="雪">❄️ 雪</option>
+              <option value="大雪">❄️ 大雪</option>
+              <option value="寒波">🥶 寒波</option>
+              <option value="肌寒い">🧥 肌寒い</option>
+            </optgroup>
+            <optgroup label="暑さ">
+              <option value="猛暑">🌡 猛暑</option>
+              <option value="真夏日">🌡 真夏日</option>
+              <option value="蒸し暑い">💦 蒸し暑い</option>
+            </optgroup>
+            <optgroup label="その他">
+              <option value="強風">💨 強風</option>
+              <option value="花粉">🤧 花粉シーズン</option>
+              <option value="黄砂">🌫 黄砂</option>
+            </optgroup>
+          </select>
         </div>
       </div>
       <div style="margin-top:10px;font-size:11px;color:#065f46;line-height:1.8;">
