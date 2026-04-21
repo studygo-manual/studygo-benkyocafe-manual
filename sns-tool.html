@@ -805,7 +805,79 @@ p, li, td, th, span, div, label, button, input, select, textarea { font-size: in
         </div>
         <div>
           <label style="font-size:11px;color:#065f46;font-weight:700;display:block;">📝 直近の試験</label>
-          <input type="text" id="xQrExam" placeholder="例: 宅建、英検、TOEIC" oninput="saveXQrVars()" style="width:100%;margin-top:3px;padding:6px 8px;border:1px solid #10b981;border-radius:5px;font-size:12px;">
+          <select id="xQrExam" onchange="saveXQrVars()" style="width:100%;margin-top:3px;padding:6px 8px;border:1px solid #10b981;border-radius:5px;font-size:12px;background:#fff;">
+            <option value="">-- 選択 --</option>
+            <optgroup label="語学">
+              <option value="TOEIC">TOEIC</option>
+              <option value="TOEFL">TOEFL</option>
+              <option value="英検">英検</option>
+              <option value="中国語検定">中国語検定</option>
+              <option value="HSK">HSK</option>
+              <option value="ハングル検定">ハングル検定</option>
+            </optgroup>
+            <optgroup label="受験">
+              <option value="共通テスト">大学入学共通テスト</option>
+              <option value="大学入試">大学入試</option>
+              <option value="高校受験">高校受験</option>
+              <option value="中学受験">中学受験</option>
+              <option value="大学院入試">大学院入試</option>
+            </optgroup>
+            <optgroup label="不動産・建築">
+              <option value="宅建">宅建（宅地建物取引士）</option>
+              <option value="マンション管理士">マンション管理士</option>
+              <option value="管理業務主任者">管理業務主任者</option>
+              <option value="一級建築士">一級建築士</option>
+              <option value="二級建築士">二級建築士</option>
+            </optgroup>
+            <optgroup label="法律・行政">
+              <option value="司法試験">司法試験</option>
+              <option value="司法書士">司法書士</option>
+              <option value="行政書士">行政書士</option>
+              <option value="社会保険労務士">社労士</option>
+              <option value="弁理士">弁理士</option>
+              <option value="公務員試験">公務員試験</option>
+            </optgroup>
+            <optgroup label="会計・金融">
+              <option value="日商簿記1級">日商簿記1級</option>
+              <option value="日商簿記2級">日商簿記2級</option>
+              <option value="日商簿記3級">日商簿記3級</option>
+              <option value="公認会計士">公認会計士</option>
+              <option value="税理士">税理士</option>
+              <option value="FP">FP（ファイナンシャルプランナー）</option>
+              <option value="証券アナリスト">証券アナリスト</option>
+              <option value="証券外務員">証券外務員</option>
+            </optgroup>
+            <optgroup label="経営・コンサル">
+              <option value="中小企業診断士">中小企業診断士</option>
+              <option value="ビジネス実務法務">ビジネス実務法務検定</option>
+            </optgroup>
+            <optgroup label="IT・技術">
+              <option value="ITパスポート">ITパスポート</option>
+              <option value="基本情報技術者">基本情報技術者</option>
+              <option value="応用情報技術者">応用情報技術者</option>
+              <option value="情報処理安全確保支援士">情報処理安全確保支援士</option>
+              <option value="ネットワークスペシャリスト">ネットワークスペシャリスト</option>
+              <option value="データベーススペシャリスト">データベーススペシャリスト</option>
+              <option value="AWS認定">AWS認定</option>
+              <option value="技術士">技術士</option>
+            </optgroup>
+            <optgroup label="医療・福祉">
+              <option value="看護師国家試験">看護師国家試験</option>
+              <option value="医師国家試験">医師国家試験</option>
+              <option value="薬剤師国家試験">薬剤師国家試験</option>
+              <option value="介護福祉士">介護福祉士</option>
+              <option value="社会福祉士">社会福祉士</option>
+              <option value="精神保健福祉士">精神保健福祉士</option>
+              <option value="登録販売者">登録販売者</option>
+            </optgroup>
+            <optgroup label="その他">
+              <option value="漢字検定">漢字検定</option>
+              <option value="数学検定">数学検定</option>
+              <option value="秘書検定">秘書検定</option>
+              <option value="MOS">MOS（Microsoft Office Specialist）</option>
+              <option value="カラーコーディネーター">カラーコーディネーター</option>
+            </optgroup>
+          </select>
         </div>
         <div>
           <label style="font-size:11px;color:#065f46;font-weight:700;display:block;">☀️ 今日の天気</label>
