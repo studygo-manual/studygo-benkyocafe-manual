@@ -1,0 +1,5230 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>スタディGO かんたんマニュアル</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", "BIZ UDPGothic", Meiryo, sans-serif;
+    background: #FFFBEA;
+    color: #333;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ヘッダー */
+  .header {
+    background: linear-gradient(135deg, #FFD93D 0%, #FFB800 100%);
+    padding: 16px 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .header-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .header-kodack {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #fff;
+    object-fit: cover;
+    object-position: center 45%;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  .header h1 {
+    font-size: 1.25rem;
+    color: #5B3A00;
+    font-weight: 800;
+  }
+  .header h1 .sub {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #7B4F00;
+    margin-top: 2px;
+  }
+  .home-btn {
+    margin-left: auto;
+    background: #fff;
+    color: #E67700;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  .home-btn:hover { background: #FFF3CC; }
+
+  /* コンテナ */
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 24px 16px 80px;
+  }
+
+  /* ヒーロー（コダック） */
+  .hero {
+    background: #fff;
+    border-radius: 20px;
+    padding: 28px 24px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .hero-kodack {
+    flex-shrink: 0;
+    width: 140px;
+    height: 140px;
+    background: url('images/kodack.jpg') center 45% / 115% no-repeat;
+    background-color: #FFFCE5;
+    border-radius: 50%;
+    border: 4px solid #FFD93D;
+    box-shadow: 0 4px 10px rgba(255,184,0,0.2);
+  }
+  .hero-speech {
+    flex: 1;
+    background: #FFFCE5;
+    border-radius: 16px;
+    padding: 16px 20px;
+    position: relative;
+    border: 2px solid #FFD93D;
+  }
+  .hero-speech::before {
+    content: '';
+    position: absolute;
+    left: -14px;
+    top: 30px;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 14px solid #FFD93D;
+  }
+  .hero-speech::after {
+    content: '';
+    position: absolute;
+    left: -11px;
+    top: 30px;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 14px solid #FFFCE5;
+  }
+  .hero-speech h2 {
+    font-size: 1.15rem;
+    color: #5B3A00;
+    margin-bottom: 6px;
+  }
+  .hero-speech p {
+    font-size: 0.95rem;
+    color: #5B3A00;
+  }
+
+  /* 検索バー */
+  .search-box {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 2px solid #FFD93D;
+  }
+  .search-box input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 1.05rem;
+    padding: 8px 4px;
+    background: transparent;
+    color: #333;
+  }
+  .search-box-icon {
+    font-size: 1.4rem;
+    color: #E67700;
+  }
+  .search-clear-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #999;
+    display: none;
+  }
+  .search-clear-btn.visible { display: block; }
+
+  /* 検索結果 */
+  .search-results {
+    background: #fff;
+    border-radius: 16px;
+    padding: 8px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    display: none;
+  }
+  .search-results.visible { display: block; }
+  .search-result-item {
+    padding: 14px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-left: 4px solid transparent;
+  }
+  .search-result-item:hover {
+    background: #FFFCE5;
+    border-left-color: #FFD93D;
+  }
+  .search-result-item + .search-result-item {
+    border-top: 1px solid #F0F0F0;
+  }
+  .search-result-q {
+    font-weight: 700;
+    color: #5B3A00;
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+  }
+  .search-result-cat {
+    font-size: 0.75rem;
+    color: #E67700;
+    background: #FFF3CC;
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+  }
+  .search-no-result {
+    padding: 16px;
+    text-align: center;
+    color: #999;
+  }
+
+  /* カテゴリタイル */
+  .section-title {
+    font-size: 1.15rem;
+    color: #5B3A00;
+    margin: 8px 0 16px;
+    padding-left: 8px;
+    border-left: 6px solid #FFD93D;
+    font-weight: 800;
+  }
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .category-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border: 2px solid transparent;
+    text-align: left;
+    width: 100%;
+    font: inherit;
+    color: inherit;
+  }
+  .category-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    border-color: #FFD93D;
+  }
+  .category-card-icon {
+    font-size: 2.2rem;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .category-card-title {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #5B3A00;
+    margin-bottom: 4px;
+  }
+  .category-card-desc {
+    font-size: 0.85rem;
+    color: #888;
+  }
+  .category-card-count {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 0.8rem;
+    color: #E67700;
+    background: #FFF3CC;
+    padding: 2px 10px;
+    border-radius: 999px;
+  }
+
+  /* 色分けカテゴリ */
+  .cat-urgent { border-top: 5px solid #E53935; }
+  .cat-contract { border-top: 5px solid #1E88E5; }
+  .cat-checkin { border-top: 5px solid #43A047; }
+  .cat-device { border-top: 5px solid #8E24AA; }
+  .cat-customer { border-top: 5px solid #FB8C00; }
+  .cat-daily { border-top: 5px solid #00897B; }
+  .cat-shinjuku { border-top: 5px solid #AD1457; }
+
+  /* Q&A詳細ビュー */
+  .qa-list-view, .qa-detail-view {
+    display: none;
+  }
+  .qa-list-view.active, .qa-detail-view.active {
+    display: block;
+  }
+
+  .back-btn {
+    background: #fff;
+    border: 2px solid #FFD93D;
+    color: #E67700;
+    padding: 8px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: 700;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+  }
+  .back-btn:hover { background: #FFFCE5; }
+
+  .qa-list {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  }
+  .qa-list-item {
+    border-left: 5px solid transparent;
+    transition: background 0.15s;
+  }
+  .qa-list-item + .qa-list-item {
+    border-top: 1px solid #F0F0F0;
+  }
+  .qa-list-item-head {
+    padding: 16px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .qa-list-item:hover {
+    background: #FFFCE5;
+    border-left-color: #FFD93D;
+  }
+  .qa-list-item.expanded {
+    background: #FFFCE5;
+    border-left-color: #FFB800;
+  }
+  .qa-list-item-q {
+    flex: 1;
+    font-weight: 600;
+    color: #333;
+  }
+  .qa-list-item-arrow {
+    color: #FFB800;
+    font-size: 1.4rem;
+    transition: transform 0.2s;
+    line-height: 1;
+  }
+  .qa-list-item.expanded .qa-list-item-arrow {
+    transform: rotate(90deg);
+  }
+  .qa-list-item-body {
+    display: none;
+    padding: 4px 20px 20px;
+    background: #fff;
+    border-top: 1px dashed #FFD93D;
+    animation: expandFade 0.2s ease-out;
+  }
+  .qa-list-item.expanded .qa-list-item-body {
+    display: block;
+  }
+  @keyframes expandFade {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .qa-list-item-body .qa-detail-a {
+    margin-top: 12px;
+  }
+  .qa-badge {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-weight: 700;
+  }
+  .qa-badge.basic { background: #E3F2FD; color: #1565C0; }
+  .qa-badge.irregular { background: #FFEBEE; color: #C62828; }
+  .qa-badge.example { background: #F3E5F5; color: #6A1B9A; }
+
+  /* Q&A詳細 */
+  .qa-detail {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  }
+  .qa-detail-q {
+    font-size: 1.3rem;
+    color: #5B3A00;
+    padding: 16px 20px;
+    background: #FFF3CC;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border-left: 6px solid #FFB800;
+    font-weight: 700;
+  }
+  .qa-detail-q::before {
+    content: 'Q ';
+    color: #E67700;
+    font-weight: 900;
+    margin-right: 4px;
+  }
+  .qa-detail-a {
+    padding: 20px;
+    background: #F1F8E9;
+    border-radius: 12px;
+    border-left: 6px solid #7CB342;
+    font-size: 1rem;
+  }
+  .qa-detail-a::before {
+    content: 'A ';
+    color: #558B2F;
+    font-weight: 900;
+    margin-right: 4px;
+    font-size: 1.15rem;
+  }
+
+  /* コダック解説 */
+  .kodack-tip {
+    display: flex;
+    gap: 12px;
+    background: #FFF3CC;
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    border: 2px dashed #FFB800;
+    align-items: flex-start;
+  }
+  .kodack-tip-img {
+    flex-shrink: 0;
+    width: 64px;
+    height: 64px;
+    background: url('images/kodack.jpg') center 45% / 115% no-repeat #FFFCE5;
+    border-radius: 50%;
+    border: 2px solid #FFD93D;
+  }
+  .kodack-tip-body {
+    flex: 1;
+  }
+  .kodack-tip-label {
+    font-size: 0.8rem;
+    color: #E67700;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+  .kodack-tip-text {
+    color: #5B3A00;
+    font-size: 0.95rem;
+  }
+
+  /* フロー図 */
+  .flow {
+    margin: 16px 0;
+  }
+  .flow-step {
+    background: #fff;
+    border: 2px solid #FFD93D;
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .flow-step-num {
+    background: #FFB800;
+    color: #fff;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .flow-arrow {
+    text-align: center;
+    color: #FFB800;
+    font-size: 1.4rem;
+    margin: -2px 0 2px 15px;
+  }
+
+  /* 表 */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+  .data-table th {
+    background: #FFD93D;
+    color: #5B3A00;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 700;
+  }
+  .data-table td {
+    padding: 10px 12px;
+    border-top: 1px solid #F0F0F0;
+  }
+  .data-table tr:nth-child(even) td { background: #FFFCE5; }
+
+  /* 警告 */
+  .alert {
+    padding: 14px 18px;
+    border-radius: 10px;
+    margin: 16px 0;
+    border-left: 5px solid;
+  }
+  .alert-warn {
+    background: #FFF3E0;
+    border-color: #FB8C00;
+    color: #5D2E00;
+  }
+  .alert-danger {
+    background: #FFEBEE;
+    border-color: #E53935;
+    color: #B71C1C;
+  }
+  .alert-info {
+    background: #E3F2FD;
+    border-color: #1E88E5;
+    color: #0D47A1;
+  }
+
+  /* モバイル */
+  @media (max-width: 640px) {
+    .hero { flex-direction: column; text-align: center; }
+    .hero-speech::before, .hero-speech::after { display: none; }
+    .header h1 { font-size: 1rem; }
+    .hero-kodack { width: 110px; height: 110px; }
+    .category-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .category-card { padding: 14px; }
+    .category-card-title { font-size: 0.9rem; }
+    .category-card-desc { display: none; }
+    .qa-detail { padding: 18px; }
+    .qa-detail-q { font-size: 1.05rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-logo">
+    <img src="images/kodack.jpg" alt="コダック" class="header-kodack">
+    <h1>
+      スタディGO かんたんマニュアル
+      <span class="sub">アプリ・管理画面の対応Q&A</span>
+    </h1>
+  </div>
+  <button class="home-btn" onclick="showHome()">🏠 ホーム</button>
+</header>
+
+<div class="container">
+
+  <!-- ホーム画面 -->
+  <div id="home-view">
+
+    <!-- コダック先生 吹き出し -->
+    <div class="hero">
+      <div class="hero-kodack"></div>
+      <div class="hero-speech">
+        <h2>スタディGO アプリ・管理画面の疑問はここで🦆</h2>
+        <p>お客様のアプリ操作、契約、チェックイン、管理画面での処理などをQ&A形式でまとめています。<br>
+        <strong>キーワード検索</strong> か <strong>下のカテゴリ</strong> から聞きたい内容を選んでください。</p>
+      </div>
+    </div>
+
+    <!-- 検索 -->
+    <div class="search-box">
+      <span class="search-box-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="例: 休会、返金、Wi-Fi、プラン変更..." autocomplete="off">
+      <button class="search-clear-btn" id="searchClearBtn" onclick="clearSearch()">&times;</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+
+    <!-- カテゴリ -->
+    <h3 class="section-title">カテゴリから探す</h3>
+    <div class="category-grid" id="categoryGrid"></div>
+
+  </div>
+
+  <!-- Q&Aリスト -->
+  <div id="qa-list-view" class="qa-list-view">
+    <button class="back-btn" onclick="showHome()">← ホームに戻る</button>
+    <h3 class="section-title" id="qaListTitle"></h3>
+    <div class="qa-list" id="qaList"></div>
+  </div>
+
+
+</div>
+
+<script>
+// ===================================
+// カテゴリ定義（スタディGOアプリ関連のみ）
+// ===================================
+// 非表示にするカテゴリID（データは残すが画面・検索に出さない）
+const HIDDEN_CATEGORIES = ['shinjuku'];
+
+const CATEGORIES = [
+  { id: 'shinjuku', icon: '🏢', title: '新宿スタジオ情報',     desc: '営業時間・連絡先・設備',         cls: 'cat-shinjuku' },
+  { id: 'app',      icon: '📱', title: 'アプリ操作',           desc: 'お客様アプリの使い方',           cls: 'cat-customer' },
+  { id: 'contract', icon: '📄', title: '契約・料金・プラン',    desc: '入会・支払い・プラン種類',        cls: 'cat-contract' },
+  { id: 'checkin',  icon: '🚪', title: 'チェックイン・解錠',    desc: 'QR読み込み・Akerun・入退室',     cls: 'cat-checkin' },
+  { id: 'change',   icon: '🔄', title: 'プラン変更・休会・解約', desc: '申請方法・10日ルール・15日決済',  cls: 'cat-daily' },
+  { id: 'admin',    icon: '💻', title: '管理画面',              desc: '12メニュー・スタッフ側操作',       cls: 'cat-device' },
+  { id: 'trouble',  icon: '🚨', title: 'トラブル・イレギュラー', desc: 'アプリ不具合・返金・エラー',     cls: 'cat-urgent' },
+];
+
+// ===================================
+// Q&Aデータ（勉強カフェ新宿 × スタディGO）
+// ===================================
+// type: basic=基本, example=例題, irregular=イレギュラー
+const QA_DATA = [
+  // ===== 🏢 新宿スタジオ情報 =====
+  {
+    id: 'sj1', cat: 'shinjuku', type: 'basic',
+    q: '勉強カフェ新宿スタジオの営業時間は？',
+    keywords: ['営業時間', '新宿', '平日', '土曜', '日祝'],
+    a: `
+      <table class="data-table">
+        <tr><th>曜日</th><th>営業時間</th></tr>
+        <tr><td>平日</td><td>6:00 〜 23:00</td></tr>
+        <tr><td>土曜</td><td>6:00 〜 22:00</td></tr>
+        <tr><td>日祝</td><td>6:00 〜 21:00</td></tr>
+      </table>
+      <div class="alert alert-info">営業時間外はアプリからチェックインできません（エラー表示）。</div>`,
+  },
+  {
+    id: 'sj2', cat: 'shinjuku', type: 'basic',
+    q: '新宿スタジオ・本部の連絡先は？',
+    keywords: ['連絡先', '電話', 'メール', '問い合わせ'],
+    a: `
+      <table class="data-table">
+        <tr><th>用途</th><th>連絡先</th></tr>
+        <tr><td>新宿スタジオ メール</td><td>benkyocafe.shinjuku@gmail.com</td></tr>
+        <tr><td>スタディGO運営 一般</td><td>info.studygo@b-pt.jp</td></tr>
+        <tr><td>スタディGO運営 電話</td><td>03-6302-0774（平日10〜17時）</td></tr>
+      </table>
+      <div class="kodack-tip">
+        <div class="kodack-tip-img"></div>
+        <div class="kodack-tip-body">
+          <div class="kodack-tip-label">🦆 コダック先生のひとこと</div>
+          <div class="kodack-tip-text">鍵が開かない等の緊急時は、まず電話に連絡してね。</div>
+        </div>
+      </div>`,
+  },
+  {
+    id: 'sj3', cat: 'shinjuku', type: 'basic',
+    q: '新宿スタジオのロッカー構成は？',
+    keywords: ['ロッカー', '新宿', '台数', '種類'],
+    a: `
+      <table class="data-table">
+        <tr><th>種類</th><th>台数</th><th>番号</th></tr>
+        <tr><td>小ロッカー</td><td>54台</td><td>1〜54</td></tr>
+        <tr><td>大ロッカー（A群）</td><td>9台</td><td>A〜I</td></tr>
+        <tr><td>大ロッカー（J群）</td><td>9台</td><td>J〜R</td></tr>
+        <tr><td>大ロッカー（S群）</td><td>9台</td><td>S〜Z・＃</td></tr>
+      </table>
+      <p>合計: 小54台 + 大27台 = <strong>81台</strong></p>
+      <div class="alert alert-info">ロッカー空き状況は「ロッカー管理表」で確認できます。</div>`,
+  },
+  {
+    id: 'sj4', cat: 'shinjuku', type: 'basic',
+    q: '新宿スタジオの管理画面ログイン情報は？',
+    keywords: ['管理画面', 'ログイン', 'メール', '新宿', 'URL', 'パスワード'],
+    a: `
+      <p><strong>URL</strong>: <a href="https://dashboard.studygo.jp/alliance/login" target="_blank">https://dashboard.studygo.jp/alliance/login</a></p>
+      <table class="data-table">
+        <tr><th>項目</th><th>内容</th></tr>
+        <tr><td>メールアドレス</td><td>benkyocafe.shinjuku@gmail.com</td></tr>
+        <tr><td>パスワード</td><td>Base@1209</td></tr>
+        <tr><td>2段階認証</td><td>メールに届く<strong>6桁の番号</strong>を入力</td></tr>
+      </table>
+      <div class="alert alert-warn">BPスタジオも同じパスワード（Base@1209）。新宿・BPのアカウントは別々。</div>`,
+  },
+  {
+    id: 'sj5', cat: 'shinjuku', type: 'basic',
+    q: '新宿スタジオで注意すべき店舗固有のポイントは？',
+    keywords: ['新宿', '注意', '店舗固有'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>営業時間が<strong>曜日で異なる</strong>（日祝は21時まで）</li>
+        <li>ロッカー予約は<strong>オプション契約</strong>として管理</li>
+        <li>休会・解約申請は<strong>毎月10日が締切</strong>（共通ルール）</li>
+        <li>管理画面のメールは<strong>benkyocafe.shinjuku@gmail.com</strong>で2段階認証必須</li>
+      </ul>
+      <div class="kodack-tip">
+        <div class="kodack-tip-img"></div>
+        <div class="kodack-tip-body">
+          <div class="kodack-tip-label">🦆 コダック先生のひとこと</div>
+          <div class="kodack-tip-text">新宿限定のルールや備品場所は、既存の店舗マニュアルのスタジオ別情報もあわせて確認してね。</div>
+        </div>
+      </div>`,
+  },
+  {
+    id: 'sj6', cat: 'shinjuku', type: 'basic',
+    q: '新宿スタジオの備品・発注はどこで管理している？',
+    keywords: ['備品', '発注', '在庫', '新宿'],
+    a: `
+      <p>新宿スタジオの備品在庫は<strong>在庫管理スプレッドシート</strong>で管理されています。</p>
+      <ul style="padding-left:24px;">
+        <li>スタッフはWebアプリから在庫数を送信</li>
+        <li>発注管理シートで自動集計（在庫数・基準値・発注必要数）</li>
+      </ul>
+      <div class="alert alert-info">詳細な発注手順・基準値は「備品在庫管理システム」の運用マニュアルを確認。</div>`,
+  },
+  {
+    id: 'sj7', cat: 'shinjuku', type: 'basic',
+    q: '勉強カフェ新宿で使える「勉強カフェ独自の会員番号」とは？',
+    keywords: ['会員番号', '新宿', '契約通知'],
+    a: `
+      <p>スタディGO契約完了時に、<strong>勉強カフェ独自の会員番号</strong>が自動で割り振られ、お客様とスタジオ宛にメール送信されます。</p>
+      <ul style="padding-left:24px;">
+        <li>お客様宛メール送信元: <strong>benkyocafe.shinjuku@gmail.com</strong>（新宿）</li>
+        <li>スタジオ宛メール送信元: <strong>info.studygo@b-pt.jp</strong></li>
+        <li>件名例: 【契約通知】【会員番号】お名前 様 - プラン名</li>
+      </ul>
+      <div class="alert alert-info">お客様がスタジオに返信すると、そのまま店舗メールで受信・返信可能（replyTo設定済）。</div>`,
+  },
+
+  // ===== 📱 アプリ操作 =====
+  {
+    id: 'app1', cat: 'app', type: 'basic',
+    q: 'スタディGOアプリはどこからダウンロードできる？',
+    keywords: ['ダウンロード', 'インストール', 'App Store', 'Google Play'],
+    a: `
+      <table class="data-table">
+        <tr><th>端末</th><th>ストア</th></tr>
+        <tr><td>iPhone</td><td>App Store</td></tr>
+        <tr><td>Android</td><td>Google Play</td></tr>
+      </table>
+      <p>検索キーワード：<strong>「スタディGO」</strong></p>`,
+  },
+  {
+    id: 'app2', cat: 'app', type: 'basic',
+    q: 'アプリの初回登録の流れは？',
+    keywords: ['登録', '初回', 'アカウント', 'メール認証'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>アプリ起動 → メールアドレス入力</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>認証メールが届く → 確認コードを入力</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>登録情報入力（氏名・住所・電話番号）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>クレジットカード登録</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">5</div><div>プラン選択→契約確定</div></div>
+      </div>
+      <div class="alert alert-info">所要時間 約15〜20分。</div>`,
+  },
+  {
+    id: 'app3', cat: 'app', type: 'basic',
+    q: 'アプリの画面構成（5タブ）は？',
+    keywords: ['タブ', '画面', '構成', 'ホーム', '検索', 'チェックイン', 'メッセージ', 'ユーザー'],
+    a: `
+      <table class="data-table">
+        <tr><th>タブ</th><th>主な機能</th></tr>
+        <tr><td>🏠 ホーム</td><td>会員カード(QR)、お知らせ、近くの店舗</td></tr>
+        <tr><td>🔍 検索</td><td>地図・リストで店舗を探す</td></tr>
+        <tr><td>📲 チェックイン</td><td>QR読み込みで入店、店舗コード手動入力</td></tr>
+        <tr><td>💬 メッセージ</td><td>店舗とのチャット（未読件数表示）</td></tr>
+        <tr><td>👤 ユーザー</td><td>マイページ、契約・予約管理</td></tr>
+      </table>`,
+  },
+  {
+    id: 'app4', cat: 'app', type: 'basic',
+    q: 'お客様の会員カード（QRコード）はどこで見られる？',
+    keywords: ['会員カード', 'QR', '表示', 'ホーム'],
+    a: `
+      <p><strong>ホームタブ</strong>の上部に会員カード（QR）が常時表示されています。</p>
+      <div class="alert alert-info">店舗側では管理画面の「会員管理」からお客様情報を検索して確認できます。</div>`,
+  },
+  {
+    id: 'app5', cat: 'app', type: 'basic',
+    q: 'お客様が過去の利用履歴を見たい場合は？',
+    keywords: ['利用履歴', '過去', '明細'],
+    a: `
+      <p>アプリの<strong>ホーム → 利用履歴</strong>から確認できます。</p>
+      <ul style="padding-left:24px;">
+        <li>月別の利用店舗・時間・料金</li>
+        <li>合計金額の集計</li>
+        <li>メール送信機能（領収書用途）</li>
+      </ul>`,
+  },
+  {
+    id: 'app6', cat: 'app', type: 'irregular',
+    q: 'メール認証のリンクが届かないとお客様が言っている',
+    keywords: ['メール', '認証', '届かない', '迷惑メール'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>迷惑メールフォルダを確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>メールアドレスの入力ミスがないか確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>再送信ボタンから再送を試す</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>ドメイン指定受信で @b-pt.jp を許可してもらう</div></div>
+      </div>`,
+  },
+  {
+    id: 'app7', cat: 'app', type: 'irregular',
+    q: 'お客様がパスワードを忘れたと言っている',
+    keywords: ['パスワード', '忘れた', '再設定'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>ログイン画面の「パスワードを忘れた方」をタップ</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>登録メールアドレスを入力</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>届いた確認コードを入力</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>新しいパスワードを設定</div></div>
+      </div>`,
+  },
+  {
+    id: 'app8', cat: 'app', type: 'basic',
+    q: 'プロフィール（氏名・住所等）の変更方法は？',
+    keywords: ['プロフィール', '変更', '編集', 'マイページ'],
+    a: `
+      <p>アプリの<strong>ユーザータブ → マイページ → プロフィール編集</strong>から変更できます。</p>`,
+  },
+  {
+    id: 'app10', cat: 'app', type: 'basic',
+    q: 'クレジットカードの登録方法は？',
+    keywords: ['カード', 'クレカ', '登録', 'Stripe', '3DS'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>登録情報入力後の支払い方法登録画面</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>カード番号・有効期限・セキュリティコード入力</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>3DSセキュア認証（カード会社のSMS等）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>登録完了 → Stripeに保存</div></div>
+      </div>`,
+  },
+  {
+    id: 'app11', cat: 'app', type: 'basic',
+    q: 'クレカの変更・追加方法は？',
+    keywords: ['カード', '変更', '追加', '更新'],
+    a: `
+      <p>アプリの<strong>マイページ → 支払い方法</strong>から変更・追加できます。</p>
+      <ul style="padding-left:24px;">
+        <li>新しいカード情報を入力 → 3DS認証</li>
+        <li>古いカードの削除は新カード登録後に可能</li>
+      </ul>
+      <div class="alert alert-warn">未払い金がある場合は、新カード登録後に決済リンクから未払い分を先に決済してください。</div>`,
+  },
+  {
+    id: 'app12', cat: 'app', type: 'basic',
+    q: '利用規約はアプリのどこで確認できる？',
+    keywords: ['利用規約', '規約', 'プライバシー'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>新規登録時のリンクから参照可能</li>
+        <li>契約フロー中のリンクからも表示</li>
+        <li>マイページ → 設定から規約・プライバシーポリシーへアクセス</li>
+      </ul>
+      <div class="alert alert-info">外部URLはアプリ内ブラウザ（WebView）で表示されます。</div>`,
+  },
+  {
+    id: 'app13', cat: 'app', type: 'basic',
+    q: 'ログアウト・ログインし直す方法は？',
+    keywords: ['ログアウト', 'ログイン', '再ログイン'],
+    a: `
+      <p>アプリの<strong>マイページ → ログアウト</strong>。再度ログイン画面からメール・パスワードで入り直します。</p>
+      <div class="alert alert-warn">ログアウトすると、再ログインまで通知や契約情報の確認ができません。</div>`,
+  },
+  {
+    id: 'app14', cat: 'app', type: 'irregular',
+    q: 'アカウント削除を希望するお客様への対応は？',
+    keywords: ['アカウント削除', '退会', '個人情報'],
+    a: `
+      <p>アカウント削除は<strong>マイページ → アカウント削除</strong>から申請。</p>
+      <div class="alert alert-warn">
+        通常は「解約」を案内してください。<br>
+        解約: データ残る・再契約可能<br>
+        アカウント削除: 個人情報削除・再登録必要
+      </div>
+      <p>お客様が明示的に削除を希望する場合のみ実施。</p>`,
+  },
+  {
+    id: 'app15', cat: 'app', type: 'basic',
+    q: '「近くの店舗」はどう使う？',
+    keywords: ['近くの店舗', '検索', '現在地'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>ホームの「近くの店舗」ボタン、または検索タブから</li>
+        <li>現在地周辺をマップで表示</li>
+        <li>マーカーをタップで店舗詳細</li>
+        <li>リスト・マップの切替可</li>
+      </ul>`,
+  },
+  {
+    id: 'app16', cat: 'app', type: 'basic',
+    q: '店舗検索でフィルタリングできる項目は？',
+    keywords: ['検索', 'フィルタ', '営業中'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>営業中の店舗のみ表示</li>
+        <li>プラン種別で絞込み</li>
+        <li>アメニティ（設備）で絞込み</li>
+      </ul>`,
+  },
+  {
+    id: 'app17', cat: 'app', type: 'basic',
+    q: '店舗詳細画面で見られる情報は？',
+    keywords: ['店舗詳細', 'タブ', '情報'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>タブ切替: ドロップイン / 月額 / アメニティ</li>
+        <li>営業時間・住所・地図</li>
+        <li>お客様レビュー</li>
+        <li>各プラン選択から契約フローへ遷移</li>
+      </ul>`,
+  },
+  {
+    id: 'app18', cat: 'app', type: 'basic',
+    q: '月額プラン契約の3ステップは？',
+    keywords: ['月額', '契約', 'ステップ', '3'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>クーポン選択（提示されたプラン/クーポンから選択）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>オプション選択（任意のオプション追加）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>支払い確認（料金確定）→ 契約完了</div></div>
+      </div>`,
+  },
+  {
+    id: 'app20', cat: 'app', type: 'basic',
+    q: 'オプション契約の追加方法は？',
+    keywords: ['オプション', '追加', '契約'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>月額プラン契約時の「オプション選択」で追加</li>
+        <li>契約後もマイページから追加可能</li>
+        <li>複数オプション（ロッカー+ドリンクなど）を一括で選択可</li>
+        <li>開始日を指定、規約同意</li>
+      </ul>`,
+  },
+  {
+    id: 'app22', cat: 'app', type: 'basic',
+    q: 'アプリの見学予約フローは？',
+    keywords: ['見学', '予約', 'アプリ'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>店舗詳細 →「予約する」</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>予約日時選択（カレンダー）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>予約内容確認（規約同意）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>予約完了 → 予約番号表示</div></div>
+      </div>
+      <div class="alert alert-info">予約一覧はマイページから確認・キャンセル可能。</div>`,
+  },
+  {
+    id: 'app23', cat: 'app', type: 'basic',
+    q: 'メッセージの送受信方法は？',
+    keywords: ['メッセージ', 'チャット', '送信'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>メッセージタブ → 店舗ごとのスレッド</li>
+        <li>未読件数・最終送受信時刻を表示</li>
+        <li>過去メッセージは上スワイプで古い分を読込</li>
+        <li>新規入力フィールドから送信</li>
+      </ul>`,
+  },
+  {
+    id: 'app24', cat: 'app', type: 'basic',
+    q: 'マイページで確認できる情報は？',
+    keywords: ['マイページ', '確認', '情報'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>プロフィール（氏名・住所・電話など）</li>
+        <li>契約情報（月額プラン・オプション）</li>
+        <li>予約管理</li>
+        <li>支払い方法・カード情報</li>
+      </ul>`,
+  },
+  {
+    id: 'app25', cat: 'app', type: 'basic',
+    q: '利用履歴で確認できる内容は？',
+    keywords: ['利用履歴', '明細', '月別'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>月別の利用店舗・時間・料金</li>
+        <li>プラン別の利用内訳</li>
+        <li>合計金額の集計</li>
+        <li>メール送信機能（領収書として）</li>
+      </ul>`,
+  },
+  {
+    id: 'app27', cat: 'app', type: 'irregular',
+    q: 'アプリを最新版に更新する方法は？',
+    keywords: ['更新', 'アップデート', 'バージョン'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li><strong>iPhone</strong>: App Store → 検索「スタディGO」→ アップデート</li>
+        <li><strong>Android</strong>: Google Play → メニュー → マイアプリ → アップデート</li>
+      </ul>
+      <div class="alert alert-warn">古いバージョンでは新機能が動作しないことがあります。定期的に更新を推奨。</div>`,
+  },
+  {
+    id: 'app28', cat: 'app', type: 'irregular',
+    q: 'QRコードがカメラで読み取れないと言われた',
+    keywords: ['QR', '読み取れない', 'カメラ', '権限'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>スマホの設定でアプリのカメラ権限がONか確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>QRが汚れていないか・光反射していないか確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>「QRが読み取れない場合」から店舗コードを手動入力</div></div>
+      </div>`,
+  },
+  {
+    id: 'app29', cat: 'app', type: 'basic',
+    q: '連絡先（メール・電話）の変更方法は？',
+    keywords: ['連絡先', 'メール', '電話', '変更'],
+    a: `
+      <p>アプリの<strong>マイページ → プロフィール編集</strong>から変更できます。</p>
+      <ul style="padding-left:24px;">
+        <li>メールアドレス変更は再認証が必要</li>
+        <li>電話番号はそのまま編集可</li>
+      </ul>`,
+  },
+  {
+    id: 'app32', cat: 'app', type: 'irregular',
+    q: 'アプリが落ちる・起動しない',
+    keywords: ['落ちる', '起動しない', 'クラッシュ'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>アプリを完全終了</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>スマホ再起動</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>アプリをアンインストール→再インストール</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>OSのバージョンを確認（古いOSは非対応）</div></div>
+      </div>`,
+  },
+  {
+    id: 'app33', cat: 'app', type: 'basic',
+    q: 'チェックイン画面で手動で店舗を選択できる？',
+    keywords: ['手動', '店舗選択', 'チェックイン'],
+    a: `
+      <p>はい。QRが読めない場合、「店舗を手動で選択」から店舗一覧→選択でチェックイン可能です。</p>
+      <div class="alert alert-info">手動選択は<strong>店舗コード入力</strong>と同じ扱いです。</div>`,
+  },
+  {
+    id: 'app34', cat: 'app', type: 'basic',
+    q: 'チェックアウト時に評価・レビュー入力はできる？',
+    keywords: ['評価', 'レビュー', 'チェックアウト'],
+    a: `
+      <p>チェックアウト完了画面で<strong>星評価とレビュー入力</strong>が可能です（任意）。</p>
+      <ul style="padding-left:24px;">
+        <li>利用時間・料金・割引明細の確認</li>
+        <li>星1〜5の評価</li>
+        <li>テキストレビュー入力</li>
+      </ul>`,
+  },
+  {
+    id: 'app35', cat: 'app', type: 'basic',
+    q: 'ボトムナビゲーションの挙動は？',
+    keywords: ['ナビゲーション', 'タブ', '切替'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>タブごとに独立したナビゲーションスタック</li>
+        <li>同タブを再タップすると上部までスクロール</li>
+        <li>タブ切替時は直前の画面状態を保持</li>
+      </ul>`,
+  },
+  {
+    id: 'app36', cat: 'app', type: 'irregular',
+    q: '認証コードが期限切れになった',
+    keywords: ['認証コード', '期限切れ', '再送'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>認証画面の「再送信」ボタンをタップ</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>新しい確認コードが届く</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>新コードを入力</div></div>
+      </div>`,
+  },
+  {
+    id: 'app37', cat: 'app', type: 'basic',
+    q: 'プラン変更はアプリでどこからできる？',
+    keywords: ['プラン変更', 'マイページ'],
+    a: `
+      <p><strong>マイページ → 契約管理 → プラン変更</strong>から申請。</p>
+      <ul style="padding-left:24px;">
+        <li>チェックアウト済みであること</li>
+        <li>支払い失敗がないこと</li>
+        <li>10日21時までの申請で当月適用</li>
+      </ul>`,
+  },
+  {
+    id: 'app38', cat: 'app', type: 'basic',
+    q: '休会申請はアプリでどこからできる？',
+    keywords: ['休会', 'アプリ', '申請'],
+    a: `
+      <p><strong>マイページ → 契約管理 → 休会申請</strong>から申請。</p>
+      <ul style="padding-left:24px;">
+        <li>店舗側で休会機能が有効になっていることが条件</li>
+        <li>チェックアウト済みであること</li>
+      </ul>`,
+  },
+  {
+    id: 'app39', cat: 'app', type: 'basic',
+    q: '解約申請はアプリでどこからできる？',
+    keywords: ['解約', 'アプリ', '申請'],
+    a: `
+      <p><strong>ユーザータブ → マイページ → 契約管理 → 解約申請</strong>から申請。</p>`,
+  },
+  {
+    id: 'app40', cat: 'app', type: 'basic',
+    q: '休会中のお客様が復帰申請する画面は？',
+    keywords: ['復帰', '休会', '申請'],
+    a: `
+      <p><strong>マイページ → 休会中の契約 → 「復帰」ボタン</strong>から復帰プランを選択。</p>`,
+  },
+  {
+    id: 'app41', cat: 'app', type: 'basic',
+    q: 'アプリのお知らせ（バナー）はどこに表示される？',
+    keywords: ['お知らせ', 'バナー', 'ホーム'],
+    a: `
+      <p>ホームタブの会員カード下部に<strong>バナー形式</strong>で表示されます。</p>
+      <ul style="padding-left:24px;">
+        <li>運営からの重要通知</li>
+        <li>キャンペーン情報</li>
+        <li>店舗の臨時休業等</li>
+      </ul>`,
+  },
+  {
+    id: 'app42', cat: 'app', type: 'basic',
+    q: '「引き下げリフレッシュ」とは？',
+    keywords: ['リフレッシュ', '引き下げ', '更新'],
+    a: `
+      <p>ホーム画面などで<strong>画面を下に引っ張って離す</strong>と、最新情報を再読込できます。</p>
+      <div class="alert alert-info">契約状態やお知らせが反映されていないときに試してください。</div>`,
+  },
+  {
+    id: 'app43', cat: 'app', type: 'basic',
+    q: 'メッセージを受信すると通知は来る？',
+    keywords: ['メッセージ', '通知', 'プッシュ'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>アプリのプッシュ通知</li>
+        <li>登録メールへの通知</li>
+      </ul>
+      <div class="alert alert-info">プッシュ通知は端末の通知設定がONである必要があります。</div>`,
+  },
+  {
+    id: 'app44', cat: 'app', type: 'basic',
+    q: '店舗のアメニティ（設備）情報はどこで確認できる？',
+    keywords: ['アメニティ', '設備', '店舗'],
+    a: `
+      <p>店舗詳細の<strong>アメニティタブ</strong>で確認。</p>
+      <ul style="padding-left:24px;">
+        <li>Wi-Fi・電源・ドリンク等の有無</li>
+        <li>個室・座席数</li>
+        <li>その他設備情報</li>
+      </ul>`,
+  },
+  {
+    id: 'app48', cat: 'app', type: 'basic',
+    q: 'チェックイン完了画面に表示される情報は？',
+    keywords: ['チェックイン', '完了', '表示'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>入店時刻</li>
+        <li>利用可能時間</li>
+        <li>その場でチェックアウトボタン</li>
+        <li>店舗からのメッセージ（プラン別）</li>
+      </ul>`,
+  },
+  {
+    id: 'app49', cat: 'app', type: 'basic',
+    q: '店舗からのメッセージ（チェックイン時）はどこで変わる？',
+    keywords: ['チェックインメッセージ', 'プラン別'],
+    a: `
+      <p>プラン種別によって表示内容が変わります：</p>
+      <ul style="padding-left:24px;">
+        <li>月額プラン → <strong>checkInNoteMonthly</strong></li>
+        <li>ドロップイン・デフォルト → <strong>checkInNoteDropin</strong></li>
+        <li>未設定なら <strong>checkInNote</strong>（共通）</li>
+      </ul>
+      <div class="alert alert-info">管理画面「店舗管理」でメッセージを設定可能。</div>`,
+  },
+  {
+    id: 'app50', cat: 'app', type: 'irregular',
+    q: 'アプリに契約情報が反映されない',
+    keywords: ['反映', 'されない', '契約情報', '遅延'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>画面を引き下げてリフレッシュ</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>ログアウト→再ログイン</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>アプリ再起動</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>管理画面で契約状態を確認（会員管理）</div></div>
+      </div>`,
+  },
+  {
+    id: 'app51', cat: 'app', type: 'basic',
+    q: '会員カードのQRコードは何に使う？',
+    keywords: ['会員カード', 'QR', '表示'],
+    a: `<p>入店時のQRとは別で、スタッフが会員を識別するための会員QRです。スタッフ側は通常使いません。お客様自身の身分確認用。</p>`,
+  },
+  {
+    id: 'app52', cat: 'app', type: 'basic',
+    q: '契約情報はアプリのどこで確認する？',
+    keywords: ['契約情報', '確認', 'マイページ'],
+    a: `
+      <p><strong>ユーザー → マイページ → 契約管理</strong>で確認できます。</p>
+      <ul style="padding-left:24px;">
+        <li>現在のプラン名</li>
+        <li>利用開始日</li>
+        <li>次回請求日・請求額</li>
+        <li>オプション契約情報</li>
+      </ul>`,
+  },
+  {
+    id: 'app53', cat: 'app', type: 'irregular',
+    q: 'アプリで店舗のQRコードが見つからないと言われた',
+    keywords: ['QR', '店頭', '設置場所'],
+    a: `
+      <p>店頭のQRコード掲示場所を案内：</p>
+      <ul style="padding-left:24px;">
+        <li>受付カウンター付近</li>
+        <li>入口付近（壁・ドア）</li>
+        <li>案内ポスター</li>
+      </ul>
+      <div class="alert alert-info">見つからない場合は、手動入力から<strong>店舗コード</strong>を案内。</div>`,
+  },
+  {
+    id: 'app54', cat: 'app', type: 'basic',
+    q: 'アプリの通知設定はどこで変更する？',
+    keywords: ['通知', '設定', 'プッシュ'],
+    a: `
+      <p>スマホ本体の<strong>設定 → アプリ → スタディGO → 通知</strong>で制御。</p>
+      <div class="alert alert-info">重要な通知（決済失敗など）も同じ設定に従うため、ONを推奨。</div>`,
+  },
+  {
+    id: 'app55', cat: 'app', type: 'irregular',
+    q: 'アプリ起動時に「新しいバージョンがあります」と出た',
+    keywords: ['アップデート', 'バージョン', 'ストア'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>ストアに移動してアップデート</li>
+        <li>古いバージョンでは<strong>機能が動作しないことがある</strong></li>
+        <li>アップデート後にログイン状態が維持される</li>
+      </ul>`,
+  },
+  {
+    id: 'app56', cat: 'app', type: 'irregular',
+    q: 'お客様が「アプリで現在地が表示されない」',
+    keywords: ['現在地', '位置情報', '権限'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>スマホの設定でアプリの位置情報権限を確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>屋内ではGPSが弱いため精度が低下することを案内</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>リストから手動で店舗を選択してもらう</div></div>
+      </div>`,
+  },
+  {
+    id: 'app57', cat: 'app', type: 'basic',
+    q: 'プラン選択画面で料金がわかりにくいと言われた',
+    keywords: ['プラン', '料金', '表示'],
+    a: `
+      <p>店舗詳細 → 月額プランタブで料金・利用時間帯を確認できます。</p>
+      <ul style="padding-left:24px;">
+        <li>プランごとに時間帯と料金が明示</li>
+        <li>タップで詳細表示</li>
+        <li>スタッフが店頭で補足説明</li>
+      </ul>`,
+  },
+  {
+    id: 'app58', cat: 'app', type: 'basic',
+    q: 'お客様が領収書を会社経費で使いたい',
+    keywords: ['領収書', '経費', '宛名'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>アプリのメール送信機能で利用履歴を取得可</li>
+        <li>正式な領収書が必要な場合は運営に依頼</li>
+        <li>宛名指定は運営の対応になるため、info.studygo@b-pt.jp を案内</li>
+      </ul>`,
+  },
+  {
+    id: 'app59', cat: 'app', type: 'irregular',
+    q: 'お客様が「登録メールが使えなくなった」',
+    keywords: ['メール', '変更', '使えない'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>まだ旧メールにアクセスできるならマイページから変更</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>アクセス不可なら運営（info.studygo@b-pt.jp）に変更依頼</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>本人確認のため身分証明情報を準備</div></div>
+      </div>`,
+  },
+  {
+    id: 'app60', cat: 'app', type: 'basic',
+    q: 'アプリでメッセージを送信した直後に反映されない',
+    keywords: ['メッセージ', '送信', '反映'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>ネットワーク遅延の場合あり（数秒〜数十秒）</li>
+        <li>画面を引き下げてリフレッシュ</li>
+        <li>送信済みマーク表示を確認</li>
+      </ul>`,
+  },
+  {
+    id: 'app61', cat: 'app', type: 'basic',
+    q: '利用開始日を変更したい',
+    keywords: ['利用開始日', '変更', 'プラン契約'],
+    a: `
+      <p>プラン契約時に選択した利用開始日は<strong>契約後は変更できません</strong>。</p>
+      <ul style="padding-left:24px;">
+        <li>契約完了前（利用開始日選択画面）なら変更可</li>
+        <li>契約後は現行プランで進めるしかない</li>
+      </ul>`,
+  },
+  {
+    id: 'app62', cat: 'app', type: 'irregular',
+    q: 'アプリのカメラが真っ暗になる',
+    keywords: ['カメラ', '真っ暗', '権限'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>スマホの設定でカメラ権限がONか確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>他のアプリ（カメラアプリ本体等）で動作確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>アプリ再起動・スマホ再起動</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>QRコードは手動入力（店舗コード）で代替</div></div>
+      </div>`,
+  },
+  {
+    id: 'app63', cat: 'app', type: 'basic',
+    q: 'アプリで「他の店舗」も見られる？',
+    keywords: ['他店舗', '検索', '全国'],
+    a: `
+      <p>はい。検索タブで全国のスタディGO対応店舗を検索できます。</p>
+      <ul style="padding-left:24px;">
+        <li>地図・リスト切替</li>
+        <li>店舗詳細で料金・アメニティ確認</li>
+        <li>旅行先・出張先でも利用可</li>
+      </ul>`,
+  },
+  {
+    id: 'app64', cat: 'app', type: 'example',
+    q: '【例題】お客様「今月末に使い切りたいけど、どうプランを変えればいい？」',
+    keywords: ['例題', '使い切り', 'プラン変更'],
+    a: `
+      <p><strong>対応</strong>：</p>
+      <ul style="padding-left:24px;">
+        <li>10日21時までなら当月中のプラン変更が可能</li>
+        <li>時間外利用したいならドロップイン併用を提案</li>
+        <li>長時間ならアップグレードの差額決済を案内</li>
+      </ul>`,
+  },
+  {
+    id: 'app65', cat: 'app', type: 'basic',
+    q: 'プッシュ通知の種類は？',
+    keywords: ['プッシュ', '通知', '種類'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>メッセージ受信</li>
+        <li>決済失敗</li>
+        <li>休会満了予告（2週間前）</li>
+        <li>解約完了通知</li>
+        <li>運営からの重要お知らせ</li>
+      </ul>`,
+  },
+  {
+    id: 'app66', cat: 'app', type: 'irregular',
+    q: 'iPhoneユーザーとAndroidユーザーでUIが違う？',
+    keywords: ['iPhone', 'Android', 'UI'],
+    a: `
+      <p>基本機能は同じですが、細かいUI要素（ボタン位置・戻るボタンなど）は異なります。</p>
+      <div class="alert alert-info">画面が違うと言われたら、どちらのOSか確認してから案内。</div>`,
+  },
+  {
+    id: 'app67', cat: 'app', type: 'basic',
+    q: 'お客様に「アプリ操作をメールで案内してほしい」と言われた',
+    keywords: ['案内', 'メール', 'サポート'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>アプリ内のヘルプ・FAQを案内</li>
+        <li>スタジオ宛メールに質問してもらい返信</li>
+        <li>個別対応が必要なら國松にエスカレーション</li>
+      </ul>`,
+  },
+  {
+    id: 'app68', cat: 'app', type: 'basic',
+    q: 'メールアドレス変更時に認証が必要なのはなぜ？',
+    keywords: ['メール変更', '認証', 'セキュリティ'],
+    a: `
+      <p>他人によるアカウント乗っ取り防止のため。</p>
+      <ul style="padding-left:24px;">
+        <li>新しいメールアドレスに認証コードを送信</li>
+        <li>コード入力で本人確認完了</li>
+        <li>その後、メールアドレスが切り替わる</li>
+      </ul>`,
+  },
+  {
+    id: 'app69', cat: 'app', type: 'irregular',
+    q: 'アプリが途中で勝手に終了（クラッシュ）する',
+    keywords: ['クラッシュ', '終了', '再起動'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>アプリを最新版に更新</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>スマホ本体を再起動</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>ストレージ空き容量を確認（不足なら削減）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>アプリを再インストール</div></div>
+      </div>`,
+  },
+  {
+    id: 'app70', cat: 'app', type: 'basic',
+    q: 'お客様がアプリ内メッセージに気付かない場合は？',
+    keywords: ['メッセージ', '気付かない', 'プッシュ'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>通知ONを案内</li>
+        <li>重要な連絡は電話・メールの併用も検討</li>
+        <li>未読件数を定期的に確認してもらう</li>
+      </ul>`,
+  },
+
+  // ===== 📄 契約・料金・プラン =====
+  {
+    id: 'c1', cat: 'contract', type: 'basic',
+    q: '勉強カフェ新宿で使えるプラン種類は？',
+    keywords: ['プラン', '種類', '月額', 'ドロップイン'],
+    a: `
+      <table class="data-table">
+        <tr><th>プラン</th><th>料金体系</th><th>こんな時</th></tr>
+        <tr><td>月額プラン</td><td>定額月額制（毎月15日決済）</td><td>毎日・頻繁に利用</td></tr>
+        <tr><td>ドロップイン（時間利用）</td><td>従量制（770円／時間・上限3,300円／日）</td><td>たまに・1回だけ</td></tr>
+      </table>
+      <div class="alert alert-info">月額プランは時間帯別に複数プランがあります。詳しくはアプリの店舗詳細で確認。</div>`,
+  },
+  {
+    id: 'c2', cat: 'contract', type: 'basic',
+    q: '月額プランの決済日はいつ？',
+    keywords: ['決済日', '15日', '月額', '請求'],
+    a: `
+      <p><strong>毎月15日</strong>に翌月分の月額料金が自動決済されます。</p>
+      <table class="data-table">
+        <tr><th>申込日</th><th>初回請求日</th><th>以降</th></tr>
+        <tr><td>月の前半（1〜14日）</td><td>翌月末（申込日〜翌月末の日割り＋入会金）</td><td>翌々月15日から毎月15日</td></tr>
+        <tr><td>月の後半（15〜月末）</td><td>翌月末（申込日〜翌月末の日割り＋入会金）</td><td>翌月15日から毎月15日</td></tr>
+      </table>`,
+  },
+  {
+    id: 'c3', cat: 'contract', type: 'basic',
+    q: '入会金はいくら？（新宿スタジオ）',
+    keywords: ['入会金', '11000', '5500', 'アプリ', '店舗', '新宿'],
+    a: `
+      <table class="data-table">
+        <tr><th>種類</th><th>金額</th><th>タイミング</th></tr>
+        <tr><td>新宿スタジオ入会金</td><td><strong>11,000円（税込）</strong></td><td>月額契約時</td></tr>
+        <tr><td>アプリ入会金</td><td>5,500円（税込）</td><td>初回登録時のみ</td></tr>
+      </table>
+      <p><strong>クーポンコードで入会金が変わる</strong></p>
+      <table class="data-table">
+        <tr><th>コード</th><th>内容</th><th>入会金</th></tr>
+        <tr><td>SJ1100</td><td>他勉強カフェからの転籍</td><td>11,000円 → <strong>無料</strong></td></tr>
+        <tr><td>SJHALF</td><td>早稲田カード等の入会金半額特典</td><td>11,000円 → <strong>5,500円</strong></td></tr>
+      </table>
+      <div class="alert alert-info">クーポンコードはプラン購入時、利用開始日を選ぶ画面で入力（大文字・小文字どちらでも可）。</div>`,
+  },
+  {
+    id: 'c4', cat: 'contract', type: 'basic',
+    q: 'ドロップイン（時間利用）の料金は？',
+    keywords: ['ドロップイン', '時間利用', '料金', '770円', '3300円'],
+    a: `
+      <table class="data-table">
+        <tr><th>項目</th><th>料金</th></tr>
+        <tr><td>基本料金</td><td>770円／時間</td></tr>
+        <tr><td>1日最大料金</td><td>3,300円</td></tr>
+        <tr><td>決済タイミング</td><td>チェックアウト時に即日自動決済</td></tr>
+      </table>
+      <div class="alert alert-warn">ドロップインの未払いがあると、次回チェックインができません。</div>`,
+  },
+  {
+    id: 'c7', cat: 'contract', type: 'basic',
+    q: '月額会員の超過料金・時間外料金は？（3パターン）',
+    keywords: ['超過', '請求', '即日', '決済', '770円', '13円', '時間外'],
+    a: `
+      <p>月額会員の来店時の3つのパターン：</p>
+      <table class="data-table">
+        <tr><th>パターン</th><th>料金</th><th>決済</th></tr>
+        <tr><td>プラン時間内</td><td>追加料金なし</td><td>—</td></tr>
+        <tr><td>時間超過（プラン時間を超える）</td><td><strong>1分13円</strong>（自動精算）</td><td>即日自動決済</td></tr>
+        <tr><td>時間外利用（ドロップインとして）</td><td><strong>770円／時間</strong>（1日上限3,300円）</td><td>即日自動決済</td></tr>
+      </table>
+      <div class="alert alert-warn">
+        <strong>重要</strong>：時間外利用は<strong>有人時間帯のみ</strong>可能。無人時間帯は利用不可。<br>
+        プラン時間帯の<strong>前</strong>の無人時間は利用不可（延長は可能）。
+      </div>
+      <div class="alert alert-info">BPアプリは翌月末請求でしたが、スタディGOは即日自動決済に変わりました。</div>`,
+  },
+  {
+    id: 'c8', cat: 'contract', type: 'basic',
+    q: '初回請求の計算式は？',
+    keywords: ['初回', '請求', '日割り', '計算'],
+    a: `
+      <p>初回請求額 = <strong>入会金（税込）+ 日割り月額料金</strong></p>
+      <p>日割り月額 = 月額 ×（契約日〜翌月末日数）÷ 契約月の総日数</p>
+      <div class="alert alert-info">
+        <strong>例</strong>：7月8日に月額30,000円プラン申込・入会金5,500円<br>
+        7/8〜8/31（55日）の日割り＋入会金 = 35,500円<br>
+        請求日: 8月31日<br>
+        9月以降: 毎月15日に30,000円
+      </div>`,
+  },
+  {
+    id: 'c9', cat: 'contract', type: 'basic',
+    q: 'クーポンの種類と適用ルールは？',
+    keywords: ['クーポン', '割引', '初月無料', '段階'],
+    a: `
+      <table class="data-table">
+        <tr><th>種類</th><th>内容</th></tr>
+        <tr><td>定率割引</td><td>例: 20%オフ</td></tr>
+        <tr><td>段階割引</td><td>初月50%オフ、2ヶ月目30%オフなど</td></tr>
+        <tr><td>複数月継続割引</td><td>3ヶ月目以降にレート割引</td></tr>
+        <tr><td>初月無料</td><td>割引率100%のルール</td></tr>
+      </table>
+      <div class="alert alert-warn"><strong>オプション料金はクーポン割引の対象外</strong>です。</div>`,
+  },
+  {
+    id: 'c10', cat: 'contract', type: 'basic',
+    q: 'ロッカーオプションの契約・解約時の注意は？',
+    keywords: ['ロッカー', 'オプション', '鍵', '紛失', '3300'],
+    a: `
+      <p><strong>契約時の注意</strong></p>
+      <ul style="padding-left:24px;">
+        <li>ロッカーは<strong>店頭での手続きが必要</strong>（有人時間帯に来店）</li>
+        <li>実際に利用できるのは、店頭で場所が決まったとき</li>
+        <li>鍵の紛失・破損時は再発行手数料 <strong>3,300円</strong></li>
+      </ul>
+      <p><strong>解約時の注意</strong></p>
+      <ul style="padding-left:24px;">
+        <li>解約はアプリで申請（<strong>店頭来店不要</strong>）</li>
+        <li>解約日までに荷物をすべて持ち帰る（残置物があると翌月分請求の可能性）</li>
+        <li>鍵は受付に返却。紛失の場合は再発行手数料 <strong>3,300円</strong></li>
+      </ul>`,
+  },
+  {
+    id: 'c18', cat: 'contract', type: 'basic',
+    q: 'プランの利用可能時間帯（どの時間に使える）は？',
+    keywords: ['利用時間', '時間帯', 'プラン', '区分'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>プランごとに「月〜金 9:00-18:00」など<strong>利用可能時間帯が設定</strong>されている</li>
+        <li>時間帯外の利用はチェックインエラーになる（契約時間外）</li>
+        <li>時間帯を広げたい場合は上位プランへのプラン変更が必要</li>
+      </ul>
+      <div class="alert alert-danger">プラン時間帯の<strong>前</strong>の無人時間は利用不可（延長は可能）。</div>`,
+  },
+  {
+    id: 'c19', cat: 'contract', type: 'example',
+    q: '【例題】プラン時間が終わった後に利用したい場合は？',
+    keywords: ['プラン終了後', '延長', '時間外', '例題'],
+    a: `
+      <p><strong>3パターン</strong>あります：</p>
+      <ul style="padding-left:24px;">
+        <li>プラン時間内で終了 → 追加なし</li>
+        <li>プラン時間から延長 → 超過分1分13円（自動精算）</li>
+        <li>プラン時間外から開始したい → 有人時間帯ならドロップインとして770円/h</li>
+      </ul>
+      <div class="alert alert-warn">プラン時間が終わった後＋有人時間帯も終了 → 利用不可（ドロップインは有人のみ）。</div>`,
+  },
+  {
+    id: 'c20', cat: 'contract', type: 'basic',
+    q: 'クーポン「SJ1100」はどんな時に使う？',
+    keywords: ['SJ1100', 'クーポン', '転籍', '新宿'],
+    a: `
+      <p>他勉強カフェから新宿スタジオへ<strong>転籍するお客様</strong>用のクーポンです。</p>
+      <ul style="padding-left:24px;">
+        <li>新宿入会金 11,000円 → <strong>無料</strong></li>
+        <li>プラン購入時、利用開始日選択画面でコード入力</li>
+        <li>大文字・小文字どちらでもOK</li>
+      </ul>`,
+  },
+  {
+    id: 'c21', cat: 'contract', type: 'basic',
+    q: 'クーポン「SJHALF」はどんな時に使う？',
+    keywords: ['SJHALF', 'クーポン', '半額', '早稲田カード'],
+    a: `
+      <p>早稲田カードなどの提携特典お客様向けです。</p>
+      <ul style="padding-left:24px;">
+        <li>新宿入会金 11,000円 → <strong>5,500円（半額）</strong></li>
+        <li>プラン購入時、利用開始日選択画面でコード入力</li>
+      </ul>`,
+  },
+  {
+    id: 'c22', cat: 'contract', type: 'irregular',
+    q: 'クーポンコードを入れ忘れた状態で契約してしまった',
+    keywords: ['クーポン', '入れ忘れ', '事後適用'],
+    a: `
+      <div class="alert alert-danger">契約後のクーポン適用は原則不可。</div>
+      <p>お客様が契約時にクーポンコードを入力せず契約した場合：</p>
+      <ul style="padding-left:24px;">
+        <li>判断に迷う場合は國松・運営に相談</li>
+        <li>独断で返金・差額調整はしない</li>
+      </ul>`,
+  },
+  {
+    id: 'c23', cat: 'contract', type: 'basic',
+    q: 'クーポンコードはお客様に事前に伝えるべき？',
+    keywords: ['クーポン', '事前', '案内'],
+    a: `
+      <p>はい。入会検討段階で該当する特典を必ず案内：</p>
+      <ul style="padding-left:24px;">
+        <li>他勉強カフェ転籍 → SJ1100</li>
+        <li>早稲田カード提示 → SJHALF</li>
+      </ul>
+      <div class="alert alert-warn">契約後のクーポン適用はできないため、<strong>事前案内が重要</strong>です。</div>`,
+  },
+  {
+    id: 'c24', cat: 'contract', type: 'basic',
+    q: 'ドロップイン契約時の請求はいつ発生する？',
+    keywords: ['ドロップイン', '請求', '先払い', '1日最大'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li><strong>チェックイン時に1日最大料金（3,300円）を先に請求</strong></li>
+        <li>チェックアウト時に実利用時間で精算 → 差額を返金 or 追加決済</li>
+      </ul>
+      <div class="alert alert-info">短時間利用でも、まず3,300円が一時的に決済されるのが特徴です。</div>`,
+  },
+  {
+    id: 'c25', cat: 'contract', type: 'basic',
+    q: '時間外利用の条件は？',
+    keywords: ['時間外', '有人時間帯', '770円'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>料金 770円/時間（即日自動決済）</li>
+        <li><strong>有人時間帯のみ</strong>利用可（無人時間帯は不可）</li>
+        <li>プラン時間帯の<strong>前</strong>の無人は不可、延長は可能</li>
+      </ul>`,
+  },
+  {
+    id: 'c28', cat: 'contract', type: 'basic',
+    q: 'オプションの料金請求タイミングは？',
+    keywords: ['オプション', '請求', 'タイミング'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>月額料金に合算して<strong>15日に請求</strong></li>
+        <li>契約月は日割り＋翌月分が入る</li>
+        <li>解約予告期間が設定されている場合あり</li>
+      </ul>`,
+  },
+  {
+    id: 'c29', cat: 'contract', type: 'basic',
+    q: 'オプションの解約予告期間とは？',
+    keywords: ['オプション', '解約予告', '予告期間'],
+    a: `
+      <p>オプション契約には店舗設定で<strong>解約予告期間</strong>が設定されている場合があります。</p>
+      <ul style="padding-left:24px;">
+        <li>予告期間分の料金は請求される</li>
+        <li>設定内容は「店舗管理」で確認可能</li>
+      </ul>`,
+  },
+  {
+    id: 'c30', cat: 'contract', type: 'irregular',
+    q: 'カード期限切れ間近のお客様への対応は？',
+    keywords: ['カード', '期限切れ', '更新'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>マイページ → 支払い方法から新カードを登録</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>古いカードを削除</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>次回請求日（15日）までに完了</div></div>
+      </div>`,
+  },
+  {
+    id: 'c31', cat: 'contract', type: 'basic',
+    q: '契約完了後にお客様宛に届くメールの内容は？',
+    keywords: ['契約完了', 'メール', '会員番号'],
+    a: `
+      <p>件名：<strong>【勉強カフェ】会員番号のお知らせ</strong></p>
+      <ul style="padding-left:24px;">
+        <li>会員番号（BCBP○○ / BCS○○）</li>
+        <li>プラン名・利用開始日</li>
+        <li>オンライン契約の方への来店案内（平日17-21/土日祝12-21）</li>
+      </ul>
+      <div class="alert alert-info">送信元: 新宿=benkyocafe.shinjuku@gmail.com（replyTo設定済）</div>`,
+  },
+  {
+    id: 'c32', cat: 'contract', type: 'basic',
+    q: 'スタジオに届く契約通知メールの内容は？',
+    keywords: ['契約通知', 'スタジオ宛', 'メール'],
+    a: `
+      <p>件名：<strong>【契約通知】○○ 様 - 会員番号 BCBP○○</strong></p>
+      <ul style="padding-left:24px;">
+        <li>お客様名・メールアドレス</li>
+        <li>プラン名・利用開始日</li>
+        <li>決済料金</li>
+      </ul>
+      <div class="alert alert-info">送信元: info.studygo@b-pt.jp。このメールを起点にスタッフが会員番号をメモ欄・チャットワークに転記。</div>`,
+  },
+  {
+    id: 'c33', cat: 'contract', type: 'basic',
+    q: 'お客様がカード登録せずにプラン契約しようとしたら？',
+    keywords: ['カード未登録', '契約', 'エラー'],
+    a: `
+      <p>カード登録前はプラン契約画面に進めません。</p>
+      <ul style="padding-left:24px;">
+        <li>登録情報入力 → カード登録が完了しないとプラン選択へ遷移できない設計</li>
+      </ul>`,
+  },
+  {
+    id: 'c41', cat: 'contract', type: 'example',
+    q: '【例題】「月初に契約して月末に引落しされた」と混乱しているお客様',
+    keywords: ['例題', '請求', '月末', '説明'],
+    a: `
+      <p><strong>対応</strong>：初回請求の仕組みを説明します。</p>
+      <ul style="padding-left:24px;">
+        <li>初回: 契約日〜翌月末分の日割り＋入会金 → 翌月末に請求</li>
+        <li>以降: 毎月15日に翌月分を請求</li>
+      </ul>
+      <div class="alert alert-info">初回請求までのタイムラグがあるため、お客様は混乱しがち。請求日を明確に伝えましょう。</div>`,
+  },
+  {
+    id: 'c42', cat: 'contract', type: 'irregular',
+    q: 'お客様が「月額料金を今月日割りで返金してほしい」',
+    keywords: ['返金', '日割り', '月額'],
+    a: `
+      <div class="alert alert-danger">月額料金の日割り返金は<strong>原則なし</strong>（月末まで利用可能なため）。</div>
+      <p>例外：システム側の不具合等で利用できなかった場合は運営判断で返金あり。</p>`,
+  },
+  {
+    id: 'c47', cat: 'contract', type: 'irregular',
+    q: 'お客様が「2つの勉強カフェを同時利用したい」',
+    keywords: ['複数店舗', '同時', '掛け持ち'],
+    a: `
+      <div class="alert alert-warn">同時チェックインは不可。ただし別々の日に異なる店舗で利用は可能です。</div>
+      <ul style="padding-left:24px;">
+        <li>店舗ごとにプラン契約</li>
+        <li>同時チェックインは禁止（エラー）</li>
+      </ul>`,
+  },
+  {
+    id: 'c48', cat: 'contract', type: 'basic',
+    q: '契約直後に利用開始するにはどうする？',
+    keywords: ['契約', '即日', '利用開始', '0日'],
+    a: `
+      <p>店舗管理の<strong>最短利用開始日</strong>を0日に変更してから契約（即日入会フロー）。</p>
+      <p>詳細は管理画面カテゴリの「即日入会の手順」を参照してください。</p>
+      <div class="alert alert-danger">契約完了後は必ず1日に戻すこと。</div>`,
+  },
+  {
+    id: 'c49', cat: 'contract', type: 'basic',
+    q: 'プラン契約の最短適用日は？',
+    keywords: ['最短', '適用日', '利用開始'],
+    a: `
+      <p>通常は<strong>契約日＋1日以降</strong>から利用開始可能。</p>
+      <ul style="padding-left:24px;">
+        <li>店舗管理の「最短利用開始日」設定による</li>
+        <li>即日入会時のみ0日に一時変更</li>
+      </ul>`,
+  },
+  {
+    id: 'c50', cat: 'contract', type: 'basic',
+    q: 'お客様への入会時説明で必ず伝える5項目は？',
+    keywords: ['入会説明', '必須項目', '最重要'],
+    a: `
+      <ol style="padding-left:24px;">
+        <li><strong>プラン時間帯の前の無人時間は利用不可</strong>（延長は可能）</li>
+        <li>プラン時間外の利用は<strong>有人時間帯のドロップイン（770円/h）</strong>のみ</li>
+        <li>プラン変更・休会・解約は<strong>月1回・10日21時締切・取消不可</strong></li>
+        <li><strong>超過・時間外料金は即日自動決済</strong>（返金不可）</li>
+        <li><strong>入会後のプラン選びなおしは翌月扱い</strong>（最初の選択が重要）</li>
+      </ol>`,
+  },
+  {
+    id: 'c51', cat: 'contract', type: 'basic',
+    q: 'プラン名の対応時間帯を知りたい',
+    keywords: ['プラン名', '時間帯', '対応'],
+    a: `
+      <p>プラン名と対応時間帯はアプリの店舗詳細 → 月額プランタブで確認。</p>
+      <ul style="padding-left:24px;">
+        <li>プラン名・時間帯はスタジオごとに異なる</li>
+        <li>不明な点は國松に確認</li>
+      </ul>`,
+  },
+  {
+    id: 'c52', cat: 'contract', type: 'example',
+    q: '【例題】お客様「毎朝6時から使いたい」',
+    keywords: ['例題', '早朝', 'プラン'],
+    a: `
+      <p><strong>対応</strong>：</p>
+      <ul style="padding-left:24px;">
+        <li>営業開始が6:00のため、6時〜利用可能なプランを提案</li>
+        <li>無人時間帯を含むプラン（終日利用可等）か要確認</li>
+        <li>プラン時間帯の前は入れない点を必ず説明</li>
+      </ul>`,
+  },
+  {
+    id: 'c53', cat: 'contract', type: 'example',
+    q: '【例題】お客様「週末だけ利用したい」',
+    keywords: ['例題', '週末', 'プラン'],
+    a: `
+      <p><strong>対応</strong>：</p>
+      <ul style="padding-left:24px;">
+        <li>頻度が低いなら<strong>ドロップイン</strong>（770円/h・上限3,300円/日）を推奨</li>
+        <li>毎週末＋長時間なら月額プランの方が得な場合も</li>
+        <li>月額は時間帯指定プランが多いので注意</li>
+      </ul>`,
+  },
+  {
+    id: 'c54', cat: 'contract', type: 'example',
+    q: '【例題】お客様「月に2-3回だけ使いたい」',
+    keywords: ['例題', '低頻度', 'ドロップイン'],
+    a: `
+      <p><strong>対応</strong>：月2-3回なら<strong>ドロップイン</strong>が最適。</p>
+      <ul style="padding-left:24px;">
+        <li>使った分だけ課金</li>
+        <li>最大料金3,300円/日で長時間利用もカバー</li>
+        <li>アプリ入会金5,500円はかかる</li>
+      </ul>`,
+  },
+  {
+    id: 'c55', cat: 'contract', type: 'example',
+    q: '【例題】お客様「連続で長時間使う日がある」',
+    keywords: ['例題', '長時間', '上限'],
+    a: `
+      <p><strong>対応</strong>：</p>
+      <ul style="padding-left:24px;">
+        <li>ドロップインは<strong>1日最大3,300円</strong>（それ以上は発生しない）</li>
+        <li>月額会員ならプラン時間内は追加なし</li>
+        <li>プラン時間超過分は1分13円自動決済</li>
+      </ul>`,
+  },
+  {
+    id: 'c56', cat: 'contract', type: 'example',
+    q: '【例題】「先月解約したが、今月また使いたい」',
+    keywords: ['例題', '再契約', '解約後'],
+    a: `
+      <p><strong>対応</strong>：</p>
+      <ul style="padding-left:24px;">
+        <li>アカウントは残っているので同メールで再契約可</li>
+        <li>アプリ入会金5,500円は不要（一度払ってれば）</li>
+        <li>新宿入会金11,000円は再契約でも発生（通常）</li>
+      </ul>
+      <div class="alert alert-info">再契約時の入会金免除ルールは運営に要確認。</div>`,
+  },
+  {
+    id: 'c57', cat: 'contract', type: 'irregular',
+    q: 'お客様「他のスタディGO店舗から移ってきた」',
+    keywords: ['転籍', '他店舗', 'SJ1100'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>他勉強カフェからの転籍なら<strong>SJ1100</strong>クーポンで新宿入会金無料</li>
+        <li>スタディGO他店舗のデータは引き継がれる（同アカウント）</li>
+        <li>契約は別プランとして新規に</li>
+      </ul>`,
+  },
+  {
+    id: 'c58', cat: 'contract', type: 'example',
+    q: '【例題】早稲田カードを持ってきたお客様',
+    keywords: ['早稲田カード', 'SJHALF', '特典'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>早稲田カードを確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>クーポンコード<strong>SJHALF</strong>の存在を案内</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>利用開始日選択画面でコード入力してもらう</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>新宿入会金が11,000円 → 5,500円に</div></div>
+      </div>`,
+  },
+  {
+    id: 'c59', cat: 'contract', type: 'basic',
+    q: 'ドロップインと月額、どちらが得か判断するには？',
+    keywords: ['ドロップイン', '月額', '損益分岐'],
+    a: `
+      <p>目安：<strong>月4-5回以上＋1回2時間以上</strong>なら月額が有利。</p>
+      <ul style="padding-left:24px;">
+        <li>ドロップイン: 770円×時間×回数 + アプリ入会金</li>
+        <li>月額: 定額料金 + 入会金 + 日割り</li>
+        <li>月額は時間帯制限あり（プランによる）</li>
+      </ul>`,
+  },
+  {
+    id: 'c60', cat: 'contract', type: 'irregular',
+    q: 'お客様「試しに1回だけ使いたい」',
+    keywords: ['お試し', '初回', 'ドロップイン'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>ドロップインを推奨（770円/h）</li>
+        <li>アカウント登録・アプリ入会金5,500円はかかる旨を案内</li>
+        <li>気に入ったら月額への切替を検討してもらう</li>
+      </ul>`,
+  },
+  {
+    id: 'c61', cat: 'contract', type: 'irregular',
+    q: 'お客様「使ってみてから契約を決めたい」',
+    keywords: ['見学', '体験', 'ドロップイン'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>まず<strong>見学予約</strong>を案内（無料）</li>
+        <li>体験希望ならドロップイン1日利用を提案</li>
+        <li>その場で気に入れば即日入会フローへ</li>
+      </ul>`,
+  },
+  {
+    id: 'c62', cat: 'contract', type: 'basic',
+    q: '契約日と利用開始日は同じ？',
+    keywords: ['契約日', '利用開始日', '違い'],
+    a: `
+      <table class="data-table">
+        <tr><th>項目</th><th>意味</th></tr>
+        <tr><td>契約日</td><td>アプリで契約が確定した日</td></tr>
+        <tr><td>利用開始日</td><td>実際にサービスが開始される日（お客様が選択）</td></tr>
+      </table>
+      <div class="alert alert-info">通常は契約日の翌日以降を選択。即日入会時のみ同日にできる。</div>`,
+  },
+  {
+    id: 'c63', cat: 'contract', type: 'basic',
+    q: 'アプリ入会金5,500円は新規登録のたびに発生する？',
+    keywords: ['アプリ入会金', '5500', '再契約'],
+    a: `
+      <p>いいえ、<strong>最初の1回のみ</strong>です。</p>
+      <ul style="padding-left:24px;">
+        <li>アカウントを作った時点で徴収</li>
+        <li>解約して再契約しても再度発生しない</li>
+        <li>別メールで新規アカウント作成すれば再度かかる</li>
+      </ul>`,
+  },
+  {
+    id: 'c64', cat: 'contract', type: 'basic',
+    q: '契約時の請求タイミングは？',
+    keywords: ['請求', 'タイミング', '決済'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>契約確定と同時に<strong>初回請求を即時決済</strong>（入会金＋日割り＋翌月分）</li>
+        <li>以降は毎月15日に翌月分を自動決済</li>
+      </ul>`,
+  },
+  {
+    id: 'c65', cat: 'contract', type: 'irregular',
+    q: 'お客様「契約画面で進めない・エラーが出る」',
+    keywords: ['契約画面', 'エラー', '進めない'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>エラーメッセージを確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>カード登録が完了しているか確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>登録情報（氏名・住所）未入力を確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>アプリ再起動・通信確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">5</div><div>解決しなければ國松・運営</div></div>
+      </div>`,
+  },
+  {
+    id: 'c66', cat: 'contract', type: 'basic',
+    q: 'オプションと月額プランの請求は合算される？',
+    keywords: ['オプション', '合算', '請求'],
+    a: `
+      <p>はい、<strong>毎月15日</strong>に月額料金と合算して請求されます。</p>
+      <div class="alert alert-info">別々のカードで払うことはできません。</div>`,
+  },
+  {
+    id: 'c67', cat: 'contract', type: 'irregular',
+    q: 'お客様「法人契約したい」',
+    keywords: ['法人', '企業', '契約'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>標準は個人アカウント</li>
+        <li>法人契約・まとめ払いは運営（info.studygo@b-pt.jp）に要相談</li>
+        <li>店舗側では受付不可</li>
+      </ul>`,
+  },
+  {
+    id: 'c68', cat: 'contract', type: 'basic',
+    q: '毎月の請求額が変わる可能性はある？',
+    keywords: ['請求額', '変動', 'クーポン'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>クーポン段階割引（初月〜3ヶ月目）で変動</li>
+        <li>プラン変更月は差額決済</li>
+        <li>オプション追加・解約で変動</li>
+        <li>超過料金・時間外料金は別途即時決済</li>
+      </ul>`,
+  },
+  {
+    id: 'c69', cat: 'contract', type: 'irregular',
+    q: 'お客様「契約月の途中で入会金を払いすぎている気がする」',
+    keywords: ['入会金', '過剰', '疑問'],
+    a: `
+      <p>入会金は1回限りですが、以下の内訳を確認：</p>
+      <ul style="padding-left:24px;">
+        <li>新宿入会金: 11,000円（SJ1100で無料・SJHALFで半額）</li>
+        <li>アプリ入会金: 5,500円（初回のみ）</li>
+      </ul>
+      <div class="alert alert-info">アプリで支払履歴を見て内訳を確認。疑問があれば運営に問い合わせ。</div>`,
+  },
+  {
+    id: 'c70', cat: 'contract', type: 'basic',
+    q: '契約情報（氏名・住所）を変えた場合、契約に影響は？',
+    keywords: ['変更', '契約', '影響'],
+    a: `
+      <p>連絡先情報の変更は契約に影響しません。</p>
+      <ul style="padding-left:24px;">
+        <li>マイページからいつでも編集可</li>
+        <li>メール変更は再認証あり</li>
+        <li>カード変更は新カード登録→旧カード削除の順</li>
+      </ul>`,
+  },
+  {
+    id: 'c71', cat: 'contract', type: 'irregular',
+    q: '月額プランの利用時間帯がプラン名からわかりにくい',
+    keywords: ['プラン名', '時間帯', 'わかりにくい'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>アプリの店舗詳細で必ず時間帯を確認</li>
+        <li>スタッフが店頭で分かりやすく補足</li>
+        <li>プラン時間帯の前は入れない・延長はできる点は必須説明</li>
+      </ul>`,
+  },
+  {
+    id: 'c72', cat: 'contract', type: 'example',
+    q: '【例題】お客様「プラン開始前に荷物だけ入れたい」',
+    keywords: ['例題', 'プラン前', '無人'],
+    a: `
+      <p><strong>対応</strong>：プラン時間帯の前は<strong>無人時間含め利用不可</strong>。</p>
+      <ul style="padding-left:24px;">
+        <li>荷物を置くためだけの入室も不可（有人時間帯以外）</li>
+        <li>ロッカーオプションならプラン時間外でも荷物保管可</li>
+      </ul>`,
+  },
+  {
+    id: 'c73', cat: 'contract', type: 'example',
+    q: '【例題】お客様「プラン終了後もう少し使いたい」',
+    keywords: ['例題', '延長', 'プラン後'],
+    a: `
+      <p><strong>対応</strong>：</p>
+      <ul style="padding-left:24px;">
+        <li>プラン時間からの<strong>延長は可能</strong>（超過料金 1分13円）</li>
+        <li>そのままチェックアウトせず滞在 → 自動で超過課金</li>
+        <li>延長途中でやめたい場合はチェックアウト</li>
+      </ul>`,
+  },
+  {
+    id: 'c74', cat: 'contract', type: 'irregular',
+    q: 'お客様「クーポンコードを使ったのに入会金が引かれていない」',
+    keywords: ['クーポン', '適用されない', '入会金'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>正しく大文字・小文字が認識されたか確認（どちらでも可のはず）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>利用開始日選択画面で入力したか確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>適用対象のプランか確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>解決しなければ國松・運営に相談</div></div>
+      </div>`,
+  },
+  {
+    id: 'c75', cat: 'contract', type: 'basic',
+    q: 'ロッカーオプションの料金は？',
+    keywords: ['ロッカー', '料金'],
+    a: `
+      <p>料金は店舗・ロッカー種別により異なります。アプリの店舗詳細でオプション確認。</p>
+      <div class="alert alert-info">小ロッカー・大ロッカーで料金差あり。鍵紛失は再発行3,300円。</div>`,
+  },
+
+  // ===== 🚪 チェックイン・解錠 =====
+  {
+    id: 'c16', cat: 'contract', type: 'basic',
+    q: 'ロッカーオプションの請求パターン（3パターン）は？',
+    keywords: ['ロッカー', '請求', 'パターン', '日割り', '15日'],
+    a: `
+      <p>ロッカー契約月と月額プラン契約月の関係で請求が変わります。</p>
+      <p><strong>パターン① 前月プラン契約＋14日以前オプション契約（例: 2/14）</strong></p>
+      <ul style="padding-left:24px;">
+        <li>契約時請求: <strong>2月分の日割り料金のみ</strong></li>
+        <li>プラン継続中 → 2/15に3月分料金</li>
+        <li>プラン休会・解約済み → 次回請求なし</li>
+      </ul>
+      <p><strong>パターン② 前月プラン契約＋15日以降オプション契約（例: 2/15）</strong></p>
+      <ul style="padding-left:24px;">
+        <li>プラン継続中: 2月分日割り＋3月分 → 次回3/15に4月分</li>
+        <li>プラン休会・解約済み: 2月分日割りのみ → 次回請求なし</li>
+      </ul>
+      <p><strong>パターン③ 同月プラン契約＋同月オプション契約</strong></p>
+      <ul style="padding-left:24px;">
+        <li>契約時請求: 2月分日割り＋3月分（契約日が14日でも15日でも同額）</li>
+        <li>プラン継続中: 3/15に4月分</li>
+        <li>プラン休会・解約済み → 次回請求なし</li>
+      </ul>
+      <div class="alert alert-warn">
+        <strong>ポイント</strong>：月額プランが2/10 21時までに休会・解約申請済みなら、オプション次回請求は発生しません。
+      </div>`,
+  },
+  {
+    id: 'c11', cat: 'contract', type: 'example',
+    q: '【例題】お客様が契約時に「どのプランがいい？」と聞いてきた',
+    keywords: ['例題', 'プラン選び', 'ヒアリング'],
+    a: `
+      <p><strong>対応</strong>：利用予定の時間帯・頻度をヒアリングしてから案内します。</p>
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>「どのくらい頻繁に使いますか？」</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>毎日/週数回 → 月額プラン、月1-2回 → ドロップイン</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>利用時間帯（何時〜何時が多いか）を確認</div></div>
+      </div>
+      <div class="alert alert-danger">
+        <strong>最重要</strong>：プラン変更は<strong>毎月10日締切・翌月反映・月1回のみ</strong>。<br>
+        最初の選択が非常に重要なので、迷っている場合はドロップインから開始も提案してください。
+      </div>`,
+  },
+  {
+    id: 'c12', cat: 'contract', type: 'example',
+    q: '【例題】クレカを持っていないお客様が契約したい',
+    keywords: ['クレカ', 'カード', '不所持', '例題'],
+    a: `
+      <div class="alert alert-danger">スタディGOは<strong>クレジットカード決済のみ</strong>。口座振替・現金は不可。</div>
+      <p><strong>対応</strong>：</p>
+      <ul style="padding-left:24px;">
+        <li>家族名義のカード登録もOKの旨を案内（名義人同意前提）</li>
+        <li>デビットカードでも登録可能（カード会社による）</li>
+        <li>現金・振込は受付不可</li>
+      </ul>`,
+  },
+  {
+    id: 'c13', cat: 'contract', type: 'basic',
+    q: '月額プランの最低継続期間は？',
+    keywords: ['最低継続', '2ヶ月', '月額', '解約'],
+    a: `
+      <p><strong>利用開始月とその翌月の2ヶ月</strong>が最低継続期間です。</p>
+      <div class="alert alert-warn">契約月の翌月の10日21時までは解約申請しても翌月末で終了になるため、実質2ヶ月は契約される計算になります。</div>`,
+  },
+  {
+    id: 'c14', cat: 'contract', type: 'basic',
+    q: '月額契約時の請求内訳は？',
+    keywords: ['請求', '内訳', '日割り', '月額'],
+    a: `
+      <p>契約時の請求 = <strong>入会金 ＋ 利用開始月分（日割り）＋ 翌月分月額料金</strong></p>
+      <div class="alert alert-info">入会金には新宿スタジオ入会金11,000円とアプリ入会金5,500円が含まれます。クーポン適用時は変動。</div>`,
+  },
+  {
+    id: 'c15', cat: 'contract', type: 'irregular',
+    q: 'スタディGO未登録のお客様がドロップインを使いたいと言っている',
+    keywords: ['ドロップイン', '未登録', '受付', '有人'],
+    a: `
+      <div class="alert alert-danger">スタディGO未登録者のドロップインは<strong>受付不可</strong>です。</div>
+      <p><strong>対応</strong>：</p>
+      <ul style="padding-left:24px;">
+        <li>店頭でスタディGOのアプリダウンロード・会員登録を案内</li>
+        <li>登録後にアプリからドロップインプラン契約してもらう</li>
+        <li>ドロップインは<strong>有人営業時間のみ</strong>対応</li>
+      </ul>`,
+  },
+
+  // ===== 🚪 チェックイン・解錠 =====
+  {
+    id: 'k1', cat: 'checkin', type: 'basic',
+    q: 'チェックインの基本フロー（スタッフ確認含む）は？',
+    keywords: ['チェックイン', 'QR', '流れ', '完了画面', '確認'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>お客様がアプリを起動</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>「チェックイン」からQRコードを読み取る</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div style="background:#FFF3E0;padding:4px 8px;border-radius:4px;"><strong>有人時間帯は、チェックイン完了画面をスタッフに見せてもらう</strong></div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>「ドアを解錠しました！」と表示 → 入室可能</div></div>
+      </div>
+      <div class="alert alert-info">
+        <strong>スタディGO会員</strong>: 入口のQRコードを読み取って入室<br>
+        <strong>旧会員（スタディGO移行前）</strong>: Akerunアプリから解錠
+      </div>
+      <div class="alert alert-warn">BPスタジオのワークスペース以外は、<strong>ラウンジの扉はオートロック</strong>。スタディGOアプリを使わないと入室できません。</div>`,
+  },
+  {
+    id: 'k2', cat: 'checkin', type: 'basic',
+    q: 'チェックアウトの流れは？',
+    keywords: ['チェックアウト', '退店', '自動'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li><strong>手動</strong>: アプリで「チェックアウト」タップ → 利用時間・料金・星評価を表示</li>
+        <li><strong>自動</strong>: 予定時刻に到達すると自動チェックアウト（強制チェックアウト）</li>
+      </ul>
+      <div class="alert alert-warn">ドロップインはチェックアウト時に即日決済されます。</div>`,
+  },
+  {
+    id: 'k3', cat: 'checkin', type: 'basic',
+    q: 'Akerun解錠の仕組みは？',
+    keywords: ['Akerun', '解錠', 'スマートロック', 'ドア'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>スタディGOはスマートロック<strong>Akerun</strong>と連携</li>
+        <li>チェックイン完了と同時にドアが自動解錠</li>
+        <li>1店舗に複数ドア（入口・奥の部屋など）がある場合、<strong>プランによって解錠されるドアが異なる</strong>設定もあり</li>
+        <li>解錠ログは管理画面の「鍵操作履歴」で確認できる（セキュリティ監査用）</li>
+      </ul>`,
+  },
+  {
+    id: 'k4', cat: 'checkin', type: 'basic',
+    q: 'チェックイン時刻は修正できる？',
+    keywords: ['チェックイン', '時刻', '修正', '打刻'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li><strong>お客様側</strong>: チェックアウト前ならアプリから修正可能</li>
+        <li><strong>スタッフ側</strong>: 管理画面の「チェックイン実績」から手動修正可能（チェックアウト後も）</li>
+      </ul>
+      <div class="alert alert-warn">チェックアウト忘れは<strong>店舗コード入力</strong>で対応します。</div>`,
+  },
+  {
+    id: 'k5', cat: 'checkin', type: 'basic',
+    q: '自動チェックアウトはいつ発動する？',
+    keywords: ['自動', 'チェックアウト', '予定時刻'],
+    a: `
+      <p>チェックイン時に予定退店時刻が自動計算され、その時刻に到達すると自動チェックアウトされます。</p>
+      <ul style="padding-left:24px;">
+        <li>月額プラン: プラン終了時刻</li>
+        <li>ドロップイン: 営業終了時刻 or 最大滞在時間</li>
+      </ul>
+      <div class="alert alert-info">自動チェックアウト済みのレコードは管理画面でも区別して表示されます。</div>`,
+  },
+  {
+    id: 'k6', cat: 'checkin', type: 'basic',
+    q: 'チェックインエラーの11パターンと対応は？',
+    keywords: ['エラー', 'チェックイン', '失敗', '11', '対応表'],
+    a: `
+      <table class="data-table">
+        <tr><th>エラー</th><th>原因</th><th>対応</th></tr>
+        <tr><td>無効なQRコードです</td><td>QR汚れ・読取失敗</td><td>QRを拭く／照明／別角度</td></tr>
+        <tr><td>店舗が見つかりません</td><td>QR間違い</td><td>正しいQRか確認・運営連絡</td></tr>
+        <tr><td>アカウント停止</td><td>運営側停止措置</td><td>運営連絡</td></tr>
+        <tr><td>契約がありません</td><td>プラン未契約</td><td>アプリから契約案内</td></tr>
+        <tr><td>解約予約中・休会中</td><td>申請済み</td><td>契約状況確認</td></tr>
+        <tr><td>営業時間外</td><td>時間外</td><td>営業時間案内</td></tr>
+        <tr><td>休業日</td><td>本日休業</td><td>カレンダー確認</td></tr>
+        <tr><td>現在満席です</td><td>座席埋まり</td><td>待ち or 別店舗案内</td></tr>
+        <tr><td>カード決済エラー</td><td>ドロップイン未払い</td><td>カード情報更新・未払い分決済</td></tr>
+        <tr><td>契約時間外</td><td>プラン利用時間外</td><td>プラン契約時間確認</td></tr>
+        <tr><td>年齢制限</td><td>最低年齢未満</td><td>利用条件説明</td></tr>
+      </table>`,
+  },
+  {
+    id: 'k7', cat: 'checkin', type: 'irregular',
+    q: 'QRコードが読み取れない',
+    keywords: ['QR', '読み取れない', '無効'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>QRコードを清潔な布で拭く</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>照明を当てる／別角度から撮影</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>アプリの「手動入力」から<strong>店舗コード</strong>を入力</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>QRが破損していたら運営に連絡して再発行</div></div>
+      </div>`,
+  },
+  {
+    id: 'k8', cat: 'checkin', type: 'irregular',
+    q: 'チェックインは成功したのにドアが開かない',
+    keywords: ['ドア', '開かない', '解錠', 'Akerun'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>物理的確認: ドア障害物・押し方・Wi-Fi接続</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>管理画面「鍵操作履歴」で解錠ログを確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>ログなし → スタディGO運営に連絡</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>ログあり・物理的に開かない → Akerun側問題（運営＋Akerunに連絡）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">5</div><div>予備キー・暗証番号で一時対応</div></div>
+      </div>`,
+  },
+  {
+    id: 'k9', cat: 'checkin', type: 'irregular',
+    q: '「満席です」と表示されてチェックインできない',
+    keywords: ['満席', 'チェックイン', '座席'],
+    a: `
+      <p>チェックアウト忘れで実際は空いていることもあります。</p>
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>管理画面「チェックイン実績」で現在チェックイン中のお客様を確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>長時間滞在者に声かけ、帰られていれば強制チェックアウト</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>実際に満席なら別店舗を案内 or 空くまで待機</div></div>
+      </div>`,
+  },
+  {
+    id: 'k10', cat: 'checkin', type: 'irregular',
+    q: '「カード決済エラー」でチェックインできない',
+    keywords: ['カード', '決済エラー', '未払い'],
+    a: `
+      <p>前回のドロップイン代が<strong>未払い</strong>の可能性が高いです。</p>
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>お客様にメールで「決済リンク」が届いているか確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>リンクから未払い分を決済してもらう</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>カード情報が古い場合は再登録</div></div>
+      </div>`,
+  },
+  {
+    id: 'k11', cat: 'checkin', type: 'irregular',
+    q: '「年齢制限」でチェックインできないお客様が来た',
+    keywords: ['年齢制限', '若年'],
+    a: `
+      <p>店舗設定の<strong>最低年齢</strong>未満の場合にエラー。</p>
+      <ul style="padding-left:24px;">
+        <li>新宿スタジオの最低年齢を確認</li>
+        <li>該当年齢未満なら利用条件を説明・お断り</li>
+        <li>新宿スタジオの最低年齢は運営に確認してから案内</li>
+      </ul>`,
+  },
+  {
+    id: 'k12', cat: 'checkin', type: 'basic',
+    q: '複数店舗での同時チェックインはできる？',
+    keywords: ['複数店舗', '同時', 'チェックイン'],
+    a: `
+      <div class="alert alert-danger"><strong>禁止</strong>です。他店舗にチェックイン中は新規チェックインでエラーになります。</div>
+      <p>他店舗にチェックイン中のお客様が来た場合は、前の店舗でチェックアウトしてもらってください。</p>`,
+  },
+  {
+    id: 'k13', cat: 'checkin', type: 'basic',
+    q: '無効なQRコードエラーの対応手順は？',
+    keywords: ['無効', 'QR', '読取', '清掃'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>QRコードを清潔な布で拭く</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>照明を当てる</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>別角度から撮影</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>それでも読めない → 店舗コード手動入力</div></div>
+      </div>`,
+  },
+  {
+    id: 'k14', cat: 'checkin', type: 'basic',
+    q: '「店舗が見つかりません」エラーの原因と対応は？',
+    keywords: ['店舗', '見つからない', 'shopId', 'QR間違い'],
+    a: `
+      <p>QRコードが間違っているか、店舗が無効化されている可能性。</p>
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>正しい店舗のQRか確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>店舗が有効かどうか管理画面で確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>運営に連絡してQR再発行</div></div>
+      </div>`,
+  },
+  {
+    id: 'k15', cat: 'checkin', type: 'basic',
+    q: '「アカウントが停止されています」への対応は？',
+    keywords: ['アカウント停止', 'エラー', '運営'],
+    a: `
+      <p>運営側で停止措置中のアカウントです。</p>
+      <ul style="padding-left:24px;">
+        <li>お客様から運営（info.studygo@b-pt.jp / 03-6302-0774）に直接連絡</li>
+        <li>店舗側では解除できない</li>
+      </ul>`,
+  },
+  {
+    id: 'k16', cat: 'checkin', type: 'basic',
+    q: '「契約がありません」エラーの対応は？',
+    keywords: ['契約なし', 'エラー', 'プラン未契約'],
+    a: `
+      <p>プラン未契約のお客様です。</p>
+      <ul style="padding-left:24px;">
+        <li>アプリからプラン契約を案内</li>
+        <li>有人時間帯なら即日ドロップイン契約も可</li>
+      </ul>`,
+  },
+  {
+    id: 'k17', cat: 'checkin', type: 'basic',
+    q: '「解約予約中／一時停止中」エラーの対応は？',
+    keywords: ['解約予約', '休会', '一時停止', 'エラー'],
+    a: `
+      <p>解約・休会申請済みで、利用制限中の状態。</p>
+      <ul style="padding-left:24px;">
+        <li>解約日・休会開始日を確認</li>
+        <li>申請取り消しは不可</li>
+        <li>利用したい場合は新規契約・復帰申請を案内</li>
+      </ul>`,
+  },
+  {
+    id: 'k18', cat: 'checkin', type: 'basic',
+    q: '「営業時間外」エラーの対応は？',
+    keywords: ['営業時間外', 'エラー', '時間'],
+    a: `
+      <p>新宿スタジオの営業時間外にチェックインしようとすると発生。</p>
+      <table class="data-table">
+        <tr><th>曜日</th><th>営業時間</th></tr>
+        <tr><td>平日</td><td>6:00〜23:00</td></tr>
+        <tr><td>土曜</td><td>6:00〜22:00</td></tr>
+        <tr><td>日祝</td><td>6:00〜21:00</td></tr>
+      </table>`,
+  },
+  {
+    id: 'k19', cat: 'checkin', type: 'basic',
+    q: '「休業日のため…」エラーの対応は？',
+    keywords: ['休業日', 'エラー', 'カレンダー'],
+    a: `
+      <p>臨時休業や営業カレンダーで休業設定がされている日のエラー。</p>
+      <ul style="padding-left:24px;">
+        <li>管理画面「営業日・営業時間管理」で確認</li>
+        <li>お客様には休業日を案内</li>
+      </ul>`,
+  },
+  {
+    id: 'k20', cat: 'checkin', type: 'basic',
+    q: '「契約時間外」エラーの対応は？',
+    keywords: ['契約時間外', 'プラン時間', 'エラー'],
+    a: `
+      <p>お客様のプランの利用可能時間帯外です。</p>
+      <ul style="padding-left:24px;">
+        <li>プラン契約時間を確認</li>
+        <li>時間外利用なら有人時間帯のドロップイン契約で対応可</li>
+      </ul>`,
+  },
+  {
+    id: 'k25', cat: 'checkin', type: 'basic',
+    q: '利用時間の計算ルールは？',
+    keywords: ['利用時間', '計算', '分単位'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>分単位で集計（秒以下は端数処理）</li>
+        <li>同一分内のチェックイン→アウトは<strong>最低1分計上</strong></li>
+        <li>プラン別の料金確定で超過分を計算</li>
+      </ul>`,
+  },
+  {
+    id: 'k27', cat: 'checkin', type: 'irregular',
+    q: '「誤ってチェックアウトしてしまった」時の対応は？',
+    keywords: ['誤チェックアウト', '再チェックイン'],
+    a: `
+      <p>再度QRを読み取って<strong>再チェックイン</strong>することで引き続き利用可能。</p>
+      <div class="alert alert-info">誤ってチェックアウトしても、有人時間帯であれば再チェックインで継続利用できます。</div>`,
+  },
+  {
+    id: 'k28', cat: 'checkin', type: 'basic',
+    q: '管理画面でのチェックイン時刻修正の条件は？',
+    keywords: ['時刻修正', '管理画面', '編集制限'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>チェックアウト後: 明細確認可能（編集制限あり）</li>
+        <li>チェックアウト前: 時間編集可能</li>
+        <li>スタッフは管理画面「チェックイン実績」から手動修正</li>
+      </ul>`,
+  },
+  {
+    id: 'k29', cat: 'checkin', type: 'basic',
+    q: 'スタッフ常駐時のチェックイン確認の意義は？',
+    keywords: ['スタッフ', '確認', '有人', '完了画面'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>正しい店舗・プランでチェックインしたか確認</li>
+        <li>チェックイン忘れ防止（後々のトラブル防止）</li>
+        <li>お客様とのコミュニケーションの機会</li>
+      </ul>
+      <div class="alert alert-info">「チェックイン完了画面を見せてください」と声かけ。</div>`,
+  },
+  {
+    id: 'k30', cat: 'checkin', type: 'basic',
+    q: 'ラウンジのオートロック仕様は？',
+    keywords: ['ラウンジ', 'オートロック', 'Akerun'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>新宿スタジオ・BPスタジオ両方のラウンジはオートロック</li>
+        <li>お客様は<strong>スタディGOアプリを使わないと入室不可</strong></li>
+        <li>有人時間帯でも同様（スタッフは別途開錠）</li>
+      </ul>`,
+  },
+  {
+    id: 'k31', cat: 'checkin', type: 'basic',
+    q: 'BPスタジオのワークスペースのオートロック設定は？',
+    keywords: ['BP', 'ワークスペース', 'オートロック', 'OFF'],
+    a: `
+      <p>BPスタジオのワークスペースのみ、<strong>有人時間帯はスタッフがオートロックをOFFに設定</strong>します。</p>
+      <div class="alert alert-info">BPのOP/CL作業として指定されている対応です。</div>`,
+  },
+  {
+    id: 'k32', cat: 'checkin', type: 'basic',
+    q: '旧会員（スタディGO移行前）の解錠方法は？',
+    keywords: ['旧会員', 'Akerunアプリ', '移行前'],
+    a: `
+      <p>BPアプリ時代の旧会員は<strong>Akerunアプリから直接解錠</strong>します。</p>
+      <div class="alert alert-warn">スタディGO会員への移行は本人がアプリで手続き。スタッフでは移行できません。</div>`,
+  },
+  {
+    id: 'k36', cat: 'checkin', type: 'irregular',
+    q: 'チェックイン成功なのにAkerun解錠タイムアウト時の対応は？',
+    keywords: ['Akerun', 'タイムアウト', 'ドア', '10回'],
+    a: `
+      <p>Akerun APIへのリクエストが最大10回/2秒間隔で試行されますが、全て失敗するとタイムアウトエラー。</p>
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>通信状況を確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>Akerunの電源・ネットワーク確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>運営＋Akerunに連絡</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>予備キーで一時対応</div></div>
+      </div>`,
+  },
+  {
+    id: 'k38', cat: 'checkin', type: 'basic',
+    q: 'QRが破損した時の店舗対応は？',
+    keywords: ['QR', '破損', '再発行'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>運営（info.studygo@b-pt.jp）に連絡</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>QRコード再発行を依頼</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>届くまでは店舗コード手動入力でお客様対応</div></div>
+      </div>`,
+  },
+  {
+    id: 'k42', cat: 'checkin', type: 'irregular',
+    q: '予備キー・暗証番号はどこに保管している？',
+    keywords: ['予備キー', '暗証番号', '緊急'],
+    a: `
+      <p>スタジオごとの定められた場所に保管。</p>
+      <ul style="padding-left:24px;">
+        <li>緊急時（Akerun故障等）のみ使用</li>
+        <li>使用時は必ず國松に報告</li>
+      </ul>
+      <div class="alert alert-warn">具体的な保管場所は新宿スタジオのスタッフ引き継ぎで確認。セキュリティ情報のためマニュアル記載は避ける。</div>`,
+  },
+  {
+    id: 'k46', cat: 'checkin', type: 'irregular',
+    q: 'お客様が「チェックアウトボタンがない」と言っている',
+    keywords: ['チェックアウト', 'ボタン', '見つからない'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>チェックイン中か確認（ホーム画面に利用中表示があるか）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>既に自動チェックアウトされている可能性を確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>アプリ再起動・再ログイン</div></div>
+      </div>`,
+  },
+  {
+    id: 'k47', cat: 'checkin', type: 'basic',
+    q: 'チェックインの検索（管理画面）のフィルタ項目は？',
+    keywords: ['フィルタ', 'チェックイン実績', '検索'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>店舗</li>
+        <li>日時範囲（デフォルト当日）</li>
+        <li>プラン種別</li>
+        <li>会員ID</li>
+      </ul>
+      <div class="alert alert-info">タブで複数条件を並行管理できます。</div>`,
+  },
+  {
+    id: 'k48', cat: 'checkin', type: 'example',
+    q: '【例題】お客様が「今すぐドロップインで利用したい」',
+    keywords: ['ドロップイン', '即日', '利用'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>スタディGO会員登録済みか確認（未登録ならアプリDL＋登録案内）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>QRコードをアプリで読み取る</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>「時間利用」プランを選択→契約（チェックイン）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>1日最大料金（3,300円）を先に請求</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">5</div><div>チェックイン完了画面をスタッフに見せてもらう</div></div>
+      </div>`,
+  },
+  {
+    id: 'k49', cat: 'checkin', type: 'example',
+    q: '【例題】お客様が「何度もチェックイン画面で失敗する」',
+    keywords: ['何度も', '失敗', 'チェックイン'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>エラーメッセージを確認（11パターンのどれか）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>エラーパターンに応じて対応表を参照</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>通信状況（Wi-Fi・モバイルデータ）確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>アプリ再起動・再ログイン</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">5</div><div>解決しなければ國松に連絡</div></div>
+      </div>`,
+  },
+  {
+    id: 'k50', cat: 'checkin', type: 'basic',
+    q: 'チェックアウト後の領収書はどこで取得？',
+    keywords: ['領収書', 'チェックアウト', '利用履歴'],
+    a: `
+      <p>アプリの<strong>ホーム → 利用履歴</strong>から月別にメール送信可能（領収書として活用）。</p>`,
+  },
+  {
+    id: 'k51', cat: 'checkin', type: 'example',
+    q: '【例題】「スマホの電池が切れてチェックアウトできない」',
+    keywords: ['例題', '電池切れ', 'チェックアウト'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>充電コンセントを案内（または貸出モバイルバッテリー）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>充電後にチェックアウト操作</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>超過発生していたら、管理画面から時刻修正可（同日内）</div></div>
+      </div>`,
+  },
+  {
+    id: 'k52', cat: 'checkin', type: 'basic',
+    q: 'QRコードを複数人で使い回しできる？',
+    keywords: ['QR', '複数', '使い回し'],
+    a: `
+      <div class="alert alert-danger">QRは店舗固有。1人1アカウントでチェックイン必須です。</div>
+      <ul style="padding-left:24px;">
+        <li>家族や友人のアカウントで代わりにチェックインは不可</li>
+        <li>それぞれのアプリで自分のQR読取が必要</li>
+      </ul>`,
+  },
+  {
+    id: 'k53', cat: 'checkin', type: 'irregular',
+    q: '「プラン時間外です」と表示される',
+    keywords: ['プラン時間外', 'エラー'],
+    a: `
+      <p>お客様のプランの利用時間帯外。</p>
+      <ul style="padding-left:24px;">
+        <li>契約中プランの時間帯を確認してもらう</li>
+        <li>時間外なら有人時間帯のドロップイン契約を提案</li>
+      </ul>`,
+  },
+  {
+    id: 'k54', cat: 'checkin', type: 'example',
+    q: '【例題】見学予約なしで「入ってみたい」と来店したお客様',
+    keywords: ['例題', '見学', '予約なし'],
+    a: `
+      <p><strong>対応</strong>：</p>
+      <ul style="padding-left:24px;">
+        <li>有人時間帯なら店頭で見学対応可</li>
+        <li>設備・料金を簡単に案内</li>
+        <li>その場でアプリ登録→契約へ進めるケースも</li>
+      </ul>`,
+  },
+  {
+    id: 'k55', cat: 'checkin', type: 'irregular',
+    q: '「未払い金がある」と表示されてチェックインできない',
+    keywords: ['未払い', 'チェックイン不可'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>お客様にメールの決済リンクを確認してもらう</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>未払い分を決済</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>チェックイン可能に</div></div>
+      </div>`,
+  },
+  {
+    id: 'k56', cat: 'checkin', type: 'basic',
+    q: 'チェックイン後すぐにチェックアウトしたい',
+    keywords: ['即チェックアウト', 'キャンセル'],
+    a: `
+      <p>チェックイン完了画面に「チェックアウト」ボタンあり。</p>
+      <ul style="padding-left:24px;">
+        <li>最低1分は計上される</li>
+        <li>ドロップインの場合1分分の料金が発生</li>
+      </ul>`,
+  },
+  {
+    id: 'k57', cat: 'checkin', type: 'example',
+    q: '【例題】「少しだけ席で休みたい」と頼まれた',
+    keywords: ['例題', '休憩', 'ドロップイン'],
+    a: `
+      <p><strong>対応</strong>：</p>
+      <ul style="padding-left:24px;">
+        <li>会員ならチェックインして利用</li>
+        <li>非会員はアプリ登録→ドロップイン契約が必要</li>
+        <li>短時間でも770円/h（最低1時間分）の可能性</li>
+      </ul>`,
+  },
+  {
+    id: 'k58', cat: 'checkin', type: 'basic',
+    q: 'チェックイン完了画面の情報は？',
+    keywords: ['チェックイン', '完了', '表示'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>入店時刻</li>
+        <li>プラン名・利用可能時間</li>
+        <li>その場でチェックアウトボタン</li>
+        <li>店舗からのメッセージ（注意事項等）</li>
+      </ul>`,
+  },
+  {
+    id: 'k59', cat: 'checkin', type: 'irregular',
+    q: 'アプリのQR読取が作動しない・カメラが反応しない',
+    keywords: ['QR', 'カメラ', '読取', '反応しない'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>アプリのカメラ権限を再確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>アプリを再起動</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>「手動入力」から店舗コードでチェックイン</div></div>
+      </div>`,
+  },
+  {
+    id: 'k60', cat: 'checkin', type: 'basic',
+    q: 'ドロップイン初回利用の会話例',
+    keywords: ['ドロップイン', '初回', '会話'],
+    a: `
+      <p><strong>案内例</strong>：</p>
+      <ol style="padding-left:24px;">
+        <li>「初回ですね。スタディGOアプリのダウンロードから始まります」</li>
+        <li>「アプリ会員登録→カード登録→QR読取の流れです」</li>
+        <li>「ドロップインは770円/時間、1日最大3,300円です」</li>
+        <li>「アプリ入会金5,500円が最初に発生します」</li>
+      </ol>`,
+  },
+  {
+    id: 'k61', cat: 'checkin', type: 'example',
+    q: '【例題】「子どもを連れて来た」',
+    keywords: ['例題', '子ども', '同伴'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>最低年齢を確認（スタジオ設定）</li>
+        <li>子どもが会員でない場合の同伴可否を運営確認</li>
+        <li>1人1アカウントが原則</li>
+      </ul>`,
+  },
+  {
+    id: 'k62', cat: 'checkin', type: 'irregular',
+    q: 'チェックアウト時にカード決済失敗した（ドロップイン）',
+    keywords: ['ドロップイン', '決済失敗', 'チェックアウト'],
+    a: `
+      <p>未払い分が残り、次回チェックイン不可になります。</p>
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>メールの決済リンクから支払い</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>カード情報を更新（別カード等）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>支払い完了でサービス再開</div></div>
+      </div>`,
+  },
+  {
+    id: 'k63', cat: 'checkin', type: 'basic',
+    q: 'チェックイン時に「お客様情報を登録してください」と出た',
+    keywords: ['お客様情報', '登録', 'エラー'],
+    a: `
+      <p>お客様情報（氏名・住所・電話等）が未登録の場合にエラー。</p>
+      <ul style="padding-left:24px;">
+        <li>マイページ → プロフィール編集で全項目を埋めてもらう</li>
+        <li>登録完了後にチェックイン</li>
+      </ul>`,
+  },
+  {
+    id: 'k64', cat: 'checkin', type: 'basic',
+    q: 'スタッフ常駐なしの時間帯にお客様が来たら？',
+    keywords: ['無人時間帯', 'お客様', '案内'],
+    a: `
+      <p>無人時間帯は<strong>アプリのみで完結</strong>します。</p>
+      <ul style="padding-left:24px;">
+        <li>月額会員はアプリからQR読取→解錠で入室</li>
+        <li>ドロップインは有人時間帯のみ対応</li>
+      </ul>`,
+  },
+  {
+    id: 'k65', cat: 'checkin', type: 'example',
+    q: '【例題】チェックイン完了画面を見せてもらう時の声かけは？',
+    keywords: ['例題', '声かけ', '確認'],
+    a: `
+      <p><strong>声かけ例</strong>：</p>
+      <ul style="padding-left:24px;">
+        <li>「こんにちは、チェックイン画面をお見せいただけますか？」</li>
+        <li>「念のため画面確認お願いします」</li>
+      </ul>
+      <div class="alert alert-info">丁寧な口調で、業務確認の一環であることを伝える。</div>`,
+  },
+  {
+    id: 'k66', cat: 'checkin', type: 'irregular',
+    q: 'チェックアウト後の精算画面で料金が高いと言われた',
+    keywords: ['精算', '高い', '料金'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>利用時間×単価の内訳を一緒に確認</li>
+        <li>1日上限（3,300円）を超えないことを説明</li>
+        <li>時間外利用（770円/h）分があれば説明</li>
+        <li>不具合疑いなら運営に相談</li>
+      </ul>`,
+  },
+  {
+    id: 'k67', cat: 'checkin', type: 'example',
+    q: '【例題】お客様「複数人でシェアして使えない？」',
+    keywords: ['例題', 'シェア', '複数人'],
+    a: `
+      <div class="alert alert-danger">1契約につき1人のみ。シェア利用は禁止です。</div>
+      <ul style="padding-left:24px;">
+        <li>ご家族・ご友人も個別に契約してもらう</li>
+      </ul>`,
+  },
+  {
+    id: 'k68', cat: 'checkin', type: 'basic',
+    q: 'チェックインしないでも施設に入れる場合がある？',
+    keywords: ['チェックイン', '不要', '入室'],
+    a: `
+      <p>原則不可。ラウンジはオートロックでアプリ経由の解錠のみ。</p>
+      <div class="alert alert-info">BPスタジオのワークスペースのみ、有人時間帯はオートロックOFF運用。</div>`,
+  },
+  {
+    id: 'k69', cat: 'checkin', type: 'irregular',
+    q: 'チェックインしたのにすぐ切れてしまった',
+    keywords: ['切れる', 'チェックイン', '不具合'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>管理画面のチェックイン実績で状態確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>通信状況（Wi-Fi等）を確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>再度QR読取で再チェックイン</div></div>
+      </div>`,
+  },
+  {
+    id: 'k70', cat: 'checkin', type: 'basic',
+    q: 'チェックインが集中する時間帯の対応は？',
+    keywords: ['集中', 'ピーク', '時間帯'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>朝・夜のピーク時は列整理</li>
+        <li>QR読取は時差発生しても並んで待つ案内</li>
+        <li>1人ずつ落ち着いて対応</li>
+      </ul>`,
+  },
+
+  // ===== 🔄 プラン変更・休会・解約 =====
+  {
+    id: 'ch1', cat: 'change', type: 'basic',
+    q: 'プラン変更・休会・解約の共通ルール「10日ルール」とは？',
+    keywords: ['10日ルール', '締切', '21時', '共通'],
+    a: `
+      <p>すべての契約変更申請は<strong>毎月10日21時</strong>が締切です。</p>
+      <table class="data-table">
+        <tr><th>申請日</th><th>反映タイミング</th></tr>
+        <tr><td>1〜10日 21:00まで</td><td><strong>今月末</strong>で終了（翌月1日から適用）</td></tr>
+        <tr><td>10日 21:01〜月末</td><td><strong>翌月末</strong>で終了（翌々月1日から適用）</td></tr>
+      </table>
+      <div class="alert alert-danger">
+        <strong>プラン変更・休会・解約はすべて月1回・申請後の取り消し不可！</strong>入会時にも必ず説明すること。
+      </div>
+      <p><strong>プラン自動更新</strong>：毎月1日に1ヶ月単位で更新。当月10日までに解約申請がなければ、15日に翌月分が請求されます。</p>
+      <div class="alert alert-info">例: 8月10日21時までに解約申請 → 8月末で解約完了。8月10日21時以降〜31日 → 9月末で解約完了。</div>`,
+  },
+  {
+    id: 'ch2', cat: 'change', type: 'basic',
+    q: 'プラン変更の手順と料金扱いは？',
+    keywords: ['プラン変更', '差額', '日割り'],
+    a: `
+      <p><strong>お客様自身のアプリから申請</strong>します。</p>
+      <ul style="padding-left:24px;">
+        <li>アップグレード: 差額を追加決済</li>
+        <li>ダウングレード: 差額返金 or 次回請求から減額</li>
+        <li>月の途中の変更は日割り計算</li>
+      </ul>
+      <div class="alert alert-warn">
+        <strong>制約</strong><br>
+        ・チェックイン中は変更不可（要チェックアウト）<br>
+        ・支払い失敗中は変更不可（カード情報更新が先）<br>
+        ・ドロップインは変更対象外
+      </div>`,
+  },
+  {
+    id: 'ch3', cat: 'change', type: 'basic',
+    q: '休会のライフサイクルは？',
+    keywords: ['休会', 'ライフサイクル', '流れ'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>アプリで休会申請 → 休会予約状態（開始日まで普通に使える）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>開始日到達 → 休会中（チェックイン不可、課金停止）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>満了日2週間前 → 予告メール送信</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>満了日到達 → 自動的に解約扱い（契約終了）</div></div>
+      </div>
+      <div class="kodack-tip">
+        <div class="kodack-tip-img"></div>
+        <div class="kodack-tip-body">
+          <div class="kodack-tip-label">🦆 コダック先生のひとこと</div>
+          <div class="kodack-tip-text">休会中の延長は基本できないから、復帰したい人は「復帰プラン」機能で戻ってね。</div>
+        </div>
+      </div>`,
+  },
+  {
+    id: 'ch4', cat: 'change', type: 'basic',
+    q: '解約はどうやって申請する？',
+    keywords: ['解約', '申請', 'アンケート'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>アプリで「解約申請」</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>解約アンケート回答（解約理由等）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>早期解約料があれば表示 → 承諾＋決済</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>解約完了日が確定（10日ルールで月末 or 翌月末）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">5</div><div>解約完了日までは通常利用可、日付到達で契約終了</div></div>
+      </div>`,
+  },
+  {
+    id: 'ch5', cat: 'change', type: 'basic',
+    q: '早期解約料はどんなときに発生する？',
+    keywords: ['早期解約料', '割引クーポン', '短期'],
+    a: `
+      <p>割引クーポンを使って契約した方が<strong>短期間で解約</strong>する場合に発生します。</p>
+      <ul style="padding-left:24px;">
+        <li>例: 初月半額クーポン使用で3ヶ月以内に解約 → 割引分を追徴</li>
+        <li>システムが自動計算 → 解約画面でお客様に表示</li>
+        <li>承諾＋決済完了で解約確定</li>
+      </ul>`,
+  },
+  {
+    id: 'ch6', cat: 'change', type: 'basic',
+    q: '解約できないケースは？',
+    keywords: ['解約できない', 'チェックイン中', '支払い失敗'],
+    a: `
+      <table class="data-table">
+        <tr><th>ケース</th><th>対応</th></tr>
+        <tr><td>チェックイン中</td><td>まずチェックアウト</td></tr>
+        <tr><td>支払い失敗中</td><td>カード情報最新化→未払い分決済</td></tr>
+        <tr><td>Stripe処理中</td><td>少し待って再試行</td></tr>
+        <tr><td>二重申請</td><td>申請内容を再確認</td></tr>
+      </table>`,
+  },
+  {
+    id: 'ch7', cat: 'change', type: 'basic',
+    q: '解約とアカウント削除の違いは？',
+    keywords: ['解約', 'アカウント削除', '違い'],
+    a: `
+      <table class="data-table">
+        <tr><th>項目</th><th>解約</th><th>アカウント削除</th></tr>
+        <tr><td>契約</td><td>終了</td><td>全契約強制終了</td></tr>
+        <tr><td>データ</td><td>残る（再契約可）</td><td>個人情報削除</td></tr>
+        <tr><td>ログイン</td><td>可能（マイページ閲覧）</td><td>不可</td></tr>
+        <tr><td>再利用</td><td>同メールで再契約OK</td><td>新規登録必要</td></tr>
+      </table>
+      <div class="alert alert-warn">アカウント削除はお客様から明示的な依頼があった場合のみ。通常は「解約」を案内してください。</div>`,
+  },
+  {
+    id: 'ch8', cat: 'change', type: 'basic',
+    q: '休会中のお客様が復帰したい場合は？',
+    keywords: ['復帰', '休会', '再開'],
+    a: `
+      <p>アプリの<strong>マイページ → 休会中の契約 → 「復帰」ボタン</strong>から復帰プランを選択して再開できます。</p>
+      <div class="alert alert-info">休会満了日が迫っている場合は、自動解約前に復帰するよう案内してください。</div>`,
+  },
+  {
+    id: 'ch9', cat: 'change', type: 'example',
+    q: '【例題】お客様が10日を過ぎた11日に休会申請した',
+    keywords: ['例題', '10日', '休会', '過ぎた'],
+    a: `
+      <p><strong>対応</strong>：</p>
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>11日申請なので<strong>翌月末から休会</strong>になることを伝える</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>申請後の取り消しはできない点を必ず伝える</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>翌月末まで通常通り利用可能な旨を案内</div></div>
+      </div>
+      <div class="alert alert-danger">スタッフ側での日付操作はできません。システムのルール通りに適用されます。</div>`,
+  },
+  {
+    id: 'ch10', cat: 'change', type: 'example',
+    q: '【例題】お客様が解約したいが早期解約料を払いたくないと言っている',
+    keywords: ['例題', '早期解約料', '払いたくない'],
+    a: `
+      <p><strong>対応</strong>：</p>
+      <ul style="padding-left:24px;">
+        <li>早期解約料は割引クーポン利用の対価なので、免除は基本不可</li>
+        <li>休会にすればその間は課金停止（延命策として提案）</li>
+        <li>早期解約料発生しないタイミング（クーポン適用期間終了後）まで待つ選択肢を案内</li>
+      </ul>
+      <div class="alert alert-warn">独断で免除・減額はしないでください。判断に迷ったら國松に相談。</div>`,
+  },
+  {
+    id: 'ch11', cat: 'change', type: 'basic',
+    q: 'アップグレードの料金精算は？',
+    keywords: ['アップグレード', '差額', '日割り'],
+    a: `
+      <p>アップグレード時は<strong>差額を追加決済</strong>します。</p>
+      <ul style="padding-left:24px;">
+        <li>月の途中で変更: 残り日数分の差額を日割り決済</li>
+        <li>翌月1日適用: 翌月の請求から新プラン金額</li>
+      </ul>`,
+  },
+  {
+    id: 'ch12', cat: 'change', type: 'basic',
+    q: 'ダウングレードの料金精算は？',
+    keywords: ['ダウングレード', '差額', '返金'],
+    a: `
+      <p>ダウングレード時は<strong>差額返金 or 次回請求から減額</strong>。</p>
+      <ul style="padding-left:24px;">
+        <li>返金方法は設定による</li>
+        <li>次回15日の請求で減額されるケースが多い</li>
+      </ul>`,
+  },
+  {
+    id: 'ch14', cat: 'change', type: 'basic',
+    q: '日割り計算式（プラン変更時）は？',
+    keywords: ['日割り', '計算式', 'プラン変更'],
+    a: `
+      <p><strong>初月料金 = 月額 ×（開始日〜月末日数）÷ 月の総日数</strong></p>
+      <div class="alert alert-info">例: 5月15日開始・月額10,000円 → 10000 × 17/31 ≈ 5,484円</div>`,
+  },
+  {
+    id: 'ch15', cat: 'change', type: 'basic',
+    q: 'ドロップインはプラン変更できる？',
+    keywords: ['ドロップイン', 'プラン変更'],
+    a: `
+      <div class="alert alert-warn">ドロップインは<strong>プラン変更の対象外</strong>です（そもそも固定契約ではないため）。</div>
+      <p>新しいプランを契約したい場合は、月額プランを新規契約してください。</p>`,
+  },
+  {
+    id: 'ch16', cat: 'change', type: 'basic',
+    q: 'プラン変更後のクーポン・オプションはどうなる？',
+    keywords: ['プラン変更', 'クーポン', 'オプション', '引継ぎ'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>クーポンは新契約へ<strong>引き継がれる</strong></li>
+        <li>オプション契約も新契約へ<strong>引き継がれる</strong></li>
+        <li>クーポン残期間・割引率はそのまま</li>
+      </ul>`,
+  },
+  {
+    id: 'ch17', cat: 'change', type: 'basic',
+    q: '休会の開始日はいつから？',
+    keywords: ['休会', '開始日', '申請'],
+    a: `
+      <p>お客様がアプリで<strong>開始日を選択</strong>して申請。</p>
+      <ul style="padding-left:24px;">
+        <li>開始日までは通常通り利用可能（休会予約状態）</li>
+        <li>開始日到達でチェックイン不可になる（休会中）</li>
+        <li>10日ルールで申請可能日が制限される</li>
+      </ul>`,
+  },
+  {
+    id: 'ch18', cat: 'change', type: 'basic',
+    q: '休会期間の上限は？',
+    keywords: ['休会期間', '上限'],
+    a: `
+      <p>店舗設定の<strong>休会最大期間</strong>（月単位）で決定。</p>
+      <ul style="padding-left:24px;">
+        <li>新宿スタジオの設定値は管理画面で確認</li>
+        <li>満了日 = 開始日 + 休会最大期間</li>
+      </ul>`,
+  },
+  {
+    id: 'ch19', cat: 'change', type: 'basic',
+    q: '休会満了が近づくと何が起きる？',
+    keywords: ['休会', '満了', '予告', '2週間前'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>満了日の<strong>2週間前</strong>にお客様に予告メール送信</li>
+        <li>満了日到達で自動解約扱い</li>
+        <li>自動解約メール送信</li>
+      </ul>
+      <div class="kodack-tip">
+        <div class="kodack-tip-img"></div>
+        <div class="kodack-tip-body">
+          <div class="kodack-tip-label">🦆 コダック先生のひとこと</div>
+          <div class="kodack-tip-text">復帰したい人は予告メールが来た時点で「復帰」ボタンから戻ってね。</div>
+        </div>
+      </div>`,
+  },
+  {
+    id: 'ch20', cat: 'change', type: 'basic',
+    q: '休会中のロッカーオプションはどうなる？',
+    keywords: ['休会', 'ロッカー', 'オプション'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>休会中はロッカーオプションも課金停止</li>
+        <li>ただし荷物は撤去推奨（店舗規則による）</li>
+        <li>鍵も返却するのが安全</li>
+      </ul>
+      <div class="alert alert-info">休会予定者がダッシュボードに表示されたら、ロッカー契約の有無をチェック。</div>`,
+  },
+  {
+    id: 'ch22', cat: 'change', type: 'basic',
+    q: '休会と解約の違いまとめ',
+    keywords: ['休会', '解約', '違い'],
+    a: `
+      <table class="data-table">
+        <tr><th>項目</th><th>休会</th><th>解約</th></tr>
+        <tr><td>月額課金</td><td>開始日まで・以降停止</td><td>解約日まで・以降停止</td></tr>
+        <tr><td>チェックイン</td><td>開始日まで可・以降不可</td><td>解約日まで可</td></tr>
+        <tr><td>復帰</td><td>「復帰」機能で可能</td><td>再契約扱い</td></tr>
+        <tr><td>自動終了</td><td>満了日に自動解約</td><td>—</td></tr>
+      </table>`,
+  },
+  {
+    id: 'ch23', cat: 'change', type: 'basic',
+    q: '休会ができない店舗はある？',
+    keywords: ['休会', 'できない', '設定'],
+    a: `
+      <p>店舗で休会機能が<strong>有効化されている場合のみ</strong>休会可能。</p>
+      <ul style="padding-left:24px;">
+        <li>新宿スタジオで休会可能かは設定確認</li>
+        <li>0なら休会メニューが表示されない</li>
+      </ul>`,
+  },
+  {
+    id: 'ch24', cat: 'change', type: 'basic',
+    q: '休会期間の延長はできる？',
+    keywords: ['休会', '延長', '再申請'],
+    a: `
+      <div class="alert alert-danger">休会期間の延長は<strong>基本的に不可</strong>です。</div>
+      <ul style="padding-left:24px;">
+        <li>再申請も不可の場合が多い</li>
+        <li>満了前に一度「復帰」→ 再度休会申請が必要なことも</li>
+      </ul>`,
+  },
+  {
+    id: 'ch25', cat: 'change', type: 'basic',
+    q: '解約の3種類は？',
+    keywords: ['解約', '種類', '自動', '強制'],
+    a: `
+      <table class="data-table">
+        <tr><th>種類</th><th>トリガー</th><th>契約終了日</th></tr>
+        <tr><td>ユーザー申請解約</td><td>アプリから申請</td><td>10日ルールで判定</td></tr>
+        <tr><td>休会期限満了</td><td>休会満了日到達</td><td>当日</td></tr>
+        <tr><td>決済失敗強制解約</td><td>複数回リトライ失敗</td><td>管理者手動解約</td></tr>
+      </table>`,
+  },
+  {
+    id: 'ch27', cat: 'change', type: 'basic',
+    q: '解約後の契約・アカウントの状態は？',
+    keywords: ['解約後', '状態', '再契約'],
+    a: `
+      <table class="data-table">
+        <tr><th>項目</th><th>値</th></tr>
+        <tr><td>契約状態</td><td>無効</td></tr>
+        <tr><td>解約完了日</td><td>通常月末</td></tr>
+        <tr><td>決済</td><td>停止済</td></tr>
+        <tr><td>アカウント</td><td>残る（再契約可能）</td></tr>
+        <tr><td>オプション契約</td><td>同日に連鎖解約</td></tr>
+      </table>`,
+  },
+  {
+    id: 'ch28', cat: 'change', type: 'basic',
+    q: '解約アンケートとは？',
+    keywords: ['解約', 'アンケート'],
+    a: `
+      <p>解約申請時にお客様が回答する解約理由・改善要望のアンケート。</p>
+      <ul style="padding-left:24px;">
+        <li>解約画面で質問に回答</li>
+        <li>運営側で分析・改善施策に活用</li>
+      </ul>`,
+  },
+  {
+    id: 'ch29', cat: 'change', type: 'basic',
+    q: '解約後の再契約はどう案内する？',
+    keywords: ['再契約', '解約後', '同メール'],
+    a: `
+      <p>同じメールアドレスで<strong>再契約可能</strong>です。</p>
+      <ul style="padding-left:24px;">
+        <li>アカウント情報（連絡先等）は残っている</li>
+        <li>アプリから新規プラン契約すれば再開</li>
+        <li>過去の利用履歴も保持されている</li>
+      </ul>`,
+  },
+  {
+    id: 'ch30', cat: 'change', type: 'basic',
+    q: '解約完了日までのサービスは？',
+    keywords: ['解約完了日', 'サービス', '利用可'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>解約完了日までは<strong>通常通り利用可能</strong></li>
+        <li>解約完了日で契約終了・課金停止</li>
+        <li>当日はチェックイン可能（営業時間内）</li>
+      </ul>`,
+  },
+  {
+    id: 'ch31', cat: 'change', type: 'basic',
+    q: '決済失敗による強制解約の条件は？',
+    keywords: ['強制解約', '決済失敗', 'リトライ'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>Stripe自動リトライ（最大3回）すべて失敗</li>
+        <li>お客様がPayment Linkから未払い決済せず長期放置</li>
+        <li>運営判断で管理者手動解約（管理画面から無効化）</li>
+      </ul>`,
+  },
+  {
+    id: 'ch32', cat: 'change', type: 'basic',
+    q: 'プラン変更時のチェックイン中制限の理由は？',
+    keywords: ['チェックイン中', 'プラン変更', '不可'],
+    a: `
+      <p>利用中（チェックイン中）は契約の整合性が取れないため不可。</p>
+      <ul style="padding-left:24px;">
+        <li>利用中のプランを確定させてから変更する必要</li>
+        <li>チェックアウト後に再度申請</li>
+      </ul>`,
+  },
+  {
+    id: 'ch33', cat: 'change', type: 'irregular',
+    q: '「プラン変更したら料金が高くなる」お客様のクレーム対応',
+    keywords: ['プラン変更', '料金', 'クレーム'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>プラン時間帯が広いプランほど料金高</li>
+        <li>差額は日割り・翌月反映のルールを説明</li>
+        <li>ダウングレードは翌月以降から減額されることを案内</li>
+      </ul>
+      <div class="alert alert-warn">独断で返金・差額調整はしないでください。</div>`,
+  },
+  {
+    id: 'ch34', cat: 'change', type: 'basic',
+    q: '支払い失敗中はプラン変更・解約できる？',
+    keywords: ['支払い失敗', 'プラン変更', '解約', '不可'],
+    a: `
+      <div class="alert alert-danger">支払い失敗中（支払い失敗中）は<strong>プラン変更・解約ができません</strong>。</div>
+      <p>対応順序：</p>
+      <ol style="padding-left:24px;">
+        <li>カード情報を更新</li>
+        <li>未払い分を決済</li>
+        <li>支払い失敗解除になる</li>
+        <li>プラン変更・解約が可能に</li>
+      </ol>`,
+  },
+  {
+    id: 'ch35', cat: 'change', type: 'basic',
+    q: 'プラン変更の申請締切時刻は？',
+    keywords: ['締切', '時刻', '21時'],
+    a: `
+      <p>プラン変更・休会・解約すべての申請締切は<strong>毎月10日21:00</strong>。</p>
+      <ul style="padding-left:24px;">
+        <li>10日21:00までの申請 → 今月末で終了・翌月1日から適用</li>
+        <li>10日21:01以降 → 翌月末で終了・翌々月1日から適用</li>
+      </ul>`,
+  },
+  {
+    id: 'ch36', cat: 'change', type: 'basic',
+    q: '休会後の「復帰プラン」選択肢は？',
+    keywords: ['復帰', 'プラン', '選択肢'],
+    a: `
+      <p>復帰時は<strong>新規プラン選択画面</strong>が表示されます。</p>
+      <ul style="padding-left:24px;">
+        <li>休会前と同じプランも再選択可</li>
+        <li>異なるプランへの変更もその場で可能</li>
+        <li>復帰日は即日または翌月など選択</li>
+      </ul>`,
+  },
+  {
+    id: 'ch37', cat: 'change', type: 'irregular',
+    q: 'お客様が「解約申請を取り消したい」',
+    keywords: ['解約', '取消', '申請取消'],
+    a: `
+      <div class="alert alert-danger">解約申請の取り消しは<strong>原則不可</strong>です。</div>
+      <ul style="padding-left:24px;">
+        <li>例外対応が必要な場合は運営に相談（DB手動更新）</li>
+        <li>通常は解約完了後の再契約を案内</li>
+      </ul>`,
+  },
+  {
+    id: 'ch38', cat: 'change', type: 'basic',
+    q: '解約完了通知メールの内容は？',
+    keywords: ['解約', '完了', 'メール'],
+    a: `
+      <p>解約が確定するとお客様に完了通知メールが送信されます。</p>
+      <ul style="padding-left:24px;">
+        <li>解約完了日</li>
+        <li>早期解約料の有無・金額</li>
+        <li>再契約に関する案内</li>
+      </ul>`,
+  },
+  {
+    id: 'ch40', cat: 'change', type: 'example',
+    q: '【例題】お客様が「休会したけど解約にしたい」',
+    keywords: ['休会', '解約', '変更', '例題'],
+    a: `
+      <p><strong>対応</strong>：</p>
+      <ul style="padding-left:24px;">
+        <li>休会中のまま満了日を迎えれば<strong>自動解約</strong>になる</li>
+        <li>即時解約したい場合：復帰→解約申請の2段階が必要</li>
+        <li>復帰した場合、復帰日までの料金が発生する可能性あり</li>
+      </ul>
+      <div class="alert alert-info">お客様のコスト・タイミングを比較して案内。</div>`,
+  },
+  {
+    id: 'ch41', cat: 'change', type: 'example',
+    q: '【例題】お客様が「今月末の10日を過ぎていたので解約申請したら翌月末になった」',
+    keywords: ['解約', '翌月末', '10日', '例題'],
+    a: `
+      <p><strong>対応</strong>：</p>
+      <ul style="padding-left:24px;">
+        <li>10日21時を過ぎた申請は翌月末終了になるルールを再説明</li>
+        <li>10日21時までの申請なら当月末終了</li>
+        <li>以降も通常通り利用可能（解約日まで）</li>
+      </ul>
+      <div class="alert alert-danger">独断での解約日変更は不可。ルール通りに適用。</div>`,
+  },
+  {
+    id: 'ch42', cat: 'change', type: 'basic',
+    q: 'プラン変更申請が承認制の店舗の場合は？',
+    keywords: ['プラン変更', '承認制', '申込'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>承認制店舗では申請後に「月額契約申込一覧」に表示</li>
+        <li>本部が承認／却下</li>
+        <li>承認で新プランに切替</li>
+      </ul>`,
+  },
+  {
+    id: 'ch44', cat: 'change', type: 'basic',
+    q: '支払い失敗中の解約はどう進める？',
+    keywords: ['支払い失敗', '解約', '未払い'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>お客様にカード情報の更新を依頼</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>Payment Linkから未払い分を決済してもらう</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>支払い失敗解除になったら解約申請可能に</div></div>
+      </div>`,
+  },
+  {
+    id: 'ch45', cat: 'change', type: 'basic',
+    q: '連絡先・支払い方法の変更タイミングは？',
+    keywords: ['連絡先', '支払い方法', '変更', 'タイミング'],
+    a: `
+      <p>いつでも変更可能です（契約中でも）。</p>
+      <ul style="padding-left:24px;">
+        <li>メールアドレス変更: 再認証が必要</li>
+        <li>電話番号変更: マイページから即時</li>
+        <li>カード変更: 新カード追加→古いカード削除</li>
+      </ul>`,
+  },
+  {
+    id: 'ch47', cat: 'change', type: 'irregular',
+    q: 'オプション解約予告期間中の取り扱いは？',
+    keywords: ['オプション', '解約予告', '予告期間'],
+    a: `
+      <p>店舗設定で解約予告期間が設定されている場合：</p>
+      <ul style="padding-left:24px;">
+        <li>予告期間分の料金は請求される</li>
+        <li>即時解約はできない</li>
+      </ul>
+      <div class="alert alert-info">新宿のロッカーオプションに予告期間があるかは店舗管理で確認。</div>`,
+  },
+  {
+    id: 'ch48', cat: 'change', type: 'basic',
+    q: '初月無料クーポンで短期解約した場合の早期解約料は？',
+    keywords: ['初月無料', '短期解約', '早期解約料'],
+    a: `
+      <p>クーポン種類と解約タイミングにより、<strong>割引分を追徴</strong>されます。</p>
+      <ul style="padding-left:24px;">
+        <li>例: 初月無料で翌月解約 → 初月分の料金を追徴</li>
+        <li>システムが自動計算 → 解約画面でお客様に表示・承諾</li>
+      </ul>`,
+  },
+  {
+    id: 'ch49', cat: 'change', type: 'basic',
+    q: 'プラン変更のできるタイミングまとめ',
+    keywords: ['プラン変更', 'タイミング', 'できる'],
+    a: `
+      <table class="data-table">
+        <tr><th>条件</th><th>プラン変更可否</th></tr>
+        <tr><td>通常・契約有効</td><td>○</td></tr>
+        <tr><td>チェックイン中</td><td>×（チェックアウト必須）</td></tr>
+        <tr><td>支払い失敗中</td><td>×（未払い解消が先）</td></tr>
+        <tr><td>解約予約中</td><td>×</td></tr>
+        <tr><td>休会中</td><td>×</td></tr>
+      </table>`,
+  },
+  {
+    id: 'ch50', cat: 'change', type: 'example',
+    q: '【例題】お客様が「入会したばかりだけど気が変わって解約したい」',
+    keywords: ['入会直後', '解約', '例題', '最低継続'],
+    a: `
+      <p><strong>対応</strong>：</p>
+      <ul style="padding-left:24px;">
+        <li>最低継続期間は<strong>利用開始月＋翌月の2ヶ月</strong></li>
+        <li>早期解約料は原則なし（クーポン未適用の場合）</li>
+        <li>10日21時までの申請で当月末、11日以降なら翌月末まで課金</li>
+      </ul>
+      <div class="alert alert-warn">10日以降の申請なら翌月末まで料金発生。10日までに解約申請するよう案内。</div>`,
+  },
+  {
+    id: 'ch51', cat: 'change', type: 'example',
+    q: '【例題】お客様「3ヶ月だけ使って辞めたい」',
+    keywords: ['例題', '短期', '3ヶ月'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>最低継続2ヶ月＋10日ルールで実際は2-3ヶ月分の課金になる</li>
+        <li>割引クーポン利用時は短期解約で<strong>早期解約料</strong>が発生する可能性</li>
+        <li>具体的な退会タイミングは契約開始日・申請日で決まる</li>
+      </ul>`,
+  },
+  {
+    id: 'ch52', cat: 'change', type: 'example',
+    q: '【例題】「引っ越しで他店舗に移りたい」',
+    keywords: ['例題', '引っ越し', '転籍'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>新宿を解約→他勉強カフェ店舗で新規契約</li>
+        <li>他店舗がスタディGO対応なら同アカウントで契約可</li>
+        <li>転籍時にクーポン適用があるか店舗ごとに確認</li>
+      </ul>`,
+  },
+  {
+    id: 'ch53', cat: 'change', type: 'example',
+    q: '【例題】「使わない月が出そう、休会にするか解約にするか迷う」',
+    keywords: ['例題', '休会', '解約', '迷う'],
+    a: `
+      <table class="data-table">
+        <tr><th>ケース</th><th>おすすめ</th></tr>
+        <tr><td>数ヶ月後に戻る予定</td><td>休会</td></tr>
+        <tr><td>しばらく戻らない</td><td>解約→再契約</td></tr>
+        <tr><td>完全にやめる</td><td>解約</td></tr>
+      </table>`,
+  },
+  {
+    id: 'ch54', cat: 'change', type: 'basic',
+    q: '休会申請時のオプションの扱いは？',
+    keywords: ['休会', 'オプション', 'ロッカー'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>休会中はオプションも課金停止</li>
+        <li>ロッカーは荷物撤去・鍵返却を推奨</li>
+        <li>復帰時にオプションも再開できる場合あり</li>
+      </ul>`,
+  },
+  {
+    id: 'ch55', cat: 'change', type: 'example',
+    q: '【例題】「プラン変更したいけど、日程がわからない」',
+    keywords: ['例題', 'プラン変更', '日程'],
+    a: `
+      <p><strong>対応</strong>：</p>
+      <ul style="padding-left:24px;">
+        <li>毎月10日21時を目安に案内</li>
+        <li>それまでなら当月中に変更、以降は翌月から</li>
+        <li>例: 9/5申請 → 9月末で旧プラン終了、10/1から新プラン</li>
+      </ul>`,
+  },
+  {
+    id: 'ch56', cat: 'change', type: 'irregular',
+    q: '「プランをダウングレードしたけど返金がまだ来ない」',
+    keywords: ['ダウングレード', '返金', '遅延'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>次回15日の請求時に減額形式で反映される場合が多い</li>
+        <li>即時返金ではないため数日〜数週間かかる</li>
+        <li>1ヶ月以上遅延なら運営に問合せ</li>
+      </ul>`,
+  },
+  {
+    id: 'ch57', cat: 'change', type: 'basic',
+    q: '解約アンケートの回答は必須？',
+    keywords: ['アンケート', '必須', '解約'],
+    a: `
+      <p>解約フローの一部として表示されます。回答は基本的に必須です。</p>
+      <div class="alert alert-info">改善施策に使われる情報なので、率直な回答を促してください。</div>`,
+  },
+  {
+    id: 'ch58', cat: 'change', type: 'basic',
+    q: '解約後に会員番号は再利用される？',
+    keywords: ['会員番号', '再利用', '解約後'],
+    a: `
+      <p>基本的に<strong>番号は永続</strong>で、再契約時も同じ会員番号が使われます。</p>
+      <ul style="padding-left:24px;">
+        <li>勉強カフェ会員番号はアカウント紐付けで一意</li>
+        <li>再契約時に番号が変わらないので過去利用履歴との連携が容易</li>
+      </ul>`,
+  },
+  {
+    id: 'ch59', cat: 'change', type: 'example',
+    q: '【例題】「休会からの復帰で前と同じプランが選べない」',
+    keywords: ['例題', '復帰', 'プラン廃止'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>プランが廃止・改定されている可能性</li>
+        <li>現行プランから最も近いものを案内</li>
+        <li>料金・時間帯を比較して選んでもらう</li>
+      </ul>`,
+  },
+  {
+    id: 'ch60', cat: 'change', type: 'irregular',
+    q: 'お客様「誤って休会を選択してしまった」',
+    keywords: ['休会', '誤選択', '取消'],
+    a: `
+      <div class="alert alert-danger">休会申請の取り消しは原則不可。</div>
+      <p>対応選択肢：</p>
+      <ul style="padding-left:24px;">
+        <li>開始日まで普通に使える（休会予約中）</li>
+        <li>休会中に「復帰」機能で戻れる（復帰プラン選択）</li>
+      </ul>`,
+  },
+
+  // ===== 💻 管理画面 =====
+  {
+    id: 'ad1', cat: 'admin', type: 'basic',
+    q: '管理画面のログイン方法は？',
+    keywords: ['管理画面', 'ログイン', 'URL', '2段階認証'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>URL: <strong>/alliance/login</strong></li>
+        <li>メールアドレス + パスワードでログイン</li>
+        <li>2段階認証: メールに届く<strong>6桁の番号</strong>を入力</li>
+      </ul>
+      <table class="data-table">
+        <tr><th>スタジオ</th><th>メール</th></tr>
+        <tr><td>新宿</td><td>benkyocafe.shinjuku@gmail.com</td></tr>
+        <tr><td>BP</td><td>benkyo-cafe.sbp@b-pt.jp</td></tr>
+      </table>`,
+  },
+  {
+    id: 'ad2', cat: 'admin', type: 'basic',
+    q: '管理画面の12メニュー一覧は？',
+    keywords: ['メニュー', '12', '管理画面', '一覧'],
+    a: `
+      <table class="data-table">
+        <tr><th>#</th><th>メニュー</th><th>主な用途</th></tr>
+        <tr><td>1</td><td>お知らせ</td><td>運営からの重要通知</td></tr>
+        <tr><td>2</td><td>ダッシュボード</td><td>対応案件を優先度付き表示</td></tr>
+        <tr><td>3</td><td>来店予約一覧</td><td>見学予約の確認・確定</td></tr>
+        <tr><td>4</td><td>月額契約申込一覧</td><td>月額契約の承認／却下（本部のみ）</td></tr>
+        <tr><td>5</td><td>チェックイン実績</td><td>入退店履歴・時刻修正</td></tr>
+        <tr><td>6</td><td>鍵操作履歴</td><td>Akerun解錠ログ</td></tr>
+        <tr><td>7</td><td>会員管理</td><td>会員情報・メモ編集・CSVエクスポート</td></tr>
+        <tr><td>8</td><td>店舗管理</td><td>店舗情報・価格・ルール</td></tr>
+        <tr><td>9</td><td>支払い実績確認</td><td>自社売上確認（本部のみ）</td></tr>
+        <tr><td>10</td><td>営業日・営業時間管理</td><td>営業スケジュール設定</td></tr>
+        <tr><td>11</td><td>加盟法人情報</td><td>登録情報参照</td></tr>
+        <tr><td>12</td><td>アカウント管理</td><td>スタッフアカウント管理（本部のみ）</td></tr>
+      </table>`,
+  },
+  {
+    id: 'ad3', cat: 'admin', type: 'basic',
+    q: 'ダッシュボードの5つの通知カテゴリは？',
+    keywords: ['ダッシュボード', '通知', '5カテゴリ'],
+    a: `
+      <table class="data-table">
+        <tr><th>カテゴリ</th><th>対応内容</th></tr>
+        <tr><td>支払いに失敗したお客様</td><td>決済エラー発生 → マネージャーに報告</td></tr>
+        <tr><td>未返信メッセージがあるお客様</td><td>「メッセージへ」からやり取り。<strong>必ずその日のうちに返信</strong></td></tr>
+        <tr><td>新規契約したお客様</td><td>会員番号メールに来店案内あり → お客様からの返信を待つ</td></tr>
+        <tr><td>解約予定のお客様</td><td><strong>店頭来店</strong>してもらい、フォーム入力＋スタッフ作業必要</td></tr>
+        <tr><td>休会予定のお客様</td><td>ロッカー契約があれば<strong>荷物撤去・鍵返却</strong>の確認</td></tr>
+      </table>
+      <div class="alert alert-danger">
+        <strong>「確認済み」ボタンは絶対に押さないでください！</strong><br>
+        スタッフは押さず、マネージャー専用操作。押すと案件がダッシュボードから消え、未対応のまま見落とす原因になります。
+      </div>`,
+  },
+  {
+    id: 'ad4', cat: 'admin', type: 'basic',
+    q: 'チェックイン実績で利用時間を手修正するには？',
+    keywords: ['チェックイン実績', '時刻修正', '手修正'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>管理画面「チェックイン実績」を開く</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>店舗・日時・プラン・会員IDでフィルタ</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>該当行をクリック → 編集ダイアログ</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>利用時間を実際の時刻に修正 → 保存</div></div>
+      </div>
+      <div class="alert alert-info">料金が変わる場合は自動で再計算されます。</div>`,
+  },
+  {
+    id: 'ad5', cat: 'admin', type: 'basic',
+    q: '鍵操作履歴はどんなときに見る？',
+    keywords: ['鍵操作履歴', 'Akerun', '監査'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>「鍵が開かない」トラブルのログ確認</li>
+        <li>無人営業時間帯のアクセス監視</li>
+        <li>不審な解錠パターンの発見</li>
+      </ul>
+      <p>表示カラム: 操作日時 / 会員名 / 店舗 / ドア名 / プラン</p>
+      <div class="alert alert-warn">自動収集のため<strong>手動修正不可</strong>。CSVエクスポート可。</div>`,
+  },
+  {
+    id: 'ad6', cat: 'admin', type: 'basic',
+    q: '会員管理で会員情報を探す方法は？',
+    keywords: ['会員管理', '検索', 'フィルタ'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>キーワード検索（ID・氏名）</li>
+        <li>性別・来店頻度・未読メッセージでフィルタ</li>
+        <li>来店日時範囲で検索</li>
+        <li>行クリックで詳細 → メモ・職業・勉強内容を編集可</li>
+        <li>CSVエクスポート（全21項目）</li>
+      </ul>
+      <div class="alert alert-warn">会員の削除は不可。退会・休会で対応します。</div>`,
+  },
+  {
+    id: 'ad7', cat: 'admin', type: 'basic',
+    q: '来店予約一覧の対応方法は？',
+    keywords: ['来店予約', '見学', '確定'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>店舗・予約日時範囲でフィルタ</li>
+        <li><strong>新規予約は黄色ハイライト</strong>→ 早期対応</li>
+        <li>「確認」ボタンで未確定予約を確定</li>
+        <li>ステータス変更（新規→確認中→確定）</li>
+        <li>CSVエクスポート可</li>
+      </ul>`,
+  },
+  {
+    id: 'ad8', cat: 'admin', type: 'basic',
+    q: 'どのメニューでCSVエクスポートできる？',
+    keywords: ['CSV', 'エクスポート', '出力'],
+    a: `
+      <p>以下のメニューでCSVエクスポートをサポート：</p>
+      <ul style="padding-left:24px;">
+        <li>会員管理（全21項目）</li>
+        <li>来店予約一覧</li>
+        <li>鍵操作履歴</li>
+      </ul>`,
+  },
+  {
+    id: 'ad9', cat: 'admin', type: 'basic',
+    q: '本部のみできる操作は？',
+    keywords: ['本部', '権限', '管理者'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>月額契約申込の承認・却下</li>
+        <li>支払い実績の閲覧</li>
+        <li>スタッフアカウントの作成・削除</li>
+        <li>店舗情報の大幅変更（新規店舗追加など）</li>
+      </ul>
+      <div class="alert alert-warn">現場スタッフはこれらの権限がないことが多いです。権限エラーが出たら本部に依頼してください。</div>`,
+  },
+  {
+    id: 'ad10', cat: 'admin', type: 'basic',
+    q: '1日の管理画面運用パターンは？',
+    keywords: ['運用', 'パターン', '朝', '営業中', '閉店'],
+    a: `
+      <table class="data-table">
+        <tr><th>タイミング</th><th>操作</th></tr>
+        <tr><td>朝（開店前）</td><td>ダッシュボード → お知らせ → 本日の来店予約</td></tr>
+        <tr><td>営業中</td><td>お客様対応・チェックイン実績の確認修正</td></tr>
+        <tr><td>閉店後</td><td>未返信メッセージ返信・翌日予約確認・決済失敗対応</td></tr>
+      </table>`,
+  },
+  {
+    id: 'ad11', cat: 'admin', type: 'basic',
+    q: '【最重要】即日入会の手順は？（最短利用開始日の設定変更）',
+    keywords: ['即日入会', '最短利用開始日', '0日', '1日', '設定戻し'],
+    a: `
+      <div class="alert alert-danger">
+        <strong>最重要オペレーション</strong><br>
+        見学当日にそのまま入会するケースはほぼ毎回発生。設定の戻し忘れは<strong>全ての新規契約者に影響</strong>します。
+      </div>
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>管理画面 →「店舗管理」→ 編集アイコンをクリック</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>「最短利用開始日」を <strong>0日</strong> に変更して保存</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>お客様にアプリで契約してもらう</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>契約完了を確認したら、<strong style="color:#C62828;">すぐに「最短利用開始日」を 1日 に戻す</strong></div></div>
+      </div>
+      <div class="kodack-tip">
+        <div class="kodack-tip-img"></div>
+        <div class="kodack-tip-body">
+          <div class="kodack-tip-label">🦆 コダック先生のひとこと</div>
+          <div class="kodack-tip-text">0日のまま放置すると、全てのお客様が即日利用開始できちゃうよ！契約完了を確認したら<strong>最優先で1日に戻して</strong>ね。</div>
+        </div>
+      </div>`,
+  },
+  {
+    id: 'ad12', cat: 'admin', type: 'basic',
+    q: '新規入会時のスタッフ作業（会員番号の扱い）は？',
+    keywords: ['会員番号', 'メモ', 'チャットワーク', '新規入会'],
+    a: `
+      <p>スタディGO管理画面の<strong>会員IDとは別に、勉強カフェ独自の会員番号</strong>があります。</p>
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>契約完了メール（BCBP○○ / BCS○○）を確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>管理画面「会員管理」で該当会員を開く</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>勉強カフェ会員番号を<strong>メモ欄</strong>に記入</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>チャットワーク<strong>【入会情報】新宿S・BPスタジオ</strong> に会員番号＋氏名を報告</div></div>
+      </div>
+      <div class="alert alert-warn">
+        管理画面のIDはスタディGO固有。会員番号は管理画面には表示されず、契約時にメールで別送されます。
+      </div>`,
+  },
+  {
+    id: 'ad13', cat: 'admin', type: 'basic',
+    q: 'オンライン契約されたお客様の来店受付時間は？',
+    keywords: ['オンライン契約', '来店', '受付', '時間'],
+    a: `
+      <p>オンライン契約完了メールに以下の来店案内が記載されています。</p>
+      <table class="data-table">
+        <tr><th>曜日</th><th>受付可能時間</th></tr>
+        <tr><td>平日</td><td>17:00 〜 21:00</td></tr>
+        <tr><td>土日祝</td><td>12:00 〜 21:00</td></tr>
+      </table>
+      <div class="alert alert-info">お客様が来店日時を返信 → メッセージ機能で確定連絡。契約済みと伝えてもらうよう案内済み。</div>`,
+  },
+  {
+    id: 'ad15', cat: 'admin', type: 'basic',
+    q: '管理画面のログインが失敗する時の対応は？',
+    keywords: ['ログイン', '失敗', 'エラー'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>メールアドレス・パスワードを確認（Base@1209）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>2段階認証の6桁番号が届いているか確認（スパム含む）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>パスワード忘却時は運営連絡（店舗側でのリセット不可）</div></div>
+      </div>`,
+  },
+  {
+    id: 'ad16', cat: 'admin', type: 'basic',
+    q: 'お知らせメニューで確認すべき内容は？',
+    keywords: ['お知らせ', 'メニュー', '通知'],
+    a: `
+      <p>運営からの重要通知・警告・お知らせが表示されます。</p>
+      <ul style="padding-left:24px;">
+        <li>タイプ別に色分け（重要/警告/お知らせ）</li>
+        <li>行クリックで本文展開</li>
+        <li>全スタッフ共通配信</li>
+      </ul>
+      <div class="alert alert-warn">朝のダッシュボード確認後、必ず目を通してください。</div>`,
+  },
+  {
+    id: 'ad17', cat: 'admin', type: 'basic',
+    q: '支払いに失敗したお客様への対応は？',
+    keywords: ['支払い失敗', 'ダッシュボード', '対応'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>ダッシュボードで決済エラー発生を確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>マネージャーに報告</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>お客様に通知（電話・メール等）してカード情報更新を依頼</div></div>
+      </div>`,
+  },
+  {
+    id: 'ad18', cat: 'admin', type: 'basic',
+    q: '未返信メッセージへの対応フローは？',
+    keywords: ['未返信', 'メッセージ', '対応'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>メール通知が届く（スタジオのメールアドレス）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>管理画面ログイン→ダッシュボード「メッセージへ」</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>該当ユーザーのメッセージを確認→返信</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>対応判断に迷う場合はマネージャーにチャットワーク相談</div></div>
+      </div>
+      <div class="alert alert-warn"><strong>必ずその日のうちに返信</strong>。</div>`,
+  },
+  {
+    id: 'ad19', cat: 'admin', type: 'basic',
+    q: '解約予定のお客様への対応は？',
+    keywords: ['解約予定', '対応', '店頭'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>店頭来店を依頼</li>
+        <li>解約フォーム入力＋スタッフ作業が必要</li>
+        <li>ロッカー契約がある場合は荷物撤去・鍵返却確認</li>
+        <li>解約完了日まで利用可能な旨を伝える</li>
+      </ul>`,
+  },
+  {
+    id: 'ad20', cat: 'admin', type: 'basic',
+    q: '休会予定のお客様への対応は？',
+    keywords: ['休会予定', '対応', 'ロッカー'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>ロッカー契約の有無を確認</li>
+        <li>ある場合は<strong>荷物撤去・鍵返却</strong>を案内</li>
+        <li>休会開始日まで通常利用可能な旨を伝える</li>
+      </ul>`,
+  },
+  {
+    id: 'ad21', cat: 'admin', type: 'basic',
+    q: '会員管理でメモ欄に記入する項目は？',
+    keywords: ['会員管理', 'メモ', '記入'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li><strong>勉強カフェ会員番号</strong>（BCBP○○ / BCS○○）</li>
+        <li>ロッカー番号（契約している場合）</li>
+        <li>特記事項（カード登録変更履歴など）</li>
+        <li>職業・勉強内容（別フィールド）</li>
+      </ul>`,
+  },
+  {
+    id: 'ad22', cat: 'admin', type: 'basic',
+    q: '会員管理のCSVエクスポート項目（21項目）は？',
+    keywords: ['CSV', 'エクスポート', '21項目'],
+    a: `
+      <p>ID、氏名、フリガナ、メール、電話、住所、生年月日、性別、職業、勉強内容、契約プラン、契約開始日、契約状況、最終来店日、来店回数、決済履歴、未払い額、メモ、登録日、更新日、ステータスなど、全21項目がCSVに含まれます。</p>
+      <div class="alert alert-info">個人情報が含まれるため、取り扱いに注意してください。</div>`,
+  },
+  {
+    id: 'ad23', cat: 'admin', type: 'basic',
+    q: '会員の「性別・来店頻度・未読メッセージ」フィルタの使い所は？',
+    keywords: ['会員', 'フィルタ', '来店頻度'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>来店頻度フィルタ: 利用頻度の低い会員への声かけ企画</li>
+        <li>未読メッセージフィルタ: 未返信お客様の一括対応</li>
+        <li>性別フィルタ: 設備・サービス分析用</li>
+      </ul>`,
+  },
+  {
+    id: 'ad24', cat: 'admin', type: 'basic',
+    q: '会員を削除したい場合は？',
+    keywords: ['会員', '削除', '不可'],
+    a: `
+      <div class="alert alert-danger">管理画面からの会員削除は<strong>できません</strong>。</div>
+      <ul style="padding-left:24px;">
+        <li>退会: 解約を案内</li>
+        <li>利用停止: 運営に連絡してアカウント停止措置</li>
+      </ul>`,
+  },
+  {
+    id: 'ad25', cat: 'admin', type: 'basic',
+    q: 'チェックイン実績のタブ機能の使い方は？',
+    keywords: ['チェックイン実績', 'タブ', '並行'],
+    a: `
+      <p>複数の検索条件を並行管理できます。</p>
+      <ul style="padding-left:24px;">
+        <li>1つ目のタブで「本日全件」</li>
+        <li>2つ目のタブで「特定会員の過去1週間」</li>
+        <li>3つ目のタブで「特定プラン種別」</li>
+      </ul>
+      <div class="alert alert-info">混雑時期のデータ分析に便利。</div>`,
+  },
+  {
+    id: 'ad26', cat: 'admin', type: 'basic',
+    q: '鍵操作履歴のCSVエクスポートはどんな時に使う？',
+    keywords: ['鍵操作履歴', 'CSV', '監査'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>異常アクセスパターンの分析</li>
+        <li>無人時間帯の解錠ログ監査</li>
+        <li>セキュリティインシデント発生時の記録提出</li>
+        <li>運営からの要請への対応</li>
+      </ul>`,
+  },
+  {
+    id: 'ad27', cat: 'admin', type: 'basic',
+    q: '店舗管理で「最短利用開始日」以外に注意すべき設定は？',
+    keywords: ['店舗管理', '設定', '注意'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>料金（分単価、1日上限）</li>
+        <li>プラン別チェックインメッセージ（月額/ドロップイン/デフォルト）</li>
+        <li>座席数（満席判定）</li>
+        <li>営業ルール説明文</li>
+        <li>最低年齢</li>
+      </ul>
+      <div class="alert alert-warn">店舗管理の設定変更は<strong>影響範囲が大きい</strong>。変更時は必ずマネージャーに確認。</div>`,
+  },
+  {
+    id: 'ad28', cat: 'admin', type: 'basic',
+    q: 'メッセージの利用場面は？',
+    keywords: ['メッセージ', '利用', '場面'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>見学予約のリスケ・キャンセル対応</li>
+        <li>契約済みお客様からの来店日時返信の確定連絡</li>
+        <li>その他のお客様とのやり取り</li>
+      </ul>`,
+  },
+  {
+    id: 'ad29', cat: 'admin', type: 'basic',
+    q: 'メッセージ返信の判断に迷ったら？',
+    keywords: ['メッセージ', '判断', '相談'],
+    a: `
+      <p>マネージャー（國松）にチャットワークで相談してから返信してください。</p>
+      <ul style="padding-left:24px;">
+        <li>料金・返金・解約などの重要判断は独断不可</li>
+        <li>一般的な営業時間等の質問は即返信OK</li>
+      </ul>`,
+  },
+  {
+    id: 'ad30', cat: 'admin', type: 'basic',
+    q: 'メール通知の種類は？',
+    keywords: ['メール通知', '種類', '受信'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>見学予約の通知</li>
+        <li>月額プラン契約・解約の通知</li>
+        <li>プラン変更・休会の通知</li>
+        <li>オプション（ロッカー）契約・解約の通知</li>
+        <li>お客様からのメッセージ受信通知</li>
+        <li>勉強カフェ会員番号の自動送信（BCBP○○/BCS○○）</li>
+      </ul>`,
+  },
+  {
+    id: 'ad31', cat: 'admin', type: 'basic',
+    q: '営業日・営業時間管理の主な操作は？',
+    keywords: ['営業日', '営業時間', '管理'],
+    a: `
+      <table class="data-table">
+        <tr><th>操作</th><th>内容</th></tr>
+        <tr><td>臨時休業</td><td>年末年始・ビル点検など</td></tr>
+        <tr><td>営業時間変更</td><td>特定日の時間変更</td></tr>
+        <tr><td>予約受付締切</td><td>見学予約の受付締切（日数・分）</td></tr>
+      </table>
+      <div class="alert alert-warn">通常マネージャーが行う設定。スタッフが変更時は必ずマネージャー確認。</div>`,
+  },
+  {
+    id: 'ad32', cat: 'admin', type: 'basic',
+    q: '営業日管理で複数ルールを同時運用する方法は？',
+    keywords: ['複数ルール', '営業時間', '祝日'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>月曜ルール、祝日ルール等を並行管理可能</li>
+        <li>開始日が新しい順で優先適用</li>
+        <li>変更は即座に予約受付に反映</li>
+      </ul>`,
+  },
+  {
+    id: 'ad33', cat: 'admin', type: 'basic',
+    q: '加盟法人情報の変更手順は？',
+    keywords: ['加盟法人', '情報', '変更'],
+    a: `
+      <p>加盟法人情報は<strong>表示のみ</strong>（編集不可）。</p>
+      <ul style="padding-left:24px;">
+        <li>法人名・代表者名・住所・電話番号・登録日が表示</li>
+        <li>変更は「お問い合わせ」から運営へ依頼</li>
+        <li>運営側更新時にパスワードリセットが発生する場合あり</li>
+      </ul>`,
+  },
+  {
+    id: 'ad34', cat: 'admin', type: 'basic',
+    q: 'スタッフアカウントの追加・削除方法は？',
+    keywords: ['アカウント', '追加', '削除', 'スタッフ'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>「アカウント管理」→「追加」で新規作成</li>
+        <li>メール・名前・パスワード・有効状態を入力</li>
+        <li>削除より<strong>無効化</strong>を推奨</li>
+      </ul>
+      <div class="alert alert-warn">本部のみ操作可能。全アカウントが全店舗閲覧・操作可能（権限分離なし）。</div>`,
+  },
+  {
+    id: 'ad35', cat: 'admin', type: 'basic',
+    q: 'スタッフアカウントの権限差は？',
+    keywords: ['権限', '本部', 'スタッフ'],
+    a: `
+      <p>現時点では権限分離なし。すべてのアカウントが同じ権限を持ちます。</p>
+      <ul style="padding-left:24px;">
+        <li>ただし「月額契約申込承認」「支払い実績閲覧」「アカウント管理」は本部専用</li>
+        <li>操作履歴追跡のため個別運用推奨（共有アカウント避ける）</li>
+      </ul>`,
+  },
+  {
+    id: 'ad36', cat: 'admin', type: 'basic',
+    q: '支払い実績の確認方法は？',
+    keywords: ['支払い実績', '確認', '本部'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>利用年月の範囲指定で検索</li>
+        <li>月ごとの受領実績一覧を表示</li>
+        <li>利用年月 / 受領年月 / 受領額 / ステータス</li>
+      </ul>
+      <div class="alert alert-warn">本部のみ閲覧可能。請求疑問は運営へ問い合わせ。</div>`,
+  },
+  {
+    id: 'ad37', cat: 'admin', type: 'basic',
+    q: '月額契約申込一覧が表示されない場合は？',
+    keywords: ['月額契約申込', '表示されない', '条件'],
+    a: `
+      <p>月額契約機能がONの法人のみ表示されます。</p>
+      <ul style="padding-left:24px;">
+        <li>承認制の店舗運営をしていない場合は非表示</li>
+        <li>本部権限でログインする必要がある</li>
+      </ul>`,
+  },
+  {
+    id: 'ad38', cat: 'admin', type: 'basic',
+    q: '月額契約申込の承認／却下ボタンの動作は？',
+    keywords: ['承認', '却下', '月額契約'],
+    a: `
+      <table class="data-table">
+        <tr><th>操作</th><th>動作</th></tr>
+        <tr><td>承認</td><td>契約有効化、会員に利用開始許可通知</td></tr>
+        <tr><td>却下</td><td>無効化、会員に却下通知</td></tr>
+      </table>`,
+  },
+  {
+    id: 'ad39', cat: 'admin', type: 'basic',
+    q: '来店予約のCSVエクスポートの活用例は？',
+    keywords: ['来店予約', 'CSV', '活用'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>見学対応数の集計</li>
+        <li>時間帯別の予約分布分析</li>
+        <li>マーケティング資料作成</li>
+      </ul>`,
+  },
+  {
+    id: 'ad40', cat: 'admin', type: 'basic',
+    q: '「新規契約したお客様」カテゴリの対応は？',
+    keywords: ['新規契約', 'ダッシュボード', '対応'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>会員番号メールにお客様宛の来店案内が含まれている</li>
+        <li>オンライン契約の場合はお客様からの返信を待つ</li>
+        <li>返信が来たら来店日時を確定・メッセージで返信</li>
+        <li>当日見学・即日入会のフォロー</li>
+      </ul>`,
+  },
+  {
+    id: 'ad41', cat: 'admin', type: 'basic',
+    q: '会員情報詳細ページへのアクセス方法は？',
+    keywords: ['会員情報', '詳細', 'テキストマーク'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>「会員管理」メニューを開く</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>一覧から対象会員を探す（検索・フィルタ可）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>一番右の<strong>テキストマーク📓</strong>を押す</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>詳細画面でメモ・職業・勉強内容を編集</div></div>
+      </div>`,
+  },
+  {
+    id: 'ad42', cat: 'admin', type: 'basic',
+    q: '管理画面のID番号と勉強カフェ会員番号の違いは？',
+    keywords: ['ID', '会員番号', '違い'],
+    a: `
+      <table class="data-table">
+        <tr><th>種類</th><th>例</th><th>表示場所</th></tr>
+        <tr><td>管理画面ID</td><td>12345</td><td>会員管理のID列</td></tr>
+        <tr><td>勉強カフェ会員番号</td><td>BCS○○ / BCBP○○</td><td>メモ欄（スタッフ記入）・契約通知メール</td></tr>
+      </table>
+      <div class="alert alert-info">勉強カフェ会員番号は管理画面に自動表示されないため、スタッフが契約通知メールから転記します。</div>`,
+  },
+  {
+    id: 'ad43', cat: 'admin', type: 'basic',
+    q: 'お客様情報をキーワード検索する方法は？',
+    keywords: ['検索', '会員管理', 'キーワード'],
+    a: `
+      <p>会員管理の検索窓で以下で検索可能：</p>
+      <ul style="padding-left:24px;">
+        <li>ID番号</li>
+        <li>氏名（部分一致）</li>
+        <li>フリガナ</li>
+      </ul>`,
+  },
+  {
+    id: 'ad44', cat: 'admin', type: 'basic',
+    q: 'オンライン契約後、お客様から連絡が来ない場合は？',
+    keywords: ['オンライン', '連絡', '待ち'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>3日以上連絡がない場合、メッセージで再度案内</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>それでも反応なし → メール送信</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>1週間以上 → マネージャーに共有</div></div>
+      </div>`,
+  },
+  {
+    id: 'ad45', cat: 'admin', type: 'basic',
+    q: '管理画面のダッシュボード以外でよく使うメニューは？',
+    keywords: ['よく使う', 'メニュー', 'ダッシュボード'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>ダッシュボード: 朝一の対応案件確認</li>
+        <li>来店予約一覧: 見学対応</li>
+        <li>会員管理: 会員情報確認・メモ編集</li>
+        <li>チェックイン実績: 入退店確認・時刻修正</li>
+        <li>メッセージ: お客様対応</li>
+      </ul>`,
+  },
+  {
+    id: 'ad46', cat: 'admin', type: 'basic',
+    q: '店舗管理の「チェックイン時メッセージ」はどう活用する？',
+    keywords: ['チェックイン', 'メッセージ', '店舗'],
+    a: `
+      <p>プラン別に異なるメッセージを設定できます。</p>
+      <ul style="padding-left:24px;">
+        <li>月額プラン → 時間帯ルール・施設利用の注意</li>
+        <li>ドロップイン → 料金・退店時刻の注意</li>
+        <li>共通の注意事項</li>
+      </ul>`,
+  },
+  {
+    id: 'ad47', cat: 'admin', type: 'basic',
+    q: '来店予約一覧で新規予約をハイライト表示する意味は？',
+    keywords: ['来店予約', '新規', '黄色', 'ハイライト'],
+    a: `
+      <p>新規予約は<strong>黄色ハイライト</strong>で目立つように表示されます。</p>
+      <ul style="padding-left:24px;">
+        <li>早期対応の必要性を示す</li>
+        <li>見落とし防止</li>
+        <li>スタッフ共有・引き継ぎ時も一目で認識可能</li>
+      </ul>`,
+  },
+  {
+    id: 'ad48', cat: 'admin', type: 'basic',
+    q: 'チェックイン実績で「精算情報」から確認できることは？',
+    keywords: ['精算情報', 'チェックイン実績', '料金'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>利用時間 × 単価</li>
+        <li>プラン内・超過・時間外の内訳</li>
+        <li>決済状態</li>
+        <li>割引適用有無</li>
+      </ul>`,
+  },
+  {
+    id: 'ad49', cat: 'admin', type: 'basic',
+    q: '管理画面にログインしたまま放置すると？',
+    keywords: ['管理画面', 'セッション', 'タイムアウト'],
+    a: `
+      <p>一定時間無操作でセッションがタイムアウトし、再ログインが必要になります。</p>
+      <div class="alert alert-warn">共用PCでは必ずログアウトしてから離席してください（情報漏洩防止）。</div>`,
+  },
+  {
+    id: 'ad50', cat: 'admin', type: 'basic',
+    q: '管理画面でスマホ・タブレットからアクセスできる？',
+    keywords: ['スマホ', 'タブレット', 'モバイル'],
+    a: `
+      <p>ブラウザがあればアクセス可能ですが、<strong>PC画面向けUI</strong>のため操作しづらいです。</p>
+      <ul style="padding-left:24px;">
+        <li>閲覧のみ: スマホ・タブレットでも可</li>
+        <li>編集操作: PC推奨</li>
+      </ul>`,
+  },
+  {
+    id: 'ad51', cat: 'admin', type: 'example',
+    q: '【例題】朝一で管理画面を開いた時の確認順序',
+    keywords: ['朝', '確認', '手順'],
+    a: `
+      <ol style="padding-left:24px;">
+        <li>お知らせメニュー（重要通知の有無）</li>
+        <li>ダッシュボード（支払い失敗・未返信・新規・解約・休会）</li>
+        <li>来店予約一覧（本日の見学予約）</li>
+        <li>メッセージ（未返信対応）</li>
+      </ol>
+      <div class="alert alert-warn">「確認済み」ボタンはマネージャーのみ。スタッフは押さない。</div>`,
+  },
+  {
+    id: 'ad52', cat: 'admin', type: 'example',
+    q: '【例題】入会当日のスタッフ作業フロー',
+    keywords: ['入会当日', '作業フロー'],
+    a: `
+      <ol style="padding-left:24px;">
+        <li>店舗管理 → 最短利用開始日を<strong>0日</strong>に変更</li>
+        <li>お客様がアプリで契約</li>
+        <li>契約完了メール受信を確認</li>
+        <li>最短利用開始日を<strong>1日</strong>に戻す</li>
+        <li>会員番号を会員管理のメモ欄に記入</li>
+        <li>チャットワーク【入会情報】に会員番号＋氏名を投稿</li>
+      </ol>`,
+  },
+  {
+    id: 'ad53', cat: 'admin', type: 'basic',
+    q: '管理画面の言語は変えられる？',
+    keywords: ['言語', '英語', '管理画面'],
+    a: `
+      <p>管理画面は日本語のみ。言語切替機能はありません。</p>`,
+  },
+  {
+    id: 'ad54', cat: 'admin', type: 'basic',
+    q: '会員管理で一度に何件まで表示できる？',
+    keywords: ['会員管理', '件数', 'ページ'],
+    a: `
+      <p>ページネーションで表示。1ページ数十件ずつ。</p>
+      <div class="alert alert-info">大量データはCSVエクスポートで扱うのが効率的。</div>`,
+  },
+  {
+    id: 'ad55', cat: 'admin', type: 'basic',
+    q: 'チェックイン実績の「プラン種別」フィルタの活用例',
+    keywords: ['プラン種別', 'フィルタ', '活用'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>ドロップイン利用者のみ抽出 → 初回利用者分析</li>
+        <li>月額会員のみ抽出 → 滞在時間分析</li>
+      </ul>`,
+  },
+  {
+    id: 'ad56', cat: 'admin', type: 'irregular',
+    q: '管理画面で検索しても会員が見つからない',
+    keywords: ['検索', '見つからない', '会員'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>氏名の表記揺れ（カナ・漢字）を確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>ID番号（スタディGO固有）で検索</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>解約済み会員はフィルタで別途検索</div></div>
+      </div>`,
+  },
+  {
+    id: 'ad57', cat: 'admin', type: 'basic',
+    q: '店舗管理の「料金設定」で注意することは？',
+    keywords: ['店舗管理', '料金', '設定'],
+    a: `
+      <p>ドロップインの分単価・1日上限を設定する項目。</p>
+      <ul style="padding-left:24px;">
+        <li>変更は<strong>全新規チェックイン</strong>に影響</li>
+        <li>変更時は必ずマネージャー確認</li>
+      </ul>`,
+  },
+  {
+    id: 'ad58', cat: 'admin', type: 'basic',
+    q: '管理画面で閲覧できる決済失敗会員一覧は？',
+    keywords: ['決済失敗', '一覧', 'ダッシュボード'],
+    a: `
+      <p>ダッシュボードの「支払いに失敗したお客様」カテゴリに一覧表示。</p>
+      <ul style="padding-left:24px;">
+        <li>マネージャーに報告</li>
+        <li>必要に応じてお客様へメッセージ</li>
+      </ul>`,
+  },
+  {
+    id: 'ad59', cat: 'admin', type: 'example',
+    q: '【例題】「解約予定者が今日来店した」',
+    keywords: ['例題', '解約予定', '来店'],
+    a: `
+      <p><strong>対応</strong>：</p>
+      <ol style="padding-left:24px;">
+        <li>フォーム入力確認</li>
+        <li>ロッカー契約があれば荷物撤去・鍵返却</li>
+        <li>解約完了日までは利用可能と案内</li>
+        <li>完了後、チャットワークに報告</li>
+      </ol>`,
+  },
+  {
+    id: 'ad60', cat: 'admin', type: 'basic',
+    q: 'メッセージの既読・未読はどう判別？',
+    keywords: ['メッセージ', '既読', '未読'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>未読メッセージは件数バッジ表示</li>
+        <li>開封すると既読になる</li>
+        <li>ダッシュボードに未返信一覧が出る</li>
+      </ul>`,
+  },
+  {
+    id: 'ad61', cat: 'admin', type: 'basic',
+    q: 'ダッシュボードに出ない通知は？',
+    keywords: ['ダッシュボード', '出ない', '通知'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>プラン変更申請 → メール通知のみ</li>
+        <li>オプション追加・解約 → メール通知のみ</li>
+        <li>メール通知を定期的に確認する必要あり</li>
+      </ul>`,
+  },
+  {
+    id: 'ad62', cat: 'admin', type: 'basic',
+    q: '管理画面でお客様に連絡する手段は？',
+    keywords: ['連絡', 'メッセージ', 'お客様'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>メッセージ機能（アプリ内チャット）が基本</li>
+        <li>電話番号は会員管理で確認可</li>
+        <li>緊急時は電話も選択肢</li>
+      </ul>`,
+  },
+  {
+    id: 'ad63', cat: 'admin', type: 'basic',
+    q: '来店予約の「確認中」ステータスの意味は？',
+    keywords: ['予約', 'ステータス', '確認中'],
+    a: `
+      <p>スタッフが確認作業中の状態。</p>
+      <ul style="padding-left:24px;">
+        <li>新規予約を確認 → 確認中</li>
+        <li>対応完了後 → 確定に変更</li>
+      </ul>`,
+  },
+  {
+    id: 'ad64', cat: 'admin', type: 'basic',
+    q: 'メール通知で「見学予約」が届いた時の対応',
+    keywords: ['見学予約', 'メール', '対応'],
+    a: `
+      <ol style="padding-left:24px;">
+        <li>メール通知を確認</li>
+        <li>管理画面「来店予約一覧」でお客様情報確認</li>
+        <li>有人時間帯なら当日対応準備</li>
+        <li>事前連絡は不要（予約時点で確定）</li>
+      </ol>`,
+  },
+  {
+    id: 'ad65', cat: 'admin', type: 'basic',
+    q: 'ダッシュボードから直接メッセージ送信できる？',
+    keywords: ['メッセージ', 'ダッシュボード', '直接'],
+    a: `
+      <p>未返信メッセージのお客様カテゴリから「メッセージへ」ボタンでチャット画面に遷移できます。</p>`,
+  },
+  {
+    id: 'ad66', cat: 'admin', type: 'basic',
+    q: 'チェックイン実績を1ヶ月分まとめて見るには？',
+    keywords: ['チェックイン', '1ヶ月', '期間'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>日付範囲を1ヶ月で指定</li>
+        <li>CSVエクスポートで分析</li>
+        <li>フィルタでプラン種別を絞り込み</li>
+      </ul>`,
+  },
+  {
+    id: 'ad67', cat: 'admin', type: 'basic',
+    q: 'お客様の「勉強内容」をメモするのはなぜ？',
+    keywords: ['勉強内容', 'メモ', '活用'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>接客時の話題として活用</li>
+        <li>試験前後の激励・声かけ</li>
+        <li>会員の特性理解</li>
+      </ul>`,
+  },
+  {
+    id: 'ad68', cat: 'admin', type: 'basic',
+    q: '来店予約のCSVエクスポートはいつ使う？',
+    keywords: ['来店予約', 'CSV', '使い所'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>月次レポート作成</li>
+        <li>運営への報告</li>
+        <li>見学対応の振り返り</li>
+      </ul>`,
+  },
+  {
+    id: 'ad69', cat: 'admin', type: 'basic',
+    q: '契約者の氏名が変わった場合の対応',
+    keywords: ['改姓', '氏名変更', '会員'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>お客様自身がアプリのプロフィール編集で変更</li>
+        <li>管理画面の会員情報は自動で更新される</li>
+        <li>会員番号・契約は変わらない</li>
+      </ul>`,
+  },
+  {
+    id: 'ad70', cat: 'admin', type: 'basic',
+    q: '長期未返信メッセージへの対応',
+    keywords: ['長期', '未返信', 'フォロー'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>3日以上未返信のお客様はピックアップ</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>再度メッセージ送信</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>反応なければメール or 電話</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>1週間超は國松に共有</div></div>
+      </div>`,
+  },
+  {
+    id: 'ad14', cat: 'admin', type: 'basic',
+    q: '見学予約の対応ルール（30分ルール）は？',
+    keywords: ['見学予約', '30分', 'キャンセル', '有人'],
+    a: `
+      <p>見学予約は<strong>予約が入った時点で確定</strong>（仮予約システムは廃止）、<strong>有人時間帯のみ</strong>受付。</p>
+      <table class="data-table">
+        <tr><th>ステータス</th><th>タイミング</th></tr>
+        <tr><td>予約確定</td><td>予約が入った時点で確定（スタッフからの連絡不要）</td></tr>
+        <tr><td>見学実施</td><td>予約日時に来店があった場合に設定</td></tr>
+        <tr><td>見学キャンセル</td><td>予約時間を<strong>30分過ぎても来店なし</strong>なら設定（お客様にメールが届く）</td></tr>
+      </table>`,
+  },
+
+  // ===== 🚨 トラブル・イレギュラー =====
+  {
+    id: 'tr1', cat: 'trouble', type: 'irregular',
+    q: 'お客様から返金要求があった',
+    keywords: ['返金', 'クレーム', '苦情'],
+    a: `
+      <div class="alert alert-danger"><strong>原則として返金は行いません。</strong></div>
+      <p><strong>返金できるケース</strong></p>
+      <ul style="padding-left:24px;">
+        <li>スタディGOアプリ自体の不具合が原因と確認できた場合のみ</li>
+      </ul>
+      <p><strong>返金できないケース</strong></p>
+      <ul style="padding-left:24px;">
+        <li>お客様のチェックアウト忘れ</li>
+        <li>お客様のプラン選択ミス</li>
+        <li>超過料金・時間外料金（即日決済済み）</li>
+        <li>月額料金の日割り返金（月末まで利用可能なため）</li>
+      </ul>
+      <div class="kodack-tip">
+        <div class="kodack-tip-img"></div>
+        <div class="kodack-tip-body">
+          <div class="kodack-tip-label">🦆 コダック先生のひとこと</div>
+          <div class="kodack-tip-text">判断に迷ったら独断で返金せず、必ず國松に連絡してね。</div>
+        </div>
+      </div>`,
+  },
+  {
+    id: 'tr2', cat: 'trouble', type: 'irregular',
+    q: 'アプリが固まって動かないとお客様が言っている',
+    keywords: ['アプリ', '固まる', 'フリーズ'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>アプリを完全終了 → 再起動</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>スマホ本体を再起動</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>通信状況（Wi-Fi／モバイル回線）を確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>アプリを最新版に更新</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">5</div><div>復旧しなければ國松に連絡</div></div>
+      </div>`,
+  },
+  {
+    id: 'tr3', cat: 'trouble', type: 'irregular',
+    q: 'Akerunのバッテリーが切れそう',
+    keywords: ['Akerun', 'バッテリー', '電池'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>Akerunダッシュボードでバッテリー残量を確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>定期チェック項目として残量低下を記録</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>交換用電池を確保・國松に連絡</div></div>
+      </div>
+      <div class="alert alert-warn">完全に切れるとドア解錠不可になります。早めの交換依頼を。</div>`,
+  },
+  {
+    id: 'tr4', cat: 'trouble', type: 'irregular',
+    q: 'クレジットカードの決済に失敗したとお客様から連絡',
+    keywords: ['クレカ', 'カード', '決済失敗'],
+    a: `
+      <table class="data-table">
+        <tr><th>原因</th><th>対応</th></tr>
+        <tr><td>残高不足・限度額超過</td><td>別カード登録 or 月末までに解消</td></tr>
+        <tr><td>カード期限切れ</td><td>新しいカードをアプリから再登録</td></tr>
+        <tr><td>セキュリティブロック</td><td>カード会社に連絡してもらう</td></tr>
+      </table>
+      <div class="alert alert-info">お客様には決済リンク付きメールが届いているはず。そこから未払い分を決済できます。</div>`,
+  },
+  {
+    id: 'tr5', cat: 'trouble', type: 'irregular',
+    q: '鍵操作履歴にログがない／解錠ログはあるのに開かない',
+    keywords: ['鍵操作履歴', 'ログ', 'なし', 'Akerun'],
+    a: `
+      <table class="data-table">
+        <tr><th>状態</th><th>原因</th><th>対応</th></tr>
+        <tr><td>ログなし</td><td>スタディGO側の問題</td><td>運営に連絡</td></tr>
+        <tr><td>ログあり・開かない</td><td>Akerun機器側の問題</td><td>運営＋Akerunに連絡</td></tr>
+      </table>
+      <p>いずれの場合も一時対応として、予備キー・暗証番号でお客様を入れてください。</p>`,
+  },
+  {
+    id: 'tr6', cat: 'trouble', type: 'irregular',
+    q: 'お客様がチェックアウト忘れを申し出てきた',
+    keywords: ['チェックアウト', '忘れ', '店舗コード'],
+    a: `
+      <p><strong>お客様のアプリ操作手順</strong></p>
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>アプリで「QR読取」</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>「QRが読み取れない場合」をタップ</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div><strong>店舗コード</strong>を入力してチェックアウト</div></div>
+      </div>
+      <p><strong>スタッフ側の対応</strong></p>
+      <ul style="padding-left:24px;">
+        <li><strong>同日のチェックイン忘れ修正</strong>は管理画面「チェックイン実績」から時間編集可能</li>
+        <li>自動チェックアウト済みで誤った時間なら、管理画面から手動修正</li>
+        <li>超過料金発生分は原則返金不可（即日決済済み）</li>
+      </ul>
+      <div class="alert alert-danger">
+        <strong>チェックアウト忘れは要注意！</strong>退店時のチェックアウトを必ず案内してください。チェックアウトしないまま退店すると、営業終了時間まで課金が継続し、お客様に余計な料金が発生します。
+      </div>`,
+  },
+  {
+    id: 'tr7', cat: 'trouble', type: 'irregular',
+    q: '月額の決済が失敗したとお客様に通知が来た',
+    keywords: ['月額', '決済失敗', 'サービス停止'],
+    a: `
+      <p>月次請求失敗時は<strong>サービス停止状態</strong>になります（チェックイン不可）。</p>
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>Stripe自動リトライ（最大3回）を待つ</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>カード情報をアプリから更新してもらう</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>決済リンク付きメールから未払い分を決済</div></div>
+      </div>
+      <div class="alert alert-warn">未払い中はチェックイン・プラン変更不可。</div>`,
+  },
+  {
+    id: 'tr8', cat: 'trouble', type: 'irregular',
+    q: '「アカウントが停止されています」とエラーが出た',
+    keywords: ['アカウント', '停止', 'エラー'],
+    a: `
+      <p>運営側で停止措置がかかっている状態です。お客様対応：</p>
+      <ul style="padding-left:24px;">
+        <li>お客様からスタディGO運営に直接連絡してもらう（info.studygo@b-pt.jp / 03-6302-0774）</li>
+        <li>店舗側では解除できません</li>
+      </ul>`,
+  },
+  {
+    id: 'tr10', cat: 'trouble', type: 'irregular',
+    q: '長時間滞在している会員への声かけ対応',
+    keywords: ['長時間', '声かけ', '満席'],
+    a: `
+      <p>特に「満席」で入れないお客様がいる時に実施：</p>
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>管理画面「チェックイン実績」で長時間滞在者を特定</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>席を確認、もう帰られている場合は強制チェックアウト</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>在席なら声かけ（チェックアウト忘れ防止）</div></div>
+      </div>
+      <div class="kodack-tip">
+        <div class="kodack-tip-img"></div>
+        <div class="kodack-tip-body">
+          <div class="kodack-tip-label">🦆 コダック先生のひとこと</div>
+          <div class="kodack-tip-text">無理に追い出そうとせず、あくまで「念のため確認」というトーンでね。</div>
+        </div>
+      </div>`,
+  },
+  {
+    id: 'tr11', cat: 'trouble', type: 'irregular',
+    q: '決済リトライ（Stripe最大3回）とは？',
+    keywords: ['Stripe', 'リトライ', '3回', '決済失敗'],
+    a: `
+      <p>月次請求失敗時、Stripeが自動で最大3回リトライします。</p>
+      <ul style="padding-left:24px;">
+        <li>1回目失敗 → 数日後再試行</li>
+        <li>2回目失敗 → 再試行</li>
+        <li>3回目失敗 → 自動リトライ終了、手動対応必要</li>
+      </ul>
+      <div class="alert alert-warn">3回失敗後は Payment Link から手動決済してもらう必要あり。</div>`,
+  },
+  {
+    id: 'tr12', cat: 'trouble', type: 'irregular',
+    q: '初回決済（日割り分）が失敗した場合は？',
+    keywords: ['初回決済', '失敗', '24時間'],
+    a: `
+      <p>初回カード決済失敗時は<strong>24時間以内の再決済</strong>が必要。</p>
+      <ul style="padding-left:24px;">
+        <li>支払い失敗状態になる</li>
+        <li>メール＋プッシュ通知が届く</li>
+        <li>カード更新後、決済リンクから再試行</li>
+      </ul>`,
+  },
+  {
+    id: 'tr14', cat: 'trouble', type: 'irregular',
+    q: 'お客様が「クレームを電話で入れたい」と言っている',
+    keywords: ['クレーム', '電話', '対応'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>状況をヒアリング（メモ）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>店舗で対応可能なら即対応</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>システム面は運営電話（03-6302-0774・平日10-17時）を案内</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>國松に状況共有（チャットワーク）</div></div>
+      </div>`,
+  },
+  {
+    id: 'tr16', cat: 'trouble', type: 'irregular',
+    q: 'お客様が「領収書がほしい」と言っている',
+    keywords: ['領収書', 'メール', '明細'],
+    a: `
+      <p>アプリの<strong>ホーム → 利用履歴</strong>から月別にメール送信できます。</p>
+      <ul style="padding-left:24px;">
+        <li>お客様自身のメールアドレスに送信される</li>
+        <li>PDFではなくメール本文形式</li>
+        <li>別途書面で必要な場合は運営に相談</li>
+      </ul>`,
+  },
+  {
+    id: 'tr17', cat: 'trouble', type: 'irregular',
+    q: '明らかにシステム側の不具合で課金されたお客様の対応は？',
+    keywords: ['システム不具合', '課金', '返金'],
+    a: `
+      <p>スタディGOアプリ自体の不具合が確認できた場合は<strong>返金対象</strong>。</p>
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>状況を詳細にヒアリング・メモ</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>管理画面のログ（鍵操作履歴・チェックイン実績）で裏付け確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>國松・運営に相談・返金依頼</div></div>
+      </div>
+      <div class="alert alert-danger">独断での返金はNG。必ずエスカレーション。</div>`,
+  },
+  {
+    id: 'tr18', cat: 'trouble', type: 'irregular',
+    q: 'お客様がアプリの通知を受け取れない',
+    keywords: ['通知', '受け取れない', 'プッシュ'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>スマホの通知設定でアプリの通知がONか確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>メール通知も確認（スパムフォルダ含む）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>アプリを最新版に更新</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>アプリ再インストール</div></div>
+      </div>`,
+  },
+  {
+    id: 'tr19', cat: 'trouble', type: 'irregular',
+    q: '「QRコードを読み取ったら別の店舗でチェックインされた」',
+    keywords: ['間違い', 'チェックイン', '別店舗'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>管理画面「チェックイン実績」で該当レコードを確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>お客様にチェックアウト操作してもらう</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>正しい店舗のQRで再チェックイン</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>誤課金発生時は國松・運営に相談</div></div>
+      </div>`,
+  },
+  {
+    id: 'tr20', cat: 'trouble', type: 'irregular',
+    q: 'ネットワーク障害でチェックインできない',
+    keywords: ['ネットワーク', '障害', 'チェックイン不可'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>店舗のWi-Fi状況を確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>お客様のモバイルデータで試す</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>ルーター再起動（店舗のネットワーク機器）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>復旧しなければ國松に連絡・予備キー対応</div></div>
+      </div>`,
+  },
+  {
+    id: 'tr22', cat: 'trouble', type: 'irregular',
+    q: 'お客様が「カードで未払いなのに決済リンクが届かない」',
+    keywords: ['決済リンク', '届かない'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>迷惑メールフォルダを確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>登録メールアドレスを確認（変更していないか）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>運営に再送依頼</div></div>
+      </div>`,
+  },
+  {
+    id: 'tr29', cat: 'trouble', type: 'irregular',
+    q: '新カードを登録してもまた決済失敗する',
+    keywords: ['新カード', '決済失敗', '繰り返し'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>カード会社に連絡してセキュリティブロックを確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>3Dセキュア設定を確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>別のカード会社のカードを試す</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>デビットカード・プリペイドカードも選択肢</div></div>
+      </div>`,
+  },
+  {
+    id: 'tr30', cat: 'trouble', type: 'irregular',
+    q: 'お客様が「引き落とし日が違う」と主張',
+    keywords: ['引き落とし', '日付', '違う'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>スタディGOの請求日: 毎月15日（翌月分）</li>
+        <li>カード会社の実際の引き落とし日はカード会社の締め日による</li>
+        <li>お客様には「Stripeが15日に決済、カード会社が締め日で集計」と説明</li>
+      </ul>`,
+  },
+  {
+    id: 'tr31', cat: 'trouble', type: 'irregular',
+    q: '緊急時、鍵が開かず入店できない会員への対応',
+    keywords: ['緊急', '入店', '鍵'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>スタッフが自分のキーで開錠して入れる</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>お客様にアプリ側のチェックイン操作はしてもらう（記録残し）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>原因調査・運営連絡</div></div>
+      </div>`,
+  },
+  {
+    id: 'tr32', cat: 'trouble', type: 'irregular',
+    q: '「契約していないのに引き落としされている」クレーム',
+    keywords: ['引き落とし', '契約していない', 'クレーム'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>管理画面で契約状態（有効/無効）を確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>契約変更履歴で解約有無を確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>解約完了日まで課金されるルールを説明</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>解約後の課金があれば運営に調査依頼</div></div>
+      </div>`,
+  },
+  {
+    id: 'tr33', cat: 'trouble', type: 'irregular',
+    q: 'お客様が「誤ってプラン変更申請してしまった」',
+    keywords: ['プラン変更', '誤申請', '取消'],
+    a: `
+      <div class="alert alert-danger">申請後の取り消しは原則不可。</div>
+      <p><strong>対応</strong>：</p>
+      <ul style="padding-left:24px;">
+        <li>翌月適用ならまだ間に合う可能性 → 運営に相談</li>
+        <li>当月適用済みなら元のプランに戻すには再度プラン変更（翌月以降）</li>
+      </ul>`,
+  },
+  {
+    id: 'tr34', cat: 'trouble', type: 'irregular',
+    q: 'お客様のスマホが機種変更になった',
+    keywords: ['機種変更', 'スマホ', 'ログイン'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>新しいスマホにアプリをインストール</li>
+        <li>同じメールアドレス・パスワードでログイン</li>
+        <li>契約情報は自動で同期される</li>
+      </ul>
+      <div class="alert alert-info">パスワード忘却時は再設定フローを案内。</div>`,
+  },
+  {
+    id: 'tr35', cat: 'trouble', type: 'irregular',
+    q: '「お客様IDが変わった」と言っている',
+    keywords: ['ID', '変わった', '会員ID'],
+    a: `
+      <p>スタディGOのIDは基本的に変わりません。別のIDが表示される場合は：</p>
+      <ul style="padding-left:24px;">
+        <li>管理画面のID（スタディGO固有番号）</li>
+        <li>勉強カフェ会員番号（BCBP/BCS）</li>
+        <li>いずれかを見ている可能性を確認</li>
+      </ul>`,
+  },
+  {
+    id: 'tr36', cat: 'trouble', type: 'irregular',
+    q: 'お客様から「受信設定を見直したが届かない」',
+    keywords: ['メール', '届かない', '受信設定'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>ドメイン指定受信で <strong>@b-pt.jp</strong> と <strong>@studygo.jp</strong> を許可</li>
+        <li>URLリンクのあるメールを許可</li>
+        <li>キャリアメール（docomo/au/softbank）は特に制限が厳しいので設定確認</li>
+      </ul>`,
+  },
+  {
+    id: 'tr37', cat: 'trouble', type: 'irregular',
+    q: 'QRコードが日光で見えにくい場所にある',
+    keywords: ['QR', '日光', '設置'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>印刷を光沢なしの紙に変更</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>設置場所を日陰に変更</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>保護フィルム貼付</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>國松に相談</div></div>
+      </div>`,
+  },
+  {
+    id: 'tr38', cat: 'trouble', type: 'irregular',
+    q: '「チェックインが早すぎた・遅すぎた」と言われた',
+    keywords: ['チェックイン', '時刻', '修正依頼'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>チェックアウト前なら管理画面から時刻修正可能</li>
+        <li>チェックアウト後も同日分なら修正可</li>
+        <li>料金が変わる場合は自動で再計算</li>
+      </ul>`,
+  },
+  {
+    id: 'tr39', cat: 'trouble', type: 'irregular',
+    q: 'メール通知が大量に来るというクレーム',
+    keywords: ['通知', '多い', 'クレーム'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>スタディGO側の通知設定は現状限定的</li>
+        <li>アプリのプッシュ通知ON/OFFで調整可</li>
+        <li>過剰な通知頻度は運営に改善要望として共有</li>
+      </ul>`,
+  },
+  {
+    id: 'tr40', cat: 'trouble', type: 'irregular',
+    q: '「解約したのに復帰メールが来た」',
+    keywords: ['解約', '復帰', 'メール'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>休会と解約を混同している可能性</li>
+        <li>管理画面で契約状態（有効/無効・休会中）を確認</li>
+        <li>メール文面を確認（「復帰」＝休会からの復帰）</li>
+      </ul>
+      <div class="alert alert-info">解約済みアカウントには休会関連メールは届きません。休会中である可能性を確認。</div>`,
+  },
+  {
+    id: 'tr41', cat: 'trouble', type: 'irregular',
+    q: 'スマホが故障してアプリが開けない',
+    keywords: ['スマホ故障', 'アプリ', '緊急'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>有人時間帯ならスタッフ側で鍵開錠対応</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>管理画面からチェックイン実績を手動で作成（手入力）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>お客様にはスマホ復旧後に連絡先確認依頼</div></div>
+      </div>`,
+  },
+  {
+    id: 'tr42', cat: 'trouble', type: 'irregular',
+    q: '「会員番号がない」と言っているお客様',
+    keywords: ['会員番号', 'ない', '問い合わせ'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>契約完了メールを確認（BCBP/BCS で始まる番号）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>管理画面のメモ欄に記入されているかスタッフ確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>メールを再送信してもらう</div></div>
+      </div>`,
+  },
+  {
+    id: 'tr43', cat: 'trouble', type: 'irregular',
+    q: '閉店時刻になっても退店しないお客様',
+    keywords: ['閉店', '退店しない', '長居'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>閉店10分前にアナウンス</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>個別に声かけ（お荷物おまとめをお願い）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>閉店時刻にも残っていたら毅然と退店依頼</div></div>
+      </div>
+      <div class="alert alert-info">営業時間外は自動チェックアウト扱い。解錠もされないため物理的に新規入場は不可。</div>`,
+  },
+  {
+    id: 'tr44', cat: 'trouble', type: 'irregular',
+    q: '電話でスタディGOについて質問されたら',
+    keywords: ['電話', '質問', '対応'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>営業時間・料金・プランの概要 → 店舗で回答</li>
+        <li>契約手続き・アプリ操作 → アプリダウンロードを案内</li>
+        <li>システム障害 → 運営（03-6302-0774）を案内</li>
+        <li>返金・契約変更の判断 → 國松に確認</li>
+      </ul>`,
+  },
+  {
+    id: 'tr46', cat: 'trouble', type: 'irregular',
+    q: '鍵が開かなくて他のお客様も困っているときの優先順位',
+    keywords: ['鍵', '優先', 'お客様'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>まず全お客様を物理的に入れる（予備キー・スタッフ開錠）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>運営に速報で連絡</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>チェックイン記録は後で手動調整</div></div>
+      </div>`,
+  },
+  {
+    id: 'tr47', cat: 'trouble', type: 'irregular',
+    q: '「アプリが使いにくい」というフィードバック',
+    keywords: ['使いにくい', 'フィードバック', '改善'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>具体的な使いにくさをヒアリング・メモ</li>
+        <li>國松経由で運営に共有</li>
+        <li>アプリの解約アンケート（解約時）も活用される</li>
+      </ul>`,
+  },
+  {
+    id: 'tr48', cat: 'trouble', type: 'irregular',
+    q: '新規スタッフがトラブル対応に慣れないときは？',
+    keywords: ['新人', '慣れない', 'エスカレーション'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>まずこのマニュアルを確認</li>
+        <li>解決しなければ先輩スタッフに相談</li>
+        <li>それでも不明なら國松（チャットワーク or 電話）</li>
+        <li>緊急は運営電話（03-6302-0774）</li>
+      </ul>`,
+  },
+  {
+    id: 'tr49', cat: 'trouble', type: 'irregular',
+    q: '「アプリに契約情報が表示されない」緊急時の対応',
+    keywords: ['契約情報', '表示されない', '緊急'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>画面引き下げでリフレッシュ</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>ログアウト→再ログイン</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>管理画面側で契約があるか確認（スタッフ）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>契約ありなのに表示されない → 運営に連絡</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">5</div><div>緊急利用ならスタッフが鍵開錠して入れる</div></div>
+      </div>`,
+  },
+  {
+    id: 'tr53', cat: 'trouble', type: 'example',
+    q: '【例題】お客様「今日の料金を払い戻してほしい」',
+    keywords: ['例題', '払い戻し', '当日'],
+    a: `
+      <div class="alert alert-danger">即日決済のため、原則払い戻しはできません。</div>
+      <ul style="padding-left:24px;">
+        <li>アプリ不具合が確認できた場合のみ運営判断で返金</li>
+        <li>独断で対応しない・國松に相談</li>
+      </ul>`,
+  },
+  {
+    id: 'tr54', cat: 'trouble', type: 'irregular',
+    q: 'お客様「アカウントにログインできない」',
+    keywords: ['ログイン', 'できない', 'パスワード'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>メールアドレスの入力ミスを確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>パスワードを忘れていないか確認（再設定案内）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>アプリ再起動・アプデ確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>解決しなければ運営</div></div>
+      </div>`,
+  },
+  {
+    id: 'tr55', cat: 'trouble', type: 'irregular',
+    q: 'お客様「予約確認メールが来ない」',
+    keywords: ['予約', 'メール', '届かない'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>迷惑メールフォルダ確認</li>
+        <li>登録メールアドレスの入力ミスを確認</li>
+        <li>管理画面で予約が登録されているか確認</li>
+        <li>必要なら再送依頼</li>
+      </ul>`,
+  },
+  {
+    id: 'tr56', cat: 'trouble', type: 'irregular',
+    q: '管理画面のデータ反映が遅い・表示が古い',
+    keywords: ['管理画面', '反映', '遅い'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>画面をリロード（F5）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>キャッシュクリア（Ctrl+Shift+R）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>別のブラウザで試す</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>復旧しなければ運営</div></div>
+      </div>`,
+  },
+  {
+    id: 'tr57', cat: 'trouble', type: 'irregular',
+    q: 'Akerun解錠時にエラー音がする',
+    keywords: ['Akerun', 'エラー音', 'ビープ'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>バッテリー残量を確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>ネットワーク接続を確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>Akerunダッシュボードでステータス確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>繰り返すなら運営＋Akerunに連絡</div></div>
+      </div>`,
+  },
+  {
+    id: 'tr58', cat: 'trouble', type: 'example',
+    q: '【例題】「チェックアウト忘れで高額請求が来た」と怒っているお客様',
+    keywords: ['例題', '高額', 'チェックアウト忘れ'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>冷静に状況ヒアリング（いつ退店したか）</li>
+        <li>管理画面で実際の滞在時間を確認</li>
+        <li>アプリ不具合の証拠があれば運営に相談</li>
+        <li>お客様の操作ミスなら<strong>原則返金不可</strong>のルール説明</li>
+      </ul>
+      <div class="alert alert-warn">感情的にならず、論理的・丁寧に対応。独断で返金判断しない。</div>`,
+  },
+  {
+    id: 'tr59', cat: 'trouble', type: 'irregular',
+    q: 'お客様「無断で課金された」',
+    keywords: ['無断', '課金', 'クレーム'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>アプリの支払履歴を一緒に確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>契約内容・チェックイン履歴を照合</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>正当な課金なら理由を説明</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>不明点あれば運営に調査依頼</div></div>
+      </div>`,
+  },
+  {
+    id: 'tr60', cat: 'trouble', type: 'irregular',
+    q: 'お客様「月額契約したがまだ使えない」',
+    keywords: ['月額', '契約済', '使えない'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>利用開始日をアプリで確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>開始日前なら開始日から使える旨を説明</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>即日使いたいならドロップイン利用も可</div></div>
+      </div>`,
+  },
+  {
+    id: 'tr61', cat: 'trouble', type: 'irregular',
+    q: 'お客様「クレカの限度額が低くて決済できない」',
+    keywords: ['限度額', 'クレカ', '決済不可'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>別のカードを登録してもらう</li>
+        <li>月末までに限度額解放されるなら待つ</li>
+        <li>デビットカード・プリペイドカードも選択肢</li>
+      </ul>`,
+  },
+  {
+    id: 'tr62', cat: 'trouble', type: 'irregular',
+    q: '管理画面のログイン後、画面が真っ白',
+    keywords: ['管理画面', '真っ白', 'ログイン後'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>ページリロード（F5）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>別ブラウザで試す</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>シークレットウィンドウで試す</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>運営に連絡</div></div>
+      </div>`,
+  },
+  {
+    id: 'tr69', cat: 'trouble', type: 'irregular',
+    q: '現金を要求してくるお客様',
+    keywords: ['現金', '要求', 'クレーム'],
+    a: `
+      <div class="alert alert-danger">スタディGOは<strong>クレジットカード決済のみ</strong>。現金は一切受付不可。</div>
+      <ul style="padding-left:24px;">
+        <li>ルール説明</li>
+        <li>カード登録を案内</li>
+        <li>家族・友人のカードでも同意あれば可</li>
+      </ul>`,
+  },
+  {
+    id: 'tr50', cat: 'trouble', type: 'irregular',
+    q: 'トラブル発生時に必ず残すべきメモは？',
+    keywords: ['メモ', '記録', 'トラブル'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li><strong>日時</strong>（発生・連絡・解決時刻）</li>
+        <li><strong>お客様情報</strong>（会員番号・氏名）</li>
+        <li><strong>状況</strong>（何が起きたか・エラーメッセージ）</li>
+        <li><strong>試した対応</strong>（効果の有無）</li>
+        <li><strong>最終結果</strong>（解決したか・エスカレーション内容）</li>
+      </ul>
+      <div class="kodack-tip">
+        <div class="kodack-tip-img"></div>
+        <div class="kodack-tip-body">
+          <div class="kodack-tip-label">🦆 コダック先生のひとこと</div>
+          <div class="kodack-tip-text">メモがあると引き継ぎも再発防止もスムーズだよ。チャットワークに共有してね。</div>
+        </div>
+      </div>`,
+  },
+];
+
+// ===================================
+// 表示ロジック
+// ===================================
+const homeView    = document.getElementById('home-view');
+const qaListView  = document.getElementById('qa-list-view');
+const categoryGrid= document.getElementById('categoryGrid');
+const searchInput = document.getElementById('searchInput');
+const searchResults = document.getElementById('searchResults');
+const searchClearBtn = document.getElementById('searchClearBtn');
+
+let currentCategory = null;
+
+// カテゴリタイルを生成
+function renderCategories() {
+  categoryGrid.innerHTML = '';
+  CATEGORIES.forEach(cat => {
+    if (HIDDEN_CATEGORIES.includes(cat.id)) return;
+    const count = QA_DATA.filter(q => q.cat === cat.id).length;
+    const btn = document.createElement('button');
+    btn.className = 'category-card ' + cat.cls;
+    btn.innerHTML = `
+      <span class="category-card-icon">${cat.icon}</span>
+      <div class="category-card-title">${cat.title}</div>
+      <div class="category-card-desc">${cat.desc}</div>
+      <div class="category-card-count">${count}項目</div>
+    `;
+    btn.addEventListener('click', () => showCategory(cat.id));
+    categoryGrid.appendChild(btn);
+  });
+}
+
+function showCategory(catId, expandId) {
+  currentCategory = catId;
+  const cat = CATEGORIES.find(c => c.id === catId);
+  document.getElementById('qaListTitle').textContent = cat.icon + ' ' + cat.title;
+  const items = QA_DATA.filter(q => q.cat === catId);
+  const listEl = document.getElementById('qaList');
+  listEl.innerHTML = '';
+  items.forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'qa-list-item';
+    el.dataset.id = item.id;
+    const typeLabel = item.type === 'basic' ? '基本' : item.type === 'example' ? '例題' : 'イレギュラー';
+    el.innerHTML = `
+      <div class="qa-list-item-head">
+        <span class="qa-badge ${item.type}">${typeLabel}</span>
+        <div class="qa-list-item-q">${item.q}</div>
+        <span class="qa-list-item-arrow">›</span>
+      </div>
+      <div class="qa-list-item-body">
+        <div class="qa-detail-a">${item.a}</div>
+      </div>
+    `;
+    el.querySelector('.qa-list-item-head').addEventListener('click', () => {
+      el.classList.toggle('expanded');
+    });
+    listEl.appendChild(el);
+  });
+  switchView('list');
+  if (expandId) {
+    const target = listEl.querySelector(`[data-id="${expandId}"]`);
+    if (target) {
+      target.classList.add('expanded');
+      setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+      return;
+    }
+  }
+  window.scrollTo(0,0);
+}
+
+function showHome() {
+  currentCategory = null;
+  switchView('home');
+  clearSearch();
+  window.scrollTo(0,0);
+}
+
+function switchView(view) {
+  homeView.style.display     = view === 'home' ? '' : 'none';
+  qaListView.classList.toggle('active', view === 'list');
+}
+
+// ===================================
+// 検索
+// ===================================
+function normalizeText(s) {
+  return (s || '').toLowerCase().replace(/\s+/g, '');
+}
+
+searchInput.addEventListener('input', () => {
+  const q = normalizeText(searchInput.value);
+  searchClearBtn.classList.toggle('visible', q.length > 0);
+  if (!q) {
+    searchResults.classList.remove('visible');
+    searchResults.innerHTML = '';
+    return;
+  }
+  const matches = QA_DATA.filter(item => {
+    if (HIDDEN_CATEGORIES.includes(item.cat)) return false;
+    const haystack = normalizeText(item.q + ' ' + (item.keywords || []).join(' ') + ' ' + item.a);
+    return haystack.includes(q);
+  });
+  renderSearchResults(matches);
+});
+
+function renderSearchResults(matches) {
+  searchResults.innerHTML = '';
+  if (matches.length === 0) {
+    searchResults.innerHTML = '<div class="search-no-result">該当するQ&Aが見つかりませんでした</div>';
+  } else {
+    matches.slice(0, 30).forEach(item => {
+      const cat = CATEGORIES.find(c => c.id === item.cat);
+      const el = document.createElement('div');
+      el.className = 'search-result-item';
+      el.innerHTML = `
+        <div class="search-result-q">${item.q}</div>
+        <span class="search-result-cat">${cat.icon} ${cat.title}</span>
+      `;
+      el.addEventListener('click', () => {
+        clearSearch();
+        showCategory(item.cat, item.id);
+      });
+      searchResults.appendChild(el);
+    });
+  }
+  searchResults.classList.add('visible');
+}
+
+function clearSearch() {
+  searchInput.value = '';
+  searchClearBtn.classList.remove('visible');
+  searchResults.classList.remove('visible');
+  searchResults.innerHTML = '';
+}
+
+// 初期表示
+renderCategories();
+
+</script>
+</body>
+</html>

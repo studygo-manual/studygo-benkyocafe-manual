@@ -106,6 +106,7 @@ body { font-family: 'Segoe UI', 'Hiragino Sans', sans-serif; background: #f0f2f5
 }
 .copy-toast.show { opacity: 1; }
 </style>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
 
@@ -301,46 +302,99 @@ function cropAndShow(x, y, w, h) {
   setStatus('statusResult', 'info', `${canvas.width}×${canvas.height}px`);
 }
 
-// GAS URL (固定)
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbzfLqw-InFueE9H7_KB3wln-7uJNH8Qk1hqPL4NNGTrqeHdPw9Jme99Ef15F_FMiWo/exec';
+// ★ Google Cloud ConsoleのOAuth クライアントIDをここに設定
+const CLIENT_ID = 'YOUR_CLIENT_ID_HERE.apps.googleusercontent.com';
+const FOLDER_ID = '1wj-glAHMpgf04rPOmZ3QHU1deu9Pu8Fw';
+const SCOPES = 'https://www.googleapis.com/auth/drive.file';
 
-// Upload to Google Drive via GAS
-$('btnUpload').addEventListener('click', async () => {
-  if (!croppedBlob) return;
+let tokenClient = null;
+let accessToken = null;
 
-  const btn = $('btnUpload');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span>アップロード中...';
-  $('shortUrlBox').classList.add('hidden');
-  setStatus('statusResult', 'info', 'Google Driveにアップロード中...');
-
-  try {
-    const reader = new FileReader();
-    const base64 = await new Promise(r => { reader.onload = () => r(reader.result.split(',')[1]); reader.readAsDataURL(croppedBlob); });
-
-    const res = await fetch(GAS_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({
-        image: base64,
-        fileName: 'photo_' + Date.now() + '.png'
-      })
-    });
-
-    const data = await res.json();
-    if (data.success && data.url) {
-      $('shortUrlOutput').value = data.url;
-      $('shortUrlBox').classList.remove('hidden');
-      setStatus('statusResult', 'success', 'URLを生成しました! コピーしてお使いください。');
-    } else {
-      setStatus('statusResult', 'error', 'アップロード失敗: ' + (data.error || '不明なエラー'));
+function ensureTokenClient() {
+  if (tokenClient) return true;
+  if (typeof google === 'undefined' || !google.accounts) {
+    setStatus('statusResult', 'error', 'Google認証ライブラリを読み込み中です。数秒後に再試行してください。');
+    return false;
+  }
+  tokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: CLIENT_ID,
+    scope: SCOPES,
+    callback: (response) => {
+      if (response.error) {
+        setStatus('statusResult', 'error', '認証失敗: ' + response.error);
+        resetUploadBtn();
+        return;
+      }
+      accessToken = response.access_token;
+      performUpload();
     }
+  });
+  return true;
+}
+
+function resetUploadBtn() {
+  const btn = $('btnUpload');
+  btn.disabled = false;
+  btn.textContent = '短いURLを生成';
+}
+
+async function performUpload() {
+  try {
+    setStatus('statusResult', 'info', 'Google Driveにアップロード中...');
+    const metadata = {
+      name: 'photo_' + Date.now() + '.png',
+      parents: [FOLDER_ID],
+      mimeType: 'image/png'
+    };
+    const form = new FormData();
+    form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
+    form.append('file', croppedBlob);
+
+    const uploadRes = await fetch(
+      'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id',
+      { method: 'POST', headers: { 'Authorization': 'Bearer ' + accessToken }, body: form }
+    );
+    if (!uploadRes.ok) {
+      const err = await uploadRes.json().catch(() => ({}));
+      throw new Error(err.error?.message || ('アップロード失敗 (HTTP ' + uploadRes.status + ')'));
+    }
+    const { id: fileId } = await uploadRes.json();
+
+    // 誰でも閲覧可に設定
+    const permRes = await fetch('https://www.googleapis.com/drive/v3/files/' + fileId + '/permissions', {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + accessToken, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ role: 'reader', type: 'anyone' })
+    });
+    if (!permRes.ok) {
+      const err = await permRes.json().catch(() => ({}));
+      throw new Error('共有設定失敗: ' + (err.error?.message || permRes.status));
+    }
+
+    const url = 'https://lh3.googleusercontent.com/d/' + fileId + '=w272';
+    $('shortUrlOutput').value = url;
+    $('shortUrlBox').classList.remove('hidden');
+    setStatus('statusResult', 'success', 'URLを生成しました! コピーしてお使いください。');
   } catch (e) {
     setStatus('statusResult', 'error', 'エラー: ' + e.message);
   }
+  resetUploadBtn();
+}
 
-  btn.disabled = false;
-  btn.textContent = '短いURLを生成';
+$('btnUpload').addEventListener('click', () => {
+  if (!croppedBlob) return;
+  if (CLIENT_ID.indexOf('YOUR_CLIENT_ID_HERE') !== -1) {
+    setStatus('statusResult', 'error', 'CLIENT_IDが未設定です。ソースのCLIENT_IDを書き換えてください。');
+    return;
+  }
+  const btn = $('btnUpload');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>認証中...';
+  $('shortUrlBox').classList.add('hidden');
+  setStatus('statusResult', 'info', 'Googleアカウントでサインインしてください（ポップアップ）');
+
+  if (!ensureTokenClient()) { resetUploadBtn(); return; }
+  tokenClient.requestAccessToken({ prompt: accessToken ? '' : 'consent' });
 });
 
 // Copy short URL

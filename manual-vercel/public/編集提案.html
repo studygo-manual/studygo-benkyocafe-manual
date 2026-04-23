@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マニュアル編集提案 | スタディGO スタッフマニュアル</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --cafe: #4CAF50;
+            --cafe-light: #E8F5E9;
+            --change: #FF5722;
+            --change-light: #FBE9E7;
+            --studygo: #2196F3;
+            --studygo-light: #E3F2FD;
+            --staff: #9C27B0;
+            --staff-light: #F3E5F5;
+            --border: #e0e0e0;
+            --bg: #f8f9fa;
+        }
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'メイリオ', sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background: var(--bg);
+        }
+
+        /* ヘッダー */
+        .page-header {
+            background: linear-gradient(135deg, #1a237e, #283593);
+            color: white;
+            padding: 24px 32px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+        .page-header h1 { font-size: 1.3rem; }
+        .page-header p { font-size: 0.85rem; opacity: 0.85; margin-top: 4px; }
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .header-stats {
+            display: flex;
+            gap: 16px;
+            font-size: 0.82rem;
+        }
+        .stat-box {
+            background: rgba(255,255,255,0.15);
+            padding: 4px 14px;
+            border-radius: 20px;
+        }
+        .stat-box strong { font-size: 1.1rem; }
+
+        /* レイアウト */
+        .layout {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            gap: 0;
+        }
+
+        /* サイドナビ */
+        .side-nav {
+            width: 260px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 80px;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+            background: white;
+            border-right: 1px solid var(--border);
+            padding: 16px 0;
+        }
+        .side-nav::-webkit-scrollbar { width: 4px; }
+        .side-nav::-webkit-scrollbar-thumb { background: #ccc; border-radius: 2px; }
+        .nav-cat-label {
+            padding: 8px 20px 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #999;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 20px;
+            font-size: 0.82rem;
+            color: #555;
+            text-decoration: none;
+            border-left: 3px solid transparent;
+            transition: all 0.15s;
+            cursor: pointer;
+        }
+        .nav-item:hover { background: #f5f5f5; color: #333; }
+        .nav-item.active { border-left-color: #1a237e; background: #E8EAF6; color: #1a237e; font-weight: bold; }
+        .nav-badge {
+            margin-left: auto;
+            font-size: 0.65rem;
+            padding: 1px 7px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+        .nav-badge.todo { background: #FFF3E0; color: #E65100; }
+        .nav-badge.done { background: #E8F5E9; color: #2E7D32; }
+        .nav-badge.editing { background: #E3F2FD; color: #1565C0; }
+
+        /* メインコンテンツ */
+        .main-content {
+            flex: 1;
+            padding: 24px 32px;
+            min-width: 0;
+        }
+
+        /* 凡例 */
+        .legend {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+            padding: 16px 20px;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            font-size: 0.82rem;
+            align-items: center;
+        }
+        .legend-title { font-weight: bold; margin-right: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 6px; }
+        .legend-dot {
+            width: 12px; height: 12px; border-radius: 50%;
+        }
+
+        /* セクションカード */
+        .section-card {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: box-shadow 0.2s;
+        }
+        .section-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .section-header:hover { background: #fafafa; }
+        .section-cat-badge {
+            font-size: 0.68rem;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        .cat-cafe .section-cat-badge { background: var(--cafe-light); color: #2E7D32; }
+        .cat-change .section-cat-badge { background: var(--change-light); color: #BF360C; }
+        .cat-studygo .section-cat-badge { background: var(--studygo-light); color: #1565C0; }
+        .cat-staff .section-cat-badge { background: var(--staff-light); color: #6A1B9A; }
+        .section-title { font-size: 1rem; font-weight: bold; flex: 1; }
+        .section-meta { font-size: 0.75rem; color: #999; }
+        .section-toggle {
+            font-size: 1.2rem;
+            color: #999;
+            transition: transform 0.2s;
+        }
+        .section-card.open .section-toggle { transform: rotate(180deg); }
+        .section-status {
+            font-size: 0.72rem;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-weight: bold;
+        }
+        .status-todo { background: #FFF3E0; color: #E65100; }
+        .status-editing { background: #E3F2FD; color: #1565C0; }
+        .status-done { background: #E8F5E9; color: #2E7D32; }
+
+        /* セクション内容 */
+        .section-body {
+            display: none;
+            border-top: 1px solid var(--border);
+        }
+        .section-card.open .section-body { display: block; }
+
+        /* h3項目リスト */
+        .h3-list {
+            padding: 0;
+            margin: 0;
+        }
+        .h3-item {
+            display: flex;
+            align-items: stretch;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .h3-item:last-child { border-bottom: none; }
+        .h3-item-left {
+            width: 50%;
+            padding: 14px 20px;
+            background: #fafbfc;
+            border-right: 1px solid #f0f0f0;
+        }
+        .h3-item-right {
+            width: 50%;
+            padding: 14px 20px;
+        }
+        .h3-label {
+            font-size: 0.72rem;
+            font-weight: bold;
+            color: #999;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .h3-name {
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+        }
+        .h3-current-summary {
+            font-size: 0.8rem;
+            color: #666;
+            line-height: 1.5;
+        }
+        .proposal-text {
+            font-size: 0.82rem;
+            color: #1565C0;
+            line-height: 1.6;
+            min-height: 40px;
+        }
+        .proposal-text.empty {
+            color: #bbb;
+            font-style: italic;
+        }
+
+        /* 決定・保留ボタン */
+        .h3-actions {
+            display: flex;
+            gap: 6px;
+            margin-top: 10px;
+        }
+        .h3-action-btn {
+            padding: 4px 14px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            font-size: 0.72rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.15s;
+            background: white;
+        }
+        .h3-action-btn:hover { opacity: 0.85; }
+        .btn-ok {
+            border-color: #4CAF50;
+            color: #2E7D32;
+        }
+        .btn-ok:hover { background: #E8F5E9; }
+        .btn-ok.active {
+            background: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+        .btn-hold {
+            border-color: #FF9800;
+            color: #E65100;
+        }
+        .btn-hold:hover { background: #FFF3E0; }
+        .btn-hold.active {
+            background: #FF9800;
+            color: white;
+            border-color: #FF9800;
+        }
+        .btn-edit {
+            border-color: #90CAF9;
+            color: #1565C0;
+        }
+        .btn-edit:hover { background: #E3F2FD; }
+        .h3-decision-badge {
+            display: inline-block;
+            font-size: 0.68rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-left: 6px;
+        }
+        .decision-ok { background: #E8F5E9; color: #2E7D32; }
+        .decision-hold { background: #FFF3E0; color: #E65100; }
+
+        /* 提案タグ */
+        .proposal-tag {
+            display: inline-block;
+            font-size: 0.68rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-right: 4px;
+            margin-bottom: 4px;
+        }
+        .tag-add { background: #E8F5E9; color: #2E7D32; }
+        .tag-update { background: #E3F2FD; color: #1565C0; }
+        .tag-delete { background: #FFEBEE; color: #C62828; }
+        .tag-rewrite { background: #FFF3E0; color: #E65100; }
+        .tag-keep { background: #F5F5F5; color: #757575; }
+        .tag-verify { background: #F3E5F5; color: #6A1B9A; }
+
+        /* サマリーバー */
+        .section-summary-bar {
+            display: flex;
+            gap: 12px;
+            padding: 10px 20px;
+            background: #f5f6f7;
+            font-size: 0.78rem;
+            flex-wrap: wrap;
+        }
+        .summary-chip {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .summary-chip-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+        }
+
+        /* 進捗バー */
+        .progress-bar-container {
+            padding: 12px 20px;
+            background: #f9f9f9;
+        }
+        .progress-bar {
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #2E7D32);
+            border-radius: 2px;
+            transition: width 0.3s;
+        }
+
+        /* フィルター */
+        .filter-bar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            padding: 6px 14px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: white;
+            font-size: 0.78rem;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .filter-btn:hover { border-color: #999; }
+        .filter-btn.active { background: #1a237e; color: white; border-color: #1a237e; }
+
+        /* メモエリア */
+        .section-note {
+            padding: 12px 20px;
+            background: #FFFDE7;
+            border-top: 1px solid #FFF9C4;
+        }
+        .section-note textarea {
+            width: 100%;
+            border: 1px solid #E0E0E0;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 0.82rem;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 50px;
+            line-height: 1.5;
+        }
+        .section-note textarea:focus {
+            outline: none;
+            border-color: #1a237e;
+        }
+        .section-note-label {
+            font-size: 0.72rem;
+            font-weight: bold;
+            color: #F9A825;
+            margin-bottom: 4px;
+        }
+
+        /* レスポンシブ */
+        @media (max-width: 900px) {
+            .side-nav { display: none; }
+            .main-content { padding: 16px; }
+            .h3-item { flex-direction: column; }
+            .h3-item-left, .h3-item-right { width: 100%; border-right: none; }
+            .h3-item-left { border-bottom: 1px dashed #e0e0e0; }
+            .header-stats { display: none; }
+        }
+
+        /* 印刷 */
+        @media print {
+            .side-nav, .page-header, .filter-bar, .legend { display: none; }
+            .section-body { display: block !important; }
+            .section-card { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-header">
+    <div class="header-row">
+        <div>
+            <h1>マニュアル編集提案</h1>
+            <p>スタディGO スタッフマニュアル ― 全セクション編集計画</p>
+        </div>
+        <div class="header-stats">
+            <div class="stat-box">セクション <strong id="totalSections">0</strong></div>
+            <div class="stat-box">h3項目 <strong id="totalH3">0</strong></div>
+            <div class="stat-box">決定 <strong id="okCount" style="color:#4CAF50;">0</strong></div>
+            <div class="stat-box">保留 <strong id="holdCount" style="color:#FF9800;">0</strong></div>
+            <div class="stat-box">完了 <strong id="doneCount">0</strong>/<strong id="doneTotal">0</strong></div>
+        </div>
+    </div>
+</div>
+
+<div class="layout">
+    <nav class="side-nav" id="sideNav"></nav>
+
+    <div class="main-content">
+        <div class="legend">
+            <span class="legend-title">提案タグ：</span>
+            <span class="legend-item"><span class="proposal-tag tag-add">追加</span> 新規コンテンツ</span>
+            <span class="legend-item"><span class="proposal-tag tag-update">更新</span> 内容の修正・追記</span>
+            <span class="legend-item"><span class="proposal-tag tag-rewrite">書き直し</span> 大幅リライト</span>
+            <span class="legend-item"><span class="proposal-tag tag-delete">削除</span> 不要箇所の除去</span>
+            <span class="legend-item"><span class="proposal-tag tag-verify">要確認</span> 事実確認が必要</span>
+            <span class="legend-item"><span class="proposal-tag tag-keep">維持</span> 変更不要</span>
+            <span style="margin-left:12px; border-left:1px solid #ddd; padding-left:16px;" class="legend-title">判定：</span>
+            <span class="legend-item"><span class="h3-action-btn btn-ok active" style="pointer-events:none;padding:2px 8px;">決定</span> そのままでOK</span>
+            <span class="legend-item"><span class="h3-action-btn btn-hold active" style="pointer-events:none;padding:2px 8px;">保留</span> 今はやらない</span>
+        </div>
+
+        <div class="filter-bar" id="filterBar">
+            <button class="filter-btn active" data-filter="all">すべて</button>
+            <button class="filter-btn" data-filter="cafe">勉強カフェ</button>
+            <button class="filter-btn" data-filter="change">変更点</button>
+            <button class="filter-btn" data-filter="studygo">スタディGO</button>
+            <button class="filter-btn" data-filter="staff">スタッフマニュアル</button>
+            <button class="filter-btn" data-filter="status-todo">未着手のみ</button>
+            <button class="filter-btn" data-filter="has-ok">決定あり</button>
+            <button class="filter-btn" data-filter="has-hold">保留あり</button>
+            <button class="filter-btn" data-filter="undecided">未判定あり</button>
+        </div>
+
+        <div id="sectionContainer"></div>
+    </div>
+</div>
+
+<script>
+// ===================================
+// マニュアル全セクションデータ
+// ===================================
+const sections = [
+    // ── 勉強カフェ ──
+    {
+        id: 'cafe-basic',
+        category: 'cafe',
+        catLabel: '勉強カフェ',
+        title: '基本情報',
+        lines: '約450行',
+        status: 'todo',
+        h3s: [
+            {
+                name: '営業時間',
+                current: '平日6:00-23:00、土曜6:00-22:00、日祝6:00-21:00のビジュアル表示（有人/無人時間帯）',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '料金',
+                current: '13プランの料金表、毎日習慣化プラン、プラン時間外料金、時間利用（ドロップイン）、オプション',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '入会時に必要なもの',
+                current: 'スタディGOアプリ、クレジットカード等の説明',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '15歳以上の現役高校生の方',
+                current: '高校生利用に関する注意事項',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: 'スタジオルール',
+                current: '12個のルールカード + スタジオ別ルール、有人/無人時間帯の違い',
+                proposal: '',
+                tag: ''
+            }
+        ]
+    },
+    {
+        id: 'cafe-studio-compare',
+        category: 'cafe',
+        catLabel: '勉強カフェ',
+        title: 'スタジオ比較表',
+        lines: '約435行',
+        status: 'todo',
+        h3s: [
+            {
+                name: 'スタジオ比較表',
+                current: '新宿南口 vs BPスタジオ西口の比較、共通設備、見学予約経路',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '印刷機（コピー機）',
+                current: '複合機使用料金・操作方法',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '防犯・防災について',
+                current: '防犯カメラ配置、避難経路図（準備中）',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '緊急連絡先',
+                current: '緊急時の連絡先一覧',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '転籍',
+                current: '転籍手続きの説明',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '給茶機トラブル対応',
+                current: '給茶機の故障・トラブル対応フロー',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: 'コーヒーサーバーメンテナンス',
+                current: 'コーヒーサーバーの清掃・メンテナンス手順',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '機器エラーコード一覧',
+                current: '各機器のエラーコードと対処法',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: 'その他機器トラブル',
+                current: '製氷機・Akerun等のトラブル対応',
+                proposal: '',
+                tag: ''
+            }
+        ]
+    },
+    {
+        id: 'cafe-systems',
+        category: 'cafe',
+        catLabel: '勉強カフェ',
+        title: '導入システムの違い',
+        lines: '約100行',
+        status: 'todo',
+        h3s: [
+            {
+                name: '各サービスの違い',
+                current: 'スタディGO（現行）vs BPアプリ（旧）の比較',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: 'BPアプリとは',
+                current: 'BPアプリの説明・概要',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '会員種別ルール比較表',
+                current: 'チェックイン方法・打刻修正・支払い方法等の8項目比較表',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '打刻について（BPアプリ）',
+                current: 'BPアプリでの打刻方法・注意事項',
+                proposal: '',
+                tag: ''
+            }
+        ]
+    },
+
+    // ── 変更点 ──
+    {
+        id: 'bp-to-studygo',
+        category: 'change',
+        catLabel: '変更点',
+        title: 'スタディGO変更点',
+        lines: '約400行',
+        status: 'todo',
+        h3s: [
+            {
+                name: '何が変わった？',
+                current: '変更内容12項目の概要',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '入会フローの違い',
+                current: '入会・契約・打刻・入退室・料金・各種変更・オプション・連絡・廃止項目の詳細比較表',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: 'スタッフが特に注意すべきポイント',
+                current: '5段階注意レベル（★★★★★〜★☆☆☆☆）の注意事項',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '月額プラン会員の利用パターン',
+                current: '月額会員の利用パターン説明',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: 'チェックイン・チェックアウトのトラブル対応',
+                current: 'チェックイン/アウト時のトラブルシューティング',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: 'オプション（ロッカー）の注意事項',
+                current: 'ロッカーオプションに関する注意点',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: 'ロッカー（オプション）請求パターン',
+                current: '3種類の請求パターン',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '今後対応予定',
+                current: '今後実装・対応予定の項目リスト',
+                proposal: '',
+                tag: ''
+            }
+        ]
+    },
+
+    // ── スタディGO ──
+    {
+        id: 'overview',
+        category: 'studygo',
+        catLabel: 'スタディGO',
+        title: 'スタディGOの特徴とDL',
+        lines: '約190行',
+        status: 'todo',
+        h3s: [
+            {
+                name: 'スタディGO機能一覧',
+                current: '10個の機能（月額申し込み、ドロップイン、見学予約、チェックイン/アウト、クレカ、Akerun解錠、勉強記録、メッセージ、会員情報変更、他施設探索）のアイコン付きグリッド',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: 'アプリのダウンロード',
+                current: 'iOS/AndroidのQRダウンロードリンク',
+                proposal: '',
+                tag: ''
+            }
+        ]
+    },
+    {
+        id: 'procedures',
+        category: 'studygo',
+        catLabel: 'スタディGO',
+        title: '★対応フロー',
+        lines: '約893行（最大セクション）',
+        status: 'todo',
+        h3s: [
+            {
+                name: '見学・お客様対応',
+                current: '【変更済み】対応フロー全体像（スタッフ7ステップ／お客様4ステップのボタン切替式パネル）。\n● 見学予約の事前対応→「連絡不要」に変更（有人時間帯のみ受付のため、予約＝確定済み）。旧テンプレート（見学予約確認・契約済み来店案内）は削除し「連絡不要」の案内ボックスに置換。\n● 契約済み初来店→会員番号メールに来店案内が含まれるため、スタッフからの連絡不要。お客様からの返信を待つだけでOK。',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '月額契約',
+                current: '【変更済み】2パターンの契約フロー。\n● 来店契約（12ステップ）: 来店→見学→アプリDL→クレカ登録→即日入会設定(0日)→契約→設定戻し(1日)→【追加】新規契約の確認(会員番号)→利用説明→初回手続き→資料→入会報告\n● オンライン契約（9ステップ）: アプリDL→クレカ→契約→【変更】新規契約の確認(会員番号)をbadge-unique→badge-commonに変更→来店手続き案内(会員番号メールに含まれるため返信待ちでOK)→来店→利用説明→手続き→資料・報告',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: 'チェックイン・チェックアウト',
+                current: 'チェックイン/アウト手順、注意点・チェックリスト',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: 'プラン解約（退会）・休会',
+                current: '解約・休会の対応フロー',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '即日入会の手順',
+                current: '即日入会時の詳細ステップ',
+                proposal: '',
+                tag: ''
+            }
+        ]
+    },
+    {
+        id: 'admin-panel',
+        category: 'studygo',
+        catLabel: 'スタディGO',
+        title: '管理画面操作方法',
+        lines: '約290行',
+        status: 'todo',
+        h3s: [
+            {
+                name: 'ダッシュボード',
+                current: '【変更済み】ログイン情報（BP/新宿スタジオ別）、5種類の通知カード。\n● 支払い失敗→マネージャー報告\n● 未返信メッセージ→その日のうちに返信\n● 【変更】新規契約→「会員番号メールに来店案内が含まれているため、お客様からの返信を待つ」に変更（旧: スタッフから連絡）\n● 解約予定→来店+フォーム+スタッフ作業\n● 休会予定→ロッカー荷物確認\n● 「確認済み」ボタンは絶対に押さない警告あり',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '会員管理',
+                current: '【変更済み】会員詳細の確認方法（ID/氏名/メール/電話/生年月日/職業/勉強内容/契約・決済履歴）。\n● スタッフのやること: 会員番号をメモ欄に記入、チャットワーク報告\n● 【追加】会員番号メールテンプレートを折りたたみ(details)で掲載:\n  - お客様宛: 件名「【勉強カフェ】会員番号のお知らせ」、会員番号・契約内容・【オンライン契約された方へ】来店案内（オレンジ枠強調）\n  - スタジオ宛: 件名「【契約通知】○○様 - 会員番号 BCBP○○」、会員番号・契約情報・お客様情報・決済料金',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '店舗管理',
+                current: '店舗設定の管理方法',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: 'チェックイン実績',
+                current: 'チェックイン実績の確認方法',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '来店予約一覧',
+                current: '【変更済み】来店予約の管理・確認方法。\n● 予約ステータス3種: 予約確定（有人時間帯のみ＝連絡不要で確定）/ 見学実施 / 見学キャンセル\n● 【削除】旧「△不明」ステータスを廃止\n● スタッフのやること:\n  1. メール通知確認→管理画面で予約内容・お客様情報を確認\n  2. 見学当日: 来店あり→「見学実施」に変更、見学対応実施\n  3. 30分過ぎても来店なし→「見学キャンセル」に変更',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: 'メッセージ',
+                current: '【変更済み】メッセージ機能の使い方。\n● 利用場面: 見学予約のリスケ・キャンセル対応 / 契約済みお客様から来店日時の返信→確定連絡 / その他やり取り\n● 確認方法: ダッシュボード「メッセージへ」またはメニュー「メッセージ」、メール通知あり\n● 対応フロー: メール通知→管理画面→メッセージ確認・返信→迷う場合はマネージャーに相談',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: 'メール通知',
+                current: 'メール通知の設定・管理',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '営業日・営業時間管理',
+                current: '営業日・時間の設定方法',
+                proposal: '',
+                tag: ''
+            }
+        ]
+    },
+    {
+        id: 'app-flow',
+        category: 'studygo',
+        catLabel: 'スタディGO',
+        title: 'アプリ画面遷移ガイド',
+        lines: '約341行',
+        status: 'todo',
+        h3s: [
+            {
+                name: '時間利用（ドロップイン）',
+                current: '6ステップの画面遷移（矢印+スクリーンショット）',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '月額プラン契約',
+                current: '【変更済み】10ステップの画面遷移（スクリーンショット付き）。\n● ステップ: 店舗検索→店舗選択→月額申込→プラン選択→利用開始日+クーポン→カレンダー日付選択→開始確認・初回手続き説明→確認して次へ→オプション選択（ロッカー小/大）→契約内容確認（2パターン: 月額のみ / 月額+ロッカー）\n● 【変更】「仮予約」の仕組みは廃止。ステップ⑨で直接「予約確定」となる流れに変更',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: 'チェックイン〜解錠〜チェックアウトまで',
+                current: 'チェックイン/解錠/チェックアウトの画面フロー',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: 'オプション（ロッカー契約）契約・解約',
+                current: 'ロッカー契約/解約の画面フロー',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: 'プラン変更',
+                current: 'プラン変更の画面フロー',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '休会',
+                current: '休会手続きの画面フロー',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: 'プラン解約（退会）',
+                current: '解約手続きの画面フロー',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '再開・プラン変更（マイページから）',
+                current: 'マイページからの再開/変更フロー',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '連絡先・支払い方法の変更',
+                current: '連絡先・支払い方法変更の画面フロー',
+                proposal: '',
+                tag: ''
+            }
+        ]
+    },
+    {
+        id: 'settings',
+        category: 'studygo',
+        catLabel: 'スタディGO',
+        title: '要注意！各種設定',
+        lines: '約75行',
+        status: 'todo',
+        h3s: [
+            {
+                name: '見学予約カレンダーの設定',
+                current: '【変更済み】管理画面での見学予約カレンダー設定方法。\n● 設定項目: 締め切り設定（前日20:00まで等）/ 基本見学可能時間（有人時間帯のみ）/ 対応不可（曜日単位で停止）\n● 【削除】旧「△対応不明」ステータスを廃止（有人時間帯のみのため予約＝確定、仮予約の仕組みはなくなった）',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '営業日・営業時間設定（月額会員向け）',
+                current: '月額会員向けの営業日/時間設定',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '営業日・営業時間設定（都度利用向け）',
+                current: '都度利用向けの営業日/時間設定',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '店舗管理での設定',
+                current: '最短利用開始日の0/1/2設定、即日入会時の戻し忘れ警告',
+                proposal: '',
+                tag: ''
+            }
+        ]
+    },
+
+    // ── スタッフマニュアル ──
+    {
+        id: 'staff-op',
+        category: 'staff',
+        catLabel: 'スタッフ',
+        title: 'OP作業（オープン作業）',
+        lines: '約71行',
+        status: 'todo',
+        h3s: [
+            {
+                name: '出勤時チェックリスト',
+                current: '17項目（入退室、照明・空調、PC・iPad、掃除、トイレ、備品、留守番電話、Akerun、看板等）',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: 'ドリンクコーナーOP',
+                current: 'ドリンクコーナーのオープン準備手順',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: 'Akerun設定（BPスタジオ ワークスペースのみ）',
+                current: 'Akerun解錠設定の手順',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '曜日別追加作業',
+                current: '曜日ごとの追加タスク',
+                proposal: '',
+                tag: ''
+            }
+        ]
+    },
+    {
+        id: 'staff-cl',
+        category: 'staff',
+        catLabel: 'スタッフ',
+        title: 'CL作業（クローズ作業）',
+        lines: '約35行',
+        status: 'todo',
+        h3s: [
+            {
+                name: '退勤時の作業',
+                current: '10項目のチェックリスト',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: 'ドリンクコーナー片付け',
+                current: 'ドリンクコーナーの終了手順',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '退勤報告',
+                current: 'チャットワークへの報告（退勤時刻、来店者数、特記事項、入会情報）',
+                proposal: '',
+                tag: ''
+            }
+        ]
+    },
+    {
+        id: 'staff-cleaning',
+        category: 'staff',
+        catLabel: 'スタッフ',
+        title: '清掃業務',
+        lines: '約36行',
+        status: 'todo',
+        h3s: [
+            {
+                name: '日常清掃',
+                current: '6項目の日常清掃チェックリスト',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '清掃時間帯',
+                current: '平日/土日祝の清掃時間',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '清掃時の注意',
+                current: '4項目の注意事項',
+                proposal: '',
+                tag: ''
+            }
+        ]
+    },
+    {
+        id: 'staff-customer',
+        category: 'staff',
+        catLabel: 'スタッフ',
+        title: '接客・受付対応',
+        lines: '約45行',
+        status: 'todo',
+        h3s: [
+            {
+                name: '基本マナー',
+                current: '基本マナー4項目',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '見学対応',
+                current: '見学対応フロー',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '入会対応',
+                current: '入会対応フロー',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: 'よくある質問への回答例',
+                current: '4つのFAQ（Wi-Fi、電源、飲食、プラン変更）',
+                proposal: '',
+                tag: ''
+            }
+        ]
+    },
+    {
+        id: 'staff-procedures',
+        category: 'staff',
+        catLabel: 'スタッフ',
+        title: '各種手続き対応',
+        lines: '約63行',
+        status: 'todo',
+        h3s: [
+            {
+                name: '入会手続きの流れ',
+                current: '入会手続きフロー図',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: 'プラン解約（退会）手続きの流れ',
+                current: '解約手続きフロー図',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '時間利用（ドロップイン）対応',
+                current: '4ステップのドロップイン対応',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: 'ロッカー契約・解約',
+                current: '新規契約4ステップ、解約手順',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '休会対応',
+                current: '休会からの再開時に2か月分決済が必要との注意',
+                proposal: '',
+                tag: ''
+            }
+        ]
+    },
+    {
+        id: 'staff-equipment-mgmt',
+        category: 'staff',
+        catLabel: 'スタッフ',
+        title: '備品・発注管理',
+        lines: '約46行',
+        status: 'todo',
+        h3s: [
+            {
+                name: '消耗品の管理',
+                current: '消耗品の種類（ドリンク・清掃・事務関連）',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '発注の流れ',
+                current: '3ステップの発注フロー',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '貸出備品の管理',
+                current: '4種類（充電器・イヤホン・ブランケット・延長コード）',
+                proposal: '',
+                tag: ''
+            }
+        ]
+    },
+    {
+        id: 'staff-report',
+        category: 'staff',
+        catLabel: 'スタッフ',
+        title: '報告・連絡',
+        lines: '約32行',
+        status: 'todo',
+        h3s: [
+            {
+                name: 'チャットワーク',
+                current: '4チャンネル（入会情報、退勤報告、備品発注、トラブル報告）',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '連絡先一覧',
+                current: 'スタディGOサポート連絡先（メール・電話）',
+                proposal: '',
+                tag: ''
+            }
+        ]
+    },
+    {
+        id: 'staff-roleplay',
+        category: 'staff',
+        catLabel: 'スタッフ',
+        title: 'ロープレ動画',
+        lines: '約58行',
+        status: 'todo',
+        h3s: [
+            {
+                name: '見学対応のポイント',
+                current: '5つのポイント（動画は準備中）',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '入会対応のポイント',
+                current: '5つのポイント',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: 'クレーム・トラブル対応のポイント',
+                current: '5つのポイント',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: '電話対応のポイント',
+                current: '5つのポイント',
+                proposal: '',
+                tag: ''
+            }
+        ]
+    },
+    {
+        id: 'staff-studio',
+        category: 'staff',
+        catLabel: 'スタッフ',
+        title: 'スタジオ別情報',
+        lines: '約50行',
+        status: 'todo',
+        h3s: [
+            {
+                name: '新宿スタジオ',
+                current: '管理画面、会議室あり、設備（空気清浄機4台他）、留守電解除、掃除機の取り扱い、固有作業',
+                proposal: '',
+                tag: ''
+            },
+            {
+                name: 'BPスタジオ',
+                current: '管理画面、テルブースあり、棚配置、固有作業',
+                proposal: '',
+                tag: ''
+            }
+        ]
+    }
+];
+
+// ===================================
+// レンダリング
+// ===================================
+const container = document.getElementById('sectionContainer');
+const sideNav = document.getElementById('sideNav');
+
+// localStorage保存キー
+const STORAGE_KEY = 'manual_edit_proposals';
+
+// 保存データ読み込み
+function loadSavedData() {
+    try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        sections.forEach(sec => {
+            if (saved[sec.id]) {
+                sec.status = saved[sec.id].status || sec.status;
+                sec.note = saved[sec.id].note || '';
+                sec.h3s.forEach((h3, i) => {
+                    if (saved[sec.id].h3s && saved[sec.id].h3s[i]) {
+                        h3.proposal = saved[sec.id].h3s[i].proposal || '';
+                        h3.tag = saved[sec.id].h3s[i].tag || '';
+                        h3.decision = saved[sec.id].h3s[i].decision || '';
+                    }
+                });
+            }
+        });
+    } catch(e) {}
+}
+
+function saveData() {
+    const data = {};
+    sections.forEach(sec => {
+        data[sec.id] = {
+            status: sec.status,
+            note: sec.note || '',
+            h3s: sec.h3s.map(h3 => ({ proposal: h3.proposal, tag: h3.tag, decision: h3.decision || '' }))
+        };
+    });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+loadSavedData();
+
+// サイドナビ生成
+function renderSideNav() {
+    let html = '';
+    let lastCat = '';
+    const catNames = { cafe: '勉強カフェ', change: '変更点', studygo: 'スタディGO', staff: 'スタッフマニュアル' };
+    sections.forEach(sec => {
+        if (sec.category !== lastCat) {
+            html += `<div class="nav-cat-label">${catNames[sec.category]}</div>`;
+            lastCat = sec.category;
+        }
+        const okN = sec.h3s.filter(h => h.decision === 'ok').length;
+        const holdN = sec.h3s.filter(h => h.decision === 'hold').length;
+        const decidedAll = (okN + holdN) === sec.h3s.length && sec.h3s.length > 0;
+        const badgeClass = decidedAll ? 'done' : (okN + holdN) > 0 ? 'editing' : 'todo';
+        const badgeText = decidedAll ? `${okN + holdN}/${sec.h3s.length}` : (okN + holdN) > 0 ? `${okN + holdN}/${sec.h3s.length}` : '未着手';
+        html += `<a class="nav-item" data-nav="${sec.id}" onclick="scrollToSection('${sec.id}')">
+            <span>${sec.title}</span>
+            <span class="nav-badge ${badgeClass}">${badgeText}</span>
+        </a>`;
+    });
+    sideNav.innerHTML = html;
+}
+
+// メインコンテンツ生成
+function renderSections(filter) {
+    let html = '';
+    let filtered;
+    if (!filter || filter === 'all') {
+        filtered = sections;
+    } else if (filter === 'status-todo') {
+        filtered = sections.filter(s => s.status === 'todo');
+    } else if (filter === 'has-ok') {
+        filtered = sections.filter(s => s.h3s.some(h => h.decision === 'ok'));
+    } else if (filter === 'has-hold') {
+        filtered = sections.filter(s => s.h3s.some(h => h.decision === 'hold'));
+    } else if (filter === 'undecided') {
+        filtered = sections.filter(s => s.h3s.some(h => !h.decision));
+    } else {
+        filtered = sections.filter(s => s.category === filter);
+    }
+
+    filtered.forEach(sec => {
+        const statusLabel = sec.status === 'done' ? '完了' : sec.status === 'editing' ? '編集中' : '未着手';
+        const statusClass = sec.status === 'done' ? 'status-done' : sec.status === 'editing' ? 'status-editing' : 'status-todo';
+
+        let h3Html = '';
+        sec.h3s.forEach((h3, i) => {
+            const tagHtml = h3.tag ? `<span class="proposal-tag tag-${h3.tag}">${getTagLabel(h3.tag)}</span>` : '';
+            const proposalContent = h3.proposal
+                ? `${tagHtml}<span>${escHtml(h3.proposal)}</span>`
+                : `<span class="proposal-text empty">クリックして編集提案を入力...</span>`;
+            const dec = h3.decision || '';
+            const decBadge = dec === 'ok' ? '<span class="h3-decision-badge decision-ok">決定</span>'
+                           : dec === 'hold' ? '<span class="h3-decision-badge decision-hold">保留</span>' : '';
+
+            h3Html += `
+                <div class="h3-item" style="${dec === 'ok' ? 'background:#f9fdf9;' : dec === 'hold' ? 'background:#fffcf5;opacity:0.7;' : ''}">
+                    <div class="h3-item-left" style="${dec === 'ok' ? 'background:#f0f9f0;' : ''}">
+                        <div class="h3-label">現在の内容</div>
+                        <div class="h3-name">${escHtml(h3.name)}${decBadge}</div>
+                        <div class="h3-current-summary">${escHtml(h3.current)}</div>
+                    </div>
+                    <div class="h3-item-right">
+                        <div class="h3-label">編集提案</div>
+                        <div class="proposal-text" onclick="editProposal('${sec.id}', ${i})" style="cursor:pointer;" title="クリックして編集">${proposalContent}</div>
+                        <div class="h3-actions">
+                            <button class="h3-action-btn btn-ok ${dec === 'ok' ? 'active' : ''}" onclick="setDecision('${sec.id}', ${i}, 'ok')">決定</button>
+                            <button class="h3-action-btn btn-hold ${dec === 'hold' ? 'active' : ''}" onclick="setDecision('${sec.id}', ${i}, 'hold')">保留</button>
+                            <button class="h3-action-btn btn-edit" onclick="editProposal('${sec.id}', ${i})">提案を編集</button>
+                        </div>
+                    </div>
+                </div>`;
+        });
+
+        // 判定済み数（決定 or 保留）
+        const proposedCount = sec.h3s.filter(h => h.decision === 'ok' || h.decision === 'hold').length;
+
+        html += `
+            <div class="section-card cat-${sec.category}" id="card-${sec.id}" data-cat="${sec.category}">
+                <div class="section-header" onclick="toggleSection('${sec.id}')">
+                    <span class="section-cat-badge">${escHtml(sec.catLabel)}</span>
+                    <span class="section-title">${escHtml(sec.title)}</span>
+                    <span class="section-meta">${sec.lines} / h3: ${sec.h3s.length}件</span>
+                    <select class="section-status ${statusClass}" onchange="changeStatus('${sec.id}', this.value)" onclick="event.stopPropagation()">
+                        <option value="todo" ${sec.status==='todo'?'selected':''}>未着手</option>
+                        <option value="editing" ${sec.status==='editing'?'selected':''}>編集中</option>
+                        <option value="done" ${sec.status==='done'?'selected':''}>完了</option>
+                    </select>
+                    <span class="section-meta">${proposedCount}/${sec.h3s.length}</span>
+                    <span class="section-toggle">&#9660;</span>
+                </div>
+                <div class="section-body">
+                    <div class="progress-bar-container">
+                        <div class="progress-bar">
+                            <div class="progress-bar-fill" style="width: ${sec.h3s.length ? (proposedCount/sec.h3s.length*100) : 0}%"></div>
+                        </div>
+                    </div>
+                    <div class="h3-list">${h3Html}</div>
+                    <div class="section-note">
+                        <div class="section-note-label">メモ</div>
+                        <textarea placeholder="このセクションへのメモ・気づきを記入..."
+                            onblur="saveNote('${sec.id}', this.value)">${escHtml(sec.note || '')}</textarea>
+                    </div>
+                </div>
+            </div>`;
+    });
+
+    // 開いているセクションを記憶
+    const openIds = [];
+    container.querySelectorAll('.section-card.open').forEach(el => {
+        openIds.push(el.id);
+    });
+
+    container.innerHTML = html;
+
+    // 開いていたセクションを復元
+    openIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('open');
+    });
+
+    updateStats();
+}
+
+function escHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function getTagLabel(tag) {
+    const map = { add: '追加', update: '更新', delete: '削除', rewrite: '書き直し', keep: '維持', verify: '要確認' };
+    return map[tag] || tag;
+}
+
+// セクション開閉
+function toggleSection(id) {
+    const card = document.getElementById('card-' + id);
+    card.classList.toggle('open');
+}
+
+// セクションへスクロール
+function scrollToSection(id) {
+    const card = document.getElementById('card-' + id);
+    if (card) {
+        card.classList.add('open');
+        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    // ナビアクティブ
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    const navItem = document.querySelector(`.nav-item[data-nav="${id}"]`);
+    if (navItem) navItem.classList.add('active');
+}
+
+// ステータス変更
+function changeStatus(id, value) {
+    const sec = sections.find(s => s.id === id);
+    if (sec) {
+        sec.status = value;
+        saveData();
+        renderSideNav();
+        // ステータスセレクトのクラスを更新
+        const select = document.querySelector(`#card-${id} .section-status`);
+        if (select) {
+            select.className = 'section-status ' + (value === 'done' ? 'status-done' : value === 'editing' ? 'status-editing' : 'status-todo');
+        }
+        updateStats();
+    }
+}
+
+// メモ保存
+function saveNote(id, value) {
+    const sec = sections.find(s => s.id === id);
+    if (sec) {
+        sec.note = value;
+        saveData();
+    }
+}
+
+// 決定・保留の設定
+function setDecision(secId, h3Index, value) {
+    const sec = sections.find(s => s.id === secId);
+    if (!sec) return;
+    const h3 = sec.h3s[h3Index];
+    // トグル：同じボタンを再度押すと解除
+    h3.decision = h3.decision === value ? '' : value;
+    saveData();
+    renderSections(currentFilter);
+    renderSideNav();
+}
+
+// 提案編集
+function editProposal(secId, h3Index) {
+    const sec = sections.find(s => s.id === secId);
+    if (!sec) return;
+    const h3 = sec.h3s[h3Index];
+
+    // タグ選択
+    const tagChoice = prompt(
+        `【${h3.name}】の編集タグを選択（番号を入力）:\n` +
+        `1: 追加（新規コンテンツ）\n` +
+        `2: 更新（内容の修正・追記）\n` +
+        `3: 書き直し（大幅リライト）\n` +
+        `4: 削除（不要箇所の除去）\n` +
+        `5: 要確認（事実確認が必要）\n` +
+        `6: 維持（変更不要）\n` +
+        `0: タグなし`,
+        h3.tag ? { add:'1',update:'2',rewrite:'3',delete:'4',verify:'5',keep:'6' }[h3.tag] || '' : ''
+    );
+
+    if (tagChoice === null) return;
+    const tagMap = { '1':'add', '2':'update', '3':'rewrite', '4':'delete', '5':'verify', '6':'keep', '0':'' };
+    h3.tag = tagMap[tagChoice] || h3.tag;
+
+    // 提案テキスト
+    const proposal = prompt(`【${h3.name}】の編集提案を入力:`, h3.proposal || '');
+    if (proposal === null) return;
+    h3.proposal = proposal;
+
+    saveData();
+    renderSections(currentFilter);
+}
+
+// 統計更新
+function updateStats() {
+    const allH3s = sections.flatMap(s => s.h3s);
+    const totalH3 = allH3s.length;
+    const okCount = allH3s.filter(h => h.decision === 'ok').length;
+    const holdCount = allH3s.filter(h => h.decision === 'hold').length;
+    const doneCount = sections.filter(s => s.status === 'done').length;
+    document.getElementById('totalSections').textContent = sections.length;
+    document.getElementById('totalH3').textContent = totalH3;
+    document.getElementById('okCount').textContent = okCount;
+    document.getElementById('holdCount').textContent = holdCount;
+    document.getElementById('doneCount').textContent = doneCount;
+    document.getElementById('doneTotal').textContent = sections.length;
+}
+
+// フィルター
+let currentFilter = 'all';
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        currentFilter = this.dataset.filter;
+        renderSections(currentFilter);
+    });
+});
+
+// 初期レンダリング
+renderSideNav();
+renderSections('all');
+</script>
+</body>
+</html>

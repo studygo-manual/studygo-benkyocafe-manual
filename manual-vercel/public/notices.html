@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>周知一覧 | スタディGO 勉強カフェ</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #4CAF50;
+            --primary-dark: #388E3C;
+            --primary-light: #C8E6C9;
+            --accent: #FFC107;
+            --danger: #f44336;
+            --text: #333;
+            --text-light: #666;
+            --bg: #f5f5f5;
+            --card-bg: #fff;
+            --border: #e0e0e0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ヘッダー */
+        .header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: #fff;
+            padding: 16px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,.15);
+        }
+        .header-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .header-logo {
+            font-weight: 700;
+            font-size: 14px;
+            background: rgba(255,255,255,.2);
+            padding: 4px 10px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+        .header h1 {
+            font-size: 18px;
+            font-weight: 600;
+            flex: 1;
+        }
+        .header-link {
+            color: rgba(255,255,255,.85);
+            text-decoration: none;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+        .header-link:hover { color: #fff; }
+
+        /* グループタブ */
+        .group-tabs {
+            max-width: 900px;
+            margin: 16px auto 0;
+            padding: 0 16px;
+            display: flex;
+            gap: 0;
+            border-bottom: 2px solid var(--border);
+        }
+        .group-tab {
+            padding: 10px 20px;
+            border: none;
+            background: none;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-light);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            transition: all .2s;
+        }
+        .group-tab:hover { color: var(--primary); }
+        .group-tab.active {
+            color: var(--primary-dark);
+            font-weight: 700;
+            border-bottom-color: var(--primary);
+        }
+        .group-tab .tab-count {
+            display: inline-block;
+            background: var(--border);
+            color: var(--text-light);
+            font-size: 11px;
+            padding: 1px 6px;
+            border-radius: 8px;
+            margin-left: 4px;
+            font-weight: 600;
+        }
+        .group-tab.active .tab-count {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+        }
+
+        /* フィルター */
+        .filter-bar {
+            max-width: 900px;
+            margin: 12px auto 0;
+            padding: 0 16px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .filter-btn {
+            padding: 5px 12px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: var(--card-bg);
+            color: var(--text-light);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all .2s;
+        }
+        .filter-btn:hover { border-color: var(--primary); color: var(--primary); }
+        .filter-btn.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+        .filter-count {
+            margin-left: auto;
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        /* 検索 */
+        .search-bar {
+            max-width: 900px;
+            margin: 12px auto 0;
+            padding: 0 16px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color .2s;
+        }
+        .search-input:focus { border-color: var(--primary); }
+
+        /* 周知カード */
+        .notices-container {
+            max-width: 900px;
+            margin: 16px auto;
+            padding: 0 16px 32px;
+        }
+        .notice-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 4px rgba(0,0,0,.06);
+            border-left: 4px solid var(--border);
+            transition: box-shadow .2s;
+            position: relative;
+        }
+        .notice-card:hover { box-shadow: 0 3px 12px rgba(0,0,0,.1); }
+        .notice-card.priority-high { border-left-color: var(--danger); }
+        .notice-card.priority-medium { border-left-color: var(--accent); }
+        .notice-card.priority-low { border-left-color: #90CAF9; }
+
+        .notice-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        .notice-date {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+        .notice-sender {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+        .notice-badge {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+        .badge-priority-high { background: #FFEBEE; color: var(--danger); }
+        .badge-priority-medium { background: #FFF8E1; color: #F57F17; }
+        .badge-priority-low { background: #E3F2FD; color: #1565C0; }
+        .badge-category { background: #E8F5E9; color: var(--primary-dark); }
+        .badge-group {
+            background: #F3E5F5;
+            color: #7B1FA2;
+        }
+        .notice-expire {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-left: auto;
+        }
+        .notice-expire.expiring-soon {
+            color: var(--danger);
+            font-weight: 600;
+        }
+        .notice-body {
+            font-size: 14px;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .notice-body .cw-info {
+            background: #f0f7ff;
+            border: 1px solid #c8ddf0;
+            border-radius: 6px;
+            padding: 12px;
+            margin: 8px 0;
+        }
+        .notice-body .cw-info-title {
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 4px;
+            color: #1565C0;
+        }
+        .notice-body .cw-hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 8px 0;
+        }
+
+        /* 確認済みチェック */
+        .notice-footer {
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .confirm-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--card-bg);
+            font-size: 13px;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all .2s;
+        }
+        .confirm-btn:hover { border-color: var(--primary); color: var(--primary); }
+        .confirm-btn.confirmed {
+            background: #E8F5E9;
+            border-color: var(--primary);
+            color: var(--primary-dark);
+        }
+        .confirm-btn .check-icon { font-size: 16px; }
+
+        /* 読み込み・エラー */
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-light);
+        }
+        .loading-spinner {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            border: 3px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin .8s linear infinite;
+            margin-bottom: 12px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .error-msg { text-align: center; padding: 60px 20px; color: var(--danger); }
+        .empty-msg { text-align: center; padding: 60px 20px; color: var(--text-light); }
+
+        /* 未確認カウント */
+        .unconfirmed-banner {
+            max-width: 900px;
+            margin: 12px auto 0;
+            padding: 0 16px;
+        }
+        .unconfirmed-banner-inner {
+            background: #FFF3E0;
+            border: 1px solid #FFE0B2;
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-size: 13px;
+            color: #E65100;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .unconfirmed-banner-inner .icon { font-size: 18px; }
+
+        /* 更新情報 */
+        .updated-info {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 8px 16px;
+            text-align: right;
+            font-size: 11px;
+            color: #aaa;
+        }
+
+        /* スマホ対応 */
+        @media (max-width: 600px) {
+            .header { padding: 12px 14px; }
+            .header h1 { font-size: 15px; }
+            .header-link { display: none; }
+            .notice-card { padding: 14px; }
+            .filter-bar { gap: 6px; }
+            .filter-btn { padding: 4px 8px; font-size: 11px; }
+            .group-tab { padding: 8px 12px; font-size: 13px; }
+            .notice-expire { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-inner">
+            <div class="header-logo">StudyGO</div>
+            <h1>周知一覧</h1>
+            <a href="index.html" class="header-link">マニュアルに戻る</a>
+        </div>
+    </div>
+
+    <!-- グループタブ -->
+    <div class="group-tabs" id="groupTabs">
+        <button class="group-tab active" data-group="all">すべて</button>
+    </div>
+
+    <div class="search-bar">
+        <input type="text" class="search-input" id="searchInput" placeholder="キーワードで検索...">
+    </div>
+
+    <div class="unconfirmed-banner" id="unconfirmedBanner" style="display:none;">
+        <div class="unconfirmed-banner-inner">
+            <span class="icon">&#9888;</span>
+            <span id="unconfirmedText"></span>
+        </div>
+    </div>
+
+    <div class="filter-bar" id="filterBar">
+        <button class="filter-btn active" data-filter="all">すべて</button>
+        <button class="filter-btn" data-filter="high">重要</button>
+        <button class="filter-btn" data-filter="ルール変更">ルール変更</button>
+        <button class="filter-btn" data-filter="シフト">シフト</button>
+        <button class="filter-btn" data-filter="イベント">イベント</button>
+        <button class="filter-btn" data-filter="設備">設備</button>
+        <button class="filter-btn" data-filter="システム">システム</button>
+        <button class="filter-btn" data-filter="その他">その他</button>
+        <span class="filter-count" id="filterCount"></span>
+    </div>
+
+    <div class="notices-container" id="noticesContainer">
+        <div class="loading" id="loadingMsg">
+            <div class="loading-spinner"></div>
+            <div>周知情報を読み込んでいます...</div>
+        </div>
+    </div>
+
+    <div class="updated-info" id="updatedInfo"></div>
+
+    <script>
+    // ===== 設定 =====
+    // GASデプロイ後にURLを設定してください
+    const GAS_URL = '';
+
+    // ===== デモデータ（GAS未接続時に表示） =====
+    const DEMO_DATA = {
+        notices: [
+            {
+                id: 'demo1',
+                date: '2026-04-01T09:00:00.000Z',
+                sender: '管理者',
+                group: '全体連絡',
+                body: '[info][title]周知管理システム接続待ち[/title]GASのデプロイURLを設定すると、Chatworkの周知がここに表示されます。\n\nこのページはデモ表示です。[/info]',
+                category: 'システム',
+                priority: '中',
+                expireDate: '',
+            },
+            {
+                id: 'demo2',
+                date: '2026-04-01T08:00:00.000Z',
+                sender: '管理者',
+                group: 'BPスタジオ',
+                body: '[info][title]使い方[/title]1. GASスクリプトをスプレッドシートに設置\n2. Chatwork APIトークンとルームIDを設定（最大3ルーム）\n3. GASをWebアプリとしてデプロイ\n4. このHTMLのGAS_URLにデプロイURLを設定\n5. GitHub Pagesにプッシュして公開[/info]\n\n管理者はスプレッドシートの「掲載」列にチェックを入れることで、アルバイトスタッフに見せる周知を選べます。',
+                category: 'システム',
+                priority: '高',
+                expireDate: '',
+            },
+            {
+                id: 'demo3',
+                date: '2026-04-01T07:00:00.000Z',
+                sender: '管理者',
+                group: '新宿スタジオ',
+                body: 'グループタブで各Chatworkルームごとの周知を切り替えできます。\nカテゴリフィルタ・キーワード検索も併用可能です。',
+                category: 'その他',
+                priority: '低',
+                expireDate: '',
+            },
+        ],
+        groups: ['BPスタジオ', '全体連絡', '新宿スタジオ'],
+        updated: new Date().toISOString(),
+    };
+
+    // ===== 状態管理 =====
+    let allNotices = [];
+    let allGroups = [];
+    let currentGroup = 'all';
+    let currentFilter = 'all';
+    let confirmedIds = JSON.parse(localStorage.getItem('notice_confirmed') || '{}');
+
+    // ===== Chatwork記法の変換 =====
+    function convertChatworkTags(text) {
+        text = text.replace(/\[info\]\[title\]([\s\S]*?)\[\/title\]([\s\S]*?)\[\/info\]/g,
+            '<div class="cw-info"><div class="cw-info-title">$1</div>$2</div>');
+        text = text.replace(/\[info\]([\s\S]*?)\[\/info\]/g,
+            '<div class="cw-info">$1</div>');
+        text = text.replace(/\[hr\]/g, '<hr class="cw-hr">');
+        text = text.replace(/\[To:\d+\]\s*/g, '');
+        text = text.replace(/\[piconname:\d+\]\s*/g, '');
+        text = text.replace(/\[code\]([\s\S]*?)\[\/code\]/g,
+            '<pre style="background:#f5f5f5;padding:8px;border-radius:4px;font-size:13px;overflow-x:auto;">$1</pre>');
+        text = text.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener" style="color:#1565C0;">$1</a>');
+        return text;
+    }
+
+    // ===== 日付フォーマット =====
+    function formatDate(isoStr) {
+        if (!isoStr) return '';
+        const d = new Date(isoStr);
+        return `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+    }
+    function formatExpireDate(isoStr) {
+        if (!isoStr) return '';
+        const d = new Date(isoStr);
+        return `${d.getMonth()+1}/${d.getDate()}まで`;
+    }
+    function isExpiringSoon(isoStr) {
+        if (!isoStr) return false;
+        const diff = new Date(isoStr) - new Date();
+        return diff > 0 && diff < 3 * 24 * 60 * 60 * 1000;
+    }
+
+    function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    // ===== グループタブの構築 =====
+    function buildGroupTabs(groups) {
+        const container = document.getElementById('groupTabs');
+        // 「すべて」タブ + 各グループの件数
+        const allCount = allNotices.length;
+        let html = `<button class="group-tab ${currentGroup === 'all' ? 'active' : ''}" data-group="all">すべて<span class="tab-count">${allCount}</span></button>`;
+
+        groups.forEach(g => {
+            const count = allNotices.filter(n => n.group === g).length;
+            html += `<button class="group-tab ${currentGroup === g ? 'active' : ''}" data-group="${escapeHtml(g)}">${escapeHtml(g)}<span class="tab-count">${count}</span></button>`;
+        });
+
+        container.innerHTML = html;
+
+        // イベント
+        container.querySelectorAll('.group-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                container.querySelectorAll('.group-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentGroup = tab.dataset.group;
+                applyFilter();
+            });
+        });
+    }
+
+    // ===== レンダリング =====
+    function renderNotices(notices) {
+        const container = document.getElementById('noticesContainer');
+
+        if (notices.length === 0) {
+            container.innerHTML = '<div class="empty-msg">該当する周知はありません</div>';
+            document.getElementById('filterCount').textContent = '';
+            return;
+        }
+
+        document.getElementById('filterCount').textContent = `${notices.length}件`;
+
+        container.innerHTML = notices.map(n => {
+            const priorityClass = `priority-${n.priority === '高' ? 'high' : n.priority === '低' ? 'low' : 'medium'}`;
+            const badgePriority = n.priority === '高'
+                ? '<span class="notice-badge badge-priority-high">重要</span>'
+                : n.priority === '低'
+                ? '<span class="notice-badge badge-priority-low">低</span>'
+                : '';
+            const badgeCategory = n.category
+                ? `<span class="notice-badge badge-category">${escapeHtml(n.category)}</span>`
+                : '';
+            // グループバッジ: 「すべて」表示時のみ表示
+            const badgeGroup = (currentGroup === 'all' && n.group)
+                ? `<span class="notice-badge badge-group">${escapeHtml(n.group)}</span>`
+                : '';
+            const expireHtml = n.expireDate
+                ? `<span class="notice-expire ${isExpiringSoon(n.expireDate) ? 'expiring-soon' : ''}">${formatExpireDate(n.expireDate)}</span>`
+                : '';
+            const isConfirmed = confirmedIds[n.id];
+            const bodyHtml = convertChatworkTags(escapeHtml(n.body));
+
+            return `
+                <div class="notice-card ${priorityClass}" data-id="${escapeHtml(n.id)}">
+                    <div class="notice-meta">
+                        <span class="notice-date">${formatDate(n.date)}</span>
+                        <span class="notice-sender">${escapeHtml(n.sender)}</span>
+                        ${badgeGroup}${badgePriority}${badgeCategory}${expireHtml}
+                    </div>
+                    <div class="notice-body">${bodyHtml}</div>
+                    <div class="notice-footer">
+                        <button class="confirm-btn ${isConfirmed ? 'confirmed' : ''}" data-id="${escapeHtml(n.id)}">
+                            <span class="check-icon">${isConfirmed ? '&#10003;' : '&#9744;'}</span>
+                            ${isConfirmed ? '確認済み' : '確認する'}
+                        </button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        container.querySelectorAll('.confirm-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.dataset.id;
+                if (confirmedIds[id]) {
+                    delete confirmedIds[id];
+                } else {
+                    confirmedIds[id] = Date.now();
+                }
+                localStorage.setItem('notice_confirmed', JSON.stringify(confirmedIds));
+                applyFilter();
+            });
+        });
+    }
+
+    function applyFilter() {
+        let filtered = allNotices;
+        const search = document.getElementById('searchInput').value.trim().toLowerCase();
+
+        // グループフィルタ
+        if (currentGroup !== 'all') {
+            filtered = filtered.filter(n => n.group === currentGroup);
+        }
+
+        // カテゴリ/重要度フィルタ
+        if (currentFilter === 'high') {
+            filtered = filtered.filter(n => n.priority === '高');
+        } else if (currentFilter !== 'all') {
+            filtered = filtered.filter(n => n.category === currentFilter);
+        }
+
+        // キーワード検索
+        if (search) {
+            filtered = filtered.filter(n =>
+                n.body.toLowerCase().includes(search) ||
+                n.sender.toLowerCase().includes(search) ||
+                (n.category && n.category.toLowerCase().includes(search)) ||
+                (n.group && n.group.toLowerCase().includes(search))
+            );
+        }
+
+        renderNotices(filtered);
+        updateUnconfirmedBanner();
+    }
+
+    function updateUnconfirmedBanner() {
+        let target = allNotices;
+        if (currentGroup !== 'all') {
+            target = target.filter(n => n.group === currentGroup);
+        }
+        const unconfirmed = target.filter(n => !confirmedIds[n.id]);
+        const banner = document.getElementById('unconfirmedBanner');
+        if (unconfirmed.length > 0) {
+            const groupLabel = currentGroup === 'all' ? '' : `（${currentGroup}）`;
+            document.getElementById('unconfirmedText').textContent =
+                `未確認の周知が ${unconfirmed.length}件 あります${groupLabel}`;
+            banner.style.display = '';
+        } else {
+            banner.style.display = 'none';
+        }
+    }
+
+    // ===== データ取得 =====
+    function loadNotices() {
+        if (!GAS_URL) {
+            allNotices = DEMO_DATA.notices;
+            allGroups = DEMO_DATA.groups || [];
+            document.getElementById('loadingMsg').style.display = 'none';
+            buildGroupTabs(allGroups);
+            applyFilter();
+            document.getElementById('updatedInfo').textContent = 'デモ表示中 - GAS_URLを設定してください';
+            return;
+        }
+
+        const callbackName = 'noticeCallback_' + Date.now();
+        window[callbackName] = function(data) {
+            allNotices = data.notices || [];
+            allGroups = data.groups || [];
+            document.getElementById('loadingMsg').style.display = 'none';
+            buildGroupTabs(allGroups);
+            applyFilter();
+
+            const updated = data.updated ? new Date(data.updated) : null;
+            if (updated) {
+                document.getElementById('updatedInfo').textContent =
+                    `最終更新: ${updated.getMonth()+1}/${updated.getDate()} ${String(updated.getHours()).padStart(2,'0')}:${String(updated.getMinutes()).padStart(2,'0')}`;
+            }
+            delete window[callbackName];
+            document.head.removeChild(script);
+        };
+
+        const script = document.createElement('script');
+        script.src = GAS_URL + '?callback=' + callbackName;
+        script.onerror = function() {
+            document.getElementById('loadingMsg').innerHTML =
+                '<div class="error-msg">データの読み込みに失敗しました。<br>ページを更新してください。</div>';
+            delete window[callbackName];
+        };
+        document.head.appendChild(script);
+    }
+
+    // ===== イベント =====
+    document.getElementById('filterBar').addEventListener('click', e => {
+        const btn = e.target.closest('.filter-btn');
+        if (!btn) return;
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        applyFilter();
+    });
+
+    document.getElementById('searchInput').addEventListener('input', () => {
+        applyFilter();
+    });
+
+    // ===== 初期化 =====
+    loadNotices();
+    </script>
+</body>
+</html>
