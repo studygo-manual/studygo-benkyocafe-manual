@@ -208,6 +208,40 @@
     padding: 2px 8px;
     border-radius: 999px;
   }
+  .search-result-source {
+    font-size: 0.7rem;
+    color: #666;
+    background: #EEE;
+    display: inline-block;
+    padding: 1px 7px;
+    border-radius: 4px;
+    margin-right: 6px;
+    font-weight: 600;
+  }
+  .search-result-snippet {
+    font-size: 0.83rem;
+    color: #444;
+    line-height: 1.55;
+    margin-top: 6px;
+    padding: 6px 10px;
+    background: #FAFAFA;
+    border-left: 3px solid #FFD93D;
+    border-radius: 4px;
+    word-break: break-word;
+  }
+  .search-result-snippet mark {
+    background: #FFE082;
+    color: #5B3A00;
+    padding: 0 2px;
+    border-radius: 3px;
+    font-weight: 700;
+  }
+  .search-result-q mark {
+    background: #FFE082;
+    color: #5B3A00;
+    padding: 0 2px;
+    border-radius: 3px;
+  }
   .search-no-result {
     padding: 16px;
     text-align: center;
@@ -732,21 +766,44 @@ const QA_DATA = [
   },
   {
     id: 'app2', cat: 'app', type: 'basic',
-    q: 'アプリの初回登録の流れは？',
-    keywords: ['登録', '初回', 'アカウント', 'メール認証'],
+    q: 'アプリDLから契約までの流れは？',
+    keywords: ['ダウンロード', 'DL', '登録', '初回', 'アカウント', 'メール認証', '契約', '流れ', 'チュートリアル', 'QRコード', '地図', '月額', 'ドロップイン'],
     a: `
+      <p><strong>【共通：アプリ起動〜クレジットカード登録まで】</strong></p>
       <div class="flow">
-        <div class="flow-step"><div class="flow-step-num">1</div><div>アプリ起動 → メールアドレス入力</div></div>
+        <div class="flow-step"><div class="flow-step-num">1</div><div>アプリ起動</div></div>
         <div class="flow-arrow">↓</div>
-        <div class="flow-step"><div class="flow-step-num">2</div><div>認証メールが届く → 確認コードを入力</div></div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div><strong>チュートリアル</strong>表示</div></div>
         <div class="flow-arrow">↓</div>
-        <div class="flow-step"><div class="flow-step-num">3</div><div>登録情報入力（氏名・住所・電話番号）</div></div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div><strong>QRコードボタン</strong>をタップ（他項目もあり）</div></div>
         <div class="flow-arrow">↓</div>
-        <div class="flow-step"><div class="flow-step-num">4</div><div>クレジットカード登録</div></div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>会員登録画面へ移動 → <strong>メールアドレス入力</strong></div></div>
         <div class="flow-arrow">↓</div>
-        <div class="flow-step"><div class="flow-step-num">5</div><div>プラン選択→契約確定</div></div>
+        <div class="flow-step"><div class="flow-step-num">5</div><div>認証メールが届く → 確認コードを入力</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">6</div><div>登録情報入力（氏名・住所・電話番号）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">7</div><div><strong>クレジットカード登録</strong></div></div>
       </div>
-      <div class="alert alert-info">所要時間 約15〜20分。</div>`,
+
+      <p style="margin-top:12px;"><strong>【月額契約する場合】</strong></p>
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">8</div><div>会員登録する前の画面に戻る</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">9</div><div>「<strong>探す</strong>」の地図機能から店舗を見つける<br><span style="font-size:0.85rem;color:#666;">※地図の位置情報許可を了承してもらうと見つかりやすい</span></div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">10</div><div>店舗情報を閲覧</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">11</div><div>「<strong>月額契約する</strong>」ボタンから契約</div></div>
+      </div>
+
+      <p style="margin-top:12px;"><strong>【ドロップイン・一時利用の場合】</strong></p>
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">8</div><div>クレジットカード登録後、<strong>店舗のQRコードを読み込む</strong></div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">9</div><div>プラン選択（ドロップイン）→ 契約確定</div></div>
+      </div>
+      <div class="alert alert-info">所要時間 約15〜20分。位置情報の許可を案内すると、店舗検索がスムーズです。</div>`,
   },
   {
     id: 'app3', cat: 'app', type: 'basic',
@@ -755,32 +812,33 @@ const QA_DATA = [
     a: `
       <table class="data-table">
         <tr><th>タブ</th><th>主な機能</th></tr>
-        <tr><td>🏠 ホーム</td><td>会員カード(QR)、お知らせ、近くの店舗</td></tr>
+        <tr><td>🏠 ホーム</td><td>会員カード、お知らせ、近くの店舗</td></tr>
         <tr><td>🔍 検索</td><td>地図・リストで店舗を探す</td></tr>
         <tr><td>📲 チェックイン</td><td>QR読み込みで入店、店舗コード手動入力</td></tr>
-        <tr><td>💬 メッセージ</td><td>店舗とのチャット（未読件数表示）</td></tr>
+        <tr><td>💬 メッセージ</td><td>店舗とのチャット（未読件数表示）<br><span style="color:#C62828;">※勉強カフェ新宿エリアでは不要</span></td></tr>
         <tr><td>👤 ユーザー</td><td>マイページ、契約・予約管理</td></tr>
       </table>`,
   },
   {
     id: 'app4', cat: 'app', type: 'basic',
-    q: 'お客様の会員カード（QRコード）はどこで見られる？',
-    keywords: ['会員カード', 'QR', '表示', 'ホーム'],
+    q: 'お客様の会員カードはどこで見られる？',
+    keywords: ['会員カード', '表示', 'ホーム'],
     a: `
-      <p><strong>ホームタブ</strong>の上部に会員カード（QR）が常時表示されています。</p>
-      <div class="alert alert-info">店舗側では管理画面の「会員管理」からお客様情報を検索して確認できます。</div>`,
+      <p><strong>ホームタブ</strong>の上部に会員カードが常時表示されています。</p>
+      <div class="alert alert-info">会員カードは<strong>QRコードではありません</strong>（お客様の会員情報を表示する画面）。店舗側では管理画面の「会員管理」からお客様情報を検索して確認できます。</div>`,
   },
   {
     id: 'app5', cat: 'app', type: 'basic',
-    q: 'お客様が過去の利用履歴を見たい場合は？',
-    keywords: ['利用履歴', '過去', '明細'],
+    q: 'お客様が過去の利用履歴・明細を見たい場合は？',
+    keywords: ['利用履歴', '過去', '明細', '領収書', 'メール'],
     a: `
       <p>アプリの<strong>ホーム → 利用履歴</strong>から確認できます。</p>
       <ul style="padding-left:24px;">
         <li>月別の利用店舗・時間・料金</li>
         <li>合計金額の集計</li>
-        <li>メール送信機能（領収書用途）</li>
-      </ul>`,
+      </ul>
+      <div class="alert alert-info"><strong>領収書について</strong>：各支払いが発生した際に、<strong>自動で領収書がメールに送信</strong>されます（都度発行）。</div>
+      <div class="alert alert-info"><strong>メール送信機能</strong>：アプリの利用履歴にあるメール送信機能では、<strong>先月分以前の内容をまとめて明細として受け取る</strong>ことができます（月ごとの集計用）。</div>`,
   },
   {
     id: 'app6', cat: 'app', type: 'irregular',
@@ -1206,12 +1264,6 @@ const QA_DATA = [
       </div>`,
   },
   {
-    id: 'app51', cat: 'app', type: 'basic',
-    q: '会員カードのQRコードは何に使う？',
-    keywords: ['会員カード', 'QR', '表示'],
-    a: `<p>入店時のQRとは別で、スタッフが会員を識別するための会員QRです。スタッフ側は通常使いません。お客様自身の身分確認用。</p>`,
-  },
-  {
     id: 'app52', cat: 'app', type: 'basic',
     q: '契約情報はアプリのどこで確認する？',
     keywords: ['契約情報', '確認', 'マイページ'],
@@ -1435,6 +1487,18 @@ const QA_DATA = [
         <li>重要な連絡は電話・メールの併用も検討</li>
         <li>未読件数を定期的に確認してもらう</li>
       </ul>`,
+  },
+  {
+    id: 'app71', cat: 'app', type: 'basic',
+    q: 'BPアプリとの違い：会員情報・支払い情報の変更方法は？',
+    keywords: ['BPアプリ', '違い', '会員情報', '支払い情報', '変更', '3/1'],
+    a: `
+      <table class="data-table">
+        <tr><th>項目</th><th>旧）BPアプリ</th><th>新）スタディGO</th></tr>
+        <tr><td>会員情報の変更</td><td>アプリで変更URLを申請（URL到着までラグあり）</td><td><strong>アプリで直接変更可能</strong></td></tr>
+        <tr><td>支払い情報の変更</td><td>アプリで変更URLを申請（URL到着までラグあり）</td><td><strong>アプリで直接変更可能</strong></td></tr>
+      </table>
+      <div class="alert alert-info">お客様自身がアプリのマイページから即時変更できるようになりました。</div>`,
   },
 
   // ===== 📄 契約・料金・プラン =====
@@ -2170,6 +2234,102 @@ const QA_DATA = [
         <li>ドロップインは<strong>有人営業時間のみ</strong>対応</li>
       </ul>`,
   },
+  {
+    id: 'c80', cat: 'contract', type: 'basic',
+    q: '月会費の引き落とし日はいつ？（お客様に聞かれたら）',
+    keywords: ['引き落とし', '決済日', '月会費', 'カード会社', '請求', '15日'],
+    a: `
+      <table class="data-table">
+        <tr><th>種別</th><th>日付</th></tr>
+        <tr><td>スタディGO側の決済実行日</td><td><strong>毎月15日</strong>（翌月分の月額料金）</td></tr>
+        <tr><td>カード会社から会員様への請求日</td><td><strong>カード会社の締日・引落日による</strong>（カード会社に要確認）</td></tr>
+      </table>
+      <div class="alert alert-info">「何日に引き落とされますか？」と聞かれたら、<strong>スタディGOの決済は毎月15日</strong>、<strong>実際の口座引き落とし日はカード会社によって異なる</strong>とご案内してください。</div>`,
+  },
+  {
+    id: 'c81', cat: 'contract', type: 'basic',
+    q: '旧フルタイム会員の利用可能時間は？',
+    keywords: ['旧フルタイム', '利用時間', '23時', '営業時間', '移行前'],
+    a: `
+      <p>旧フルタイムプランの会員様は、<strong>営業時間の最後まで利用可能</strong>です。</p>
+      <table class="data-table">
+        <tr><th>曜日</th><th>利用可能時間</th></tr>
+        <tr><td>平日</td><td>6:00〜<strong>23:00</strong></td></tr>
+        <tr><td>土曜</td><td>6:00〜22:00</td></tr>
+        <tr><td>日祝</td><td>6:00〜21:00</td></tr>
+      </table>
+      <div class="alert alert-info">打刻修正依頼があっても、営業時間内であれば問題ありません。</div>`,
+  },
+  {
+    id: 'c82', cat: 'contract', type: 'basic',
+    q: '短期パス飛込利用時、来店フォームの記入は必要？',
+    keywords: ['短期パス', '飛込', '来店フォーム', '購入申請', '記入'],
+    a: `
+      <div class="alert alert-info">来店フォームの記入は<strong>不要</strong>です。</div>
+      <p><strong>短期パス購入申請フォーム</strong>に電話番号とメールアドレスの項目があるため、そちらで情報が取れます。</p>
+      <ul style="padding-left:24px;">
+        <li>購入申請フォームの入力を案内</li>
+        <li>支払いはAirレジで処理</li>
+        <li>短期パス用ICカード紛失は<strong>再発行手数料1,100円</strong>（ロッカー鍵紛失の項目で金額修正して決済）</li>
+      </ul>`,
+  },
+  {
+    id: 'c76', cat: 'contract', type: 'basic',
+    q: 'BPアプリとの違い：入会手続き・会員番号・支払い方法は？',
+    keywords: ['BPアプリ', '違い', '入会', '会員番号', '支払い方法', 'クレカ', '所要時間', '3/1'],
+    a: `
+      <table class="data-table">
+        <tr><th>項目</th><th>旧）BPアプリ</th><th>新）スタディGO</th></tr>
+        <tr><td>入会手続き</td><td>会費ペイ＋BPアプリ＋Akerun＋LINE登録<br>所要時間：約30〜40分</td><td><strong>アプリで一括登録（+Lステップ）</strong><br>メール認証→個人情報→カード登録→プラン契約<br><strong>所要時間：約15〜20分</strong></td></tr>
+        <tr><td>会員番号</td><td>BCS〜 / BCBP〜</td><td>BCS〜<strong>G</strong> / BCBP〜<strong>G</strong>（末尾Gで区別）</td></tr>
+        <tr><td>支払い方法</td><td>口座振替 / クレカ</td><td><strong>クレカのみ</strong>（口座振替は廃止）</td></tr>
+        <tr><td>決済システム</td><td>別サービス：会費PAY</td><td><strong>アプリ内で一元管理</strong></td></tr>
+      </table>
+      <div class="alert alert-info">スタディGOではアプリで一括登録するため、スタッフのオペレーションが約30%に軽減されます。</div>`,
+  },
+  {
+    id: 'c77', cat: 'contract', type: 'basic',
+    q: 'BPアプリとの違い：料金・決済（超過・時間外・ドロップイン・領収書）は？',
+    keywords: ['BPアプリ', '違い', '超過料金', '時間外', 'ドロップイン', '領収書', '即日決済', '会費PAY', '3/1'],
+    a: `
+      <table class="data-table">
+        <tr><th>項目</th><th>旧）BPアプリ</th><th>新）スタディGO</th></tr>
+        <tr><td>超過料金</td><td>会費ペイで後日請求（翌月末）</td><td><strong>自動精算・即日決済（1分13円）</strong></td></tr>
+        <tr><td>時間外利用</td><td>打刻のみで営業時間すべて利用可能</td><td><strong>有人時間帯のみ利用可能（770円/h）</strong>※即日決済</td></tr>
+        <tr><td>ドロップイン</td><td>現地決済のみ</td><td>アプリで受付・決済（770円/h、1Day最大3,300円）<br><strong>※スタディGO未登録者は受付不可</strong></td></tr>
+        <tr><td>料金確認</td><td>スタッフに確認</td><td><strong>アプリ内で確認可能</strong>（新規契約・時間外は即時／サブスクは毎月15日）</td></tr>
+        <tr><td>領収書</td><td>スタッフに依頼（手書きで発行）</td><td><strong>決済ごとに電子領収書がメールで自動送付</strong>（月の利用金額は翌月1日にまとめて発行可能）</td></tr>
+      </table>
+      <div class="alert alert-warn">時間外料金は即日決済に変わりました。<strong>アプリの不具合でない限り、チェックイン・アウトはお客様の責任となり返金は行いません。</strong></div>`,
+  },
+  {
+    id: 'c78', cat: 'contract', type: 'basic',
+    q: 'BPアプリとの違い：廃止・新設されたプラン／サービスは？',
+    keywords: ['BPアプリ', '違い', '廃止', '新設', '時間制プラン', '新宿エリアパス', '即日アップグレード', '時間外割引', '習慣化プラン', '3/1'],
+    a: `
+      <table class="data-table">
+        <tr><th>項目</th><th>旧）BPアプリ</th><th>新）スタディGO</th></tr>
+        <tr><td>時間制プラン</td><td>あり</td><td style="color:#C62828;"><strong>廃止</strong></td></tr>
+        <tr><td>新宿エリアパス</td><td>あり</td><td style="color:#C62828;"><strong>廃止</strong></td></tr>
+        <tr><td>即日アップグレード</td><td>あり</td><td style="color:#C62828;"><strong>廃止</strong></td></tr>
+        <tr><td>時間外利用割引（会員様550円/h）</td><td>あり</td><td style="color:#C62828;"><strong>廃止（770円/h統一）</strong></td></tr>
+        <tr><td>習慣化プラン</td><td>なし</td><td style="color:#1565C0;"><strong>スタディGOのみ実施</strong></td></tr>
+      </table>
+      <div class="alert alert-danger">旧会員から廃止プランの問合せがあった場合は、代替プランをご案内してください。</div>`,
+  },
+  {
+    id: 'c79', cat: 'contract', type: 'basic',
+    q: 'BPアプリとの違い：オプション（ロッカー）契約・解約の流れは？',
+    keywords: ['BPアプリ', '違い', 'オプション', 'ロッカー', '契約', '解約', 'Googleフォーム', '3/1'],
+    a: `
+      <table class="data-table">
+        <tr><th>項目</th><th>旧）BPアプリ</th><th>新）スタディGO</th></tr>
+        <tr><td>ロッカー契約</td><td>Googleフォーム＋会費PAY事後決済</td><td><strong>アプリで契約（日割）・即時決済</strong>※契約時は場所決めのため店頭来店必要</td></tr>
+        <tr><td>ロッカー解約</td><td>店頭でGoogleフォーム</td><td><strong>アプリで解約（店頭来店不要）</strong></td></tr>
+        <tr><td>ロッカー管理</td><td colspan="2" style="text-align:center;">スプレッドシートで管理（共通）</td></tr>
+      </table>
+      <div class="alert alert-warn">解約日までに荷物をすべて持ち帰ること（残置物があれば翌月分請求の可能性）。鍵は受付に返却、紛失時は再発行手数料3,300円。</div>`,
+  },
 
   // ===== 🚪 チェックイン・解錠 =====
   {
@@ -2847,6 +3007,58 @@ const QA_DATA = [
         <li>1人ずつ落ち着いて対応</li>
       </ul>`,
   },
+  {
+    id: 'k71', cat: 'checkin', type: 'basic',
+    q: 'BPアプリとの違い：チェックイン方法・QR設置場所・開錠方法は？',
+    keywords: ['BPアプリ', '違い', 'チェックイン', 'QRコード', '入口', '受付', 'Akerun', 'ICカード', '開錠', '3/1'],
+    a: `
+      <table class="data-table">
+        <tr><th>項目</th><th>旧）BPアプリ</th><th>新）スタディGO</th></tr>
+        <tr><td>チェックイン</td><td>受付の専用機器にQRコードをかざす</td><td><strong>アプリでQRコードを読み取り</strong></td></tr>
+        <tr><td>QRコード設置場所</td><td>受付</td><td><strong>入口の扉 ＋ 受付</strong>（受付は初回ドロップイン用）</td></tr>
+        <tr><td>入退室（開錠）</td><td>Akerunアプリ or ICカード</td><td><strong>スタディGOアプリで開錠</strong></td></tr>
+      </table>
+      <div class="alert alert-info">入館はスタディGOアプリで開錠。<strong>Akerunについてスタッフの対応は不要</strong>です。</div>
+      <div class="alert alert-warn">旧BP会員（スタディGO未移行）は従来通りAkerunアプリから直接解錠します。</div>`,
+  },
+  {
+    id: 'k74', cat: 'checkin', type: 'basic',
+    q: '会員様のために入口ドアを開けてあげても良い？',
+    keywords: ['ドア', '開ける', '入退室', 'Akerun', '履歴', '運用'],
+    a: `
+      <div class="alert alert-danger">原則、<strong>会員様自身でアプリから解錠していただく</strong>運用です。</div>
+      <p>理由: Akerunの入退館履歴を会員様ご本人のアカウントで残すため。</p>
+      <ul style="padding-left:24px;">
+        <li>会員様の端末でトラブルが起きていない限り、スタッフが代わりに開けない</li>
+        <li>親切で開けてしまうと履歴が残らず、不正利用チェックができなくなる</li>
+        <li>端末不具合・忘れ物取りに戻った等、明確にトラブルの場合のみスタッフが対応</li>
+      </ul>
+      <div class="alert alert-info">2026年4月以降の運用変更です（國松MGより周知済）。</div>`,
+  },
+  {
+    id: 'k75', cat: 'checkin', type: 'irregular',
+    q: 'iPad(QRリーダー)に8桁の数字と「〜は登録されていません」と出た',
+    keywords: ['iPad', 'QRリーダー', '登録されていません', '8桁', 'エラー', '仕様'],
+    a: `
+      <p><strong>スタディGO未登録のQRコード</strong>または<strong>BP会員のQRコードを誤読</strong>した際の仕様表示です。</p>
+      <ul style="padding-left:24px;">
+        <li>誰も打刻していないのに音が鳴る場合、通行人等がカメラ範囲にQR的なものをかざした可能性</li>
+        <li>会員様が困っている様子でなければ<strong>スルーで問題なし</strong></li>
+        <li>会員様が「チェックインできない」と言ってきた場合は、スタディGOアプリからチェックインしてもらう</li>
+      </ul>`,
+  },
+  {
+    id: 'k72', cat: 'checkin', type: 'basic',
+    q: 'BPアプリとの違い：打刻修正・チェックアウト忘れの対応は？',
+    keywords: ['BPアプリ', '違い', '打刻', '修正', 'チェックアウト忘れ', '店舗コード', '3/1'],
+    a: `
+      <table class="data-table">
+        <tr><th>項目</th><th>旧）BPアプリ</th><th>新）スタディGO</th></tr>
+        <tr><td>打刻修正</td><td>スタッフが管理画面から修正可能</td><td><strong>チェックイン時刻：チェックアウト前まで修正可</strong><br>チェックアウト忘れ：<strong>アプリで店舗コード入力</strong></td></tr>
+      </table>
+      <div class="alert alert-warn">スタディGOでは打刻関連の対応が限定的です。<strong>チェックイン時刻の修正は「チェックアウト前」のみ</strong>可能（管理画面「チェックイン実績」→「編集」）。</div>
+      <div class="alert alert-info"><strong>チェックアウト忘れ（退店後）</strong>：アプリ →「QR読取」→「QRが読み取れない場合」→ 店舗コードを入力してチェックアウト（店舗コードはQRポップに記載。営業終了時に強制チェックアウト）。</div>`,
+  },
 
   // ===== 🔄 プラン変更・休会・解約 =====
   {
@@ -3510,6 +3722,72 @@ const QA_DATA = [
         <li>開始日まで普通に使える（休会予約中）</li>
         <li>休会中に「復帰」機能で戻れる（復帰プラン選択）</li>
       </ul>`,
+  },
+  {
+    id: 'ch62', cat: 'change', type: 'basic',
+    q: 'プラン変更・休会は「それぞれ月1回」か「合計月1回」か？',
+    keywords: ['プラン変更', '休会', '月1回', '回数', '合計', '制限'],
+    a: `
+      <div class="alert alert-danger"><strong>プラン変更・休会・解約は、合わせて月に1度までです。</strong></div>
+      <p>例：当月にプラン変更を申請済みの方は、同月中に休会申請はできません（翌月以降扱い）。</p>
+      <ul style="padding-left:24px;">
+        <li>申請後の<strong>取り消し不可</strong></li>
+        <li>毎月10日21時が締切</li>
+        <li>入会時のプラン選択・各種申請は、お客様に十分に確認してから実行してください</li>
+      </ul>`,
+  },
+  {
+    id: 'ch63', cat: 'change', type: 'basic',
+    q: '同じ日付でも、休会と退会で「適用開始日」は異なる？',
+    keywords: ['休会', '退会', '適用開始日', '違い', '申請日'],
+    a: `
+      <p>10日21時までの申請で、原則<strong>翌月1日から適用</strong>（休会・退会共通）。</p>
+      <table class="data-table">
+        <tr><th>手続き</th><th>申請例</th><th>適用開始</th></tr>
+        <tr><td>休会</td><td>4/10までに申請</td><td><strong>5/1〜休会開始</strong></td></tr>
+        <tr><td>退会</td><td>4/10までに申請</td><td><strong>4/30で契約終了</strong>（5/1時点では契約なし）</td></tr>
+      </table>
+      <div class="alert alert-warn">退会は「契約終了月の末日まで利用可」、休会は「翌月1日から休会」と、<strong>最終利用可能日と適用タイミングが異なります</strong>。</div>
+      <div class="alert alert-info">10日21時を過ぎた申請は<strong>翌々月</strong>扱いになる点にも注意。</div>`,
+  },
+  {
+    id: 'ch64', cat: 'change', type: 'irregular',
+    q: '休会中のお客様から優待券の発行依頼が来たが対応可能？',
+    keywords: ['優待券', '休会中', '発行', 'Lステップ'],
+    a: `
+      <p>休会中の優待券発行は<strong>個別判断</strong>が必要です。マネージャーに確認してください。</p>
+      <ul style="padding-left:24px;">
+        <li>原則、優待券はアクティブな会員様向け特典</li>
+        <li>休会期間中の利用は想定外のため、発行可否はケースバイケース</li>
+        <li>判断に迷う場合はLステップ・チャットワークでマネージャーへエスカレーション</li>
+      </ul>`,
+  },
+  {
+    id: 'ch65', cat: 'change', type: 'basic',
+    q: '習慣化プランのお客様が来店したらスタッフは何をする？',
+    keywords: ['習慣化プラン', '対応', 'チェックイン', '確認'],
+    a: `
+      <p>習慣化プランは<strong>スタディGOのみ</strong>のプランです。</p>
+      <ul style="padding-left:24px;">
+        <li>他プランと同様、<strong>チェックイン完了画面を見せてもらう</strong>だけでOK</li>
+        <li>スタッフ側の特別な操作は<strong>不要</strong></li>
+        <li>プラン時間や利用条件はアプリ側で管理されている</li>
+      </ul>
+      <div class="alert alert-info">習慣化プランの詳細は社内マニュアル（スタディGO管理画面）で確認可能。</div>`,
+  },
+  {
+    id: 'ch61', cat: 'change', type: 'basic',
+    q: 'BPアプリとの違い：プラン変更・解約・休会の手続きは？',
+    keywords: ['BPアプリ', '違い', 'プラン変更', '解約', '退会', '休会', '10日ルール', '取り消し不可', '3/1'],
+    a: `
+      <table class="data-table">
+        <tr><th>項目</th><th>旧）BPアプリ</th><th>新）スタディGO</th></tr>
+        <tr><td>プラン変更</td><td>アプリで申請（取り消し不可）</td><td><strong>アプリで申請（10日ルール厳守）</strong><br>毎月10日までに申請・<strong>月1回・取り消し不可</strong></td></tr>
+        <tr><td>プラン解約（退会）</td><td>店頭でGoogleフォーム</td><td><strong>店頭でGoogleフォーム回答</strong><br>※10日21時までにスタッフが管理画面で処理しないと自動請求で翌月継続</td></tr>
+        <tr><td>休会</td><td>店頭でGoogleフォーム</td><td><strong>アプリで10日までに申請</strong><br>店頭来店不要・スタッフ手続きなし</td></tr>
+      </table>
+      <div class="alert alert-danger"><strong>スタディGOでは申請後の取り消しができません。</strong>さらに<strong>プラン変更・休会は月に1度しか</strong>できないため、申請前にお客様へ十分に確認すること。入会時のプラン選択時にも必ず説明する。</div>
+      <div class="alert alert-info">休会はアプリで申請するだけ（店頭来店不要・スタッフ手続きなし）で、BPアプリ時代から大きく変わりました。</div>`,
   },
 
   // ===== 💻 管理画面 =====
@@ -4385,6 +4663,46 @@ const QA_DATA = [
         <tr><td>見学キャンセル</td><td>予約時間を<strong>30分過ぎても来店なし</strong>なら設定（お客様にメールが届く）</td></tr>
       </table>`,
   },
+  {
+    id: 'ad71', cat: 'admin', type: 'basic',
+    q: '打刻時間修正フォームで送られてきた申請はどこで見れる？',
+    keywords: ['打刻修正', 'フォーム', 'Googleフォーム', '申請', 'スプレッドシート', '確認'],
+    a: `
+      <p>打刻時間修正フォームの送信内容は、<strong>Googleスプレッドシートに自動記録</strong>されます。</p>
+      <ul style="padding-left:24px;">
+        <li>権限の関係で、スタッフ端末から見られない場合があります</li>
+        <li>見られない場合はマネージャーへ依頼</li>
+        <li>管理画面「チェックイン実績」→「編集」でも修正可能（チェックアウト前のみ）</li>
+      </ul>
+      <div class="alert alert-warn">会員様からスタッフに直接申請があった場合は、忘れずその場で修正してください（後回しにしてクレームになったケースあり）。</div>`,
+  },
+  {
+    id: 'ad72', cat: 'admin', type: 'basic',
+    q: 'お客様未登録でスタジオ利用希望（飛込）の対応フローは？',
+    keywords: ['未登録', '飛込', 'スタディGO登録', '案内', 'ドロップイン', '一時利用'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>店頭でスタディGOアプリのDLを案内（iOS/Android）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>会員登録（メール認証・個人情報・クレカ登録）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>ドロップインプラン購入 → チェックイン</div></div>
+      </div>
+      <div class="alert alert-danger"><strong>クレジットカードを持っていない方・登録できない方は利用不可</strong>（例外なし）。</div>
+      <div class="alert alert-info">外国人のお客様には英語版の登録フローを案内。所要時間は15〜20分かかる旨を先に伝えておくと親切です。</div>`,
+  },
+  {
+    id: 'ad73', cat: 'admin', type: 'basic',
+    q: 'BPアプリとの違い：連絡方法・チェックイン中の会員確認は？',
+    keywords: ['BPアプリ', '違い', '連絡方法', 'Lステップ', 'アプリメッセージ', 'チェックイン中', '会員確認', '3/1'],
+    a: `
+      <table class="data-table">
+        <tr><th>項目</th><th>旧）BPアプリ</th><th>新）スタディGO</th></tr>
+        <tr><td>連絡方法</td><td colspan="2" style="text-align:center;">Lステップ（LINE）<br>※スタディGOでは<strong>見学予約・店外での契約時はアプリメッセージも使用</strong></td></tr>
+        <tr><td>チェックイン中の<br>会員確認</td><td colspan="2" style="text-align:center;">管理画面から確認（共通）</td></tr>
+      </table>
+      <div class="alert alert-info">お客様にはスタディGOアプリの<strong>通知設定をON</strong>にしてもらうよう案内してください。</div>`,
+  },
 
   // ===== 🚨 トラブル・イレギュラー =====
   {
@@ -5176,8 +5494,86 @@ function normalizeText(s) {
   return (s || '').toLowerCase().replace(/\s+/g, '');
 }
 
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, m => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[m]));
+}
+
+function escapeRegex(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function stripHtml(html) {
+  return String(html).replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+// ハイライト付きテキスト生成（プレースホルダ方式でエスケープと両立）
+const __MS__ = 'M_S';
+const __ME__ = 'M_E';
+function highlightAll(text, query) {
+  const re = new RegExp(escapeRegex(query), 'gi');
+  const marked = String(text).replace(re, m => __MS__ + m + __ME__);
+  return escapeHtml(marked)
+    .split(__MS__).join('<mark>')
+    .split(__ME__).join('</mark>');
+}
+
+// 答え本文から該当箇所を抽出（前後コンテキスト含む）
+function extractSnippet(text, query, contextLen = 40) {
+  const re = new RegExp(escapeRegex(query), 'i');
+  const m = text.match(re);
+  if (!m) {
+    const head = text.slice(0, 120);
+    return escapeHtml(head) + (text.length > 120 ? '…' : '');
+  }
+  const idx = m.index;
+  const start = Math.max(0, idx - contextLen);
+  const end = Math.min(text.length, idx + m[0].length + contextLen);
+  const snippet = text.slice(start, end);
+  const prefix = start > 0 ? '…' : '';
+  const suffix = end < text.length ? '…' : '';
+  return prefix + highlightAll(snippet, query) + suffix;
+}
+
+// 検索ヒット箇所を特定（質問／キーワード／本文）
+function findMatchInfo(item, rawQuery) {
+  const q = rawQuery.trim();
+  if (!q) return null;
+  const re = new RegExp(escapeRegex(q), 'i');
+
+  // 1. 質問（q）でヒット
+  if (re.test(item.q)) {
+    return { source: '質問', html: highlightAll(item.q, q) };
+  }
+  // 2. キーワードでヒット
+  const kwText = (item.keywords || []).join('・');
+  if (re.test(kwText)) {
+    return { source: 'キーワード', html: highlightAll(kwText, q) };
+  }
+  // 3. 本文（answer）でヒット
+  const aText = stripHtml(item.a || '');
+  if (re.test(aText)) {
+    return { source: '本文', html: extractSnippet(aText, q) };
+  }
+  // 4. 空白を無視した normalize マッチでのフォールバック
+  const aText2 = stripHtml(item.a || '');
+  const nq = normalizeText(q);
+  if (normalizeText(item.q).includes(nq)) {
+    return { source: '質問', html: escapeHtml(item.q) };
+  }
+  if (normalizeText(kwText).includes(nq)) {
+    return { source: 'キーワード', html: escapeHtml(kwText) };
+  }
+  if (normalizeText(aText2).includes(nq)) {
+    return { source: '本文', html: escapeHtml(aText2.slice(0, 120)) + (aText2.length > 120 ? '…' : '') };
+  }
+  return null;
+}
+
 searchInput.addEventListener('input', () => {
-  const q = normalizeText(searchInput.value);
+  const rawQ = searchInput.value;
+  const q = normalizeText(rawQ);
   searchClearBtn.classList.toggle('visible', q.length > 0);
   if (!q) {
     searchResults.classList.remove('visible');
@@ -5189,21 +5585,27 @@ searchInput.addEventListener('input', () => {
     const haystack = normalizeText(item.q + ' ' + (item.keywords || []).join(' ') + ' ' + item.a);
     return haystack.includes(q);
   });
-  renderSearchResults(matches);
+  renderSearchResults(matches, rawQ);
 });
 
-function renderSearchResults(matches) {
+function renderSearchResults(matches, rawQuery) {
   searchResults.innerHTML = '';
   if (matches.length === 0) {
     searchResults.innerHTML = '<div class="search-no-result">該当するQ&Aが見つかりませんでした</div>';
   } else {
     matches.slice(0, 30).forEach(item => {
       const cat = CATEGORIES.find(c => c.id === item.cat);
+      const info = findMatchInfo(item, rawQuery);
+      const qHtml = (info && info.source === '質問') ? info.html : escapeHtml(item.q);
+      const snippetHtml = (info && info.source !== '質問')
+        ? `<div class="search-result-snippet"><span class="search-result-source">${info.source}</span>${info.html}</div>`
+        : '';
       const el = document.createElement('div');
       el.className = 'search-result-item';
       el.innerHTML = `
-        <div class="search-result-q">${item.q}</div>
+        <div class="search-result-q">${qHtml}</div>
         <span class="search-result-cat">${cat.icon} ${cat.title}</span>
+        ${snippetHtml}
       `;
       el.addEventListener('click', () => {
         clearSearch();

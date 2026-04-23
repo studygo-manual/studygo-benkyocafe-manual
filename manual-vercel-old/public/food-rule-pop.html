@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>勉強カフェ お食事についてのお願い(POP)</title>
+<style>
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "Hiragino Sans", "Yu Gothic UI", "Yu Gothic", "Meiryo", sans-serif;
+    background: #e0e0e0;
+    padding: 20px;
+  }
+
+  .toolbar {
+    max-width: 210mm;
+    margin: 0 auto 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+  .toolbar button {
+    padding: 12px 24px;
+    background: #2c5f8d;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .toolbar button:hover { background: #1e4a70; }
+  .toolbar .hint {
+    background: #fff3cd;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 12px;
+    color: #856404;
+    align-self: center;
+  }
+
+  /* POP本体 A4縦 */
+  .pop {
+    width: 210mm;
+    height: 297mm;
+    margin: 0 auto;
+    background: #fff;
+    padding: 18mm 16mm;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    color: #222;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 飾り */
+  .pop::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 14mm;
+    background: linear-gradient(135deg, #2c5f8d, #4a90c2);
+  }
+  .pop::after {
+    content: "";
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4mm;
+    background: linear-gradient(135deg, #2c5f8d, #4a90c2);
+  }
+
+  .pop-header {
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    text-align: center;
+    margin: -4mm -16mm 8mm;
+    padding: 2mm 0 4mm;
+  }
+  .pop-header .small {
+    font-size: 12pt;
+    letter-spacing: 0.3em;
+    opacity: 0.95;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 26pt;
+    font-weight: 800;
+    color: #2c5f8d;
+    margin-bottom: 4mm;
+    letter-spacing: 0.05em;
+  }
+  h1 .accent {
+    color: #e65100;
+    font-size: 30pt;
+  }
+
+  .lead {
+    text-align: center;
+    font-size: 11pt;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 8mm;
+    padding: 0 4mm;
+  }
+
+  .axis-section {
+    margin-bottom: 6mm;
+  }
+
+  .axis-title {
+    text-align: center;
+    font-size: 13pt;
+    font-weight: 700;
+    color: #2c5f8d;
+    margin-bottom: 4mm;
+    padding: 2mm 0;
+    background: #f0f7ff;
+    border-radius: 6px;
+  }
+
+  .axis-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 3mm;
+    margin-bottom: 4mm;
+  }
+
+  .axis-card {
+    border: 2px solid #2c5f8d;
+    border-radius: 8px;
+    padding: 4mm 3mm;
+    text-align: center;
+    background: #fafbfc;
+  }
+
+  .axis-card .icon {
+    font-size: 24pt;
+    margin-bottom: 1mm;
+    display: block;
+  }
+
+  .axis-card .label {
+    font-size: 14pt;
+    font-weight: 800;
+    color: #2c5f8d;
+    margin-bottom: 2mm;
+  }
+
+  .axis-card .desc {
+    font-size: 9pt;
+    line-height: 1.5;
+    color: #555;
+  }
+
+  .examples {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4mm;
+    margin-bottom: 6mm;
+    flex: 1;
+  }
+
+  .ex-box {
+    border-radius: 8px;
+    padding: 4mm 5mm;
+    border: 2px solid;
+  }
+
+  .ex-ok {
+    border-color: #4caf50;
+    background: #f1f8e9;
+  }
+  .ex-ng {
+    border-color: #f44336;
+    background: #ffebee;
+  }
+
+  .ex-box h3 {
+    font-size: 14pt;
+    font-weight: 800;
+    text-align: center;
+    padding-bottom: 2mm;
+    margin-bottom: 3mm;
+    border-bottom: 2px solid;
+  }
+  .ex-ok h3 { color: #2e7d32; border-color: #4caf50; }
+  .ex-ng h3 { color: #c62828; border-color: #f44336; }
+
+  .ex-box ul {
+    list-style: none;
+    padding: 0;
+  }
+  .ex-box li {
+    font-size: 10pt;
+    padding: 1.5mm 0;
+    padding-left: 6mm;
+    position: relative;
+    line-height: 1.5;
+  }
+  .ex-ok li::before {
+    content: "○";
+    color: #4caf50;
+    font-weight: 800;
+    position: absolute;
+    left: 0;
+  }
+  .ex-ng li::before {
+    content: "×";
+    color: #f44336;
+    font-weight: 800;
+    position: absolute;
+    left: 0;
+  }
+
+  .footer-note {
+    text-align: center;
+    padding: 3mm 4mm;
+    background: #fff9e6;
+    border: 1.5px dashed #ffc107;
+    border-radius: 6px;
+    font-size: 10pt;
+    line-height: 1.6;
+    color: #5d4500;
+  }
+  .footer-note strong { color: #e65100; }
+
+  .brand {
+    text-align: center;
+    font-size: 9pt;
+    color: #888;
+    margin-top: 4mm;
+    letter-spacing: 0.1em;
+  }
+
+  /* 印刷時 */
+  @media print {
+    body { background: #fff; padding: 0; }
+    .toolbar { display: none; }
+    .pop {
+      box-shadow: none;
+      margin: 0;
+      width: 210mm;
+      height: 297mm;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="toolbar">
+  <span class="hint">💡 印刷ダイアログで「PDFに保存」を選択するとPDF化できます</span>
+  <button onclick="window.print()">🖨 PDF化/印刷</button>
+  <button onclick="location.href='food-rule.html'" style="background: #6c757d;">← 詳細ページへ</button>
+</div>
+
+<div class="pop">
+  <div class="pop-header">
+    <div class="small">STUDY GO × 勉強カフェ</div>
+  </div>
+
+  <h1>館内でのお食事<span class="accent">について</span></h1>
+
+  <p class="lead">
+    勉強カフェは、皆さまが集中して学習いただくための共用スペースです。<br>
+    周りのお客様への <strong>「ちょっとした思いやり」</strong> にご協力をお願いいたします。
+  </p>
+
+  <div class="axis-section">
+    <div class="axis-title">🌟 お願いしたい3つのこと 🌟</div>
+    <div class="axis-grid">
+      <div class="axis-card">
+        <span class="icon">🌸</span>
+        <div class="label">匂い</div>
+        <div class="desc">香りが広がるお食事は<br>ご遠慮ください</div>
+      </div>
+      <div class="axis-card" style="border-style: dashed;">
+        <span class="icon">🔥</span>
+        <div class="label">温度</div>
+        <div class="desc"><strong style="color:#e65100;">温かい食事は匂いが<br>広がりやすい</strong>ため<br>ご遠慮ください</div>
+      </div>
+      <div class="axis-card">
+        <span class="icon">🔊</span>
+        <div class="label">音</div>
+        <div class="desc">お菓子類はOKです<br>周囲へのご配慮を<br>お願いします</div>
+      </div>
+    </div>
+    <div style="text-align: center; font-size: 9pt; color: #555; margin-top: 2mm; padding: 2mm; background: #fff9e6; border-radius: 4px;">
+      ※ 温度と匂いは連動しています。<strong style="color:#e65100;">冷めたお食事は匂いが広がりにくい</strong>ためお召し上がりいただけます。
+    </div>
+  </div>
+
+  <div class="examples">
+    <div class="ex-box ex-ok">
+      <h3>✓ お召し上がりOK</h3>
+      <ul>
+        <li>サンドイッチ・おにぎり</li>
+        <li>パン類（冷たいもの）</li>
+        <li>お菓子・チョコレート</li>
+        <li>和菓子・ナッツ類</li>
+        <li>バナナ・りんご 等の果物</li>
+        <li>冷たいお弁当</li>
+        <li>お飲み物全般</li>
+        <li>オフィスグリコのお菓子</li>
+      </ul>
+    </div>
+
+    <div class="ex-box ex-ng">
+      <h3>✕ ご遠慮ください</h3>
+      <ul>
+        <li>カップラーメン・カップ麺</li>
+        <li>カレー・エスニック料理</li>
+        <li>ニンニク・ニラ料理</li>
+        <li>温かいお弁当</li>
+        <li>デリバリー（温かい料理）</li>
+        <li>お酒・アルコール類</li>
+        <li>匂いの強い発酵食品</li>
+        <li>温め直したお食事</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    上記に該当しないお食事については、<strong>スタッフがご案内</strong>いたします。<br>
+    ご不明な点はお気軽にスタッフまでお声がけください。
+  </div>
+
+  <div class="brand">BENKYO CAFE × STUDY GO</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マニュアル編集ガイド</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'メイリオ', Meiryo, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: #f5f5f5;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #4CAF50;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #4CAF50;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #388E3C;
+            font-size: 1.4rem;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-left: 15px;
+            border-left: 4px solid #4CAF50;
+        }
+        h3 {
+            color: #333;
+            font-size: 1.1rem;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            background: #E8F5E9;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+        p {
+            margin-bottom: 15px;
+        }
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .code-block {
+            background: #263238;
+            color: #ECEFF1;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .code-block .comment {
+            color: #78909C;
+        }
+        .code-block .tag {
+            color: #80CBC4;
+        }
+        .code-block .attr {
+            color: #FFCC80;
+        }
+        .code-block .string {
+            color: #C5E1A5;
+        }
+        .code-block .highlight {
+            background: #37474F;
+            display: block;
+            margin: 0 -20px;
+            padding: 0 20px;
+        }
+        .tip {
+            background: #E3F2FD;
+            border-left: 4px solid #2196F3;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .tip-title {
+            color: #1976D2;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .warning {
+            background: #FFF3E0;
+            border-left: 4px solid #FF9800;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .warning-title {
+            color: #F57C00;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .danger {
+            background: #FFEBEE;
+            border-left: 4px solid #f44336;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .danger-title {
+            color: #D32F2F;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            text-align: left;
+        }
+        th {
+            background: #4CAF50;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        .file-structure {
+            background: #ECEFF1;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: monospace;
+            margin: 15px 0;
+        }
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .example-box {
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .example-title {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            font-weight: bold;
+        }
+        .example-content {
+            padding: 20px;
+        }
+        kbd {
+            background: #eee;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            padding: 2px 6px;
+            font-family: monospace;
+        }
+        footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>マニュアル編集ガイド</h1>
+        <p class="subtitle">スタディGO スタッフマニュアルの編集方法</p>
+
+        <!-- 目次 -->
+        <h2>目次</h2>
+        <ol>
+            <li><a href="#files">ファイル構成</a></li>
+            <li><a href="#tools">編集に使うツール</a></li>
+            <li><a href="#open">ファイルの開き方</a></li>
+            <li><a href="#basics">HTMLの基本</a></li>
+            <li><a href="#text">テキストを変更する</a></li>
+            <li><a href="#list">リスト項目を追加・削除する</a></li>
+            <li><a href="#section">セクションを追加する</a></li>
+            <li><a href="#card">カード（囲み）を追加する</a></li>
+            <li><a href="#table">表を編集する</a></li>
+            <li><a href="#link">リンクを追加する</a></li>
+            <li><a href="#examples">実践例：営業時間を追加する</a></li>
+            <li><a href="#backup">バックアップについて</a></li>
+            <li><a href="#trouble">トラブル対処法</a></li>
+        </ol>
+
+        <!-- ファイル構成 -->
+        <h2 id="files">1. ファイル構成</h2>
+        <p>マニュアルは以下のファイルで構成されています：</p>
+        <div class="file-structure">
+            manual/<br>
+            ├── index.html　　　← マニュアル本体（文章を編集）<br>
+            ├── style.css　　　 ← スタイル（色・レイアウトを編集）<br>
+            └── 編集ガイド.html　← このガイド
+        </div>
+        <table>
+            <tr>
+                <th>変更したい内容</th>
+                <th>編集するファイル</th>
+            </tr>
+            <tr>
+                <td>文章・項目の追加/変更/削除</td>
+                <td>index.html</td>
+            </tr>
+            <tr>
+                <td>色・フォント・余白などの変更</td>
+                <td>style.css</td>
+            </tr>
+        </table>
+
+        <!-- 編集ツール -->
+        <h2 id="tools">2. 編集に使うツール</h2>
+        <h3>推奨：Visual Studio Code（無料）</h3>
+        <p>以下からダウンロードできます：<br>
+        <a href="https://code.visualstudio.com/" target="_blank">https://code.visualstudio.com/</a></p>
+        <div class="tip">
+            <div class="tip-title">Visual Studio Codeの利点</div>
+            <ul>
+                <li>HTMLタグが色分けされて見やすい</li>
+                <li>入力補完機能がある</li>
+                <li>エラーを教えてくれる</li>
+            </ul>
+        </div>
+
+        <h3>簡易：メモ帳（Windows標準）</h3>
+        <p>Windowsに最初から入っているメモ帳でも編集できます。</p>
+
+        <!-- ファイルの開き方 -->
+        <h2 id="open">3. ファイルの開き方</h2>
+        <h3>Visual Studio Codeの場合</h3>
+        <ol>
+            <li><span class="step-number">1</span>Visual Studio Codeを起動</li>
+            <li><span class="step-number">2</span>「ファイル」→「フォルダーを開く」</li>
+            <li><span class="step-number">3</span>manualフォルダを選択</li>
+            <li><span class="step-number">4</span>左のファイル一覧から編集したいファイルをクリック</li>
+        </ol>
+
+        <h3>メモ帳の場合</h3>
+        <ol>
+            <li><span class="step-number">1</span>index.htmlを右クリック</li>
+            <li><span class="step-number">2</span>「プログラムから開く」→「メモ帳」を選択</li>
+        </ol>
+
+        <div class="warning">
+            <div class="warning-title">注意</div>
+            <p>index.htmlをダブルクリックするとブラウザで開きます。編集するには「右クリック」→「プログラムから開く」を使ってください。</p>
+        </div>
+
+        <!-- HTMLの基本 -->
+        <h2 id="basics">4. HTMLの基本</h2>
+        <p>HTMLは「タグ」で文章を囲んで構造を作ります。</p>
+        <div class="code-block">
+<span class="comment">&lt;!-- これはコメント。画面には表示されません --&gt;</span>
+
+<span class="tag">&lt;p&gt;</span>これは段落です。<span class="tag">&lt;/p&gt;</span>
+
+<span class="tag">&lt;h3&gt;</span>これは見出しです<span class="tag">&lt;/h3&gt;</span>
+
+<span class="tag">&lt;ul&gt;</span>
+    <span class="tag">&lt;li&gt;</span>リスト項目1<span class="tag">&lt;/li&gt;</span>
+    <span class="tag">&lt;li&gt;</span>リスト項目2<span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ul&gt;</span>
+        </div>
+
+        <table>
+            <tr>
+                <th>タグ</th>
+                <th>意味</th>
+                <th>使用例</th>
+            </tr>
+            <tr>
+                <td>&lt;p&gt;...&lt;/p&gt;</td>
+                <td>段落（文章）</td>
+                <td>&lt;p&gt;説明文です。&lt;/p&gt;</td>
+            </tr>
+            <tr>
+                <td>&lt;h2&gt;...&lt;/h2&gt;</td>
+                <td>大見出し</td>
+                <td>&lt;h2&gt;セクション名&lt;/h2&gt;</td>
+            </tr>
+            <tr>
+                <td>&lt;h3&gt;...&lt;/h3&gt;</td>
+                <td>中見出し</td>
+                <td>&lt;h3&gt;小項目名&lt;/h3&gt;</td>
+            </tr>
+            <tr>
+                <td>&lt;ul&gt;...&lt;/ul&gt;</td>
+                <td>箇条書きリスト</td>
+                <td>番号なしリスト</td>
+            </tr>
+            <tr>
+                <td>&lt;ol&gt;...&lt;/ol&gt;</td>
+                <td>番号付きリスト</td>
+                <td>手順など</td>
+            </tr>
+            <tr>
+                <td>&lt;li&gt;...&lt;/li&gt;</td>
+                <td>リスト項目</td>
+                <td>リストの各項目</td>
+            </tr>
+            <tr>
+                <td>&lt;strong&gt;...&lt;/strong&gt;</td>
+                <td>太字・強調</td>
+                <td>&lt;strong&gt;重要&lt;/strong&gt;</td>
+            </tr>
+        </table>
+
+        <!-- テキスト変更 -->
+        <h2 id="text">5. テキストを変更する</h2>
+        <p>最も簡単な編集です。タグの中の文字を書き換えるだけです。</p>
+
+        <div class="example-box">
+            <div class="example-title">例：電話番号を変更する</div>
+            <div class="example-content">
+                <p><strong>変更前：</strong></p>
+                <div class="code-block">
+<span class="tag">&lt;p&gt;</span>電話：03-6302-0774（平日10:00〜18:00）<span class="tag">&lt;/p&gt;</span>
+                </div>
+                <p><strong>変更後：</strong></p>
+                <div class="code-block">
+<span class="tag">&lt;p&gt;</span>電話：03-1234-5678（平日9:00〜17:00）<span class="tag">&lt;/p&gt;</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="tip">
+            <div class="tip-title">検索機能を活用</div>
+            <p><kbd>Ctrl</kbd> + <kbd>F</kbd> で検索窓が開きます。変更したい文字を検索すると、該当箇所がすぐ見つかります。</p>
+        </div>
+
+        <!-- リスト編集 -->
+        <h2 id="list">6. リスト項目を追加・削除する</h2>
+
+        <h3>項目を追加する</h3>
+        <div class="code-block">
+<span class="tag">&lt;ul&gt;</span>
+    <span class="tag">&lt;li&gt;</span>既存の項目1<span class="tag">&lt;/li&gt;</span>
+    <span class="tag">&lt;li&gt;</span>既存の項目2<span class="tag">&lt;/li&gt;</span>
+<span class="highlight">    <span class="tag">&lt;li&gt;</span>新しく追加した項目<span class="tag">&lt;/li&gt;</span>  ← この行を追加</span>
+<span class="tag">&lt;/ul&gt;</span>
+        </div>
+
+        <h3>項目を削除する</h3>
+        <p>&lt;li&gt;から&lt;/li&gt;までの1行をまるごと削除します。</p>
+
+        <!-- セクション追加 -->
+        <h2 id="section">7. セクションを追加する</h2>
+        <p>新しいセクション（章）を追加する場合のテンプレートです。</p>
+        <div class="code-block">
+<span class="comment">&lt;!-- 新しいセクション --&gt;</span>
+<span class="tag">&lt;section</span> <span class="attr">id</span>=<span class="string">"new-section"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;h2&gt;</span>新しいセクション名<span class="tag">&lt;/h2&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="string">"card"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;h3&gt;</span>見出し<span class="tag">&lt;/h3&gt;</span>
+        <span class="tag">&lt;p&gt;</span>説明文をここに書きます。<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/section&gt;</span>
+        </div>
+
+        <div class="warning">
+            <div class="warning-title">目次への追加を忘れずに</div>
+            <p>新しいセクションを追加したら、サイドバーの目次にもリンクを追加してください。</p>
+            <div class="code-block">
+<span class="comment">&lt;!-- #sidebarの中のulに追加 --&gt;</span>
+<span class="tag">&lt;li&gt;&lt;a</span> <span class="attr">href</span>=<span class="string">"#new-section"</span><span class="tag">&gt;</span>新しいセクション名<span class="tag">&lt;/a&gt;&lt;/li&gt;</span>
+            </div>
+        </div>
+
+        <!-- カード追加 -->
+        <h2 id="card">8. カード（囲み）を追加する</h2>
+
+        <h3>通常のカード</h3>
+        <div class="code-block">
+<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="string">"card"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;h3&gt;</span>カードのタイトル<span class="tag">&lt;/h3&gt;</span>
+    <span class="tag">&lt;p&gt;</span>カードの内容です。<span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+        </div>
+
+        <h3>重要なカード（緑の強調）</h3>
+        <div class="code-block">
+<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="string">"card important"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;h3&gt;</span>重要なお知らせ<span class="tag">&lt;/h3&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+        </div>
+
+        <h3>警告カード（赤の強調）</h3>
+        <div class="code-block">
+<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="string">"card warning"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;h3&gt;</span>注意事項<span class="tag">&lt;/h3&gt;</span>
+    <span class="tag">&lt;p&gt;</span>注意すべき内容です。<span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+        </div>
+
+        <!-- 表の編集 -->
+        <h2 id="table">9. 表を編集する</h2>
+        <div class="code-block">
+<span class="tag">&lt;table</span> <span class="attr">class</span>=<span class="string">"info-table"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;tr&gt;</span>                          <span class="comment">&lt;!-- 1行目 --&gt;</span>
+        <span class="tag">&lt;th&gt;</span>見出しセル<span class="tag">&lt;/th&gt;</span>       <span class="comment">&lt;!-- 見出し --&gt;</span>
+        <span class="tag">&lt;td&gt;</span>データセル<span class="tag">&lt;/td&gt;</span>       <span class="comment">&lt;!-- データ --&gt;</span>
+    <span class="tag">&lt;/tr&gt;</span>
+    <span class="tag">&lt;tr&gt;</span>                          <span class="comment">&lt;!-- 2行目 --&gt;</span>
+        <span class="tag">&lt;th&gt;</span>営業時間<span class="tag">&lt;/th&gt;</span>
+        <span class="tag">&lt;td&gt;</span>10:00〜22:00<span class="tag">&lt;/td&gt;</span>
+    <span class="tag">&lt;/tr&gt;</span>
+<span class="tag">&lt;/table&gt;</span>
+        </div>
+
+        <!-- リンク -->
+        <h2 id="link">10. リンクを追加する</h2>
+        <div class="code-block">
+<span class="comment">&lt;!-- 外部サイトへのリンク --&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="string">"https://example.com"</span><span class="tag">&gt;</span>リンクテキスト<span class="tag">&lt;/a&gt;</span>
+
+<span class="comment">&lt;!-- メールリンク --&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="string">"mailto:info@example.com"</span><span class="tag">&gt;</span>info@example.com<span class="tag">&lt;/a&gt;</span>
+
+<span class="comment">&lt;!-- ページ内リンク（#の後ろはid名） --&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="string">"#checkin"</span><span class="tag">&gt;</span>チェックインの項目へ<span class="tag">&lt;/a&gt;</span>
+        </div>
+
+        <!-- 実践例 -->
+        <h2 id="examples">11. 実践例：営業時間を追加する</h2>
+        <p>「システム概要」セクションに勉強カフェの営業時間を追加する例です。</p>
+
+        <h3>手順</h3>
+        <ol>
+            <li><span class="step-number">1</span>index.htmlを開く</li>
+            <li><span class="step-number">2</span><kbd>Ctrl</kbd> + <kbd>F</kbd> で「システム概要」を検索</li>
+            <li><span class="step-number">3</span>該当セクションを見つけたら、以下のコードを追加</li>
+        </ol>
+
+        <div class="code-block">
+<span class="comment">&lt;!-- 「システム概要」セクション内に以下を追加 --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="string">"card"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;h3&gt;</span>勉強カフェ 営業時間<span class="tag">&lt;/h3&gt;</span>
+    <span class="tag">&lt;table</span> <span class="attr">class</span>=<span class="string">"info-table"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;tr&gt;</span>
+            <span class="tag">&lt;th&gt;</span>平日<span class="tag">&lt;/th&gt;</span>
+            <span class="tag">&lt;td&gt;</span>6:00〜23:00<span class="tag">&lt;/td&gt;</span>
+        <span class="tag">&lt;/tr&gt;</span>
+        <span class="tag">&lt;tr&gt;</span>
+            <span class="tag">&lt;th&gt;</span>土曜<span class="tag">&lt;/th&gt;</span>
+            <span class="tag">&lt;td&gt;</span>6:00〜22:00<span class="tag">&lt;/td&gt;</span>
+        <span class="tag">&lt;/tr&gt;</span>
+        <span class="tag">&lt;tr&gt;</span>
+            <span class="tag">&lt;th&gt;</span>日祝<span class="tag">&lt;/th&gt;</span>
+            <span class="tag">&lt;td&gt;</span>6:00〜21:00<span class="tag">&lt;/td&gt;</span>
+        <span class="tag">&lt;/tr&gt;</span>
+    <span class="tag">&lt;/table&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+        </div>
+
+        <ol start="4">
+            <li><span class="step-number">4</span>ファイルを保存（<kbd>Ctrl</kbd> + <kbd>S</kbd>）</li>
+            <li><span class="step-number">5</span>ブラウザで確認（index.htmlをダブルクリック、または<kbd>F5</kbd>で更新）</li>
+        </ol>
+
+        <!-- バックアップ -->
+        <h2 id="backup">12. バックアップについて</h2>
+        <div class="danger">
+            <div class="danger-title">編集前に必ずバックアップを取ってください</div>
+            <p>manualフォルダをコピーして、日付付きの名前で保存しておくことをおすすめします。</p>
+            <p>例：manual_backup_20240205</p>
+        </div>
+
+        <!-- トラブル対処 -->
+        <h2 id="trouble">13. トラブル対処法</h2>
+
+        <h3>レイアウトが崩れた</h3>
+        <ul>
+            <li>タグの閉じ忘れがないか確認（&lt;div&gt;には&lt;/div&gt;が必要）</li>
+            <li>引用符（"）の閉じ忘れがないか確認</li>
+            <li>バックアップから復元</li>
+        </ul>
+
+        <h3>変更が反映されない</h3>
+        <ul>
+            <li>ファイルを保存したか確認（<kbd>Ctrl</kbd> + <kbd>S</kbd>）</li>
+            <li>ブラウザをリロード（<kbd>F5</kbd> または <kbd>Ctrl</kbd> + <kbd>F5</kbd>）</li>
+            <li>ブラウザのキャッシュをクリア</li>
+        </ul>
+
+        <h3>文字化けする</h3>
+        <ul>
+            <li>ファイルをUTF-8形式で保存してください</li>
+            <li>メモ帳の場合：「名前を付けて保存」→ 文字コードを「UTF-8」に変更</li>
+        </ul>
+
+        <div class="tip">
+            <div class="tip-title">困ったときは</div>
+            <p>編集で困った場合は、バックアップから復元するか、このガイドを参考にしてください。大きな変更を加える前には必ずバックアップを取っておきましょう。</p>
+        </div>
+
+        <footer>
+            <p>勉強カフェ スタディGO マニュアル編集ガイド</p>
+        </footer>
+    </div>
+</body>
+</html>

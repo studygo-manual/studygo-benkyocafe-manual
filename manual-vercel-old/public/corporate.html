@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スタディGO 掲載店運営マニュアル | 加盟法人様用</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>スタディGO 掲載店運営マニュアル</h1>
+            <p class="subtitle">加盟法人様用</p>
+        </div>
+    </header>
+
+    <nav id="sidebar">
+        <div class="nav-section">
+            <h3>目次</h3>
+            <ul>
+                <li><a href="#overview">システム概要</a></li>
+                <li><a href="#support">サポート体制</a></li>
+                <li><a href="#workflow">業務フロー</a></li>
+                <li><a href="#login">管理画面ログイン</a></li>
+                <li><a href="#checkin">チェックイン・チェックアウト</a></li>
+                <li><a href="#dropin">ドロップイン利用</a></li>
+                <li><a href="#reservation">内見予約対応</a></li>
+                <li><a href="#contract">契約時の対応</a></li>
+                <li><a href="#cancel">解約時の対応</a></li>
+                <li><a href="#settings">各種設定</a></li>
+                <li><a href="#trouble">トラブル対応</a></li>
+                <li><a href="#checklist">導入チェックリスト</a></li>
+                <li><a href="#rules">注意事項</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <!-- システム概要 -->
+        <section id="overview">
+            <h2>システム概要</h2>
+            <div class="card">
+                <h3>スタディGOとは</h3>
+                <p>スタディGOは、勉強場所を探しているユーザーと店舗をマッチングするアプリです。</p>
+                <p>ユーザーは以下をアプリ内で完結できます：</p>
+                <ul>
+                    <li>店舗検索・比較</li>
+                    <li>内見予約</li>
+                    <li>契約・決済</li>
+                    <li>QRコードでのチェックイン・チェックアウト</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>利用プランの種類</h3>
+                <div class="plan-grid">
+                    <div class="plan-item">
+                        <h4>月額プラン</h4>
+                        <p>毎月定額で利用できるプラン。プラン時間を超過した場合は1分単位で課金されます。</p>
+                    </div>
+                    <div class="plan-item">
+                        <h4>ドロップイン（都度利用）</h4>
+                        <p>予約不要で利用できるスポット利用。チェックイン時に1日最大料金を請求し、チェックアウト時に精算します。</p>
+                    </div>
+                    <div class="plan-item highlight">
+                        <h4>デフォルトプラン（60分プラン）</h4>
+                        <p>スタディGO独自のプラン。月額6,600円で毎日60分利用可能。超過分は1分単位課金。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- サポート体制 -->
+        <section id="support">
+            <h2>サポート体制</h2>
+            <div class="card important">
+                <h3>店舗の営業に関わるもの以外は運営に問い合わせてOK</h3>
+            </div>
+            <div class="card">
+                <h3>掲載店からの問い合わせ先</h3>
+                <div class="contact-info">
+                    <p><strong>株式会社ベースポイント スタディGOサポート</strong></p>
+                    <p>メール：<a href="mailto:info.studygo@b-pt.jp">info.studygo@b-pt.jp</a></p>
+                    <p>電話：03-6302-0774（平日10:00〜18:00）</p>
+                    <p class="note">※掲載店お問い合わせのみ</p>
+                </div>
+            </div>
+            <div class="card">
+                <h3>ユーザーからの問い合わせ</h3>
+                <p>ユーザーはアプリのメッセージ機能から「スタディGO運営」に直接問い合わせできます。</p>
+                <p>運営への問い合わせを誘導する場合は、アプリ内のメッセージ機能から問い合わせできる旨をご案内ください。</p>
+            </div>
+        </section>
+
+        <!-- 業務フロー -->
+        <section id="workflow">
+            <h2>業務フロー</h2>
+            <div class="card">
+                <h3>掲載店舗の対応フロー</h3>
+                <div class="workflow-diagram">
+                    <div class="workflow-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>内見予約対応</h4>
+                            <ul>
+                                <li>内見カレンダーを設定</li>
+                                <li>内見予約を管理</li>
+                                <li>ユーザーと連絡</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="workflow-arrow">→</div>
+                    <div class="workflow-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>内見対応</h4>
+                            <ul>
+                                <li>内見実施</li>
+                                <li>禁止事項に注意</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="workflow-arrow">→</div>
+                    <div class="workflow-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>登録手続き</h4>
+                            <ul>
+                                <li>ルール説明</li>
+                                <li>鍵付与</li>
+                                <li>身分証明書確認</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="workflow-arrow">→</div>
+                    <div class="workflow-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>接客・補助</h4>
+                            <ul>
+                                <li>通常の接客対応</li>
+                                <li>トラブル対応</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="workflow-arrow">→</div>
+                    <div class="workflow-step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>抹消手続き</h4>
+                            <ul>
+                                <li>鍵削除</li>
+                                <li>連絡事項</li>
+                                <li>オプション解約</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <p class="note">※スタディGO特有の業務は少なく、主に内見予約対応と連絡業務のみです。</p>
+            </div>
+        </section>
+
+        <!-- 管理画面ログイン -->
+        <section id="login">
+            <h2>管理画面ログイン</h2>
+            <div class="card">
+                <h3>ログイン方法</h3>
+                <ol>
+                    <li>運営からメールで送られてきたログイン情報を確認</li>
+                    <li>管理画面にアクセス</li>
+                    <li>「法人メールアドレス」と「パスワード」を入力</li>
+                    <li>ログインボタンをクリック</li>
+                </ol>
+                <div class="tips">
+                    <h4>ポイント</h4>
+                    <ul>
+                        <li>パスワードは変更可能です</li>
+                        <li>運営側で法人情報を更新するとパスワードがリセットされます</li>
+                        <li>対応が必要なことはバッジと件数で表示されます</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card">
+                <h3>管理画面メニュー</h3>
+                <ul>
+                    <li><strong>ダッシュボード</strong> - 未返信メッセージ、本日の内見予約、新規契約者などを確認</li>
+                    <li><strong>内見予約一覧</strong> - 内見予約の管理</li>
+                    <li><strong>チェックイン実績</strong> - ユーザーの利用履歴確認</li>
+                    <li><strong>会員管理</strong> - 会員情報の確認、メッセージ送信</li>
+                    <li><strong>店舗管理</strong> - 店舗情報の設定</li>
+                    <li><strong>支払い実績確認</strong> - 決済情報の確認</li>
+                    <li><strong>営業日・営業時間管理</strong> - カレンダー設定</li>
+                    <li><strong>加盟法人情報</strong> - 法人情報の確認</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- チェックイン・チェックアウト -->
+        <section id="checkin">
+            <h2>チェックイン・チェックアウト</h2>
+            <div class="card">
+                <h3>事前準備</h3>
+                <div class="important-box">
+                    <p>掲載開始前に、受付カウンターや入り口ドア等にQRコードを設置してください。</p>
+                </div>
+            </div>
+            <div class="card">
+                <h3>チェックインの流れ</h3>
+                <ol>
+                    <li>ユーザーがアプリでQRコードを読み取る</li>
+                    <li>チェックイン完了画面が表示される</li>
+                    <li>必要があれば画面を確認</li>
+                </ol>
+                <p class="note">※QR読取エラー時は店舗コードでもチェックイン可能です（非推奨）</p>
+            </div>
+            <div class="card">
+                <h3>チェックアウトの流れ</h3>
+                <ol>
+                    <li>ユーザーがアプリでQRコードを読み取る</li>
+                    <li>チェックアウト完了・精算画面が表示される</li>
+                </ol>
+                <div class="warning">
+                    <h4>重要</h4>
+                    <ul>
+                        <li>チェックアウトが行われるまで利用があったものとみなされます</li>
+                        <li>課金対象の場合は課金されます</li>
+                        <li>営業終了時間に強制チェックアウトが行われます</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card">
+                <h3>チェックアウト時の精算</h3>
+                <ul>
+                    <li>月額プラン時間超過分の算出・請求</li>
+                    <li>ドロップイン利用時の1日最大請求額からの精算（返金または請求）</li>
+                    <li>超過時間は店舗設定の〇〇円/1分で計算（計50円未満は切り捨て）</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>利用履歴の確認方法</h3>
+                <ol>
+                    <li>管理画面の「チェックイン実績」をクリック</li>
+                    <li>店舗で絞り込み</li>
+                    <li>日付で範囲指定</li>
+                </ol>
+                <p>チェックアウト後は明細確認可能、チェックアウト前は時間編集可能です。</p>
+            </div>
+        </section>
+
+        <!-- ドロップイン利用 -->
+        <section id="dropin">
+            <h2>ドロップイン利用</h2>
+            <div class="card">
+                <h3>ドロップイン利用が想定されるシーン</h3>
+                <ul>
+                    <li>月額利用を検討しているが、まずはお試しとして利用</li>
+                    <li>月額会員だが、プラン時間外にチェックインする場合</li>
+                    <li>月額会員だが、〇〇分プランの残時間が無い状態</li>
+                    <li>勉強場所を近辺で探していた人</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>ドロップイン利用の流れ</h3>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <h4>1. QR読取</h4>
+                        <p>ユーザーがQRを読み取り、ドロップインプラン選択画面が表示</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>2. 契約・チェックイン</h4>
+                        <p>チェックイン時にドロップインプランを契約（契約即チェックイン）。この時点で1日最大料金を請求</p>
+                    </div>
+                    <div class="flow-step">
+                        <h4>3. チェックアウト・精算</h4>
+                        <p>QRを読み取り、チェックアウト完了・明細画面が表示</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <h3>月額会員のドロップイン利用</h3>
+                <p>月額会員でも以下のノンストップ利用が可能です：</p>
+                <p>プラン時間前にドロップイン → プラン時間内に突入 → プラン時間外の超過利用</p>
+                <div class="tips">
+                    <p>これを容認する場合、鍵付与の際にプラン時間内に限定せず、営業時間全ての鍵付与を行う必要があります。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 内見予約対応 -->
+        <section id="reservation">
+            <h2>内見予約対応</h2>
+            <div class="card">
+                <h3>内見予約が入ったら</h3>
+                <ol>
+                    <li>登録の店舗メールアドレスに予約のお知らせが届く</li>
+                    <li>管理画面の「内見予約一覧」で確認</li>
+                    <li>
+                        ステータスを変更：
+                        <ul>
+                            <li>◎内見可能の場合 → 即確定</li>
+                            <li>△対応不明の場合 → 仮予約（「予約確定」または「予約キャンセル」に変更）</li>
+                        </ul>
+                    </li>
+                    <li>ユーザーにメッセージを送信（推奨）</li>
+                </ol>
+            </div>
+            <div class="card">
+                <h3>内見対応</h3>
+                <ul>
+                    <li>通常の内見対応と同じ内容でOK（営業時間や利用ルール等の説明）</li>
+                    <li class="warning-text">※店舗で提供されているプランの紹介・説明や、他サービスの紹介・説明はお控えください</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>内見後の契約</h3>
+                <p>気に入っていただけたら「アプリを通じて」契約してもらいます。</p>
+                <ul>
+                    <li>ユーザーがアプリで単独で完結できるので、店舗側作業はありません</li>
+                    <li>契約についての質問は次項「契約時の対応」を参照</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>内見予約日時経過後</h3>
+                <ol>
+                    <li>対応実績に合わせてステータスを変更</li>
+                    <li>来店した場合 →「内見実施」</li>
+                    <li>来店しなかった場合 →「内見キャンセル」</li>
+                    <li>ステータス変更後、一覧から非表示になりアーカイブされます</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- 契約時の対応 -->
+        <section id="contract">
+            <h2>契約時の対応</h2>
+
+            <div class="card">
+                <h3>店内で契約した場合</h3>
+                <p>契約はユーザーがアプリで行うため、店舗側作業はありません。</p>
+                <p>契約後は通常の店舗でのご入会と同様の業務を行ってください：</p>
+                <ul>
+                    <li>施設ルールの読み合せ</li>
+                    <li>無人時間帯の鍵付与</li>
+                    <li>身分証明書の確認、コピー等</li>
+                    <li>緊急連絡先を伝える（店舗利用に係る）</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>店外で契約した場合</h3>
+                <p>その場にいないで契約したユーザーとは：</p>
+                <ul>
+                    <li>内見をしたがその場で契約しなかったユーザー</li>
+                    <li>ドロップインなどで過去に接点のあったユーザー</li>
+                    <li>いきなりアプリから契約したユーザー</li>
+                </ul>
+                <h4>対応フロー</h4>
+                <ol>
+                    <li>「メール」通知とダッシュボードの「新規契約したお客様」で確認</li>
+                    <li>「メッセージ」またはメールアドレスでユーザーに連絡</li>
+                    <li>初回利用前の所定手続き（ルール説明、鍵発行、身分証確認等）が必要な旨を伝える</li>
+                    <li>来店できる日のアポイントメントを取得（利用開始初日以前が推奨）</li>
+                </ol>
+            </div>
+
+            <div class="card">
+                <h3>月額プランの仕組み</h3>
+                <table class="info-table">
+                    <tr>
+                        <th>契約時の請求</th>
+                        <td>
+                            <ul>
+                                <li>入会金5,500円</li>
+                                <li>店舗別初期費用</li>
+                                <li>利用開始月分（日割り）</li>
+                                <li>翌月分月額料金</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>最低継続期間</th>
+                        <td>利用開始月とその翌月の2ヶ月</td>
+                    </tr>
+                    <tr>
+                        <th>解約申請</th>
+                        <td>前月11日〜当月10日までの申請で当月末解約</td>
+                    </tr>
+                    <tr>
+                        <th>自動更新</th>
+                        <td>当月10日までに解約申請が無ければ、15日に翌月分請求。1日に1ヶ月単位で自動更新</td>
+                    </tr>
+                </table>
+                <p class="note">プラン変更ルール等、詳細はメッセージ機能で「運営に聞いてください」でOKです。</p>
+            </div>
+        </section>
+
+        <!-- 解約時の対応 -->
+        <section id="cancel">
+            <h2>解約時の対応</h2>
+            <div class="card">
+                <h3>解約の流れ</h3>
+                <ol>
+                    <li>10日までの解約申請で月末での契約終了 → 11日に一覧に解約者が追加</li>
+                    <li>ダッシュボードで解約者を確認</li>
+                    <li>必要があれば連絡（物理キーの回収が必要な場合など）</li>
+                    <li>最終利用日以降に鍵の権限削除など、店舗システム側で退会処理</li>
+                </ol>
+            </div>
+            <div class="card">
+                <h3>管理画面での操作</h3>
+                <ul>
+                    <li>「鍵回収ステータス」で管理（未回収/回収済み）</li>
+                    <li>対応完了後は「確認済み」で一覧から非表示に</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 各種設定 -->
+        <section id="settings">
+            <h2>各種設定</h2>
+
+            <div class="card">
+                <h3>内見予約カレンダーの設定</h3>
+                <p>「営業日・営業時間管理」から設定します。</p>
+                <h4>設定項目</h4>
+                <ul>
+                    <li><strong>締め切り設定</strong> - いつまで内見予約を受け付けるか（例：「前日の20:00まで」「当日の内見開始時刻の1時間前」など）</li>
+                    <li><strong>基本内見可能時間</strong> - 「◎内見可能」となる時間帯</li>
+                    <li><strong>対応不明</strong> - チェックを入れると「△対応不明」（仮予約）で表示</li>
+                    <li><strong>対応不可</strong> - チェックを入れるとその曜日の内見予約を停止</li>
+                </ul>
+                <div class="tips">
+                    <p>無人店舗の場合は基本は全て「△対応不明」とする運用が想定されます。</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>営業日・営業時間設定（月額会員向け）</h3>
+                <p>スタディGOの月額会員の受け入れ可能時間・曜日を設定します。</p>
+                <div class="warning">
+                    <ul>
+                        <li>頻繁な変更は推奨しません</li>
+                        <li>現在提供中のプランと干渉しないようにご注意ください</li>
+                        <li>月額契約中ユーザーに事前連絡が必要な場合があります</li>
+                        <li>終了時間1分前にチェックイン中ユーザーの強制チェックアウトが行われます</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>営業日・営業時間設定（都度利用向け）</h3>
+                <p>ドロップインの受け入れ可能時間・曜日を設定します。有人営業時間帯の設定が想定されます。</p>
+                <div class="warning">
+                    <p>「月額会員向け」と「都度利用向け」は独立したカレンダーのため連動しません。両方の設定を変更し、整合させる必要があります。</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>店舗管理での設定</h3>
+                <p>「店舗管理」→ 一番右の編集アイコンをクリック</p>
+                <table class="info-table">
+                    <tr>
+                        <th>チェックイン時表示</th>
+                        <td>入室方法や暗証番号、利用ルールなどを記載</td>
+                    </tr>
+                    <tr>
+                        <th>契約前同意事項</th>
+                        <td>契約前にユーザーに同意を求める内容を記載</td>
+                    </tr>
+                    <tr>
+                        <th>最短利用開始日</th>
+                        <td>
+                            「n日以降」の営業日と設定可能<br>
+                            0=当日から契約して利用可<br>
+                            1=契約の翌日から利用可<br>
+                            2=契約の2日後から利用可
+                        </td>
+                    </tr>
+                </table>
+                <p class="note">※内見対応時にその日から入会させたいときはその時のみ設定変更</p>
+            </div>
+        </section>
+
+        <!-- トラブル対応 -->
+        <section id="trouble">
+            <h2>トラブル対応</h2>
+
+            <div class="card">
+                <h3>チェックインを忘れた場合</h3>
+                <table class="trouble-table">
+                    <tr>
+                        <th>同日の場合</th>
+                        <td>
+                            <ol>
+                                <li>その場でチェックインしてもらう</li>
+                                <li>管理画面「チェックイン実績」→「編集」で現在のチェックインを修正</li>
+                            </ol>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>別日の場合</th>
+                        <td>
+                            掲載店側では修正できないため、運営にご相談ください。<br>
+                            運営から追加請求を行います。
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card">
+                <h3>チェックアウトを忘れた場合</h3>
+                <table class="trouble-table">
+                    <tr>
+                        <th>同日の場合<br>（店舗を離れてしまった）</th>
+                        <td>
+                            「QR読取」→「QRが読み取れない場合」→ 店舗コードを入力<br>
+                            ※店舗コードはQRのポップに記載
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>別日の場合</th>
+                        <td>
+                            営業時間終了時点で自動チェックアウトされています。<br>
+                            <strong>チェックアウト忘れの返金はありません。</strong>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card warning">
+                <h3>間違ってチェックイン/チェックアウトした場合</h3>
+                <p>返金や修正措置はありません。</p>
+                <p>店舗では対応できない旨を伝え、対応が必要な場合は運営に連絡してもらってください（アプリ内メッセージ機能）。</p>
+            </div>
+
+            <div class="card">
+                <h3>お休みや営業時間の変更</h3>
+                <p>イベント貸切、店舗メンテナンス、年末年始など、数時間〜数日程度の変更の場合：</p>
+                <ol>
+                    <li>「会員管理」から月額契約中ユーザーにメッセージまたはメールで連絡</li>
+                    <li>「営業日・営業時間管理」で「月額会員向け」と「都度利用向け」両方の設定を変更</li>
+                </ol>
+                <p class="note">※状況によっては返金を求められる可能性があります。掲載店に決定権がありますが、ご相談やサポートは運営で承ります。</p>
+            </div>
+        </section>
+
+        <!-- 導入チェックリスト -->
+        <section id="checklist">
+            <h2>導入チェックリスト</h2>
+            <div class="card">
+                <h3>サービス開始前に確認してください</h3>
+                <div class="checklist">
+                    <label><input type="checkbox"> WEB掲載の店舗情報の確認（事前にURL共有）</label>
+                    <label><input type="checkbox"> 管理画面の「店舗詳細」からの情報確認</label>
+                    <label><input type="checkbox"> 「月額利用向け」設定の確認（営業日・営業時間管理）</label>
+                    <label><input type="checkbox"> 「内見予約」の設定（月額利用向け設定画面内）</label>
+                    <label><input type="checkbox"> 「都度利用向け」設定の確認（営業日・営業時間管理）</label>
+                    <label><input type="checkbox"> チェックイン時に表示したい情報の記載（店舗詳細）</label>
+                    <label><input type="checkbox"> 契約前の同意文に表示したい情報の記載（店舗詳細）</label>
+                    <label><input type="checkbox"> 最短利用開始日の設定（店舗詳細）</label>
+                    <label><input type="checkbox"> 店舗利用ルールのご提供（事前にメール）</label>
+                    <label><input type="checkbox"> 座席表等のエリア説明のご提供（事前にメール）</label>
+                    <label><input type="checkbox"> QRコードの設置</label>
+                </div>
+            </div>
+        </section>
+
+        <!-- 注意事項 -->
+        <section id="rules">
+            <h2>注意事項（禁止事項）</h2>
+            <div class="card warning">
+                <h3>スタディGOサービス特有の留意事項</h3>
+                <ul>
+                    <li>
+                        <strong>スタディGOユーザーを直接契約に誘因すること</strong><br>
+                        ※契約前のユーザー・契約済のユーザーかは問いません
+                    </li>
+                    <li>
+                        <strong>同一内容のプランを異なる料金で設定すること</strong><br>
+                        ※利用時間帯や曜日を変えてオリジナル化することで回避できます
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>スタディGO 掲載店運営マニュアル</p>
+        <p class="update-date">最終更新日: <span id="lastUpdate"></span></p>
+    </footer>
+
+    <script>
+        // 最終更新日を表示
+        document.getElementById('lastUpdate').textContent = new Date().toLocaleDateString('ja-JP');
+
+        // スムーズスクロール
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 現在表示中のセクションをハイライト
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('#sidebar a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const scrollPos = scrollY + 80;
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionBottom = sectionTop + section.offsetHeight;
+
+                if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
