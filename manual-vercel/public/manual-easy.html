@@ -637,6 +637,7 @@ const CATEGORIES = [
   { id: 'change',   icon: '🔄', title: 'プラン変更・休会・解約', desc: '申請方法・10日ルール・15日決済',  cls: 'cat-daily' },
   { id: 'admin',    icon: '💻', title: '管理画面',              desc: '12メニュー・スタッフ側操作',       cls: 'cat-device' },
   { id: 'trouble',  icon: '🚨', title: 'トラブル・イレギュラー', desc: 'アプリ不具合・返金・エラー',     cls: 'cat-urgent' },
+  { id: 'cafe_irregular', icon: '🏪', title: '勉強カフェイレギュラー', desc: '店舗運営の困りごと事例集（日報3年分から抽出）', cls: 'cat-urgent' },
 ];
 
 // ===================================
@@ -5402,6 +5403,415 @@ const QA_DATA = [
           <div class="kodack-tip-text">メモがあると引き継ぎも再発防止もスムーズだよ。チャットワークに共有してね。</div>
         </div>
       </div>`,
+  },
+
+  // ===================================
+  // 🏪 勉強カフェイレギュラー（日報2022/11〜2026/4から頻出パターン抽出）
+  // ===================================
+  // ----- Akerun・入退室 -----
+  {
+    id: 'ci1', cat: 'cafe_irregular', type: 'irregular',
+    q: 'Akerunのオートロックが解除できない／調子が悪い',
+    keywords: ['Akerun', 'アケルン', 'オートロック', '解除', '調子悪い', '反応しない'],
+    a: `
+      <p>頻出するAkerun不調の対処順序：</p>
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>ドア横の<strong>ワンタッチボタン</strong>を押す（一度開閉の手順を踏むと復旧することがある）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>ドア横の<strong>黒い機械のコード（電源）を抜き差し</strong>して再起動</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>パソコンのAkerun画面で<strong>ログアウト→再ログイン</strong></div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>復旧しなければ<strong>オートロックを切ってフリー状態</strong>で営業＋國松に連絡</div></div>
+      </div>
+      <div class="alert alert-warn">完全に動かない時は、ラウンジ外に呼び出しベルを置きビジターが入店できる動線を確保。POPで「御用の方は押してください」を提示。</div>
+      <div class="alert alert-info">過去事例: ベランダ・廊下の鍵が開きっぱなしになるケースも複数発生。出勤時の確認を徹底。</div>`,
+  },
+  {
+    id: 'ci2', cat: 'cafe_irregular', type: 'irregular',
+    q: 'モバイルSuica・モバイルPASMOがAkerunで反応しない',
+    keywords: ['モバイル', 'Suica', 'PASMO', 'IC', 'akerun', '反応しない'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>BPスタジオでは<strong>モバイルSuicaが反応しにくい</strong>事例が複数あり</li>
+        <li>WS側のリーダーで読み取れない場合、<strong>ラウンジ側のリーダー</strong>で試してもらう（逆も可）</li>
+        <li>会員様の<strong>位置情報をオン</strong>にすると接続できることがある</li>
+        <li>反応しない場合は、現物のICカード紐付けを案内（スタッフ滞在時間に対面で実施）</li>
+      </ul>
+      <div class="alert alert-info">登録は「合鍵→会員様の名前検索→クリック→メール再送信」で操作。</div>`,
+  },
+  {
+    id: 'ci3', cat: 'cafe_irregular', type: 'irregular',
+    q: 'Akerunからのメールが届かないと言われた',
+    keywords: ['Akerun', 'メール', '届かない', '迷惑メール'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>会員様の迷惑メールフォルダを確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>Akerun管理画面で「合鍵」→対象会員→<strong>メール再送信</strong>を実行</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>「以前Akerunを使ったことがあるか」を確認（既存アカウントが残っているケースあり）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>復旧しなければアプリを<strong>アンインストール→再インストール</strong>を案内</div></div>
+      </div>
+      <div class="alert alert-info">時間を空けて届く事例も複数（迷惑メールでない遅延あり）。</div>`,
+  },
+  {
+    id: 'ci4', cat: 'cafe_irregular', type: 'irregular',
+    q: 'Akerun電池残量低下／電池交換',
+    keywords: ['Akerun', '電池', 'バッテリー', '残量', '交換'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>Akerun画面に「電池残量が残り少ないです」と表示されたら<strong>早めに國松に連絡</strong></li>
+        <li>表示は本体・カードリーダーどちらの残量低下か明示されないので、両方確認</li>
+        <li>BPは<strong>新宿スタジオ→BPの順</strong>で連絡が来ることが多い</li>
+        <li>使用済み電池は受付端に置き、まとめて処分</li>
+      </ul>
+      <div class="alert alert-warn">電池切れ＝解錠不可。ラウンジ・WS両方の本体を定期確認。</div>`,
+  },
+  {
+    id: 'ci5', cat: 'cafe_irregular', type: 'irregular',
+    q: 'オートロックの施錠タイムラグが長い',
+    keywords: ['オートロック', '施錠', 'タイムラグ', '遅い'],
+    a: `
+      <p>過去事例: 開けてから<strong>30秒〜1分後に施錠</strong>される現象が複数発生。</p>
+      <ul style="padding-left:24px;">
+        <li>退勤前にPCから施錠状態を確認してから帰る</li>
+        <li>ベランダ・廊下の鍵も併せて確認（開きっぱなしのケースあり）</li>
+        <li>慢性的にひどい場合は國松に共有</li>
+      </ul>`,
+  },
+
+  // ----- 印刷機・コピー機 -----
+  {
+    id: 'ci6', cat: 'cafe_irregular', type: 'irregular',
+    q: 'パソコンから複合機に印刷ができない',
+    keywords: ['コピー機', '複合機', 'プリンター', '印刷', 'パソコン', 'PC', 'できない'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>PCのWi-Fiが <strong>bmnetwork_shinjuku</strong>（または該当SSID）に接続されているか確認</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>PCのWi-FiとBluetoothを<strong>一度オフ→オン</strong></div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>複合機本体のコンセントを抜いて<strong>再起動</strong></div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>復旧待ちの間、別作業へ。放置中に勝手に直る事例あり</div></div>
+      </div>`,
+  },
+  {
+    id: 'ci7', cat: 'cafe_irregular', type: 'irregular',
+    q: '紙詰まりエラーが出るのに紙は詰まっていない',
+    keywords: ['コピー機', '紙詰まり', 'エラー', 'B5'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li><strong>B5サイズ印刷時に頻発</strong>する事例あり</li>
+        <li>給紙トレーを開けて<strong>用紙位置を整える</strong>（B5用紙を既定位置にセット）</li>
+        <li>機械側の用紙サイズ設定を一度変更→戻す</li>
+        <li>ピーピー音が鳴り続ける場合は、コンセント抜き差しで再起動</li>
+      </ul>`,
+  },
+  {
+    id: 'ci8', cat: 'cafe_irregular', type: 'irregular',
+    q: '白黒コピーが薄い／色がおかしい',
+    keywords: ['コピー機', '白黒', '薄い', 'カラー', 'インク'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>過去事例: <strong>白黒だけ薄く、カラーは出る</strong>現象が複数発生</li>
+        <li>トナー残量を画面で確認</li>
+        <li>カラー出力の白飛び・退色は<strong>パーツ交換が必要</strong>な場合あり → 業者対応</li>
+        <li>応急処置として「使用不可」のPOPを貼り、土日明けに業者連絡</li>
+      </ul>`,
+  },
+  {
+    id: 'ci9', cat: 'cafe_irregular', type: 'irregular',
+    q: 'USBから印刷できない／スマホからデータ送信できない',
+    keywords: ['USB', '印刷', 'データ', 'スマホ', '転送'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>USB差込口の汚れ → <strong>定期的に拭き掃除</strong></li>
+        <li>貸出用USBが用意されている（受付に保管）</li>
+        <li>会員様のUSBで読み込めない場合は<strong>貸出USBで対応</strong></li>
+        <li><strong>スマホからの直接データ転送はできない仕様</strong>（HPで誤解されがち。問合せ時に明確化）</li>
+      </ul>`,
+  },
+
+  // ----- ロッカー -----
+  {
+    id: 'ci10', cat: 'cafe_irregular', type: 'irregular',
+    q: 'ロッカー管理表と現状が一致していない',
+    keywords: ['ロッカー', '管理表', '空き', '不一致'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>iPadとPCで<strong>同期が遅れる</strong>ケースあり → 両方で確認</li>
+        <li>契約・解約対応をしたら<strong>必ず管理表を更新</strong>（書き忘れ多発）</li>
+        <li>休会時のロッカー解約も同時に書き込む</li>
+        <li>「空済」タブの編集漏れに注意</li>
+      </ul>
+      <div class="alert alert-warn">対応者本人が即時更新する運用を徹底。</div>`,
+  },
+  {
+    id: 'ci11', cat: 'cafe_irregular', type: 'irregular',
+    q: 'ロッカー鍵の番号シールが取れた／剥がれた',
+    keywords: ['ロッカー', '鍵', '番号', 'シール', 'テプラ'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>テプラで番号シールを再作成して貼る（新宿・BP共にテプラあり）</li>
+        <li>テプラがない時は<strong>付箋で代用</strong>し、後日テプラで作り直す</li>
+        <li>BPのテプラは18mm幅まで対応（それ以上は使えない）</li>
+      </ul>`,
+  },
+  {
+    id: 'ci12', cat: 'cafe_irregular', type: 'irregular',
+    q: 'ロッカー大の番号設定方法',
+    keywords: ['ロッカー', '大', '番号', '設定', 'ロック'],
+    a: `
+      <p>大ロッカーは<strong>ダイヤル番号を設定する</strong>タイプ。久しぶりだと方法を忘れがち。</p>
+      <ul style="padding-left:24px;">
+        <li>会員様にお渡し前に<strong>番号設定→施解錠を3回テスト</strong></li>
+        <li>失敗するとロッカーが「開かずの扉」になり、開錠依頼が必要</li>
+        <li>不安な場合は他スタッフに対面で確認してから対応</li>
+      </ul>`,
+  },
+  {
+    id: 'ci13', cat: 'cafe_irregular', type: 'irregular',
+    q: 'ロッカー鍵紛失時の対応・手数料',
+    keywords: ['ロッカー', '鍵', '紛失', '手数料', '1100'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>手数料: <strong>1,100円</strong>（鍵紛失代）</li>
+        <li>Airレジ「ロッカー鍵紛失」の項目から決済</li>
+        <li>受験生パス用ICカード紛失時は同項目の値段を修正して決済</li>
+        <li>会員様への請求対応はBPアプリ事務手続き欄にメモ</li>
+      </ul>`,
+  },
+
+  // ----- 空調・温度 -----
+  {
+    id: 'ci14', cat: 'cafe_irregular', type: 'irregular',
+    q: '空調の温度設定で会員様から指摘があった',
+    keywords: ['空調', 'エアコン', '暑い', '寒い', '温度'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>外気温に合わせて温度設定を調整（冬は気持ち高め）</li>
+        <li>WSは奥が暑くなりやすい傾向</li>
+        <li>空気清浄機を併用（におい・蒸し対策にもなる）</li>
+        <li>個別に冷えピタを使う方も。体調不良の可能性も気にかける</li>
+      </ul>`,
+  },
+
+  // ----- 水回り・設備 -----
+  {
+    id: 'ci15', cat: 'cafe_irregular', type: 'irregular',
+    q: '加湿器の水こぼし／カビ・におい',
+    keywords: ['加湿器', '水', 'こぼし', 'カビ', 'におい'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>給水時はトレーの上で行う（こぼしやすい）</li>
+        <li>フィルターから汗臭い・カビ臭いにおい → <strong>洗浄＋天日干し</strong></li>
+        <li>タンク内の白いカルキは熱湯＋クエン酸でつけ置き</li>
+        <li>蓋が固くて開かない時は無理せず次出勤者に依頼</li>
+      </ul>`,
+  },
+  {
+    id: 'ci16', cat: 'cafe_irregular', type: 'irregular',
+    q: 'コーヒーマシン・給茶機が動かない／コーヒーかすエラー',
+    keywords: ['コーヒー', 'マシン', '給茶機', 'エラー', 'カス'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div><strong>コーヒーかす容器が満杯</strong>になっていないか確認 → 空に</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div>豆の残量を確認・補充</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>給茶機は<strong>受け皿の汚れ・水漏れ</strong>がないか確認</div></div>
+      </div>
+      <div class="alert alert-info">取扱説明書はネット上にもあり、ブックマーク済み。</div>`,
+  },
+  {
+    id: 'ci17', cat: 'cafe_irregular', type: 'irregular',
+    q: '製氷機から氷が出ない',
+    keywords: ['製氷', '氷', '出ない'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>製氷ペースが<strong>需要に追いつかない</strong>季節（夏場）あり</li>
+        <li>本体ホースの内側にピンク汚れが出ることあり → 定期清掃</li>
+        <li>長時間出ない場合は國松に連絡</li>
+      </ul>`,
+  },
+  {
+    id: 'ci18', cat: 'cafe_irregular', type: 'irregular',
+    q: 'シンク・手洗い場が詰まった',
+    keywords: ['シンク', '手洗い', '詰まり', 'つまり'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>マドラーや棒で詰まりを軽くつつく</li>
+        <li>ハイターでヌメリ・においを除去</li>
+        <li>解消しない場合は國松に連絡（業者手配）</li>
+      </ul>`,
+  },
+
+  // ----- トイレ -----
+  {
+    id: 'ci19', cat: 'cafe_irregular', type: 'irregular',
+    q: '男子トイレのにおい対策',
+    keywords: ['トイレ', '男子', 'におい', '臭い', '消臭'],
+    a: `
+      <p>男子トイレは女子トイレと比較して<strong>慢性的ににおいが残りやすい</strong>傾向。</p>
+      <ul style="padding-left:24px;">
+        <li>消臭力スプレーは一時的効果のみ → 根本対策はトイレ本体の清掃強化</li>
+        <li>床のベタつきには<strong>トイレマジックリン</strong>が有効</li>
+        <li>清掃時は鏡・床面まで丁寧に拭く</li>
+        <li>巡回頻度を増やして使用済みペーパー量・床汚れを早期発見</li>
+      </ul>`,
+  },
+  {
+    id: 'ci20', cat: 'cafe_irregular', type: 'irregular',
+    q: 'ペーパータオル・トイレットペーパーが切れていた',
+    keywords: ['トイレ', 'ペーパー', '切れ', '補充'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>OP・CL時は<strong>必ず両トイレを巡回</strong>して在庫確認</li>
+        <li>ペーパータオルの蓋が壊れていた事例あり → 報告</li>
+        <li>残り1巻になったら発注リスト追加</li>
+      </ul>`,
+  },
+
+  // ----- 忘れ物・落とし物 -----
+  {
+    id: 'ci21', cat: 'cafe_irregular', type: 'irregular',
+    q: '忘れ物・落とし物の対応フロー',
+    keywords: ['忘れ物', '落とし物', '紛失', '保管'],
+    a: `
+      <div class="flow">
+        <div class="flow-step"><div class="flow-step-num">1</div><div>発見場所・日時・特徴を<strong>遺失物票</strong>に記入</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div><strong>忘れ物BOX</strong>に保管（個人情報を含むものは別保管）</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div>会員様の物と判別できればBPアプリのメモ欄に記載＆退室時にお声がけ</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div>一定期間経過しても引取がなければ整理（捨てられそうな物のみ）</div></div>
+      </div>
+      <div class="alert alert-warn">財布・スマホ・USB等の重要品は中身を確認せず、必ず社員に共有。</div>`,
+  },
+  {
+    id: 'ci22', cat: 'cafe_irregular', type: 'irregular',
+    q: '会員様の持ち物紛失の問い合わせ',
+    keywords: ['紛失', '盗難', '防犯', 'カメラ'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>忘れ物BOX・落とし物リストを確認</li>
+        <li>店内に該当物がない場合、<strong>防犯カメラ</strong>の確認を社員に依頼</li>
+        <li>BPアプリのメモ欄に記録（後日見つかった際に渡せるように）</li>
+        <li>会員様には「見つかり次第連絡」と明確に伝える</li>
+      </ul>`,
+  },
+
+  // ----- 騒音・マナー -----
+  {
+    id: 'ci23', cat: 'cafe_irregular', type: 'irregular',
+    q: 'タイピング音・キーボード音への注意依頼',
+    keywords: ['タイピング', 'キーボード', '音', 'うるさい', '注意'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>会員様からの依頼があれば、対象会員様に<strong>声を低めにお声がけ</strong></li>
+        <li>常連会員様で繰り返し発生する場合は、対応スタッフ間で共有</li>
+        <li>BPアプリのメモ欄に記録すると次回以降スムーズ</li>
+      </ul>
+      <div class="alert alert-info">注意した側・された側どちらもストレスなので、丁寧な言葉選びを意識。</div>`,
+  },
+  {
+    id: 'ci24', cat: 'cafe_irregular', type: 'irregular',
+    q: '食べ物のにおいが強い会員様への対応',
+    keywords: ['におい', '食べ物', '臭い', 'マナー'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>入会時に<strong>「新幹線で食べられないものはNG」</strong>とルール説明（過去事例で会員様が納得した表現）</li>
+        <li>該当者にはお声がけ＋メモ共有</li>
+        <li>常連で繰り返す場合は注意の引継ぎを徹底</li>
+        <li>消臭スプレーで一時対応</li>
+      </ul>`,
+  },
+
+  // ----- 会員様の体調・救急 -----
+  {
+    id: 'ci25', cat: 'cafe_irregular', type: 'irregular',
+    q: '会員様の体調不良・救急対応',
+    keywords: ['体調', '救急', '怪我', '絆創膏'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>新宿・BPともに<strong>救急箱あり</strong>（絆創膏・消毒液）</li>
+        <li>消毒液・咳止め等の<strong>使用期限を年1回確認</strong>（期限切れは破棄）</li>
+        <li>体調不良が深刻な場合は救急車を躊躇なく呼ぶ</li>
+        <li>会員様から「水筒が割れた」等の報告があれば、お怪我の有無を必ず確認</li>
+      </ul>`,
+  },
+
+  // ----- 在庫・補充 -----
+  {
+    id: 'ci26', cat: 'cafe_irregular', type: 'irregular',
+    q: 'ドリンク・備品の在庫切れ／補充忘れ',
+    keywords: ['在庫', '切れ', '補充', 'ドリンク', 'コーヒー', 'ミルク'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>OP時に<strong>ドリンクコーナー全体を点検</strong>（コーヒー豆・紅茶・ミルク・紙コップ・カロリーメイト等）</li>
+        <li>残り1〜2袋になったら<strong>アスクル発注カゴに追加</strong></li>
+        <li>BYに前回発注分が置いてあるケースがあるので<strong>BY内の在庫も確認</strong>してから発注</li>
+        <li>看板パンフレット・プラン表は減りが早いので別途補充</li>
+      </ul>
+      <div class="alert alert-warn">レシート用紙・領収書用紙の在庫切れは即影響大。赤線が見えたら即発注。</div>`,
+  },
+  {
+    id: 'ci27', cat: 'cafe_irregular', type: 'irregular',
+    q: 'BGMが切れている／音楽が小さい',
+    keywords: ['BGM', '音楽', '切れ', 'WS', 'ラウンジ'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>端末のWi-Fi接続を確認 → 切れていれば再接続</li>
+        <li>音量設定が下がっていることも → スピーカー側で確認</li>
+        <li>頻発する場合は端末を再起動</li>
+        <li>会員様から指摘される前に巡回時にチェック</li>
+      </ul>`,
+  },
+
+  // ----- 業務ミス・引継ぎ -----
+  {
+    id: 'ci28', cat: 'cafe_irregular', type: 'irregular',
+    q: '出勤遅刻・体調不良で勤務できない時',
+    keywords: ['遅刻', '欠勤', '体調', 'シフト'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>遅刻が確定した時点で<strong>すぐにチャットワークで連絡</strong>（事後報告NG）</li>
+        <li>急な欠勤は<strong>マネージャーに直接連絡＋シフトチャットへ投稿</strong></li>
+        <li>退勤後も鍵閉め忘れ等を発見したら投稿</li>
+      </ul>
+      <div class="alert alert-info">遅刻・欠勤は誰でも起こり得る。隠さず早く共有することが最優先。</div>`,
+  },
+  {
+    id: 'ci29', cat: 'cafe_irregular', type: 'irregular',
+    q: '入会対応・マイゴールシートで気をつけること',
+    keywords: ['入会', 'マイゴールシート', '会員番号', 'Wチェック'],
+    a: `
+      <ul style="padding-left:24px;">
+        <li>マイゴールシートには<strong>会員番号を必ず記入</strong>（裏面ではなく表面に）</li>
+        <li>ミニッツプランの方のシートには付箋を貼る（剥がれ防止）</li>
+        <li>入会対応後はWチェックを必ず実施（漏れあると後で大変）</li>
+        <li>イレギュラー対応はBPアプリのメモ欄＋チャットワークに記録</li>
+      </ul>`,
+  },
+
+  // ----- 旧システム特有（注記付き・参考用） -----
+  {
+    id: 'ci30', cat: 'cafe_irregular', type: 'irregular',
+    q: '【旧】会費ペイ・Square・BPアプリ関連の旧運用',
+    keywords: ['旧', '会費ペイ', 'Square', 'BPアプリ', '旧システム'],
+    a: `
+      <div class="alert alert-warn"><strong>これは旧システム（〜2025年5月）の運用です。</strong>現行はスタディGOで処理。下記は過去の問合せ対応用の参考情報です。</div>
+      <ul style="padding-left:24px;">
+        <li><strong>会費ペイ</strong>: 住所・口座振替の登録に使用（現スタッフ閲覧不可）</li>
+        <li><strong>Square端末</strong>: クレカ・交通系決済 → <strong>充電切れ事例多数</strong>（OP時に充電確認）</li>
+        <li><strong>BPアプリ</strong>: 旧入退室・利用明細管理。スマホ機種変更時に消えるケースあり</li>
+        <li><strong>BPアプリのQRコード</strong>は受付に置かれていた紙が現在は別管理</li>
+      </ul>
+      <div class="alert alert-info">旧会員様（2025/5/20以前入会）からの問合せには上記知識が必要。新規対応は全てスタディGOで処理。</div>`,
   },
 ];
 
