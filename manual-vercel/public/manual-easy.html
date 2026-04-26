@@ -402,8 +402,70 @@
     font-weight: 700;
   }
   .qa-badge.basic { background: #E3F2FD; color: #1565C0; }
+  .qa-badge.advanced { background: #E8F5E9; color: #2E7D32; }
   .qa-badge.irregular { background: #FFEBEE; color: #C62828; }
   .qa-badge.example { background: #F3E5F5; color: #6A1B9A; }
+
+  /* タイプ別グループ（プルダウン形式） */
+  .type-group {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .type-group-head {
+    padding: 14px 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  .type-group-head:hover { background: #FAFAFA; }
+  .type-group.basic    .type-group-head { background: #E3F2FD; border-left: 5px solid #1565C0; }
+  .type-group.advanced .type-group-head { background: #E8F5E9; border-left: 5px solid #2E7D32; }
+  .type-group.irregular .type-group-head { background: #FFEBEE; border-left: 5px solid #C62828; }
+  .type-group.example  .type-group-head { background: #F3E5F5; border-left: 5px solid #6A1B9A; }
+  .type-group-icon {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+  .type-group-title {
+    flex: 1;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #333;
+  }
+  .type-group-count {
+    font-size: 0.85rem;
+    color: #666;
+    font-weight: 600;
+  }
+  .type-group-arrow {
+    font-size: 1.3rem;
+    color: #999;
+    transition: transform 0.2s;
+  }
+  .type-group.expanded .type-group-arrow {
+    transform: rotate(90deg);
+  }
+  .type-group-body {
+    display: none;
+    padding: 8px 12px 12px;
+    background: #fff;
+  }
+  .type-group.expanded .type-group-body {
+    display: block;
+  }
+  .type-group-empty {
+    padding: 16px;
+    color: #999;
+    font-size: 0.88rem;
+    text-align: center;
+  }
 
   /* Q&A詳細 */
   .qa-detail {
@@ -6697,6 +6759,14 @@ function renderCategories() {
   });
 }
 
+// タイプ定義（順序・ラベル・アイコン）
+const TYPE_GROUPS = [
+  { id: 'basic',     label: '基本',         icon: '📘' },
+  { id: 'advanced',  label: '応用',         icon: '📗' },
+  { id: 'irregular', label: 'イレギュラー', icon: '⚠️' },
+  { id: 'example',   label: '例題',         icon: '💡' },
+];
+
 function showCategory(catId, expandId) {
   currentCategory = catId;
   const cat = CATEGORIES.find(c => c.id === catId);
@@ -6704,30 +6774,82 @@ function showCategory(catId, expandId) {
   const items = QA_DATA.filter(q => q.cat === catId);
   const listEl = document.getElementById('qaList');
   listEl.innerHTML = '';
+
+  // タイプ別にグループ化
+  const groups = {};
+  TYPE_GROUPS.forEach(g => groups[g.id] = []);
   items.forEach(item => {
-    const el = document.createElement('div');
-    el.className = 'qa-list-item';
-    el.dataset.id = item.id;
-    const typeLabel = item.type === 'basic' ? '基本' : item.type === 'example' ? '例題' : 'イレギュラー';
-    el.innerHTML = `
-      <div class="qa-list-item-head">
-        <span class="qa-badge ${item.type}">${typeLabel}</span>
-        <div class="qa-list-item-q">${item.q}</div>
-        <span class="qa-list-item-arrow">›</span>
-      </div>
-      <div class="qa-list-item-body">
-        <div class="qa-detail-a">${item.a}</div>
-      </div>
-    `;
-    el.querySelector('.qa-list-item-head').addEventListener('click', () => {
-      el.classList.toggle('expanded');
-    });
-    listEl.appendChild(el);
+    const t = TYPE_GROUPS.find(g => g.id === item.type) ? item.type : 'basic';
+    groups[t].push(item);
   });
+
+  // 各タイプのグループを生成
+  TYPE_GROUPS.forEach(typeGroup => {
+    const groupItems = groups[typeGroup.id];
+    const groupEl = document.createElement('div');
+    groupEl.className = `type-group ${typeGroup.id}`;
+    groupEl.dataset.type = typeGroup.id;
+
+    const headHtml = `
+      <div class="type-group-head">
+        <span class="type-group-icon">${typeGroup.icon}</span>
+        <span class="type-group-title">${typeGroup.label}</span>
+        <span class="type-group-count">${groupItems.length}件</span>
+        <span class="type-group-arrow">›</span>
+      </div>
+      <div class="type-group-body"></div>
+    `;
+    groupEl.innerHTML = headHtml;
+
+    const bodyEl = groupEl.querySelector('.type-group-body');
+    if (groupItems.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'type-group-empty';
+      empty.textContent = '項目はまだありません';
+      bodyEl.appendChild(empty);
+    } else {
+      groupItems.forEach(item => {
+        const el = document.createElement('div');
+        el.className = 'qa-list-item';
+        el.dataset.id = item.id;
+        const typeLabel = TYPE_GROUPS.find(g => g.id === item.type)?.label || '基本';
+        el.innerHTML = `
+          <div class="qa-list-item-head">
+            <span class="qa-badge ${item.type}">${typeLabel}</span>
+            <div class="qa-list-item-q">${item.q}</div>
+            <span class="qa-list-item-arrow">›</span>
+          </div>
+          <div class="qa-list-item-body">
+            <div class="qa-detail-a">${item.a}</div>
+          </div>
+        `;
+        el.querySelector('.qa-list-item-head').addEventListener('click', (e) => {
+          e.stopPropagation();
+          el.classList.toggle('expanded');
+        });
+        bodyEl.appendChild(el);
+      });
+    }
+
+    // タイプグループ自体の開閉
+    groupEl.querySelector('.type-group-head').addEventListener('click', () => {
+      groupEl.classList.toggle('expanded');
+    });
+    // 件数があるグループはデフォルトで開く
+    if (groupItems.length > 0) {
+      groupEl.classList.add('expanded');
+    }
+
+    listEl.appendChild(groupEl);
+  });
+
   switchView('list');
   if (expandId) {
     const target = listEl.querySelector(`[data-id="${expandId}"]`);
     if (target) {
+      // 親グループも開く
+      const parentGroup = target.closest('.type-group');
+      if (parentGroup) parentGroup.classList.add('expanded');
       target.classList.add('expanded');
       setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
       return;
