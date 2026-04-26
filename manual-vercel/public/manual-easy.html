@@ -538,6 +538,55 @@
     font-size: 0.95rem;
   }
 
+  /* 横並びステップ（左→右） */
+  .flow-h {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 8px;
+    margin: 14px 0;
+  }
+  .flow-h-step {
+    flex: 1 1 140px;
+    min-width: 140px;
+    background: #fff;
+    border: 2px solid #FFD93D;
+    border-radius: 10px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+  }
+  .flow-h-step-num {
+    background: #FFB800;
+    color: #fff;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.78rem;
+    flex-shrink: 0;
+  }
+  .flow-h-step-text {
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+  .flow-h-arrow {
+    align-self: center;
+    color: #FFB800;
+    font-size: 1.2rem;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  @media (max-width: 640px) {
+    .flow-h { flex-direction: column; }
+    .flow-h-arrow { transform: rotate(90deg); }
+  }
+
   /* Q&A間ジャンプボタン */
   .qa-jump {
     display: inline-flex;
@@ -1244,16 +1293,29 @@ const QA_DATA = [
   {
     id: 'app10', cat: 'app', type: 'basic',
     q: 'クレジットカードの登録方法は？',
-    keywords: ['カード', 'クレカ', '登録', 'Stripe', '3DS'],
+    keywords: ['カード', 'クレカ', '登録', 'Stripe', '3DS', 'DL', 'ダウンロード'],
     a: `
-      <div class="flow">
-        <div class="flow-step"><div class="flow-step-num">1</div><div>登録情報入力後の支払い方法登録画面</div></div>
-        <div class="flow-arrow">↓</div>
-        <div class="flow-step"><div class="flow-step-num">2</div><div>カード番号・有効期限・セキュリティコード入力</div></div>
-        <div class="flow-arrow">↓</div>
-        <div class="flow-step"><div class="flow-step-num">3</div><div>3DSセキュア認証（カード会社のSMS等）</div></div>
-        <div class="flow-arrow">↓</div>
-        <div class="flow-step"><div class="flow-step-num">4</div><div>登録完了 → Stripeに保存</div></div>
+      <div class="alert alert-info"><strong>※ スタディGOアプリのDL〜初回登録時の流れ</strong>です。後からの変更・追加は <a href="#" onclick="goToQA('app11');return false;" style="color:#1565C0;text-decoration:underline;">「クレカの変更・追加方法」</a> を参照。</div>
+      <div class="flow-h">
+        <div class="flow-h-step">
+          <div class="flow-h-step-num">1</div>
+          <div class="flow-h-step-text">登録情報入力後の<br><strong>支払い方法登録画面</strong></div>
+        </div>
+        <div class="flow-h-arrow">→</div>
+        <div class="flow-h-step">
+          <div class="flow-h-step-num">2</div>
+          <div class="flow-h-step-text">カード番号・有効期限・<br>セキュリティコード入力</div>
+        </div>
+        <div class="flow-h-arrow">→</div>
+        <div class="flow-h-step">
+          <div class="flow-h-step-num">3</div>
+          <div class="flow-h-step-text"><strong>3DSセキュア認証</strong><br>（カード会社のSMS等）</div>
+        </div>
+        <div class="flow-h-arrow">→</div>
+        <div class="flow-h-step">
+          <div class="flow-h-step-num">4</div>
+          <div class="flow-h-step-text">登録完了<br>→ Stripeに保存</div>
+        </div>
       </div>`,
   },
   {
@@ -1271,13 +1333,25 @@ const QA_DATA = [
   {
     id: 'app12', cat: 'app', type: 'basic',
     q: '利用規約はアプリのどこで確認できる？',
-    keywords: ['利用規約', '規約', 'プライバシー'],
+    keywords: ['利用規約', '規約', 'プライバシー', '店舗', 'スタディGO'],
     a: `
-      <ul style="padding-left:24px;">
-        <li>新規登録時のリンクから参照可能</li>
-        <li>契約フロー中のリンクからも表示</li>
-        <li>マイページ → 設定から規約・プライバシーポリシーへアクセス</li>
-      </ul>
+      <p>利用規約は<strong>2種類</strong>あります。</p>
+
+      <div style="background:#E3F2FD;border-left:5px solid #1565C0;border-radius:8px;padding:12px 16px;margin:10px 0;">
+        <div style="font-weight:800;color:#0D47A1;margin-bottom:6px;">① スタディGO（アプリ全体）の利用規約</div>
+        <ul style="padding-left:22px;margin:0;">
+          <li><strong>新規登録時</strong>: 登録画面のリンクから参照</li>
+          <li><strong>アプリ利用中</strong>: <strong>マイページ → よくあるご質問 → 最下部の「利用規約」リンク</strong>からアプリ内Webブラウザで開いて閲覧</li>
+        </ul>
+      </div>
+
+      <div style="background:#E8F5E9;border-left:5px solid #2E7D32;border-radius:8px;padding:12px 16px;margin:10px 0;">
+        <div style="font-weight:800;color:#1B5E20;margin-bottom:6px;">② 月額契約した店舗の利用規約</div>
+        <ul style="padding-left:22px;margin:0;">
+          <li><strong>マイページ → 契約中のプラン一覧</strong>から、「<strong>店舗利用規約</strong>」のリンクで閲覧</li>
+        </ul>
+      </div>
+
       <div class="alert alert-info">外部URLはアプリ内ブラウザ（WebView）で表示されます。</div>`,
   },
   {
