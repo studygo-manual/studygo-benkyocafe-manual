@@ -1091,18 +1091,6 @@ const QA_DATA = [
 
   // ===== 📱 アプリ操作 =====
   {
-    id: 'app1', cat: 'app', type: 'basic',
-    q: 'スタディGOアプリはどこからダウンロードできる？',
-    keywords: ['ダウンロード', 'インストール', 'App Store', 'Google Play'],
-    a: `
-      <table class="data-table">
-        <tr><th>端末</th><th>ストア</th></tr>
-        <tr><td>iPhone</td><td>App Store</td></tr>
-        <tr><td>Android</td><td>Google Play</td></tr>
-      </table>
-      <p>検索キーワード：<strong>「スタディGO」</strong></p>`,
-  },
-  {
     id: 'app2', cat: 'app', type: 'basic',
     q: 'アプリDLから契約までの流れは？',
     keywords: ['ダウンロード', 'DL', '登録', '初回', 'アカウント', 'メール認証', '契約', '流れ', 'チュートリアル', 'QRコード', '地図', '月額', 'ドロップイン', 'ビジター'],
@@ -1230,14 +1218,6 @@ const QA_DATA = [
           </ul>
         </div>
       </details>`,
-  },
-  {
-    id: 'app4', cat: 'app', type: 'basic',
-    q: 'お客様の会員カードはどこで見られる？',
-    keywords: ['会員カード', '表示', 'ホーム'],
-    a: `
-      <p><strong>ホームタブ</strong>の上部に会員カードが常時表示されています。</p>
-      <div class="alert alert-info">店舗側では管理画面の「会員管理」からお客様情報を検索して確認できます。</div>`,
   },
   {
     id: 'app5', cat: 'app', type: 'basic',
@@ -1452,18 +1432,6 @@ const QA_DATA = [
       <div class="alert alert-info">予約一覧はマイページから確認・キャンセル可能。</div>`,
   },
   {
-    id: 'app23', cat: 'app', type: 'basic',
-    q: 'メッセージの送受信方法は？',
-    keywords: ['メッセージ', 'チャット', '送信'],
-    a: `
-      <ul style="padding-left:24px;">
-        <li>メッセージタブ → 店舗ごとのスレッド</li>
-        <li>未読件数・最終送受信時刻を表示</li>
-        <li>過去メッセージは上スワイプで古い分を読込</li>
-        <li>新規入力フィールドから送信</li>
-      </ul>`,
-  },
-  {
     id: 'app24', cat: 'app', type: 'basic',
     q: 'マイページで確認できる情報は？',
     keywords: ['マイページ', '確認', '情報'],
@@ -1558,17 +1526,6 @@ const QA_DATA = [
       </ul>`,
   },
   {
-    id: 'app35', cat: 'app', type: 'basic',
-    q: 'ボトムナビゲーションの挙動は？',
-    keywords: ['ナビゲーション', 'タブ', '切替'],
-    a: `
-      <ul style="padding-left:24px;">
-        <li>タブごとに独立したナビゲーションスタック</li>
-        <li>同タブを再タップすると上部までスクロール</li>
-        <li>タブ切替時は直前の画面状態を保持</li>
-      </ul>`,
-  },
-  {
     id: 'app36', cat: 'app', type: 'irregular',
     q: '認証コードが期限切れになった',
     keywords: ['認証コード', '期限切れ', '再送'],
@@ -1631,14 +1588,6 @@ const QA_DATA = [
       </ul>`,
   },
   {
-    id: 'app42', cat: 'app', type: 'basic',
-    q: '「引き下げリフレッシュ」とは？',
-    keywords: ['リフレッシュ', '引き下げ', '更新'],
-    a: `
-      <p>ホーム画面などで<strong>画面を下に引っ張って離す</strong>と、最新情報を再読込できます。</p>
-      <div class="alert alert-info">契約状態やお知らせが反映されていないときに試してください。</div>`,
-  },
-  {
     id: 'app43', cat: 'app', type: 'basic',
     q: 'メッセージを受信すると通知は来る？',
     keywords: ['メッセージ', '通知', 'プッシュ'],
@@ -1672,19 +1621,6 @@ const QA_DATA = [
         <li>その場でチェックアウトボタン</li>
         <li>店舗からのメッセージ（プラン別）</li>
       </ul>`,
-  },
-  {
-    id: 'app49', cat: 'app', type: 'basic',
-    q: '店舗からのメッセージ（チェックイン時）はどこで変わる？',
-    keywords: ['チェックインメッセージ', 'プラン別'],
-    a: `
-      <p>プラン種別によって表示内容が変わります：</p>
-      <ul style="padding-left:24px;">
-        <li>月額プラン → <strong>checkInNoteMonthly</strong></li>
-        <li>ドロップイン・デフォルト → <strong>checkInNoteDropin</strong></li>
-        <li>未設定なら <strong>checkInNote</strong>（共通）</li>
-      </ul>
-      <div class="alert alert-info">管理画面「店舗管理」でメッセージを設定可能。</div>`,
   },
   {
     id: 'app50', cat: 'app', type: 'irregular',
@@ -1760,18 +1696,6 @@ const QA_DATA = [
       </div>`,
   },
   {
-    id: 'app57', cat: 'app', type: 'basic',
-    q: 'プラン選択画面で料金がわかりにくいと言われた',
-    keywords: ['プラン', '料金', '表示'],
-    a: `
-      <p>店舗詳細 → 月額プランタブで料金・利用時間帯を確認できます。</p>
-      <ul style="padding-left:24px;">
-        <li>プランごとに時間帯と料金が明示</li>
-        <li>タップで詳細表示</li>
-        <li>スタッフが店頭で補足説明</li>
-      </ul>`,
-  },
-  {
     id: 'app58', cat: 'app', type: 'basic',
     q: 'お客様が領収書を会社経費で使いたい',
     keywords: ['領収書', '経費', '宛名'],
@@ -1794,17 +1718,6 @@ const QA_DATA = [
         <div class="flow-arrow">↓</div>
         <div class="flow-step"><div class="flow-step-num">3</div><div>本人確認のため身分証明情報を準備</div></div>
       </div>`,
-  },
-  {
-    id: 'app60', cat: 'app', type: 'basic',
-    q: 'アプリでメッセージを送信した直後に反映されない',
-    keywords: ['メッセージ', '送信', '反映'],
-    a: `
-      <ul style="padding-left:24px;">
-        <li>ネットワーク遅延の場合あり（数秒〜数十秒）</li>
-        <li>画面を引き下げてリフレッシュ</li>
-        <li>送信済みマーク表示を確認</li>
-      </ul>`,
   },
   {
     id: 'app61', cat: 'app', type: 'basic',
@@ -1914,17 +1827,6 @@ const QA_DATA = [
         <div class="flow-arrow">↓</div>
         <div class="flow-step"><div class="flow-step-num">4</div><div>アプリを再インストール</div></div>
       </div>`,
-  },
-  {
-    id: 'app70', cat: 'app', type: 'basic',
-    q: 'お客様がアプリ内メッセージに気付かない場合は？',
-    keywords: ['メッセージ', '気付かない', 'プッシュ'],
-    a: `
-      <ul style="padding-left:24px;">
-        <li>通知ONを案内</li>
-        <li>重要な連絡は電話・メールの併用も検討</li>
-        <li>未読件数を定期的に確認してもらう</li>
-      </ul>`,
   },
   {
     id: 'app71', cat: 'app', type: 'basic',
