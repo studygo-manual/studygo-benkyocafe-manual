@@ -2746,20 +2746,6 @@ const QA_DATA = [
       </div>`,
   },
   {
-    id: 'k9', cat: 'checkin', type: 'irregular',
-    q: '「満席です」と表示されてチェックインできない',
-    keywords: ['満席', 'チェックイン', '座席'],
-    a: `
-      <p>チェックアウト忘れで実際は空いていることもあります。</p>
-      <div class="flow">
-        <div class="flow-step"><div class="flow-step-num">1</div><div>管理画面「チェックイン実績」で現在チェックイン中のお客様を確認</div></div>
-        <div class="flow-arrow">↓</div>
-        <div class="flow-step"><div class="flow-step-num">2</div><div>長時間滞在者に声かけ、帰られていれば強制チェックアウト</div></div>
-        <div class="flow-arrow">↓</div>
-        <div class="flow-step"><div class="flow-step-num">3</div><div>実際に満席なら別店舗を案内 or 空くまで待機</div></div>
-      </div>`,
-  },
-  {
     id: 'k10', cat: 'checkin', type: 'irregular',
     q: '「カード決済エラー」でチェックインできない',
     keywords: ['カード', '決済エラー', '未払い'],
@@ -2774,39 +2760,12 @@ const QA_DATA = [
       </div>`,
   },
   {
-    id: 'k11', cat: 'checkin', type: 'irregular',
-    q: '「年齢制限」でチェックインできないお客様が来た',
-    keywords: ['年齢制限', '若年'],
-    a: `
-      <p>店舗設定の<strong>最低年齢</strong>未満の場合にエラー。</p>
-      <ul style="padding-left:24px;">
-        <li>新宿スタジオの最低年齢を確認</li>
-        <li>該当年齢未満なら利用条件を説明・お断り</li>
-        <li>新宿スタジオの最低年齢は運営に確認してから案内</li>
-      </ul>`,
-  },
-  {
     id: 'k12', cat: 'checkin', type: 'basic',
     q: '複数店舗での同時チェックインはできる？',
     keywords: ['複数店舗', '同時', 'チェックイン'],
     a: `
       <div class="alert alert-danger"><strong>禁止</strong>です。他店舗にチェックイン中は新規チェックインでエラーになります。</div>
       <p>他店舗にチェックイン中のお客様が来た場合は、前の店舗でチェックアウトしてもらってください。</p>`,
-  },
-  {
-    id: 'k13', cat: 'checkin', type: 'basic',
-    q: '無効なQRコードエラーの対応手順は？',
-    keywords: ['無効', 'QR', '読取', '清掃'],
-    a: `
-      <div class="flow">
-        <div class="flow-step"><div class="flow-step-num">1</div><div>QRコードを清潔な布で拭く</div></div>
-        <div class="flow-arrow">↓</div>
-        <div class="flow-step"><div class="flow-step-num">2</div><div>照明を当てる</div></div>
-        <div class="flow-arrow">↓</div>
-        <div class="flow-step"><div class="flow-step-num">3</div><div>別角度から撮影</div></div>
-        <div class="flow-arrow">↓</div>
-        <div class="flow-step"><div class="flow-step-num">4</div><div>それでも読めない → 店舗コード手動入力</div></div>
-      </div>`,
   },
   {
     id: 'k14', cat: 'checkin', type: 'basic',
@@ -2870,17 +2829,6 @@ const QA_DATA = [
       </table>`,
   },
   {
-    id: 'k19', cat: 'checkin', type: 'basic',
-    q: '「休業日のため…」エラーの対応は？',
-    keywords: ['休業日', 'エラー', 'カレンダー'],
-    a: `
-      <p>臨時休業や営業カレンダーで休業設定がされている日のエラー。</p>
-      <ul style="padding-left:24px;">
-        <li>管理画面「営業日・営業時間管理」で確認</li>
-        <li>お客様には休業日を案内</li>
-      </ul>`,
-  },
-  {
     id: 'k20', cat: 'checkin', type: 'basic',
     q: '「契約時間外」エラーの対応は？',
     keywords: ['契約時間外', 'プラン時間', 'エラー'],
@@ -2922,18 +2870,6 @@ const QA_DATA = [
       </ul>`,
   },
   {
-    id: 'k29', cat: 'checkin', type: 'basic',
-    q: 'スタッフ常駐時のチェックイン確認の意義は？',
-    keywords: ['スタッフ', '確認', '有人', '完了画面'],
-    a: `
-      <ul style="padding-left:24px;">
-        <li>正しい店舗・プランでチェックインしたか確認</li>
-        <li>チェックイン忘れ防止（後々のトラブル防止）</li>
-        <li>お客様とのコミュニケーションの機会</li>
-      </ul>
-      <div class="alert alert-info">「チェックイン完了画面を見せてください」と声かけ。</div>`,
-  },
-  {
     id: 'k30', cat: 'checkin', type: 'basic',
     q: 'ラウンジのオートロック仕様は？',
     keywords: ['ラウンジ', 'オートロック', 'Akerun'],
@@ -2961,47 +2897,6 @@ const QA_DATA = [
       <div class="alert alert-warn">スタディGO会員への移行は本人がアプリで手続き。スタッフでは移行できません。</div>`,
   },
   {
-    id: 'k36', cat: 'checkin', type: 'irregular',
-    q: 'チェックイン成功なのにAkerun解錠タイムアウト時の対応は？',
-    keywords: ['Akerun', 'タイムアウト', 'ドア', '10回'],
-    a: `
-      <p>Akerun APIへのリクエストが最大10回/2秒間隔で試行されますが、全て失敗するとタイムアウトエラー。</p>
-      <div class="flow">
-        <div class="flow-step"><div class="flow-step-num">1</div><div>通信状況を確認</div></div>
-        <div class="flow-arrow">↓</div>
-        <div class="flow-step"><div class="flow-step-num">2</div><div>Akerunの電源・ネットワーク確認</div></div>
-        <div class="flow-arrow">↓</div>
-        <div class="flow-step"><div class="flow-step-num">3</div><div>運営＋Akerunに連絡</div></div>
-        <div class="flow-arrow">↓</div>
-        <div class="flow-step"><div class="flow-step-num">4</div><div>予備キーで一時対応</div></div>
-      </div>`,
-  },
-  {
-    id: 'k38', cat: 'checkin', type: 'basic',
-    q: 'QRが破損した時の店舗対応は？',
-    keywords: ['QR', '破損', '再発行'],
-    a: `
-      <div class="flow">
-        <div class="flow-step"><div class="flow-step-num">1</div><div>運営（info.studygo@b-pt.jp）に連絡</div></div>
-        <div class="flow-arrow">↓</div>
-        <div class="flow-step"><div class="flow-step-num">2</div><div>QRコード再発行を依頼</div></div>
-        <div class="flow-arrow">↓</div>
-        <div class="flow-step"><div class="flow-step-num">3</div><div>届くまでは店舗コード手動入力でお客様対応</div></div>
-      </div>`,
-  },
-  {
-    id: 'k42', cat: 'checkin', type: 'irregular',
-    q: '予備キー・暗証番号はどこに保管している？',
-    keywords: ['予備キー', '暗証番号', '緊急'],
-    a: `
-      <p>スタジオごとの定められた場所に保管。</p>
-      <ul style="padding-left:24px;">
-        <li>緊急時（Akerun故障等）のみ使用</li>
-        <li>使用時は必ず國松に報告</li>
-      </ul>
-      <div class="alert alert-warn">具体的な保管場所は新宿スタジオのスタッフ引き継ぎで確認。セキュリティ情報のためマニュアル記載は避ける。</div>`,
-  },
-  {
     id: 'k46', cat: 'checkin', type: 'irregular',
     q: 'お客様が「チェックアウトボタンがない」と言っている',
     keywords: ['チェックアウト', 'ボタン', '見つからない'],
@@ -3015,9 +2910,9 @@ const QA_DATA = [
       </div>`,
   },
   {
-    id: 'k47', cat: 'checkin', type: 'basic',
+    id: 'k47', cat: 'admin', type: 'basic',
     q: 'チェックインの検索（管理画面）のフィルタ項目は？',
-    keywords: ['フィルタ', 'チェックイン実績', '検索'],
+    keywords: ['フィルタ', 'チェックイン実績', '検索', '管理画面'],
     a: `
       <ul style="padding-left:24px;">
         <li>店舗</li>
@@ -3062,13 +2957,6 @@ const QA_DATA = [
       </div>`,
   },
   {
-    id: 'k50', cat: 'checkin', type: 'basic',
-    q: 'チェックアウト後の領収書はどこで取得？',
-    keywords: ['領収書', 'チェックアウト', '利用履歴'],
-    a: `
-      <p>アプリの<strong>ホーム → 利用履歴</strong>から月別にメール送信可能（領収書として活用）。</p>`,
-  },
-  {
     id: 'k51', cat: 'checkin', type: 'example',
     q: '【例題】「スマホの電池が切れてチェックアウトできない」',
     keywords: ['例題', '電池切れ', 'チェックアウト'],
@@ -3080,17 +2968,6 @@ const QA_DATA = [
         <div class="flow-arrow">↓</div>
         <div class="flow-step"><div class="flow-step-num">3</div><div>超過発生していたら、管理画面から時刻修正可（同日内）</div></div>
       </div>`,
-  },
-  {
-    id: 'k52', cat: 'checkin', type: 'basic',
-    q: 'QRコードを複数人で使い回しできる？',
-    keywords: ['QR', '複数', '使い回し'],
-    a: `
-      <div class="alert alert-danger">QRは店舗固有。1人1アカウントでチェックイン必須です。</div>
-      <ul style="padding-left:24px;">
-        <li>家族や友人のアカウントで代わりにチェックインは不可</li>
-        <li>それぞれのアプリで自分のQR読取が必要</li>
-      </ul>`,
   },
   {
     id: 'k53', cat: 'checkin', type: 'irregular',
@@ -3271,14 +3148,6 @@ const QA_DATA = [
       </ul>`,
   },
   {
-    id: 'k68', cat: 'checkin', type: 'basic',
-    q: 'チェックインしないでも施設に入れる場合がある？',
-    keywords: ['チェックイン', '不要', '入室'],
-    a: `
-      <p>原則不可。ラウンジはオートロックでアプリ経由の解錠のみ。</p>
-      <div class="alert alert-info">BPスタジオのワークスペースのみ、有人時間帯はオートロックOFF運用。</div>`,
-  },
-  {
     id: 'k69', cat: 'checkin', type: 'irregular',
     q: 'チェックインしたのにすぐ切れてしまった',
     keywords: ['切れる', 'チェックイン', '不具合'],
@@ -3290,17 +3159,6 @@ const QA_DATA = [
         <div class="flow-arrow">↓</div>
         <div class="flow-step"><div class="flow-step-num">3</div><div>再度QR読取で再チェックイン</div></div>
       </div>`,
-  },
-  {
-    id: 'k70', cat: 'checkin', type: 'basic',
-    q: 'チェックインが集中する時間帯の対応は？',
-    keywords: ['集中', 'ピーク', '時間帯'],
-    a: `
-      <ul style="padding-left:24px;">
-        <li>朝・夜のピーク時は列整理</li>
-        <li>QR読取は時差発生しても並んで待つ案内</li>
-        <li>1人ずつ落ち着いて対応</li>
-      </ul>`,
   },
   {
     id: 'k71', cat: 'checkin', type: 'basic',
