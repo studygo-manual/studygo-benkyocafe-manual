@@ -538,6 +538,47 @@
     font-size: 0.95rem;
   }
 
+  /* フロー図2列 */
+  .flow-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .flow-col {
+    background: #FFFCEF;
+    border: 2px solid #FFD93D;
+    border-radius: 12px;
+    padding: 14px;
+  }
+  .flow-col-title {
+    font-weight: 800;
+    color: #5B3A00;
+    text-align: center;
+    margin-bottom: 12px;
+    padding: 6px 10px;
+    background: #FFE89E;
+    border-radius: 8px;
+    font-size: 0.95rem;
+  }
+  .flow-col .flow-step {
+    background: #fff;
+    border: 1.5px solid #FFD93D;
+  }
+  .flow-col-visitor .flow-col-title { background: #BBDEFB; color: #0D47A1; }
+  .flow-col-visitor { background: #F2F8FF; border-color: #90CAF9; }
+  .flow-col-visitor .flow-step { border-color: #90CAF9; }
+  .flow-col-visitor .flow-step-num { background: #1976D2; }
+  .flow-col-visitor .flow-arrow { color: #1976D2; }
+  .flow-col-monthly .flow-col-title { background: #C8E6C9; color: #1B5E20; }
+  .flow-col-monthly { background: #F1F8F2; border-color: #A5D6A7; }
+  .flow-col-monthly .flow-step { border-color: #A5D6A7; }
+  .flow-col-monthly .flow-step-num { background: #388E3C; }
+  .flow-col-monthly .flow-arrow { color: #388E3C; }
+  @media (max-width: 640px) {
+    .flow-cols { grid-template-columns: 1fr; }
+  }
+
   /* フロー図 */
   .flow {
     margin: 16px 0;
@@ -948,41 +989,55 @@ const QA_DATA = [
   {
     id: 'app2', cat: 'app', type: 'basic',
     q: 'アプリDLから契約までの流れは？',
-    keywords: ['ダウンロード', 'DL', '登録', '初回', 'アカウント', 'メール認証', '契約', '流れ', 'チュートリアル', 'QRコード', '地図', '月額', 'ドロップイン'],
+    keywords: ['ダウンロード', 'DL', '登録', '初回', 'アカウント', 'メール認証', '契約', '流れ', 'チュートリアル', 'QRコード', '地図', '月額', 'ドロップイン', 'ビジター'],
     a: `
-      <p><strong>【共通：アプリ起動〜クレジットカード登録まで】</strong></p>
-      <div class="flow">
-        <div class="flow-step"><div class="flow-step-num">1</div><div>アプリ起動</div></div>
-        <div class="flow-arrow">↓</div>
-        <div class="flow-step"><div class="flow-step-num">2</div><div><strong>チュートリアル</strong>表示</div></div>
-        <div class="flow-arrow">↓</div>
-        <div class="flow-step"><div class="flow-step-num">3</div><div><strong>QRコードボタン</strong>をタップ（他項目もあり）</div></div>
-        <div class="flow-arrow">↓</div>
-        <div class="flow-step"><div class="flow-step-num">4</div><div>会員登録画面へ移動 → <strong>メールアドレス入力</strong></div></div>
-        <div class="flow-arrow">↓</div>
-        <div class="flow-step"><div class="flow-step-num">5</div><div>認証メールが届く → 確認コードを入力</div></div>
-        <div class="flow-arrow">↓</div>
-        <div class="flow-step"><div class="flow-step-num">6</div><div>登録情報入力（氏名・住所・電話番号）</div></div>
-        <div class="flow-arrow">↓</div>
-        <div class="flow-step"><div class="flow-step-num">7</div><div><strong>クレジットカード登録</strong></div></div>
-      </div>
+      <p>用途別に2パターンあります（横並びで比較）。</p>
+      <div class="flow-cols">
 
-      <p style="margin-top:12px;"><strong>【月額契約する場合】</strong></p>
-      <div class="flow">
-        <div class="flow-step"><div class="flow-step-num">8</div><div>会員登録する前の画面に戻る</div></div>
-        <div class="flow-arrow">↓</div>
-        <div class="flow-step"><div class="flow-step-num">9</div><div>「<strong>探す</strong>」の地図機能から店舗を見つける<br><span style="font-size:0.85rem;color:#666;">※地図の位置情報許可を了承してもらうと見つかりやすい</span></div></div>
-        <div class="flow-arrow">↓</div>
-        <div class="flow-step"><div class="flow-step-num">10</div><div>店舗情報を閲覧</div></div>
-        <div class="flow-arrow">↓</div>
-        <div class="flow-step"><div class="flow-step-num">11</div><div>「<strong>月額契約する</strong>」ボタンから契約</div></div>
-      </div>
+        <div class="flow-col flow-col-visitor">
+          <div class="flow-col-title">🕐 ビジター利用（ドロップイン）</div>
+          <div class="flow">
+            <div class="flow-step"><div class="flow-step-num">1</div><div>アプリ起動</div></div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step"><div class="flow-step-num">2</div><div><strong>チュートリアル</strong>表示</div></div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step"><div class="flow-step-num">3</div><div><strong>QRコードボタン</strong>をタップ<br><span style="font-size:0.8rem;color:#666;">（他項目もあり）</span></div></div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step"><div class="flow-step-num">4</div><div>会員登録画面 → <strong>メールアドレス入力</strong></div></div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step"><div class="flow-step-num">5</div><div>認証メール → 確認コード入力</div></div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step"><div class="flow-step-num">6</div><div>登録情報入力（氏名・住所・電話番号）</div></div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step"><div class="flow-step-num">7</div><div><strong>クレジットカード登録</strong></div></div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step"><div class="flow-step-num">8</div><div><strong>店舗のQRコード</strong>を読み込む</div></div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step"><div class="flow-step-num">9</div><div>プラン選択（ドロップイン）→ 契約確定</div></div>
+          </div>
+        </div>
 
-      <p style="margin-top:12px;"><strong>【ドロップイン・一時利用の場合】</strong></p>
-      <div class="flow">
-        <div class="flow-step"><div class="flow-step-num">8</div><div>クレジットカード登録後、<strong>店舗のQRコードを読み込む</strong></div></div>
-        <div class="flow-arrow">↓</div>
-        <div class="flow-step"><div class="flow-step-num">9</div><div>プラン選択（ドロップイン）→ 契約確定</div></div>
+        <div class="flow-col flow-col-monthly">
+          <div class="flow-col-title">📅 月額契約</div>
+          <div class="flow">
+            <div class="flow-step"><div class="flow-step-num">1</div><div>アプリ起動</div></div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step"><div class="flow-step-num">2</div><div><strong>チュートリアル</strong>表示</div></div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step"><div class="flow-step-num">3</div><div><strong>店舗を探して</strong>、<br>【<strong>月額契約申し込みをする</strong>】<br>ボタンをタップ<br><span style="font-size:0.8rem;color:#666;">※地図の位置情報許可で店舗が見つかりやすい</span></div></div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step"><div class="flow-step-num">4</div><div>会員登録画面 → <strong>メールアドレス入力</strong></div></div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step"><div class="flow-step-num">5</div><div>認証メール → 確認コード入力</div></div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step"><div class="flow-step-num">6</div><div>登録情報入力（氏名・住所・電話番号）</div></div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step"><div class="flow-step-num">7</div><div><strong>クレジットカード登録</strong></div></div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step"><div class="flow-step-num">8</div><div>プラン選択 → 契約確定</div></div>
+          </div>
+        </div>
+
       </div>
       <div class="alert alert-info">所要時間 約15〜20分。位置情報の許可を案内すると、店舗検索がスムーズです。</div>`,
   },
