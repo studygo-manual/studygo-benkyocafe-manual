@@ -538,6 +538,35 @@
     font-size: 0.95rem;
   }
 
+  /* Q&A間ジャンプボタン */
+  .qa-jump {
+    display: inline-flex;
+    gap: 8px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+  .qa-jump-btn {
+    background: #FFB800;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .qa-jump-btn:hover { background: #FF9800; }
+  .qa-jump-btn.outline {
+    background: #fff;
+    color: #FF9800;
+    border: 2px solid #FFB800;
+  }
+  .qa-jump-btn.outline:hover { background: #FFFCEF; }
+
   /* サブプルダウン（answer内の折りたたみ） */
   .sub-toggle {
     margin: 8px 0;
@@ -611,8 +640,10 @@
   .flow-col-monthly .flow-step { border-color: #A5D6A7; }
   .flow-col-monthly .flow-step-num { background: #388E3C; }
   .flow-col-monthly .flow-arrow { color: #388E3C; }
+  .flow-cols .flow-step { min-height: 90px; }
   @media (max-width: 640px) {
     .flow-cols { grid-template-columns: 1fr; }
+    .flow-cols .flow-step { min-height: auto; }
   }
 
   /* フロー図 */
@@ -1072,10 +1103,14 @@ const QA_DATA = [
             <div class="flow-arrow">↓</div>
             <div class="flow-step"><div class="flow-step-num">8</div><div>プラン選択 → 契約確定</div></div>
           </div>
+          <div class="qa-jump" style="margin-top:12px;justify-content:center;">
+            <button class="qa-jump-btn" onclick="goToQA('app_flow2')">📷 月額契約の画面遷移を詳しく見る →</button>
+            <a class="qa-jump-btn outline" href="#qa=app_flow2" target="_blank" rel="noopener">別タブで開く ↗</a>
+          </div>
         </div>
 
       </div>
-      <div class="alert alert-info">所要時間 約15〜20分。位置情報の許可を案内すると、店舗検索がスムーズです。</div>`,
+      <div class="alert alert-info">所要時間 5〜10分。位置情報の許可を案内すると、店舗検索がスムーズです。</div>`,
   },
   {
     id: 'app3', cat: 'app', type: 'basic',
@@ -7156,6 +7191,22 @@ function clearSearch() {
 
 // 初期表示
 renderCategories();
+
+// Q&A間ナビゲーション（IDから所属カテゴリを引いてジャンプ）
+function goToQA(qaId) {
+  const item = QA_DATA.find(q => q.id === qaId);
+  if (!item) return;
+  showCategory(item.cat, qaId);
+}
+window.goToQA = goToQA;
+
+// URLハッシュ #qa=app_receipt から起動時に該当Q&Aを開く
+function openFromHash() {
+  const m = location.hash.match(/qa=([\w-]+)/);
+  if (m) goToQA(m[1]);
+}
+window.addEventListener('hashchange', openFromHash);
+openFromHash();
 
 // スクリーンショット拡大モーダル
 function openScreenshot(img) {
