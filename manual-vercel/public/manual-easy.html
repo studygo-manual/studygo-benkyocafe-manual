@@ -538,6 +538,42 @@
     font-size: 0.95rem;
   }
 
+  /* サブプルダウン（answer内の折りたたみ） */
+  .sub-toggle {
+    margin: 8px 0;
+    background: #fff;
+    border: 1.5px solid #FFD93D;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .sub-toggle > summary {
+    padding: 10px 14px;
+    cursor: pointer;
+    background: #FFFCEF;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    color: #5B3A00;
+    user-select: none;
+  }
+  .sub-toggle > summary::-webkit-details-marker { display: none; }
+  .sub-toggle > summary::before {
+    content: '▶';
+    font-size: 0.7rem;
+    color: #FFB800;
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+  .sub-toggle[open] > summary::before { transform: rotate(90deg); }
+  .sub-toggle-body {
+    padding: 12px 16px 14px;
+    border-top: 1px solid #FFE89E;
+  }
+  .sub-toggle-body ul { margin: 0; padding-left: 20px; }
+  .sub-toggle-body li { margin-bottom: 4px; line-height: 1.55; }
+
   /* フロー図2列 */
   .flow-cols {
     display: grid;
@@ -1043,17 +1079,73 @@ const QA_DATA = [
   },
   {
     id: 'app3', cat: 'app', type: 'basic',
-    q: 'アプリの画面構成（5タブ）は？',
-    keywords: ['タブ', '画面', '構成', 'ホーム', '検索', 'チェックイン', 'メッセージ', 'ユーザー'],
+    q: 'アプリの画面構成（5タブ）は？⇒各機能で何ができるの？',
+    keywords: ['タブ', '画面', '構成', 'ホーム', '検索', 'チェックイン', 'メッセージ', 'ユーザー', '機能'],
     a: `
-      <table class="data-table">
-        <tr><th>タブ</th><th>主な機能</th></tr>
-        <tr><td>🏠 ホーム</td><td>会員カード、お知らせ、近くの店舗</td></tr>
-        <tr><td>🔍 検索</td><td>地図・リストで店舗を探す</td></tr>
-        <tr><td>📲 チェックイン</td><td>QR読み込みで入店、店舗コード手動入力</td></tr>
-        <tr><td>💬 メッセージ</td><td>店舗とのチャット（未読件数表示）<br><span style="color:#C62828;">※勉強カフェ新宿エリアでは不要</span></td></tr>
-        <tr><td>👤 ユーザー</td><td>マイページ、契約・予約管理</td></tr>
-      </table>`,
+      <p>5つのタブに分かれています。タップすると各機能の詳細が見れます。</p>
+
+      <details class="sub-toggle">
+        <summary>🏠 ホーム</summary>
+        <div class="sub-toggle-body">
+          <ul>
+            <li>会員カードの表示（お客様の会員情報を確認できる）</li>
+            <li>運営からのお知らせ表示</li>
+            <li>近くの店舗の案内・検索</li>
+            <li>キャンペーン・新規プランの案内</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="sub-toggle">
+        <summary>🔍 検索（探す）</summary>
+        <div class="sub-toggle-body">
+          <ul>
+            <li>地図表示で近くの店舗を探す</li>
+            <li>リスト表示で全国の店舗を確認</li>
+            <li>店舗詳細（住所・営業時間・料金プラン）を閲覧</li>
+            <li>「月額契約申し込みをする」ボタンから契約</li>
+            <li>位置情報の許可で店舗発見がスムーズ</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="sub-toggle">
+        <summary>📲 チェックイン</summary>
+        <div class="sub-toggle-body">
+          <ul>
+            <li>店舗のQRコードを読み込んで入店</li>
+            <li>QRが読めない場合は店舗コード手動入力</li>
+            <li>チェックアウトも同タブから（QR読取 → 確認）</li>
+            <li>営業時間外はエラー表示</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="sub-toggle">
+        <summary>💬 メッセージ</summary>
+        <div class="sub-toggle-body">
+          <ul>
+            <li>店舗スタッフとの個別チャット</li>
+            <li>未読件数のバッジ表示</li>
+            <li>運営からの個別連絡を受信</li>
+            <li><span style="color:#C62828;font-weight:700;">※勉強カフェ新宿エリアでは不要（使用していません）</span></li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="sub-toggle">
+        <summary>👤 ユーザー（マイページ）</summary>
+        <div class="sub-toggle-body">
+          <ul>
+            <li>契約中プランの確認・変更・休会・解約</li>
+            <li><strong>利用履歴の確認</strong>（「利用履歴を確認」ボタン）</li>
+            <li>連絡先・支払い方法（クレジットカード）の変更</li>
+            <li>来店予約の管理</li>
+            <li>領収書のメール送信機能</li>
+            <li>退会・アカウント設定</li>
+          </ul>
+        </div>
+      </details>`,
   },
   {
     id: 'app4', cat: 'app', type: 'basic',
@@ -1061,18 +1153,19 @@ const QA_DATA = [
     keywords: ['会員カード', '表示', 'ホーム'],
     a: `
       <p><strong>ホームタブ</strong>の上部に会員カードが常時表示されています。</p>
-      <div class="alert alert-info">会員カードは<strong>QRコードではありません</strong>（お客様の会員情報を表示する画面）。店舗側では管理画面の「会員管理」からお客様情報を検索して確認できます。</div>`,
+      <div class="alert alert-info">店舗側では管理画面の「会員管理」からお客様情報を検索して確認できます。</div>`,
   },
   {
     id: 'app5', cat: 'app', type: 'basic',
     q: 'お客様が過去の利用履歴・明細を見たい場合は？',
-    keywords: ['利用履歴', '過去', '明細', '領収書', 'メール'],
+    keywords: ['利用履歴', '過去', '明細', '領収書', 'メール', 'マイページ'],
     a: `
-      <p>アプリの<strong>ホーム → 利用履歴</strong>から確認できます。</p>
+      <p>アプリの<strong>マイページ → 【利用履歴を確認】</strong>から見れます。</p>
       <ul style="padding-left:24px;">
         <li>月別の利用店舗・時間・料金</li>
         <li>合計金額の集計</li>
       </ul>
+      <div class="alert alert-warn"><strong>注意：利用履歴は終了したものでないと表示されません。</strong>チェックイン中の記録は<strong>チェックアウトしないと見れません</strong>のでご注意ください。</div>
       <div class="alert alert-info"><strong>領収書について</strong>：各支払いが発生した際に、<strong>自動で領収書がメールに送信</strong>されます（都度発行）。</div>
       <div class="alert alert-info"><strong>メール送信機能</strong>：アプリの利用履歴にあるメール送信機能では、<strong>先月分以前の内容をまとめて明細として受け取る</strong>ことができます（月ごとの集計用）。</div>`,
   },
