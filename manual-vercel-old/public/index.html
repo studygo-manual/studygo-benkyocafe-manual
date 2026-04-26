@@ -39,7 +39,6 @@
             </div>
             <div class="user-info" id="userInfo" style="display: none;">
                 <span class="user-name" id="userNameDisplay"></span>
-                <button class="user-info-btn" id="pinChangeBtn">PIN変更</button>
                 <button class="user-info-btn" id="logoutBtn">ログアウト</button>
             </div>
         </div>
@@ -49,8 +48,8 @@
     <div class="login-modal-overlay" id="loginOverlay">
         <div class="login-modal">
             <div class="login-modal-header">
-                <h3>スタッフログイン</h3>
-                <p>スタッフマニュアルを利用するにはログインしてください</p>
+                <h3>スタッフ選択</h3>
+                <p>スタッフマニュアルを利用するにはお名前を選択してください</p>
             </div>
             <div class="login-form">
                 <div class="login-form-group">
@@ -59,39 +58,8 @@
                         <option value="">-- 選択してください --</option>
                     </select>
                 </div>
-                <div class="login-form-group">
-                    <label for="loginPin">PIN（4桁）</label>
-                    <input type="password" id="loginPin" maxlength="4" inputmode="numeric" pattern="[0-9]*" placeholder="4桁の数字">
-                </div>
                 <button class="login-btn" id="loginBtn">ログイン</button>
                 <div class="login-error" id="loginError"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- PIN変更モーダル -->
-    <div class="pin-change-modal-overlay" id="pinChangeOverlay">
-        <div class="pin-change-modal">
-            <div class="pin-change-header">
-                <h3>PIN変更</h3>
-                <button class="pin-change-close" id="pinChangeClose">&times;</button>
-            </div>
-            <div class="pin-change-form">
-                <div class="login-form-group">
-                    <label for="currentPin">現在のPIN</label>
-                    <input type="password" id="currentPin" maxlength="4" inputmode="numeric" pattern="[0-9]*" placeholder="現在の4桁PIN">
-                </div>
-                <div class="login-form-group">
-                    <label for="newPin">新しいPIN</label>
-                    <input type="password" id="newPin" maxlength="4" inputmode="numeric" pattern="[0-9]*" placeholder="新しい4桁PIN">
-                </div>
-                <div class="login-form-group">
-                    <label for="confirmPin">新しいPIN（確認）</label>
-                    <input type="password" id="confirmPin" maxlength="4" inputmode="numeric" pattern="[0-9]*" placeholder="もう一度入力">
-                </div>
-                <button class="pin-change-btn" id="pinChangeSaveBtn">PINを変更する</button>
-                <div class="pin-change-error" id="pinChangeError"></div>
-                <div class="pin-change-success" id="pinChangeSuccess"></div>
             </div>
         </div>
     </div>
@@ -4023,35 +3991,21 @@
 
     <script>
         // ===================================
-        // スタッフログインシステム
+        // スタッフログインシステム（名前選択のみ）
         // ===================================
         const STAFF_LIST = [
-            { name: '近藤', pin: '0000' },
-            { name: '國松', pin: '0000' },
-            { name: '岡林', pin: '0000' },
-            { name: '山下', pin: '0000' },
-            { name: 'カンノ', pin: '0000' },
-            { name: '生島', pin: '0000' },
-            { name: '清水', pin: '0000' },
-            { name: '新井', pin: '0000' },
-            { name: '前保', pin: '0000' },
-            { name: '遠藤', pin: '0000' },
+            { name: '近藤' },
+            { name: '國松' },
+            { name: '岡林' },
+            { name: '山下' },
+            { name: 'カンノ' },
+            { name: '生島' },
+            { name: '清水' },
+            { name: '新井' },
+            { name: '前保' },
+            { name: '遠藤' },
+            { name: '菊地' },
         ];
-
-        // スタッフPINの取得（localStorage優先、なければデフォルト）
-        function getStaffPin(name) {
-            const savedPins = JSON.parse(localStorage.getItem('studygo_staff_pins') || '{}');
-            if (savedPins[name]) return savedPins[name];
-            const staff = STAFF_LIST.find(s => s.name === name);
-            return staff ? staff.pin : null;
-        }
-
-        // スタッフPINの保存
-        function saveStaffPin(name, newPin) {
-            const savedPins = JSON.parse(localStorage.getItem('studygo_staff_pins') || '{}');
-            savedPins[name] = newPin;
-            localStorage.setItem('studygo_staff_pins', JSON.stringify(savedPins));
-        }
 
         // 現在ログイン中のユーザー名を取得
         function getCurrentUser() {
@@ -4061,19 +4015,12 @@
         // ログインUIの初期化
         const loginOverlay = document.getElementById('loginOverlay');
         const loginNameSelect = document.getElementById('loginName');
-        const loginPinInput = document.getElementById('loginPin');
         const loginBtn = document.getElementById('loginBtn');
         const loginError = document.getElementById('loginError');
         const userInfo = document.getElementById('userInfo');
         const userNameDisplay = document.getElementById('userNameDisplay');
         const headerGuide = document.getElementById('headerGuide');
         const logoutBtn = document.getElementById('logoutBtn');
-        const pinChangeBtnHeader = document.getElementById('pinChangeBtn');
-        const pinChangeOverlay = document.getElementById('pinChangeOverlay');
-        const pinChangeClose = document.getElementById('pinChangeClose');
-        const pinChangeSaveBtn = document.getElementById('pinChangeSaveBtn');
-        const pinChangeError = document.getElementById('pinChangeError');
-        const pinChangeSuccess = document.getElementById('pinChangeSuccess');
 
         // ドロップダウンにスタッフ名を追加
         STAFF_LIST.forEach(staff => {
@@ -4083,40 +4030,27 @@
             loginNameSelect.appendChild(opt);
         });
 
-        // ログイン処理
+        // ログイン処理（名前選択のみ）
         function doLogin() {
             const name = loginNameSelect.value;
-            const pin = loginPinInput.value;
             loginError.textContent = '';
 
             if (!name) {
                 loginError.textContent = 'スタッフ名を選択してください';
                 return;
             }
-            if (!pin || pin.length !== 4) {
-                loginError.textContent = 'PINは4桁で入力してください';
-                return;
-            }
-
-            const correctPin = getStaffPin(name);
-            if (pin !== correctPin) {
-                loginError.textContent = 'PINが正しくありません';
-                loginPinInput.value = '';
-                loginPinInput.focus();
-                return;
-            }
 
             // ログイン成功
             sessionStorage.setItem('studygo_current_user', name);
             loginOverlay.classList.remove('active');
-            loginPinInput.value = '';
             showUserInfo(name);
             onLoginSuccess();
         }
 
         loginBtn.addEventListener('click', doLogin);
-        loginPinInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') doLogin();
+        // 選択するだけで即ログイン
+        loginNameSelect.addEventListener('change', function() {
+            if (this.value) doLogin();
         });
 
         // ログアウト処理
@@ -4141,51 +4075,6 @@
             userInfo.style.display = 'none';
             if (headerGuide) headerGuide.style.display = '';
         }
-
-        // PIN変更モーダル
-        pinChangeBtnHeader.addEventListener('click', function() {
-            document.getElementById('currentPin').value = '';
-            document.getElementById('newPin').value = '';
-            document.getElementById('confirmPin').value = '';
-            pinChangeError.textContent = '';
-            pinChangeSuccess.textContent = '';
-            pinChangeOverlay.classList.add('active');
-        });
-
-        pinChangeClose.addEventListener('click', function() {
-            pinChangeOverlay.classList.remove('active');
-        });
-
-        pinChangeOverlay.addEventListener('click', function(e) {
-            if (e.target === pinChangeOverlay) pinChangeOverlay.classList.remove('active');
-        });
-
-        pinChangeSaveBtn.addEventListener('click', function() {
-            const user = getCurrentUser();
-            if (!user) return;
-            const current = document.getElementById('currentPin').value;
-            const newP = document.getElementById('newPin').value;
-            const confirm = document.getElementById('confirmPin').value;
-            pinChangeError.textContent = '';
-            pinChangeSuccess.textContent = '';
-
-            if (current !== getStaffPin(user)) {
-                pinChangeError.textContent = '現在のPINが正しくありません';
-                return;
-            }
-            if (!newP || newP.length !== 4 || !/^\d{4}$/.test(newP)) {
-                pinChangeError.textContent = '新しいPINは4桁の数字で入力してください';
-                return;
-            }
-            if (newP !== confirm) {
-                pinChangeError.textContent = '確認用PINが一致しません';
-                return;
-            }
-
-            saveStaffPin(user, newP);
-            pinChangeSuccess.textContent = 'PINを変更しました';
-            setTimeout(() => { pinChangeOverlay.classList.remove('active'); }, 1200);
-        });
 
         // ログイン後のコールバック（クイズ・お知らせの再読み込み）
         // ===================================
