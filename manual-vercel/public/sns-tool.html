@@ -4593,11 +4593,14 @@ function calcPostIndexForDate(seriesName, targetDate, targetSlot) {
     var curKey = dateToKey(cur);
     var rot = getRotationForDate(cur);
     if (rot) {
+      var spDate = X_SPECIAL_DATES[curKey];
       for (var s = 0; s < X_TIME_SLOTS.length; s++) {
         var slot = X_TIME_SLOTS[s];
         if (curKey === targetKey && targetSlot && slot === targetSlot) {
           return offset % posts.length;
         }
+        // GW特別投稿などで上書きされる slot は通常ローテのカウントを進めない
+        if (spDate && spDate[slot]) continue;
         if (rot[slot] === seriesName) {
           offset++;
         }
