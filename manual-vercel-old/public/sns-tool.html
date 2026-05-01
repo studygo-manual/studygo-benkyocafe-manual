@@ -4616,11 +4616,7 @@ function renderXTodayCards() {
   document.getElementById('xTodayTitle').textContent = dateStr + ' の投稿内容';
   document.getElementById('xTodayWeek').textContent = 'WEEK ' + info.week;
 
-  var rotation = getRotationForDate(d);
-  if (!rotation) {
-    document.getElementById('xTodayCards').innerHTML = '<p style="color:#888;">ローテーション未定義</p>';
-    return;
-  }
+  var rotation = getRotationForDate(d) || {};
 
   var dateKey = dateToKey(d);
   var checks = xDailyChecks[dateKey] || {};
@@ -4790,8 +4786,7 @@ function copyAllInterviewPosts() {
 function copyAllXPosts() {
   var d = xSelectedDate;
   var info = getWeekAndDayFor(d);
-  var rotation = getRotationForDate(d);
-  if (!rotation) return;
+  var rotation = getRotationForDate(d) || {};
 
   var dateKey = dateToKey(d);
   var checks = xDailyChecks[dateKey] || {};
@@ -4972,11 +4967,7 @@ function renderSchedCards() {
   var d = xSchedSelectedDate;
   if (!d) return;
   var info = getWeekAndDayFor(d);
-  var rotation = getRotationForDate(d);
-  if (!rotation) {
-    document.getElementById('xSchedCards').innerHTML = '<p style="color:#888;">ローテーション未定義</p>';
-    return;
-  }
+  var rotation = getRotationForDate(d) || {};
 
   var dateKey = dateToKey(d);
   var checks = xDailyChecks[dateKey] || {};
